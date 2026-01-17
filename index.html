@@ -226,8 +226,6 @@
       padding: 150px 10% 120px;
       scroll-margin-top: 90px;
     }
-
-    /* more air so scroll is always visible */
     section:not(#home){
       min-height: auto;
       padding: 140px 10% 140px;
@@ -253,28 +251,35 @@
       border: 2px solid rgba(255,255,255,0.35);
       background: rgba(10, 15, 25, 0.55);
       box-shadow: 0 0 30px rgba(242,169,0,0.18);
-      margin-top: -28px; /* slightly higher */
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      margin-top: -28px;
+      position: relative;
     }
 
-    /* ROTATION KEYFRAMES */
-    @keyframes slow-rotate {
-      from { transform: rotate(0deg) scale(1.08); }
-      to   { transform: rotate(360deg) scale(1.08); }
+    /* ==== GUARANTEED ROTATION (wrapper, Safari-safe) ==== */
+    @-webkit-keyframes world-rotate {
+      from { -webkit-transform: rotate(0deg) scale(1.10); transform: rotate(0deg) scale(1.10); }
+      to   { -webkit-transform: rotate(360deg) scale(1.10); transform: rotate(360deg) scale(1.10); }
+    }
+    @keyframes world-rotate {
+      from { transform: rotate(0deg) scale(1.10); }
+      to   { transform: rotate(360deg) scale(1.10); }
     }
 
-    .logo-container img {
-      width: 110%;
-      height: 110%;
+    .world-rotator{
+      position: absolute;
+      inset: -6%;                 /* overscan so edges never show */
+      will-change: transform;
+      -webkit-animation: world-rotate 30s linear infinite;
+      animation: world-rotate 30s linear infinite;
+    }
+
+    .world-rotator img{
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      transform-origin: center center;
-      animation: slow-rotate 30s linear infinite; /* 1 rotation / 30s */
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .logo-container img { animation: none; }
+      display: block;
+      user-select: none;
+      pointer-events: none;
     }
 
     .hero-claim {
@@ -319,7 +324,7 @@
       opacity: 0.98;
     }
 
-    /* ===== BASYS SECTION (process points) ===== */
+    /* ===== BASYS SECTION ===== */
     .concept-head h2{
       color: var(--accent);
       text-transform: uppercase;
@@ -366,7 +371,7 @@
       font-size: 0.98rem;
     }
 
-    /* ===== ANALYTICS (original text) ===== */
+    /* ===== ANALYTICS ===== */
     .analytics-card p{
       font-size: 1.07rem;
       line-height: 1.75;
@@ -567,7 +572,7 @@
   <div class="bg"></div>
 
   <header id="siteHeader">
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
         <path d="M4 7h16M4 12h16M4 17h16"></path>
       </svg>
@@ -596,7 +601,9 @@
   <!-- Home -->
   <section id="home" data-section="home">
     <div class="logo-container reveal">
-      <img src="logo.png" alt="Basys Analytics Logo" />
+      <div class="world-rotator">
+        <img src="logo.png" alt="Basys Analytics Logo" />
+      </div>
     </div>
 
     <div class="hero-claim reveal" id="heroClaim">
