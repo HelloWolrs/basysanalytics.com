@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basys Analytics | Observe · Learn · Lead</title>
     <style>
-        body {
+        /* Grunddesign */
+        body, html {
             margin: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #050a12; /* Sehr dunkles Blau/Schwarz */
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #050a12;
             color: white;
-            line-height: 1.6;
+            scroll-behavior: smooth;
         }
+
+        /* Hero Bereich mit deinem Bild */
         header {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('dein-bild-weltraum.jpg'); 
+            background: linear-gradient(rgba(5, 10, 18, 0.7), rgba(5, 10, 18, 0.7)), 
+                        url('background.jpg'); /* Hier dein Bild hochladen */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -22,83 +27,133 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
         }
-        .logo-text {
-            font-size: 4rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
+
+        .logo-container {
+            max-width: 80%;
         }
-        .logo-orange { color: #f7931a; } /* Bitcoin Orange */
-        .claim {
-            font-size: 1.5rem;
-            letter-spacing: 5px;
+
+        h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            color: #ccc;
         }
-        .section {
-            padding: 80px 10%;
-            max-width: 1200px;
+
+        .orange { color: #f7931a; }
+
+        .claim {
+            font-size: 1.2rem;
+            letter-spacing: 6px;
+            margin-top: 10px;
+            color: #bdc3c7;
+            text-transform: uppercase;
+        }
+
+        /* Content Sektionen */
+        .container {
+            max-width: 1100px;
             margin: auto;
+            padding: 80px 20px;
         }
+
+        h2 {
+            color: #f7931a;
+            font-size: 2.2rem;
+            border-bottom: 2px solid #f7931a;
+            display: inline-block;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
+            gap: 30px;
         }
+
         .card {
-            background: rgba(255,255,255,0.05);
-            padding: 30px;
-            border-radius: 10px;
-            border-left: 4px solid #f7931a;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(247, 147, 26, 0.2);
+            transition: transform 0.3s ease;
         }
-        h2 { color: #f7931a; font-size: 2.5rem; }
-        .footer {
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #f7931a;
+        }
+
+        .card h3 {
+            color: #f7931a;
+            font-size: 1.5rem;
+            margin-top: 0;
+        }
+
+        /* Über OLL Sektion */
+        .about-section {
+            background-color: #0a111e;
+            padding: 80px 0;
+        }
+
+        footer {
             text-align: center;
             padding: 40px;
-            font-size: 0.9rem;
-            color: #666;
-            border-top: 1px solid #222;
+            font-size: 0.8rem;
+            color: #555;
+            background: #050a12;
+        }
+
+        /* Mobile Anpassung */
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .claim { font-size: 0.9rem; letter-spacing: 3px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-text"><span class="logo-orange">B</span>asys Analytics</div>
-        <div class="claim">Observe · Learn · Lead</div>
+        <div class="logo-container">
+            <h1><span class="orange">B</span>asys Analytics</h1>
+            <div class="claim">Observe · Learn · Lead</div>
+        </div>
     </header>
 
-    <section class="section">
-        <h2>Das Fundament</h2>
-        <p>Basys Analytics steht für ein stabiles, methodisches Fundament (Base, Basis, System). In der komplexen Welt der Digital Assets bieten wir die notwendige Struktur, um aus flüchtigen Daten echte Erkenntnisse zu gewinnen.</p>
-        
+    <div class="container">
+        <h2>Unser Fundament</h2>
+        <p style="font-size: 1.2rem; max-width: 800px;">
+            Basys Analytics bietet ein methodisches System zur strukturierten Beobachtung und Einordnung von Digital-Asset-Märkten. 
+            Auf einer stabilen Basis entwickeln wir Erkenntnisse für die digitale Ökonomie.
+        </p>
+
         <div class="grid">
             <div class="card">
                 <h3>Observe</h3>
-                <p>Strukturierte Beobachtung der Märkte. Wir filtern das Rauschen und konzentrieren uns auf die signifikanten Signale der digitalen Ökonomie.</p>
+                <p>Präzise Marktbeobachtung filtert das Rauschen der Datenströme und identifiziert die wesentlichen Trends.</p>
             </div>
             <div class="card">
                 <h3>Learn</h3>
-                <p>Tiefgreifendes Verständnis durch Analyse. Wir interpretieren Datenzusammenhänge, um fundierte Orientierung zu ermöglichen.</p>
+                <p>Systematische Interpretation schafft tiefes Verständnis für komplexe Zusammenhänge und Marktdynamiken.</p>
             </div>
             <div class="card">
                 <h3>Lead</h3>
-                <p>Verantwortungsvolle Führung. Wir begleiten Sie dabei, auf Basis von Erkenntnissen souveräne und zukunftsfähige Entscheidungen zu treffen.</p>
+                <p>Aus Orientierung entsteht Führung. Wir ermöglichen verantwortungsvolle Entscheidungen in einer volatilen Welt.</p>
             </div>
         </div>
-    </section>
-
-    <section class="section" style="background: #0a111e;">
-        <h2>Über OLL</h2>
-        <p>Hinter <strong>OLL</strong> steht nicht nur unser Prozess, sondern auch die persönliche Referenz von <strong>Oliver und Lion Leininger</strong>. Wir verbinden individuelle Motivation mit systematischer Analyse.</p>
-    </section>
-
-    <div class="footer">
-        &copy; 2026 Basys Analytics | Oliver & Lion Leininger
     </div>
+
+    <div class="about-section">
+        <div class="container">
+            <h2>Persönliche Expertise</h2>
+            <p><strong>OLL</strong> steht für mehr als einen Prozess – es ist die Verbindung aus der systematischen Analyse und der persönlichen Motivation von <strong>Oliver und Lion Leininger</strong>.</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 Basys Analytics | Oliver & Lion Leininger | basysanalytics.com
+    </footer>
 
 </body>
 </html>
