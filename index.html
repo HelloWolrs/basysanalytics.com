@@ -11,8 +11,8 @@
 :root{
   --accent:#f2a900;
 
-  /* ✅ Lesbarer Standard-Glass (vorher .92) */
-  --glass:rgba(10,15,25,.72);
+  /* ✅ viel transparenter (Default) */
+  --glass: rgba(10,15,25,.38);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -168,7 +168,10 @@ nav a.login-link.active::after{ display:none; }
   display:none;
   padding:10px;
   border-radius:14px;
-  background:rgba(10,15,25,.92);
+
+  /* keep readable vs super transparent cards */
+  background:rgba(10,15,25,.78);
+
   backdrop-filter:blur(14px);
   border:1px solid rgba(255,255,255,.10);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
@@ -360,7 +363,7 @@ section{
 .brand .btc{ color:var(--accent); }
 .brand .light{ font-weight:700; opacity:.92; }
 
-/* Observe · Learn · Lead (bigger, initials accent, rest white, bigger dark dots) */
+/* Observe · Learn · Lead */
 .brand-claim{
   margin-top:14px;
   font-size:1.35rem;
@@ -418,41 +421,41 @@ section{
   40%{ transform:translateY(-10px); }
 }
 
-/* Cards */
+/* ===================== CARDS ===================== */
+/* ✅ Alle Boxen viel transparenter + Hover wirkt auf ALLE */
 .glass-card{
-  background:var(--glass);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
+  background-color: var(--glass);     /* IMPORTANT: background-color */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius:20px;
   padding:48px;
   width:100%;
   max-width:950px;
-  border:1px solid rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.12);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
 
-  /* ✅ hover animation */
   transition:
-    background .35s ease,
+    background-color .35s ease,
     backdrop-filter .35s ease,
     box-shadow .35s ease,
     transform .35s ease;
 }
 
-/* ✅ Hover Transparenz (mehr Durchsicht) */
+/* Hover Transparenz */
 .glass-card:hover{
-  background: rgba(10,15,25,.55);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
+  background-color: rgba(10,15,25,.22);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
   box-shadow:0 30px 70px rgba(0,0,0,.65);
   transform: translateY(-2px);
 }
 
-/* ✅ Mobile / Touch: Hover deaktivieren */
+/* Touch devices: no hover flicker */
 @media (hover: none){
   .glass-card:hover{
-    background: var(--glass);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    background-color: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     box-shadow:0 20px 50px rgba(0,0,0,.55);
     transform: none;
   }
@@ -485,7 +488,12 @@ section{
   justify-content:space-between;
   padding:14px 16px;
   border-radius:14px;
-  background:rgba(255,255,255,.04);
+
+  /* optional: slightly glassy too */
+  background-color: rgba(10,15,25,.22);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
   border:1px solid rgba(255,255,255,.10);
 }
 .wallet-address{
