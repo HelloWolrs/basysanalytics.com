@@ -11,8 +11,8 @@
 :root{
   --accent:#f2a900;
 
-  /* ✅ viel transparenter (Default) */
-  --glass: rgba(10,15,25,.38);
+  /* ✅ noch transparenter: fast durchsichtig, aber nicht ganz */
+  --glass: rgba(10,15,25,.22);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -169,7 +169,7 @@ nav a.login-link.active::after{ display:none; }
   padding:10px;
   border-radius:14px;
 
-  /* keep readable vs super transparent cards */
+  /* Menü bewusst lesbarer als fast-durchsichtige Cards */
   background:rgba(10,15,25,.78);
 
   backdrop-filter:blur(14px);
@@ -422,16 +422,16 @@ section{
 }
 
 /* ===================== CARDS ===================== */
-/* ✅ Alle Boxen viel transparenter + Hover wirkt auf ALLE */
+/* ✅ Alle Boxen sehr transparent + Hover wirkt auf ALLE */
 .glass-card{
-  background-color: var(--glass);     /* IMPORTANT: background-color */
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background-color: var(--glass);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
   border-radius:20px;
   padding:48px;
   width:100%;
   max-width:950px;
-  border:1px solid rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.14);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
 
   transition:
@@ -441,23 +441,23 @@ section{
     transform .35s ease;
 }
 
-/* Hover Transparenz */
+/* ✅ Hover: fast durchsichtig, aber nicht ganz */
 .glass-card:hover{
-  background-color: rgba(10,15,25,.22);
-  backdrop-filter: blur(26px);
-  -webkit-backdrop-filter: blur(26px);
+  background-color: rgba(10,15,25,.12);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   box-shadow:0 30px 70px rgba(0,0,0,.65);
   transform: translateY(-2px);
 }
 
-/* Touch devices: no hover flicker */
+/* ✅ Mobile / Touch: Hover deaktivieren */
 @media (hover: none){
   .glass-card:hover{
     background-color: var(--glass);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow:0 20px 50px rgba(0,0,0,.55);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
     transform: none;
+    box-shadow:0 20px 50px rgba(0,0,0,.55);
   }
 }
 
@@ -489,8 +489,8 @@ section{
   padding:14px 16px;
   border-radius:14px;
 
-  /* optional: slightly glassy too */
-  background-color: rgba(10,15,25,.22);
+  /* optional: passend zu den super transparenten Cards */
+  background-color: rgba(10,15,25,.14);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 
