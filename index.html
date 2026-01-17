@@ -1,536 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basys Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basys Analytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
-    <style>
-        :root { --accent: #f2a900; --glass: rgba(10, 15, 25, 0.95); }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html {
-            height: 100%;
-            font-family: 'Inter', sans-serif;
-            color: #fff;
-            background-color: #0b0d17;
-            scroll-behavior: smooth;
-        }
+  <style>
+    :root { --accent: #f2a900; --glass: rgba(10, 15, 25, 0.95); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      background-color: #0b0d17;
+      scroll-behavior: smooth;
+    }
 
-        .bg {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            background:
-                linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.7)),
-                url('1000081562.jpg') no-repeat center center;
-            background-size: cover;
-        }
+    .bg {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.72)),
+        url('1000081562.jpg') no-repeat center center;
+      background-size: cover;
+    }
 
-        /* ============ HEADER ============ */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 25px 50px;
-            z-index: 1000;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            gap: 18px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-            transition: padding 0.25s ease, background 0.25s ease, backdrop-filter 0.25s ease, border-color 0.25s ease;
-        }
+    /* ============ HEADER ============ */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 25px 50px;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 18px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+      transition: padding 0.25s ease, background 0.25s ease, backdrop-filter 0.25s ease, border-color 0.25s ease;
+    }
 
-        /* Solid / compact header on scroll */
-        header.scrolled {
-            padding: 14px 50px;
-            background: rgba(10, 15, 25, 0.75);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
+    header.scrolled {
+      padding: 14px 50px;
+      background: rgba(10, 15, 25, 0.75);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
 
-        nav {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
+    nav {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
 
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-            opacity: 0.75;
-            transition: 0.25s;
-        }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      opacity: 0.75;
+      transition: 0.25s;
+    }
 
-        nav a:hover {
-            opacity: 1;
-            color: var(--accent);
-        }
+    nav a:hover {
+      opacity: 1;
+      color: var(--accent);
+    }
 
-        .login-link {
-            border: 1px solid var(--accent);
-            padding: 8px 18px;
-            border-radius: 8px;
-            color: var(--accent);
-            opacity: 1;
-        }
+    .login-link {
+      border: 1px solid var(--accent);
+      padding: 8px 18px;
+      border-radius: 8px;
+      color: var(--accent);
+      opacity: 1;
+    }
 
-        /* Mobile nav toggle */
-        .nav-toggle {
-            display: none;
-            margin-left: auto;
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.12);
-            background: rgba(255,255,255,0.06);
-            color: #fff;
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-        }
-        .nav-toggle:hover {
-            background: rgba(255,255,255,0.10);
-            border-color: rgba(255,255,255,0.18);
-            transform: translateY(-1px);
-        }
-        .nav-toggle svg { display:block; }
+    /* Mobile nav toggle */
+    .nav-toggle {
+      display: none;
+      margin-left: auto;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .nav-toggle:hover {
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.18);
+      transform: translateY(-1px);
+    }
+    .nav-toggle svg { display:block; }
 
-        /* ============ SECTIONS ============ */
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 110px 10% 90px;
-        }
+    /* ============ SECTIONS ============ */
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      /* Hero editorial: more whitespace */
+      padding: 150px 10% 120px;
+    }
 
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            padding: 45px;
-            width: 100%;
-            max-width: 950px;
-            border: 1px solid rgba(255,255,255,0.10);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 45px;
+      width: 100%;
+      max-width: 950px;
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
 
-        .logo-container {
-            width: 600px;
-            height: 360px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.35);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(10, 15, 25, 0.55);
-            box-shadow: 0 0 30px rgba(242,169,0,0.18);
-        }
+    .logo-container {
+      width: 600px;
+      height: 360px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.35);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(10, 15, 25, 0.55);
+      box-shadow: 0 0 30px rgba(242,169,0,0.18);
+    }
 
-        .logo-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-        /* ===== HERO TYPOGRAPHY ===== */
-        .hero-claim {
-            margin-top: 26px;
-            text-align: center;
-            max-width: 860px;
-            line-height: 1.18;
-            font-size: clamp(1.35rem, 2.2vw, 2.25rem);
-            font-weight: 700;
-            letter-spacing: 0.2px;
-            text-shadow: 0 10px 35px rgba(0,0,0,0.55);
-        }
-        .hero-claim .accent {
-            color: var(--accent);
-        }
-        .hero-sub {
-            margin-top: 14px;
-            opacity: 0.78;
-            font-size: 0.98rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+    /* ===== HERO CLAIM: minimalist + thinner + spacing ===== */
+    .hero-claim {
+      margin-top: 38px;              /* more white space */
+      text-align: center;
+      max-width: 980px;
+      font-size: clamp(0.98rem, 1.35vw, 1.22rem);
+      font-weight: 500;              /* thinner */
+      letter-spacing: 1.6px;         /* more spacing */
+      opacity: 0.86;
+      text-shadow: 0 8px 28px rgba(0,0,0,0.42);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      white-space: nowrap;
+    }
+    .hero-claim .accent { color: var(--accent); }
 
-        /* Observe · Learn · Lead row */
-        .oll-row {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 18px;
-        }
-        .oll-pill {
-            padding: 10px 14px;
-            border-radius: 999px;
-            border: 1px solid rgba(255,255,255,0.12);
-            background: rgba(255,255,255,0.06);
-            backdrop-filter: blur(10px);
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 700;
-            opacity: 0.95;
-        }
-        .oll-pill span {
-            color: var(--accent);
-        }
+    /* Claim disappears on scroll */
+    .hero-claim.hidden {
+      opacity: 0;
+      transform: translateY(-10px);
+      pointer-events: none;
+    }
 
-        .scroll-indicator {
-            margin-top: 34px;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-        }
+    .scroll-indicator {
+      margin-top: 48px;              /* more editorial whitespace */
+      animation: bounce 2s infinite;
+      cursor: pointer;
+    }
 
-        @keyframes bounce {
-            0%,20%,50%,80%,100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-        }
+    @keyframes bounce {
+      0%,20%,50%,80%,100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+    }
 
-        .highlight {
-            color: var(--accent);
-            font-weight: 600;
-        }
+    .highlight { color: var(--accent); font-weight: 600; }
 
-        .summary-box {
-            margin-top: 25px;
-            padding: 22px 22px;
-            border-left: 4px solid var(--accent);
-            background: rgba(255,255,255,0.05);
-            line-height: 1.7;
-            border-radius: 14px;
-        }
+    .summary-box {
+      margin-top: 25px;
+      padding: 22px;
+      border-left: 4px solid var(--accent);
+      background: rgba(255,255,255,0.05);
+      line-height: 1.7;
+      border-radius: 14px;
+    }
 
-        /* ===== CONCEPT: structured 2-column ===== */
-        .concept-grid {
-            display: grid;
-            gap: 26px;
-        }
-        .concept-left h2 {
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-        }
-        .concept-left .kicker {
-            margin-top: 8px;
-            opacity: 0.75;
-            line-height: 1.7;
-            font-size: 1.02rem;
-        }
-        .concept-right p {
-            font-size: 1.07rem;
-            line-height: 1.75;
-            margin-bottom: 18px;
-        }
-        .concept-right p:last-child { margin-bottom: 0; }
+    /* ===== CONCEPT: structured 2-column ===== */
+    .concept-grid {
+      display: grid;
+      gap: 26px;
+    }
+    .concept-left h2 {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+    .concept-left .kicker {
+      margin-top: 8px;
+      opacity: 0.78;
+      line-height: 1.7;
+      font-size: 1.02rem;
+    }
+    .concept-right p {
+      font-size: 1.07rem;
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+    .concept-right p:last-child { margin-bottom: 0; }
 
-        .concept-points {
-            margin-top: 18px;
-            display: grid;
-            gap: 10px;
-        }
-        .concept-point {
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            padding: 14px 14px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-        }
-        .concept-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--accent);
-            margin-top: 6px;
-            flex: 0 0 auto;
-            box-shadow: 0 0 18px rgba(242,169,0,0.28);
-        }
-        .concept-point strong {
-            display: block;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            opacity: 0.9;
-            margin-bottom: 4px;
-        }
-        .concept-point span {
-            display: block;
-            opacity: 0.82;
-            line-height: 1.6;
-            font-size: 0.98rem;
-        }
+    .concept-points {
+      margin-top: 18px;
+      display: grid;
+      gap: 10px;
+    }
+    .concept-point {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .concept-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 6px;
+      flex: 0 0 auto;
+      box-shadow: 0 0 18px rgba(242,169,0,0.28);
+    }
+    .concept-point strong {
+      display: block;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.92;
+      margin-bottom: 4px;
+    }
+    .concept-point span {
+      display: block;
+      opacity: 0.82;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
 
-        /* ===== Reveal on scroll ===== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(14px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-        .reveal.in {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    /* ===== Reveal on scroll ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        /* ===== Form ===== */
-        input, textarea {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 12px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            border-radius: 10px;
-        }
+    /* ===== Form ===== */
+    input, textarea {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      border-radius: 10px;
+      font-family: inherit;
+      outline: none;
+    }
 
-        .btn {
-            width: 100%;
-            padding: 16px;
-            background: var(--accent);
-            border: none;
-            border-radius: 10px;
-            font-weight: 800;
-            cursor: pointer;
-            text-transform: uppercase;
-            color: #000;
-            transition: 0.25s;
-        }
+    .btn {
+      width: 100%;
+      padding: 16px;
+      background: var(--accent);
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      text-transform: uppercase;
+      color: #000;
+      transition: 0.25s;
+    }
 
-        .btn:hover {
-            background: #d99800;
-            transform: translateY(-2px);
-        }
+    .btn:hover {
+      background: #d99800;
+      transform: translateY(-2px);
+    }
 
-        footer {
-            background: rgba(10,15,25,0.9);
-            padding: 40px 10%;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.85rem;
-            color: #888;
-        }
+    footer {
+      background: rgba(10,15,25,0.9);
+      padding: 40px 10%;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.85rem;
+      color: #888;
+    }
 
-        /* ===== Responsive ===== */
-        @media (min-width: 980px) {
-            .concept-grid {
-                grid-template-columns: 1fr 1.35fr;
-                align-items: start;
-            }
-        }
+    /* ===== Responsive ===== */
+    @media (min-width: 980px) {
+      .concept-grid {
+        grid-template-columns: 1fr 1.35fr;
+        align-items: start;
+      }
+    }
 
-        @media (max-width: 900px) {
-            .logo-container { width: min(600px, 92vw); height: min(360px, 55vw); }
-        }
+    @media (max-width: 900px) {
+      .logo-container { width: min(600px, 92vw); height: min(360px, 55vw); }
+      section { padding: 135px 8% 110px; }
+    }
 
-        @media (max-width: 768px) {
-            header { padding: 16px 16px; }
-            header.scrolled { padding: 12px 16px; }
+    @media (max-width: 768px) {
+      header { padding: 16px 16px; }
+      header.scrolled { padding: 12px 16px; }
 
-            /* Burger appears, nav becomes dropdown */
-            .nav-toggle { display: inline-flex; }
+      /* Burger appears, nav becomes dropdown */
+      .nav-toggle { display: inline-flex; }
 
-            nav {
-                position: absolute;
-                top: calc(100% + 10px);
-                left: 16px;
-                right: 16px;
-                display: grid;
-                gap: 10px;
-                padding: 14px;
-                border-radius: 16px;
-                background: rgba(10, 15, 25, 0.9);
-                border: 1px solid rgba(255,255,255,0.10);
-                backdrop-filter: blur(16px);
-                box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+      nav {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 16px;
+        right: 16px;
+        display: grid;
+        gap: 10px;
+        padding: 14px;
+        border-radius: 16px;
+        background: rgba(10, 15, 25, 0.9);
+        border: 1px solid rgba(255,255,255,0.10);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.55);
 
-                opacity: 0;
-                transform: translateY(-8px);
-                pointer-events: none;
-                transition: 0.2s ease;
-            }
-            header.nav-open nav {
-                opacity: 1;
-                transform: translateY(0);
-                pointer-events: auto;
-            }
-            nav a {
-                padding: 12px 12px;
-                border-radius: 12px;
-                background: rgba(255,255,255,0.04);
-                border: 1px solid rgba(255,255,255,0.08);
-                opacity: 0.95;
-            }
-            nav a:hover {
-                background: rgba(242,169,0,0.10);
-                border-color: rgba(242,169,0,0.25);
-            }
-            .login-link {
-                text-align: center;
-                background: rgba(242,169,0,0.12);
-            }
-        }
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition: 0.2s ease;
+      }
+      header.nav-open nav {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+      nav a {
+        padding: 12px 12px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        opacity: 0.95;
+      }
+      nav a:hover {
+        background: rgba(242,169,0,0.10);
+        border-color: rgba(242,169,0,0.25);
+      }
+      .login-link {
+        text-align: center;
+        background: rgba(242,169,0,0.12);
+      }
 
-        @media (prefers-reduced-motion: reduce) {
-            * { scroll-behavior: auto !important; }
-            .scroll-indicator { animation: none; }
-            .reveal { opacity: 1; transform: none; transition: none; }
-        }
-    </style>
+      /* allow wrapping on very small screens */
+      .hero-claim { white-space: normal; letter-spacing: 1.2px; line-height: 1.35; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .scroll-indicator { animation: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-claim { transition: none; }
+    }
+  </style>
 </head>
 <body>
 
-<div class="bg"></div>
+  <div class="bg"></div>
 
-<header id="siteHeader">
+  <header id="siteHeader">
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
-            <path d="M4 7h16M4 12h16M4 17h16"/>
-        </svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
     </button>
 
     <nav id="siteNav">
-        <a href="#home">Home</a>
-        <a href="#concept">Concept</a>
-        <a href="#contact">Contact</a>
-        <a href="/login" class="login-link">Login</a>
+      <a href="#home">Home</a>
+      <a href="#concept">Concept</a>
+      <a href="#contact">Contact</a>
+      <a href="/login" class="login-link">Login</a>
     </nav>
-</header>
+  </header>
 
-<section id="home">
+  <section id="home">
     <div class="logo-container reveal">
-        <img src="logo.png" alt="Basys Analytics Logo">
+      <img src="logo.png" alt="Basys Analytics Logo" />
     </div>
 
-    <div class="hero-claim reveal">
-        From <span class="accent">Observation</span> to <span class="accent">Leadership</span><br>
-        in Digital Markets
-    </div>
-
-    <div class="hero-sub reveal">Observe · Learn · Lead</div>
-
-    <div class="oll-row reveal" aria-label="Observe Learn Lead">
-        <div class="oll-pill"><span>Observe</span> markets</div>
-        <div class="oll-pill"><span>Learn</span> structure</div>
-        <div class="oll-pill"><span>Lead</span> with insight</div>
+    <div class="hero-claim reveal" id="heroClaim">
+      From <span class="accent">Observation</span> to <span class="accent">Leadership</span> in Digital Markets
     </div>
 
     <a href="#concept" class="scroll-indicator reveal" aria-label="Scroll to concept">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-        </svg>
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
     </a>
-</section>
+  </section>
 
-<section id="concept">
+  <section id="concept">
     <div class="glass-card reveal">
-        <div class="concept-grid">
-            <div class="concept-left">
-                <h2>Concept</h2>
-                <div class="kicker">
-                    A structured framework for observing, interpreting, and classifying crypto and digital asset markets —
-                    built on a stable methodological foundation.
-                </div>
+      <div class="concept-grid">
+        <div class="concept-left">
+          <h2>Concept</h2>
+          <div class="kicker">
+            A structured framework for observing, interpreting, and classifying crypto and digital asset markets —
+            built on a stable methodological foundation.
+          </div>
 
-                <div class="concept-points">
-                    <div class="concept-point">
-                        <div class="concept-dot"></div>
-                        <div>
-                            <strong>Observe</strong>
-                            <span>Capture market behavior with discipline and consistency.</span>
-                        </div>
-                    </div>
-                    <div class="concept-point">
-                        <div class="concept-dot"></div>
-                        <div>
-                            <strong>Learn</strong>
-                            <span>Turn signals into understanding and orientation.</span>
-                        </div>
-                    </div>
-                    <div class="concept-point">
-                        <div class="concept-dot"></div>
-                        <div>
-                            <strong>Lead</strong>
-                            <span>Act responsibly — decisions guided by insight, not noise.</span>
-                        </div>
-                    </div>
-                </div>
+          <div class="concept-points">
+            <div class="concept-point">
+              <div class="concept-dot"></div>
+              <div>
+                <strong>Observe</strong>
+                <span>Capture market behavior with discipline and consistency.</span>
+              </div>
             </div>
-
-            <div class="concept-right">
-                <p>
-                    <span class="highlight">Analytics</span> is an analytical system designed for the structured observation,
-                    interpretation, and classification of crypto and digital asset markets. The name
-                    <span class="highlight">Basys</span> is derived from Base, Basis, and System — representing a stable,
-                    methodical foundation.
-                </p>
-
-                <p>
-                    The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
-                    understanding grows from observation, orientation emerges from understanding, and responsible leadership
-                    arises from orientation.
-                </p>
-
-                <p>
-                    <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
-                    <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
-                </p>
-
-                <div class="summary-box">
-                    <strong>In short:</strong> Basys Analytics combines a stable analytical foundation, a clear process of insight,
-                    and personal values for responsible decision-making in the digital economy.
-                </div>
+            <div class="concept-point">
+              <div class="concept-dot"></div>
+              <div>
+                <strong>Learn</strong>
+                <span>Turn signals into understanding and orientation.</span>
+              </div>
             </div>
+            <div class="concept-point">
+              <div class="concept-dot"></div>
+              <div>
+                <strong>Lead</strong>
+                <span>Act responsibly — decisions guided by insight, not noise.</span>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="concept-right">
+          <p>
+            <span class="highlight">BasysAnalytics</span> is an analytical system designed for the structured observation,
+            interpretation, and classification of crypto and digital asset markets. The name
+            <span class="highlight">Basys</span> is derived from Base, Basis, and System — representing a stable,
+            methodical foundation.
+          </p>
+
+          <p>
+            The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
+            understanding grows from observation, orientation emerges from understanding, and responsible leadership
+            arises from orientation.
+          </p>
+
+          <p>
+            <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
+            <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
+          </p>
+
+          <div class="summary-box">
+            <strong>In short:</strong> Basys Analytics combines a stable analytical foundation, a clear process of insight,
+            and personal values for responsible decision-making in the digital economy.
+          </div>
+        </div>
+      </div>
     </div>
 
     <a href="#contact" class="scroll-indicator reveal" aria-label="Scroll to contact">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-        </svg>
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
     </a>
-</section>
+  </section>
 
-<section id="contact">
+  <section id="contact">
     <div class="glass-card reveal" style="max-width:550px;">
-        <h2 style="color:var(--accent);margin-bottom:30px;text-align:center;letter-spacing:3px;text-transform:uppercase;">
-            Contact
-        </h2>
-        <form>
-            <input type="text" placeholder="Full Name" required>
-            <input type="email" placeholder="Email Address" required>
-            <textarea rows="5" placeholder="Your Message" required></textarea>
-            <button class="btn" type="submit">Send Message</button>
-        </form>
+      <h2 style="color:var(--accent);margin-bottom:30px;text-align:center;letter-spacing:3px;text-transform:uppercase;">
+        Contact
+      </h2>
+      <form>
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button class="btn" type="submit">Send Message</button>
+      </form>
     </div>
-</section>
+  </section>
 
-<footer>
-    <strong>Basys Analytics</strong><br>
-    Oliver &amp; Lion Leininger<br>
+  <footer>
+    <strong>Basys Analytics</strong><br />
+    Oliver &amp; Lion Leininger<br />
     <span style="opacity:.6;">© 2026 Basys Analytics</span>
-</footer>
+  </footer>
 
-<script>
-    // Header: solid/compact on scroll
+  <script>
+    // Header: solid/compact on scroll + claim hide on scroll
     const header = document.getElementById('siteHeader');
+    const heroClaim = document.getElementById('heroClaim');
+
     const onScroll = () => {
-        if (window.scrollY > 20) header.classList.add('scrolled');
-        else header.classList.remove('scrolled');
+      const y = window.scrollY || 0;
+      header.classList.toggle('scrolled', y > 20);
+
+      // claim disappears after a small scroll
+      if (heroClaim) heroClaim.classList.toggle('hidden', y > 120);
     };
+
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
@@ -539,38 +516,38 @@
     const nav = document.getElementById('siteNav');
 
     const closeNav = () => {
-        header.classList.remove('nav-open');
-        navToggle.setAttribute('aria-expanded', 'false');
+      header.classList.remove('nav-open');
+      navToggle.setAttribute('aria-expanded', 'false');
     };
 
     navToggle.addEventListener('click', () => {
-        const open = header.classList.toggle('nav-open');
-        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      const open = header.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
 
     // Close menu when clicking a link (mobile)
     nav.addEventListener('click', (e) => {
-        if (e.target.tagName.toLowerCase() === 'a') closeNav();
+      if (e.target.tagName.toLowerCase() === 'a') closeNav();
     });
 
     // Close menu on escape
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeNav();
+      if (e.key === 'Escape') closeNav();
     });
 
     // Reveal on scroll (IntersectionObserver)
     const revealEls = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in');
-                io.unobserve(entry.target);
-            }
-        });
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
     }, { threshold: 0.12 });
 
     revealEls.forEach(el => io.observe(el));
-</script>
+  </script>
 
 </body>
 </html>
