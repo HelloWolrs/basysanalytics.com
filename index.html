@@ -3,77 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basys Analytics | Observe · Learn · Lead</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Basys Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --accent: #f2a900;
-            --glass: rgba(10, 15, 25, 0.88);
-            --border: rgba(255, 255, 255, 0.12);
-        }
-
+        :root { --accent: #f2a900; --glass: rgba(10, 15, 25, 0.9); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body, html {
             height: 100%;
             font-family: 'Inter', sans-serif;
-            color: #ffffff;
+            color: #fff;
             background-color: #0b0d17;
             scroll-behavior: smooth;
-            line-height: 1.7;
-            overflow-x: hidden;
         }
 
         /* Hintergrund Setup */
         .bg-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
                         url('1000081562.jpg') no-repeat center top;
             background-size: cover;
         }
 
-        /* Navigation Header */
+        /* Navigation */
         header {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 25px 50px;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
             z-index: 1000;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-        }
-
-        nav {
             display: flex;
             align-items: center;
-            gap: 30px;
         }
 
+        nav { display: flex; align-items: center; gap: 25px; }
+        
         nav a {
             color: #fff;
             text-decoration: none;
-            font-size: 0.75rem;
+            font-size: 12px;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
-            opacity: 0.6;
-            transition: 0.3s;
+            opacity: 0.7;
         }
-
-        nav a:hover { opacity: 1; color: var(--accent); }
 
         .login-link {
             border: 1px solid var(--accent);
-            padding: 6px 15px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: 4px;
             color: var(--accent) !important;
             opacity: 1 !important;
         }
 
-        .login-link:hover {
-            background: var(--accent);
+        /* Sektionen */
+        section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 80px 10%;
+        }
+
+        #home { justify-content: flex-start; align-items: flex-end; padding-bottom: 10vh; }
+
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .hero-row { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+        .hero-row span { font-size: 3rem; font-weight: 700; }
+        .dot { color: var(--accent); }
+
+        .highlight { color: var(--accent); font-weight: 600; }
+        .summary-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-left: 4px solid var(--accent);
+            background: rgba(255,255,255,0.05);
+        }
+
+        input, textarea {
+            width: 100%; padding: 15px; margin-bottom: 10px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; border-radius: 8px; outline: none;
+        }
+
+        .btn {
+            width: 100%; padding: 15px; background: var(--accent);
+            border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .hero-row span { font-size: 1.8rem; }
+            nav { gap: 10px; }
+            nav a { font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container"></div>
+
+    <header>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#vision">Konzept</a>
+            <a href="#contact">Kontakt</a>
+            <a href="/login" class="login-link">Login</a>
+        </nav>
+    </header>
+
+    <section id="home">
+        <div class="glass-card" style="max-width: 700px;">
+            <p style="text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-size: 14px;">Basys Analytics</p>
+            <div class="hero-row">
+                <span>Observe</span><span class="dot">·</span>
+                <span>Learn</span><span class="dot">·</span>
+                <span style="color:var(--accent);">Lead</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="vision">
+        <div class="glass-card">
+            <h2 style="color: var(--accent); margin-bottom: 20px; text-transform: uppercase;">Das System</h2>
+            <p style="margin-bottom: 20px;">
+                <span class="highlight">Analytics</span> ist ein analytisches System zur strukturierten Beobachtung, Interpretation und Einordnung von Krypto und Digital Asset märkten. Der name <span class="highlight">Basys</span> leitet sich von Base, Basis und System ab und steht für ein stabiles, methodisches Fundament.
+            </p>
+            <p style="margin-bottom: 20px;">
+                Der Claim <span class="highlight">Observer Learn Lead</span> beschreibt den inneren Prozess: Aus Beobachtung entsteht Verständnis, aus Verständnis entsteht Orientierung und aus Orientierung entsteht verantwortungsvolle Führung.
+            </p>
+            <p>
+                <span class="highlight">OLL</span> steht für das konzeptionelle Leitmodell sowie für <span class="highlight">Oliver und Lion Leininger</span> als Verbindung individueller Motivation mit systematischer Analyse.
+            </p>
+            <div class="summary-box">
+                <strong>Zusammengefasst:</strong> Basys Analytics vereint ein stabiles Fundament, einen klaren Erkenntnisprozess und persönliche Werte für verantwortungsvolle Entscheidungen in der digitalen Ökonomie.
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="glass-card" style="max-width: 500px;">
+            <h2 style="color: var(--accent); margin-bottom: 20px;">KONTAKT</h2>
+            <form>
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="E-Mail" required>
+                <textarea rows="4" placeholder="Nachricht"></textarea>
+                <button type="submit" class="btn">SENDEN</button>
+            </form>
+        </div>
+    </section>
+
+</body>
+</html>
