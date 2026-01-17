@@ -25,7 +25,6 @@
       background:
         linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.72)),
         url('1000081562.jpg') no-repeat center center;
-      /* zoom OUT (shows more of the image) */
       background-size: 100% auto;
     }
     @media (max-width: 900px){
@@ -102,8 +101,6 @@
       color: var(--accent);
       opacity: 1;
     }
-
-    /* Keep login look even when "active" would apply */
     nav a.login-link.active::after { display: none; }
 
     /* Mobile nav toggle */
@@ -136,7 +133,7 @@
       justify-content: center;
       align-items: center;
       padding: 150px 10% 120px;
-      scroll-margin-top: 90px; /* fixes anchor positions under fixed header */
+      scroll-margin-top: 90px;
     }
 
     .glass-card {
@@ -209,7 +206,7 @@
       border-radius: 14px;
     }
 
-    /* ===== CONCEPT: structured box ===== */
+    /* ===== CONCEPT ===== */
     .concept-head h2{
       color: var(--accent);
       text-transform: uppercase;
@@ -256,7 +253,7 @@
       font-size: 0.98rem;
     }
 
-    /* ===== ANALYTICS BOX ===== */
+    /* ===== ANALYTICS ===== */
     .analytics-card p{
       font-size: 1.07rem;
       line-height: 1.75;
@@ -360,7 +357,7 @@
         border: 1px solid rgba(255,255,255,0.08);
         opacity: 0.95;
       }
-      nav a.active::after { display: none; } /* underline not needed inside dropdown */
+      nav a.active::after { display: none; }
       nav a.active { color: var(--accent); }
 
       nav a:hover {
@@ -392,10 +389,10 @@
     </button>
 
     <nav id="siteNav">
-      <a href="#home">Home</a>
-      <a href="#concept">Concept</a>
-      <a href="#analytics">Analytics</a>
-      <a href="#contact">Contact</a>
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#concept" data-nav="concept">Concept</a>
+      <a href="#analytics" data-nav="analytics">Analytics</a>
+      <a href="#contact" data-nav="contact">Contact</a>
       <a href="/login" class="login-link">Login</a>
     </nav>
   </header>
@@ -416,7 +413,6 @@
     </a>
   </section>
 
-  <!-- CONCEPT: box 1 -->
   <section id="concept" data-section="concept">
     <div class="glass-card reveal">
       <div class="concept-head">
@@ -458,7 +454,6 @@
     </a>
   </section>
 
-  <!-- ANALYTICS: box 2 -->
   <section id="analytics" data-section="analytics">
     <div class="glass-card reveal analytics-card">
       <h2 style="color:var(--accent);margin-bottom:14px;letter-spacing:3px;text-transform:uppercase;">Analytics</h2>
@@ -545,12 +540,10 @@
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
 
-    // Close menu when clicking a link (mobile)
     nav.addEventListener('click', (e) => {
       if (e.target.tagName.toLowerCase() === 'a') closeNav();
     });
 
-    // Close menu on escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeNav();
     });
@@ -567,35 +560,51 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => io.observe(el));
 
-    // Active nav item (scroll spy)
-    const sectionIds = ['home', 'concept', 'analytics', 'contact'];
-    const sectionEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
-    const navLinks = Array.from(document.querySelectorAll('#siteNav a[href^="#"]'))
-      .filter(a => a.getAttribute('href') !== '#');
+    // ===== Active nav item (ROBUST scroll spy) =====
+    const navLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
+    const sections = navLinks
+      .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+      .filter(Boolean);
 
     const setActive = (id) => {
       navLinks.forEach(a => {
-        const match = a.getAttribute('href') === '#' + id;
-        a.classList.toggle('active', match);
-        if (match) a.setAttribute('aria-current', 'page');
+        const isActive = a.getAttribute('data-nav') === id;
+        a.classList.toggle('active', isActive);
+        if (isActive) a.setAttribute('aria-current', 'page');
         else a.removeAttribute('aria-current');
       });
     };
 
-    const spy = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) setActive(entry.target.id);
-      });
-    }, {
-      root: null,
-      threshold: 0.35,
-      rootMargin: '-20% 0px -60% 0px'
-    });
+    const getHeaderOffset = () => {
+      const rect = header.getBoundingClientRect();
+      return rect.height + 18; // little breathing room
+    };
 
-    sectionEls.forEach(sec => spy.observe(sec));
+    let ticking = false;
+    const updateActiveFromScroll = () => {
+      ticking = false;
 
-    // fallback initial state
-    setActive('home');
+      const offset = getHeaderOffset();
+      const y = window.scrollY + offset;
+
+      // pick the last section whose top is above the "active line"
+      let currentId = sections[0]?.id || 'home';
+      for (const sec of sections) {
+        if (sec.offsetTop <= y) currentId = sec.id;
+      }
+      setActive(currentId);
+    };
+
+    const onScrollSpy = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateActiveFromScroll);
+    };
+
+    window.addEventListener('scroll', onScrollSpy, { passive: true });
+    window.addEventListener('resize', onScrollSpy);
+    window.addEventListener('load', onScrollSpy);
+    onScrollSpy(); // initial
   </script>
 </body>
 </html>
