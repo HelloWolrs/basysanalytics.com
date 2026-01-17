@@ -203,19 +203,6 @@ section{
   justify-content:flex-start;
 }
 
-/* grain */
-#home::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  opacity:.10;
-  mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
-  background-size:220px 220px;
-}
-#home > *{position:relative;z-index:1}
-
 /* twinkle */
 .twinkle{
   position:absolute;
@@ -245,71 +232,50 @@ section{
   min-height:calc(100svh - 92px - 18px);
 }
 
-/* ✅ NEW: True circle sizing based on vmin (never egg) */
+/* ✅ ONE SIZE, USED FOR BOTH width + height (no egg possible) */
 .hero-stage{
-  --stage: min(78vmin, 720px);
-  width: var(--stage);
-  height: var(--stage);
-  max-width: 92vw;   /* safety */
-  max-height: 58svh; /* safety */
+  --s: min(92vw, 58svh, 720px);
+  width: var(--s);
+  height: var(--s);
   position:relative;
+  flex:0 0 auto;
 }
 
-/* Keep square even if max-height limits it */
-@supports (height: 1svh){
-  .hero-stage{
-    --stage: min(78vmin, 58svh, 92vw, 720px);
-    width: var(--stage);
-    height: var(--stage);
-  }
-}
-
+/* rotation */
 @keyframes rotate-earth{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
 .globe-rotator{
   position:absolute;
   inset:0;
-
-  border-radius:50%;
-  overflow:hidden;
-
-  /* ✅ extra hard circle cut */
-  clip-path: circle(50% at 50% 50%);
-
   animation: rotate-earth 240s linear infinite;
   will-change:transform;
+  overflow:hidden;
 
+  /* ✅ SVG mask is extremely stable on Android */
+  -webkit-mask: url("#circleMask");
+  mask: url("#circleMask");
+}
+
+/* Terminator shading + atmosphere (inside the masked area) */
+.globe-rotator::before{
+  content:"";
+  position:absolute;
+  inset:0;
   background:
     radial-gradient(circle at 70% 50%,
       rgba(0,0,0,0) 45%,
       rgba(0,0,0,.30) 70%,
       rgba(0,0,0,.52) 100%);
-
-  -webkit-mask-image: radial-gradient(circle, #000 92%, transparent 100%);
-  mask-image: radial-gradient(circle, #000 92%, transparent 100%);
-}
-
-.globe-rotator::before{
-  content:"";
-  position:absolute;
-  inset:2%;
-  border-radius:50%;
-  background: radial-gradient(circle,
-    rgba(120,170,255,0.26) 0%,
-    rgba(120,170,255,0.12) 36%,
-    rgba(0,0,0,0.00) 70%);
-  filter: blur(12px);
-  opacity:0.65;
   pointer-events:none;
 }
 .globe-rotator::after{
   content:"";
   position:absolute;
   inset:4%;
-  border-radius:50%;
+  border-radius:9999px;
   box-shadow:
     0 0 18px rgba(120,170,255,.18),
-    0 0 40px rgba(120,170,255,.10);
+    0 0 44px rgba(120,170,255,.10);
   pointer-events:none;
   opacity:.9;
 }
@@ -319,7 +285,6 @@ section{
   height:118%;
   object-fit:cover;
   object-position:center;
-  border-radius:50%;
   filter:
     drop-shadow(0 26px 55px rgba(0,0,0,.35))
     contrast(0.92)
@@ -327,7 +292,7 @@ section{
     brightness(1.05);
 }
 
-/* ✅ Text over globe (bigger than claim) */
+/* Text over globe */
 .hero-text{
   position:absolute;
   inset:0;
@@ -346,12 +311,11 @@ section{
   font-weight:800;
   letter-spacing:.04em;
   text-shadow:0 14px 30px rgba(0,0,0,.6);
-  white-space:nowrap; /* Basys Analytics stays one line */
+  white-space:nowrap;
 }
 .brand .btc{color:var(--accent)}
 .brand .light{font-weight:700;opacity:.92}
 
-/* Claim smaller than brand, always one line */
 .brand-claim{
   font-size:clamp(1.10rem, 3.1vw, 1.55rem);
   letter-spacing:.14em;
@@ -371,7 +335,6 @@ section{
   box-shadow:0 0 12px rgba(255,255,255,.18);
 }
 
-/* Tagline wraps */
 .hero-claim{
   text-align:center;
   max-width:min(980px, 92vw);
@@ -550,6 +513,16 @@ footer{
 
 <body>
 
+<!-- ✅ SVG mask used by CSS above -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <mask id="circleMask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+      <rect width="1" height="1" fill="black"></rect>
+      <circle cx=".5" cy=".5" r=".5" fill="white"></circle>
+    </mask>
+  </defs>
+</svg>
+
 <header id="siteHeader">
   <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
@@ -577,7 +550,6 @@ footer{
   </nav>
 </header>
 
-<!-- HOME -->
 <section id="home" data-section="home">
   <div class="twinkle" aria-hidden="true"></div>
 
@@ -591,7 +563,6 @@ footer{
         <div class="brand">
           <span class="btc">₿</span>asys <span class="light">Analytics</span>
         </div>
-
         <div class="brand-claim" aria-label="Observe Learn Lead">
           <span><span class="accent-initial">O</span>bserve</span>
           <span class="dot" aria-hidden="true"></span>
