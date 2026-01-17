@@ -17,14 +17,15 @@
             scroll-behavior: smooth;
         }
 
-        /* Hintergrund Setup */
+        /* HINTERGRUND OPTIMIERT: Kein Abschneiden mehr */
         .bg-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), 
-                        url('1000081562.jpg') no-repeat center top;
+                        url('1000081562.jpg') no-repeat center center;
             background-size: cover;
+            background-attachment: fixed;
         }
 
         /* Navigation */
@@ -34,7 +35,7 @@
             padding: 25px 50px;
             z-index: 1000;
             display: flex;
-            justify-content: space-between; /* Links Menü, Rechts Login */
+            justify-content: space-between;
             align-items: center;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
         }
@@ -52,7 +53,6 @@
             transition: color 0.3s ease, opacity 0.3s ease;
         }
 
-        /* Hover Effekt mit Farbwechsel */
         nav a:hover { 
             opacity: 1; 
             color: var(--accent); 
@@ -79,10 +79,9 @@
             padding: 80px 10%;
         }
 
-        /* Hero Box Positionierung: Mittig und weit oben */
         #home { 
-            align-items: flex-start; /* Oben ausrichten */
-            padding-top: 15vh;        /* Abstand von oben */
+            align-items: flex-start;
+            padding-top: 15vh;
         }
 
         .glass-card {
@@ -96,17 +95,16 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* Spezielle Hero-Card */
         .hero-card {
             max-width: 850px;
-            text-align: center; /* Text zentriert */
+            text-align: center;
         }
 
         .hero-row { 
             display: flex; 
             gap: 15px; 
             align-items: center; 
-            justify-content: center; /* Mittig */
+            justify-content: center;
             flex-wrap: wrap; 
             margin-top: 10px; 
         }
@@ -124,9 +122,8 @@
             text-align: left;
         }
 
-        #vision, #contact { align-items: center; } /* Andere Sektionen bleiben mittig */
+        #vision, #contact { align-items: center; }
 
-        /* Formular */
         input, textarea {
             width: 100%; padding: 15px; margin-bottom: 12px;
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
@@ -178,16 +175,16 @@
         <div class="glass-card" style="max-width: 900px;">
             <h2 style="color: var(--accent); margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Das System</h2>
             <p style="margin-bottom: 20px; font-size: 1.05rem;">
-                <span class="highlight">Analytics</span> ist ein analytisches System zur strukturierten Beobachtung, Interpretation und Einordnung von Krypto- und Digital Asset märkten. Der name <span class="highlight">Basys</span> leitet sich von Base, Basis und System ab und steht für ein stabiles, methodisches Fundament, auf dem erkentnisse aufgebaut und entscheidungen entwickelt werden.
+                <span class="highlight">Analytics</span> ist ein analytisches System zur strukturierten Beobachtung, Interpretation und Einordnung von Krypto- und Digital Asset märkten. Der name <span class="highlight">Basys</span> leitet sich von Base, Basis und System ab und steht für ein stabiles, methodisches Fundament.
             </p>
             <p style="margin-bottom: 20px; font-size: 1.05rem;">
-                Der Claim <span class="highlight">Observer Learn Lead</span> beschreibt den inneren prozess diese systems: aus Beobachtung ensteht Verständniss, aus verständniss ensteht orientierung und aus orientierung entsteht verantwortungvolle führung.
+                Der Claim <span class="highlight">Observer Learn Lead</span> beschreibt den inneren Prozess: Aus Beobachtung entsteht Verständnis, aus Verständnis entsteht Orientierung und aus Orientierung entsteht verantwortungsvolle Führung.
             </p>
             <p style="font-size: 1.05rem;">
-                <span class="highlight">OLL</span> steht dabei für Observer Learn Lead als Konzeptionelles leitmodell als auch für <span class="highlight">Oliver und Lion Leininger</span> als Persönliche Referenz und verbindung individueller Motivation mit systematischer Analyse.
+                <span class="highlight">OLL</span> steht für das konzeptionelle Leitmodell sowie persönlich für <span class="highlight">Oliver und Lion Leininger</span> als Verbindung individueller Motivation mit systematischer Analyse.
             </p>
             <div class="summary-box">
-                <strong>Zusammengefasst:</strong> Basys Analytics vereint ein stabiles analytisches Fundament, einen klaren Erkenntnisprozess und persönliche Werte, um aus Daten Orientierung und verantwortungsvolle Entscheidungen in einer digitalen Ökonomie zu ermöglichen.
+                <strong>Zusammengefasst:</strong> Basys Analytics vereint ein stabiles analytisches Fundament, einen klaren Erkenntnisprozess und persönliche Werte für verantwortungsvolle Entscheidungen in der digitalen Ökonomie.
             </div>
         </div>
     </section>
@@ -196,10 +193,10 @@
         <div class="glass-card" style="max-width: 500px;">
             <h2 style="color: var(--accent); margin-bottom: 25px; text-align: center;">KONTAKT</h2>
             <form>
-                <input type="text" placeholder="Vollständiger Name" required>
-                <input type="email" placeholder="E-Mail Adresse" required>
-                <textarea rows="4" placeholder="Ihre Nachricht an uns..."></textarea>
-                <button type="submit" class="btn">NACHRICHT SENDEN</button>
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="E-Mail" required>
+                <textarea rows="4" placeholder="Nachricht"></textarea>
+                <button type="submit" class="btn">SENDEN</button>
             </form>
         </div>
     </section>
