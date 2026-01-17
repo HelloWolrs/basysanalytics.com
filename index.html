@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basys Analytics</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
         :root { --accent: #f2a900; --glass: rgba(10, 15, 25, 0.95); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,7 +22,7 @@
             inset: 0;
             z-index: -1;
             background:
-                linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
+                linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.7)),
                 url('1000081562.jpg') no-repeat center center;
             background-size: cover;
         }
@@ -36,7 +37,17 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            gap: 18px;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+            transition: padding 0.25s ease, background 0.25s ease, backdrop-filter 0.25s ease, border-color 0.25s ease;
+        }
+
+        /* Solid / compact header on scroll */
+        header.scrolled {
+            padding: 14px 50px;
+            background: rgba(10, 15, 25, 0.75);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         nav {
@@ -52,8 +63,8 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
-            opacity: 0.7;
-            transition: 0.3s;
+            opacity: 0.75;
+            transition: 0.25s;
         }
 
         nav a:hover {
@@ -64,10 +75,32 @@
         .login-link {
             border: 1px solid var(--accent);
             padding: 8px 18px;
-            border-radius: 6px;
+            border-radius: 8px;
             color: var(--accent);
             opacity: 1;
         }
+
+        /* Mobile nav toggle */
+        .nav-toggle {
+            display: none;
+            margin-left: auto;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+        .nav-toggle:hover {
+            background: rgba(255,255,255,0.10);
+            border-color: rgba(255,255,255,0.18);
+            transform: translateY(-1px);
+        }
+        .nav-toggle svg { display:block; }
 
         /* ============ SECTIONS ============ */
         section {
@@ -76,7 +109,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 100px 10%;
+            padding: 110px 10% 90px;
         }
 
         .glass-card {
@@ -85,8 +118,8 @@
             border-radius: 20px;
             padding: 45px;
             width: 100%;
-            max-width: 850px;
-            border: 1px solid rgba(255,255,255,0.1);
+            max-width: 950px;
+            border: 1px solid rgba(255,255,255,0.10);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
@@ -95,12 +128,12 @@
             height: 360px;
             border-radius: 50%;
             overflow: hidden;
-            border: 2px solid rgba(255,255,255,0.4);
+            border: 2px solid rgba(255,255,255,0.35);
             display: flex;
             justify-content: center;
             align-items: center;
-            background: var(--glass);
-            box-shadow: 0 0 30px rgba(242,169,0,0.2);
+            background: rgba(10, 15, 25, 0.55);
+            box-shadow: 0 0 30px rgba(242,169,0,0.18);
         }
 
         .logo-container img {
@@ -109,8 +142,54 @@
             object-fit: cover;
         }
 
+        /* ===== HERO TYPOGRAPHY ===== */
+        .hero-claim {
+            margin-top: 26px;
+            text-align: center;
+            max-width: 860px;
+            line-height: 1.18;
+            font-size: clamp(1.35rem, 2.2vw, 2.25rem);
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            text-shadow: 0 10px 35px rgba(0,0,0,0.55);
+        }
+        .hero-claim .accent {
+            color: var(--accent);
+        }
+        .hero-sub {
+            margin-top: 14px;
+            opacity: 0.78;
+            font-size: 0.98rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Observe · Learn · Lead row */
+        .oll-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 18px;
+        }
+        .oll-pill {
+            padding: 10px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(10px);
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+            opacity: 0.95;
+        }
+        .oll-pill span {
+            color: var(--accent);
+        }
+
         .scroll-indicator {
-            margin-top: 40px;
+            margin-top: 34px;
             animation: bounce 2s infinite;
             cursor: pointer;
         }
@@ -127,12 +206,87 @@
 
         .summary-box {
             margin-top: 25px;
-            padding: 25px;
+            padding: 22px 22px;
             border-left: 4px solid var(--accent);
             background: rgba(255,255,255,0.05);
-            line-height: 1.6;
+            line-height: 1.7;
+            border-radius: 14px;
         }
 
+        /* ===== CONCEPT: structured 2-column ===== */
+        .concept-grid {
+            display: grid;
+            gap: 26px;
+        }
+        .concept-left h2 {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        .concept-left .kicker {
+            margin-top: 8px;
+            opacity: 0.75;
+            line-height: 1.7;
+            font-size: 1.02rem;
+        }
+        .concept-right p {
+            font-size: 1.07rem;
+            line-height: 1.75;
+            margin-bottom: 18px;
+        }
+        .concept-right p:last-child { margin-bottom: 0; }
+
+        .concept-points {
+            margin-top: 18px;
+            display: grid;
+            gap: 10px;
+        }
+        .concept-point {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 14px 14px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .concept-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            margin-top: 6px;
+            flex: 0 0 auto;
+            box-shadow: 0 0 18px rgba(242,169,0,0.28);
+        }
+        .concept-point strong {
+            display: block;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+        .concept-point span {
+            display: block;
+            opacity: 0.82;
+            line-height: 1.6;
+            font-size: 0.98rem;
+        }
+
+        /* ===== Reveal on scroll ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== Form ===== */
         input, textarea {
             width: 100%;
             padding: 15px;
@@ -140,7 +294,7 @@
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             color: #fff;
-            border-radius: 8px;
+            border-radius: 10px;
         }
 
         .btn {
@@ -148,11 +302,12 @@
             padding: 16px;
             background: var(--accent);
             border: none;
-            border-radius: 8px;
-            font-weight: 700;
+            border-radius: 10px;
+            font-weight: 800;
             cursor: pointer;
             text-transform: uppercase;
             color: #000;
+            transition: 0.25s;
         }
 
         .btn:hover {
@@ -169,9 +324,70 @@
             color: #888;
         }
 
+        /* ===== Responsive ===== */
+        @media (min-width: 980px) {
+            .concept-grid {
+                grid-template-columns: 1fr 1.35fr;
+                align-items: start;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .logo-container { width: min(600px, 92vw); height: min(360px, 55vw); }
+        }
+
         @media (max-width: 768px) {
-            header { padding: 18px 20px; }
-            nav { gap: 15px; }
+            header { padding: 16px 16px; }
+            header.scrolled { padding: 12px 16px; }
+
+            /* Burger appears, nav becomes dropdown */
+            .nav-toggle { display: inline-flex; }
+
+            nav {
+                position: absolute;
+                top: calc(100% + 10px);
+                left: 16px;
+                right: 16px;
+                display: grid;
+                gap: 10px;
+                padding: 14px;
+                border-radius: 16px;
+                background: rgba(10, 15, 25, 0.9);
+                border: 1px solid rgba(255,255,255,0.10);
+                backdrop-filter: blur(16px);
+                box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+
+                opacity: 0;
+                transform: translateY(-8px);
+                pointer-events: none;
+                transition: 0.2s ease;
+            }
+            header.nav-open nav {
+                opacity: 1;
+                transform: translateY(0);
+                pointer-events: auto;
+            }
+            nav a {
+                padding: 12px 12px;
+                border-radius: 12px;
+                background: rgba(255,255,255,0.04);
+                border: 1px solid rgba(255,255,255,0.08);
+                opacity: 0.95;
+            }
+            nav a:hover {
+                background: rgba(242,169,0,0.10);
+                border-color: rgba(242,169,0,0.25);
+            }
+            .login-link {
+                text-align: center;
+                background: rgba(242,169,0,0.12);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { scroll-behavior: auto !important; }
+            .scroll-indicator { animation: none; }
+            .reveal { opacity: 1; transform: none; transition: none; }
         }
     </style>
 </head>
@@ -179,8 +395,14 @@
 
 <div class="bg"></div>
 
-<header>
-    <nav>
+<header id="siteHeader">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+    </button>
+
+    <nav id="siteNav">
         <a href="#home">Home</a>
         <a href="#concept">Concept</a>
         <a href="#contact">Contact</a>
@@ -189,15 +411,24 @@
 </header>
 
 <section id="home">
-    <div class="logo-container">
+    <div class="logo-container reveal">
         <img src="logo.png" alt="Basys Analytics Logo">
     </div>
 
-    <p style="margin-top:30px;opacity:.8;font-size:1.2rem;letter-spacing:1px;text-align:center;">
-        From Observation to Leadership in Digital Markets
-    </p>
+    <div class="hero-claim reveal">
+        From <span class="accent">Observation</span> to <span class="accent">Leadership</span><br>
+        in Digital Markets
+    </div>
 
-    <a href="#concept" class="scroll-indicator">
+    <div class="hero-sub reveal">Observe · Learn · Lead</div>
+
+    <div class="oll-row reveal" aria-label="Observe Learn Lead">
+        <div class="oll-pill"><span>Observe</span> markets</div>
+        <div class="oll-pill"><span>Learn</span> structure</div>
+        <div class="oll-pill"><span>Lead</span> with insight</div>
+    </div>
+
+    <a href="#concept" class="scroll-indicator reveal" aria-label="Scroll to concept">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
             <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
         </svg>
@@ -205,37 +436,68 @@
 </section>
 
 <section id="concept">
-    <div class="glass-card">
-        <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
-            Concept
-        </h2>
+    <div class="glass-card reveal">
+        <div class="concept-grid">
+            <div class="concept-left">
+                <h2>Concept</h2>
+                <div class="kicker">
+                    A structured framework for observing, interpreting, and classifying crypto and digital asset markets —
+                    built on a stable methodological foundation.
+                </div>
 
-        <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
-            <span class="highlight">BasysAnalytics</span> is an analytical system designed for the structured observation,
-            interpretation, and classification of crypto and digital asset markets.
-            The name <span class="highlight">Basys</span> is derived from Base, Basis, and System,
-            representing a stable, methodical foundation.
-        </p>
+                <div class="concept-points">
+                    <div class="concept-point">
+                        <div class="concept-dot"></div>
+                        <div>
+                            <strong>Observe</strong>
+                            <span>Capture market behavior with discipline and consistency.</span>
+                        </div>
+                    </div>
+                    <div class="concept-point">
+                        <div class="concept-dot"></div>
+                        <div>
+                            <strong>Learn</strong>
+                            <span>Turn signals into understanding and orientation.</span>
+                        </div>
+                    </div>
+                    <div class="concept-point">
+                        <div class="concept-dot"></div>
+                        <div>
+                            <strong>Lead</strong>
+                            <span>Act responsibly — decisions guided by insight, not noise.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
-            The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
-            Understanding grows from observation, orientation emerges from understanding,
-            and responsible leadership arises from orientation.
-        </p>
+            <div class="concept-right">
+                <p>
+                    <span class="highlight">Analytics</span> is an analytical system designed for the structured observation,
+                    interpretation, and classification of crypto and digital asset markets. The name
+                    <span class="highlight">Basys</span> is derived from Base, Basis, and System — representing a stable,
+                    methodical foundation.
+                </p>
 
-        <p style="font-size: 1.1rem; line-height: 1.7;">
-            <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
-            <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
-        </p>
+                <p>
+                    The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
+                    understanding grows from observation, orientation emerges from understanding, and responsible leadership
+                    arises from orientation.
+                </p>
 
-        <div class="summary-box">
-            <strong>In short:</strong> Basys Analytics combines a stable analytical foundation,
-            a clear process of insight, and personal values for responsible decision-making
-            in the digital economy.
+                <p>
+                    <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
+                    <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
+                </p>
+
+                <div class="summary-box">
+                    <strong>In short:</strong> Basys Analytics combines a stable analytical foundation, a clear process of insight,
+                    and personal values for responsible decision-making in the digital economy.
+                </div>
+            </div>
         </div>
     </div>
 
-    <a href="#contact" class="scroll-indicator">
+    <a href="#contact" class="scroll-indicator reveal" aria-label="Scroll to contact">
         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
             <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
         </svg>
@@ -243,24 +505,72 @@
 </section>
 
 <section id="contact">
-    <div class="glass-card" style="max-width:550px;">
-        <h2 style="color:var(--accent);margin-bottom:30px;text-align:center;letter-spacing:3px;">
-            CONTACT
+    <div class="glass-card reveal" style="max-width:550px;">
+        <h2 style="color:var(--accent);margin-bottom:30px;text-align:center;letter-spacing:3px;text-transform:uppercase;">
+            Contact
         </h2>
         <form>
             <input type="text" placeholder="Full Name" required>
             <input type="email" placeholder="Email Address" required>
             <textarea rows="5" placeholder="Your Message" required></textarea>
-            <button class="btn">Send Message</button>
+            <button class="btn" type="submit">Send Message</button>
         </form>
     </div>
 </section>
 
 <footer>
     <strong>Basys Analytics</strong><br>
-    Oliver & Lion Leininger<br>
+    Oliver &amp; Lion Leininger<br>
     <span style="opacity:.6;">© 2026 Basys Analytics</span>
 </footer>
+
+<script>
+    // Header: solid/compact on scroll
+    const header = document.getElementById('siteHeader');
+    const onScroll = () => {
+        if (window.scrollY > 20) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Mobile burger menu
+    const navToggle = document.getElementById('navToggle');
+    const nav = document.getElementById('siteNav');
+
+    const closeNav = () => {
+        header.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+    };
+
+    navToggle.addEventListener('click', () => {
+        const open = header.classList.toggle('nav-open');
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // Close menu when clicking a link (mobile)
+    nav.addEventListener('click', (e) => {
+        if (e.target.tagName.toLowerCase() === 'a') closeNav();
+    });
+
+    // Close menu on escape
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeNav();
+    });
+
+    // Reveal on scroll (IntersectionObserver)
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in');
+                io.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach(el => io.observe(el));
+</script>
 
 </body>
 </html>
