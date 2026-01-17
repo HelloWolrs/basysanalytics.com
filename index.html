@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basys Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root { --accent: #f2a900; --glass: rgba(10, 15, 25, 0.95); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,21 +16,41 @@
             background-size: cover; 
         }
 
-        /* LOGO DESIGN IM HEADER */
+        /* HEADER LAYOUT: LINKS LINKS, LOGO MITTE */
         header { 
-            position: fixed; top: 0; width: 100%; padding: 25px 50px; z-index: 1000; 
-            display: flex; justify-content: space-between; align-items: center; 
+            position: fixed; top: 0; width: 100%; padding: 20px 50px; z-index: 1000; 
+            display: grid; 
+            grid-template-columns: 1fr auto 1fr; /* Drei Spalten für perfekte Zentrierung */
+            align-items: center; 
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); 
         }
-        .logo-text { 
-            font-size: 24px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; 
-            color: #fff; text-decoration: none; display: flex; align-items: center; 
-        }
-        .logo-text .a-part { 
-            background: linear-gradient(45deg, #f2a900, #ffcc00);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-left: 4px;
-        }
+        
+        /* NAVIGATION LINKS (LINKS) */
+        .nav-links { display: flex; gap: 25px; justify-content: flex-start; }
+        nav a { color: #fff; text-decoration: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: 700; opacity: 0.7; transition: 0.3s; }
+        nav a:hover { opacity: 1; color: var(--accent); }
 
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        nav a { color: #fff; text-decoration: none; font-size: 1
+        /* LOGO (MITTE) */
+        .logo-box {
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+        }
+        .logo-text { 
+            font-size: 28px; 
+            font-weight: 800; 
+            letter-spacing: -0.5px;
+            color: #fff;
+            display: flex;
+            align-items: baseline;
+        }
+        .logo-text span { color: var(--accent); text-shadow: 0 0 15px rgba(242, 169, 0, 0.3); }
+        .logo-text .small { font-size: 20px; font-weight: 600; text-transform: lowercase; }
+
+        /* LOGIN BUTTON (RECHTS) */
+        .header-right { display: flex; justify-content: flex-end; }
+        .login-link { border: 1px solid var(--accent); padding: 8px 18px; border-radius: 6px; color: var(--accent)!important; font-size: 11px; text-transform: uppercase; font-weight: 700; text-decoration: none; transition: 0.3s; }
+        .login-link:hover { background: var(--accent); color: #000!important; }
+
+        /* SECTIONS */
+        section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 10%; }
