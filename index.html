@@ -3,115 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mein GitHub Projekt</title>
+    <title>Basys Analytics | Observe · Learn · Lead</title>
     <style>
-        /* Grundlegendes Design */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        /* Grunddesign & Farben */
+        :root {
+            --orange: #f7931a;
+            --dark-bg: #050a12;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-gray: #bdc3c7;
+        }
+
+        body, html {
             margin: 0;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f4f4f4;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            scroll-behavior: smooth;
         }
 
-        /* Header & Navigation */
+        /* Logo oben links */
+        .top-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+        }
+        .top-logo img {
+            height: 80px; /* Größe des Logos oben links */
+            border-radius: 50%;
+            border: 2px solid var(--orange);
+            box-shadow: 0 0 15px rgba(247, 147, 26, 0.3);
+        }
+
+        /* Hero Bereich */
         header {
-            background-color: #24292e; /* GitHub Dunkelgrau */
-            color: #ffffff;
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        nav {
+            height: 100vh;
+            background: linear-gradient(rgba(5, 10, 18, 0.6), rgba(5, 10, 18, 0.8)), 
+                        url('background.jpg'); 
+            background-size: cover;
+            background-position: center;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            max-width: 1000px;
-            margin: 0 auto;
+            text-align: center;
             padding: 0 20px;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            margin: 0;
-            padding: 0;
-        }
-
-        .nav-links li {
-            margin-left: 20px;
-        }
-
-        .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: #007bff; /* Blau beim Drüberfahren */
-        }
-
-        /* Hauptinhalt */
-        .container {
-            max-width: 1000px;
-            margin: 50px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
         h1 {
-            color: #24292e;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin: 0;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .orange { color: var(--orange); }
+
+        .claim {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            letter-spacing: 8px;
+            margin-top: 15px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+
+        /* Layout Container */
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 100px 20px;
+        }
+
+        h2 {
+            color: var(--orange);
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* OLL Prozess Cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-bottom: 4px solid var(--orange);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .card h3 {
+            color: var(--orange);
+            font-size: 1.8rem;
+            margin-top: 0;
+        }
+
+        /* Kontaktformular */
+        .contact-box {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        .contact-box input, .contact-box textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #333;
+            color: white;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            background: var(--orange);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #e08215;
         }
 
         footer {
             text-align: center;
-            padding: 2rem;
-            font-size: 0.8rem;
-            color: #777;
+            padding: 60px 20px;
+            font-size: 0.9rem;
+            color: #555;
+            border-top: 1px solid #111;
         }
+
     </style>
 </head>
 <body>
 
+    <div class="top-logo">
+        <img src="logo.jpg" alt="Basys Analytics Logo">
+    </div>
+
     <header>
-        <nav>
-            <div class="logo">Meine Website</div>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="#projekte">Projekte</a></li>
-                <li><a href="#ueber-mich">Über mich</a></li>
-                <li><a href="#kontakt">Kontakt</a></li>
-            </ul>
-        </nav>
+        <h1><span class="orange">B</span>asys Analytics</h1>
+        <div class="claim">Observe · Learn · Lead</div>
     </header>
 
-    <main class="container">
-        <section id="home">
-            <h1>Willkommen auf meiner neuen GitHub Page!</h1>
-            <p>Dies ist der komplette Code inklusive eines responsiven Headers. Du kannst diesen Text einfach löschen und deinen eigenen Inhalt hinzufügen.</p>
-        </section>
+    <div class="container">
+        <h2>Unser Analyse-System</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Observe</h3>
+                <p>Wir nutzen fortschrittliche Analyse-Tools zur strukturierten Beobachtung der globalen Digital-Asset-Märkte. Wir trennen das Rauschen von den echten Signalen.</p>
+            </div>
+            <div class="card">
+                <h3>Learn</h3>
+                <p>Daten allein sind wertlos. Wir interpretieren Marktbewegungen und technologische Entwicklungen, um tiefes Verständnis und echte Orientierung zu schaffen.</p>
+            </div>
+            <div class="card">
+                <h3>Lead</h3>
+                <p>Verantwortungsvolles Handeln erfordert Wissen. Wir unterstützen Sie dabei, aus Erkenntnissen klare Strategien und souveräne Entscheidungen zu entwickeln.</p>
+            </div>
+        </div>
+    </div>
 
-        <section id="projekte" style="margin-top: 40px;">
-            <h2>Meine Projekte</h2>
-            <p>Hier wird bald eine Liste meiner Arbeiten erscheinen.</p>
-        </section>
-    </main>
+    <div style="background: #0a111e;">
+        <div class="container">
+            <h2>Persönliche Expertise</h2>
+            <p style="text-align: center; font-size: 1.2rem; line-height: 1.8;">
+                Hinter <strong>Basys Analytics</strong> stehen Oliver und Lion Leininger. <br>
+                Wir verbinden ein stabiles methodisches Fundament mit persönlichen Werten, um in der digitalen Ökonomie Orientierung zu geben.
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Kontaktieren Sie uns</h2>
+        <div class="contact-box">
+            <form action="#">
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="E-Mail" required>
+                <textarea rows="5" placeholder="Ihre Nachricht"></textarea>
+                <button type="submit" class="submit-btn">Nachricht senden</button>
+            </form>
+        </div>
+    </div>
 
     <footer>
-        &copy; 2026 Erstellt mit GitHub Pages
+        &copy; 2026 Basys Analytics | Oliver & Lion Leininger | basysanalytics.com<br>
+        Strukturiert. Methodisch. Führend.
     </footer>
 
 </body>
