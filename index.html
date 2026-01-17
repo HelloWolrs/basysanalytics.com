@@ -9,9 +9,10 @@
 
 <style>
 :root{
-  --accent:#f2a900;
+  /* ✅ klares Bitcoin Orange */
+  --accent:#F7931A;
 
-  /* ✅ noch transparenter */
+  /* ✅ sehr transparent */
   --glass: rgba(10,15,25,.14);
 }
 
@@ -22,6 +23,11 @@ html,body{
   font-family:"Inter",sans-serif;
   color:#fff;
   scroll-behavior:smooth;
+}
+
+/* ✅ Anchor Sprünge berücksichtigen fixed Header */
+html{
+  scroll-padding-top: 120px;
 }
 
 /* ===== Global City Background ===== */
@@ -97,7 +103,7 @@ nav a:hover, .nav-group-toggle:hover{
   color:var(--accent);
 }
 
-/* Active = accent orange like ₿ */
+/* Active = accent orange */
 nav a.active{
   opacity:1;
   color:var(--accent);
@@ -110,7 +116,7 @@ nav a.active::after{
   height:2px;
   background:var(--accent);
   border-radius:999px;
-  box-shadow:0 0 18px rgba(242,169,0,.25);
+  box-shadow:0 0 18px rgba(247,147,26,.25);
 }
 
 /* Login style */
@@ -153,7 +159,7 @@ nav a.login-link.active::after{ display:none; }
   height:2px;
   background:var(--accent);
   border-radius:999px;
-  box-shadow:0 0 18px rgba(242,169,0,.25);
+  box-shadow:0 0 18px rgba(247,147,26,.25);
 }
 
 .nav-group-menu{
@@ -190,14 +196,14 @@ nav a.login-link.active::after{ display:none; }
 }
 
 .nav-group-menu a:hover{
-  background:rgba(242,169,0,.10);
-  border-color:rgba(242,169,0,.25);
+  background:rgba(247,147,26,.10);
+  border-color:rgba(247,147,26,.25);
   color:#fff;
 }
 
 .nav-group-menu a.active{
-  background:rgba(242,169,0,.12);
-  border-color:rgba(242,169,0,.45);
+  background:rgba(247,147,26,.12);
+  border-color:rgba(247,147,26,.45);
   color:var(--accent);
 }
 .nav-group-menu a.active::after{ display:none; }
@@ -213,21 +219,19 @@ section{
   scroll-margin-top:90px;
 }
 
-/* ✅ ENGER ab Analytics bis Contact (gilt für alle außer Home) */
+/* ✅ Beim Klick soll die Section so hoch wie möglich sitzen,
+      aber der Pfeil unten im Viewport sichtbar bleiben */
 section:not(#home){
   justify-content:flex-start;
-  min-height:86vh;
-  padding-top:112px;
-  padding-bottom:60px;
+  min-height:100vh;     /* wichtig: = Viewporthöhe */
+  padding-top:92px;     /* hoch, ohne unter Header zu rutschen */
+  padding-bottom:26px;  /* wenig Luft unten */
 }
 
-/* ✅ Contact: Box + Pfeil höher */
+/* ✅ Contact: Box + Pfeil höher (wie von dir gewünscht) */
 #contact{
-  padding-top: 92px;
-  padding-bottom: 50px;
-}
-#contact .scroll-indicator{
-  margin-top: 14px;
+  padding-top: 92px;     /* bewusst identisch – kann bleiben */
+  padding-bottom: 26px;
 }
 
 /* ===== HERO overrides global bg ===== */
@@ -270,7 +274,7 @@ section:not(#home){
   to{ transform:translate3d(10px,-14px,0); }
 }
 
-/* Hero stage (✅ 10% smaller globe) */
+/* Hero stage (10% smaller globe already integrated) */
 .hero-stage{
   position:relative;
   width:min(504px, 90vw);
@@ -360,7 +364,7 @@ section:not(#home){
   pointer-events:none;
 }
 
-/* ✅ Brand skaliert + letter-spacing feiner */
+/* Brand */
 .brand{
   font-size:clamp(2.2rem, 4.6vw, 3.1rem);
   font-weight:800;
@@ -371,7 +375,7 @@ section:not(#home){
   gap:0;
 }
 
-/* ✅ ₿ minimal größer als asys */
+/* ₿ slightly bigger */
 .brand .btc{
   color:var(--accent);
   font-size:1.18em;
@@ -444,9 +448,12 @@ section:not(#home){
   40%{ transform:translateY(-10px); }
 }
 
-/* ✅ Pfeil näher an die Box (ab Analytics bis Contact) */
+/* ✅ Pfeil IMMER unten sichtbar bei Sprung/Scroll (außer Home) */
 section:not(#home) .scroll-indicator{
-  margin-top:18px;
+  margin-top:auto;        /* schiebt ihn nach unten */
+  padding-top:18px;
+  position: sticky;
+  bottom: 18px;
 }
 
 /* ===================== CARDS ===================== */
@@ -468,7 +475,6 @@ section:not(#home) .scroll-indicator{
     transform .35s ease;
 }
 
-/* ✅ Hover: noch transparenter */
 .glass-card:hover{
   background-color: rgba(10,15,25,.07);
   backdrop-filter: blur(28px);
@@ -515,7 +521,6 @@ section:not(#home) .scroll-indicator{
   padding:14px 16px;
   border-radius:14px;
 
-  /* ✅ transparenter */
   background-color: rgba(10,15,25,.08);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -535,8 +540,8 @@ section:not(#home) .scroll-indicator{
   flex:0 0 auto;
   padding:10px 14px;
   border-radius:10px;
-  border:1px solid rgba(242,169,0,.35);
-  background:rgba(242,169,0,.12);
+  border:1px solid rgba(247,147,26,.35);
+  background:rgba(247,147,26,.12);
   color:#fff;
   cursor:pointer;
   font-weight:800;
@@ -548,8 +553,8 @@ section:not(#home) .scroll-indicator{
 
 .copy-btn:hover{
   transform:translateY(-1px);
-  background:rgba(242,169,0,.18);
-  border-color:rgba(242,169,0,.55);
+  background:rgba(247,147,26,.18);
+  border-color:rgba(247,147,26,.55);
 }
 
 .fund-note{
@@ -588,7 +593,7 @@ input, textarea{
   color:#000;
   transition:.25s;
 }
-.btn:hover{ background:#d99800; transform:translateY(-2px); }
+.btn:hover{ background:#E07F00; transform:translateY(-2px); }
 
 /* Footer */
 footer{
@@ -604,7 +609,7 @@ footer{
 .footer-meta{ margin-top:10px; opacity:.85; }
 .footer-tagline{
   margin-top:6px;
-  color:rgba(242,169,0,.92);
+  color:rgba(247,147,26,.92);
   letter-spacing:1px;
   text-transform:uppercase;
   font-weight:800;
@@ -678,18 +683,22 @@ footer{
 
   .wallet-box{ flex-direction:column; align-items:stretch; }
   .copy-btn{ width:100%; }
+
+  /* sticky bottom bei sehr kleinen Displays etwas sanfter */
+  section:not(#home) .scroll-indicator{
+    bottom: 12px;
+  }
 }
 
 @media (max-width: 900px){
   section{ padding:125px 8% 110px; }
   section:not(#home){
-    min-height:84vh;
-    padding-top:105px;
-    padding-bottom:55px;
+    padding-top:88px;
+    padding-bottom:22px;
   }
   #contact{
     padding-top: 88px;
-    padding-bottom: 46px;
+    padding-bottom: 22px;
   }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
@@ -707,7 +716,6 @@ footer{
 .hero-stage{ margin-top: -20px; }
 .hero-claim{ margin-top: 14px; }
 #home .scroll-indicator{ margin-top: 30px; }
-
 </style>
 </head>
 
