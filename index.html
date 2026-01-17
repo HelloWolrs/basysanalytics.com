@@ -200,7 +200,6 @@ section{
   min-height:100svh;
   padding-top:calc(92px + env(safe-area-inset-top));
   padding-bottom:calc(18px + env(safe-area-inset-bottom));
-
   justify-content:flex-start;
 }
 
@@ -234,7 +233,6 @@ section{
   to{transform:translate3d(10px,-14px,0)}
 }
 
-/* HERO LAYOUT (overlay text + always fits) */
 .hero-wrap{
   width:100%;
   max-width:1000px;
@@ -243,31 +241,34 @@ section{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:16px;
+  gap:14px;
   min-height:calc(100svh - 92px - 18px);
 }
 
-/* Stage: ALWAYS SQUARE -> no egg */
+/* ✅ HARD CIRCLE: width & height always identical */
 .hero-stage{
   position:relative;
-  width:clamp(280px, 58vw, 640px);   /* ~30% bigger */
-  aspect-ratio:1/1;
-  flex:0 0 auto;
-  display:grid;
-  place-items:center;
-
-  /* hard safety so it never clips on short screens */
+  width:clamp(300px, 62vw, 680px);
+  height:clamp(300px, 62vw, 680px);
   max-width:92vw;
   max-height:52svh;
+  flex:0 0 auto;
 }
 
-/* rotation */
+/* Keep square even when height is constrained */
+@supports (height: 1svh){
+  .hero-stage{
+    width:min(clamp(300px, 62vw, 680px), 52svh, 92vw);
+    height:min(clamp(300px, 62vw, 680px), 52svh, 92vw);
+  }
+}
+
 @keyframes rotate-earth{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
 .globe-rotator{
   position:absolute;
   inset:0;
-  border-radius:50%;
+  border-radius:9999px;
   overflow:hidden;
   animation: rotate-earth 240s linear infinite;
   will-change:transform;
@@ -286,7 +287,7 @@ section{
   content:"";
   position:absolute;
   inset:2%;
-  border-radius:50%;
+  border-radius:9999px;
   background: radial-gradient(circle,
     rgba(120,170,255,0.26) 0%,
     rgba(120,170,255,0.12) 36%,
@@ -299,7 +300,7 @@ section{
   content:"";
   position:absolute;
   inset:4%;
-  border-radius:50%;
+  border-radius:9999px;
   box-shadow:
     0 0 18px rgba(120,170,255,.18),
     0 0 40px rgba(120,170,255,.10);
@@ -312,7 +313,7 @@ section{
   height:112%;
   object-fit:cover;
   object-position:center;
-  border-radius:50%;
+  border-radius:9999px;
   filter:
     drop-shadow(0 26px 55px rgba(0,0,0,.35))
     contrast(0.92)
@@ -320,7 +321,7 @@ section{
     brightness(1.05);
 }
 
-/* TEXT OVER THE GLOBE (always) */
+/* ✅ Text over globe */
 .hero-text{
   position:absolute;
   inset:0;
@@ -331,10 +332,9 @@ section{
   text-align:center;
   gap:10px;
   pointer-events:none;
-  padding:10%;
+  padding:12%;
 }
 
-/* brand ~30% bigger */
 .brand{
   font-size:clamp(2.6rem, 7.2vw, 4.7rem);
   font-weight:800;
@@ -344,6 +344,7 @@ section{
 .brand .btc{color:var(--accent)}
 .brand .light{font-weight:700;opacity:.92}
 
+/* ✅ Claim always one line */
 .brand-claim{
   font-size:clamp(1.05rem, 3.2vw, 1.55rem);
   letter-spacing:.14em;
@@ -352,7 +353,7 @@ section{
   display:flex;
   align-items:center;
   justify-content:center;
-  flex-wrap:wrap;
+  white-space:nowrap;
 }
 .brand-claim > span{color:#fff;font-weight:600}
 .accent-initial{color:var(--accent);font-weight:900}
@@ -363,15 +364,16 @@ section{
   box-shadow:0 0 12px rgba(255,255,255,.18);
 }
 
-/* tagline under stage, always visible */
+/* ✅ Tagline wraps naturally */
 .hero-claim{
   text-align:center;
-  max-width:980px;
+  max-width:min(980px, 92vw);
   font-size:clamp(.95rem, 2.2vw, 1.10rem);
   letter-spacing:1.2px;
   opacity:.92;
   text-shadow:0 10px 30px rgba(0,0,0,.38);
   line-height:1.35;
+  white-space:normal;
 }
 .hero-claim span{color:var(--accent)}
 
@@ -537,10 +539,13 @@ footer{
   .copy-btn{width:100%}
 }
 
-/* tighten on small screens without changing circle */
+/* small tweaks */
 @media (max-width: 480px){
   section{padding:130px 8% 100px}
-  .hero-stage{max-height:48svh}
+  .hero-stage{
+    width:min(78vw, 50svh);
+    height:min(78vw, 50svh);
+  }
   .dot{margin:0 14px}
 }
 </style>
@@ -585,8 +590,7 @@ footer{
         <img src="hero-globe.png" alt="Earth">
       </div>
 
-      <!-- TEXT ALWAYS ON TOP OF GLOBE -->
-      <div class="hero-text" aria-label="Basys Analytics">
+      <div class="hero-text">
         <div class="brand">
           <span class="btc">₿</span>asys <span class="light">Analytics</span>
         </div>
@@ -617,7 +621,6 @@ footer{
 <section id="basys" data-section="basys">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); text-transform:uppercase; letter-spacing:3px; margin-bottom:10px;">Basys</h2>
-
     <p style="margin-top:6px; opacity:.90; line-height:1.7; font-size:1.02rem;">
       A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
     </p>
