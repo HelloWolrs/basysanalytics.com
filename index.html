@@ -17,60 +17,58 @@
       scroll-behavior: smooth;
     }
 
-    /* ============ BACKGROUND (WORLD DRIFT + PARALLAX LAYER) ============ */
+    /* ============ BACKGROUND (ROBUST: WORLD DRIFT + PARALLAX) ============ */
     .bg{
       position: fixed;
       inset: 0;
       z-index: -1;
       overflow: hidden;
-      /* Parallax offsets (updated by JS) */
+      pointer-events: none;
+
+      /* parallax vars (JS updates these) */
       --px: 0px;
       --py: 0px;
     }
-    /* image layer */
-    .bg::before{
-      content:"";
-      position:absolute;
-      inset:-12%;
+
+    /* The animated image layer (real element, not pseudo) */
+    .bg-layer{
+      position: absolute;
+      inset: -12%;
       background: url('1000081562.jpg') no-repeat center center;
       background-size: cover;
-      transform-origin: 50% 50%;
-      /* Combine drift animation + parallax translate */
-      transform: translate3d(var(--px), var(--py), 0) scale(1.12) rotate(0deg);
-      animation: worldDrift 60s linear infinite;
       will-change: transform;
       filter: saturate(1.02) contrast(1.02);
+      transform-origin: 50% 50%;
+      animation: worldDrift 70s ease-in-out infinite;
     }
-    /* overlay */
-    .bg::after{
-      content:"";
-      position:absolute;
-      inset:0;
+
+    /* Dark overlay */
+    .bg-overlay{
+      position: absolute;
+      inset: 0;
       background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.72));
-      pointer-events: none;
     }
 
-    /*
-      We animate custom properties so the parallax (JS) can add to them smoothly.
-      This avoids fighting between animation and JS transforms.
-    */
-    @property --drift-rot { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
-    @property --drift-x { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
-    @property --drift-y { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
-    @property --drift-scale { syntax: "<number>"; inherits: false; initial-value: 1.12; }
-
-    /* Rewrite transform using drift vars + parallax vars */
-    .bg::before{
-      transform:
-        translate3d(calc(var(--px) + var(--drift-x)), calc(var(--py) + var(--drift-y)), 0)
-        scale(var(--drift-scale))
-        rotate(var(--drift-rot));
-    }
-
+    /* Combine drift + parallax using calc() inside keyframes */
     @keyframes worldDrift{
-      0%   { --drift-scale: 1.12; --drift-rot: 0deg;   --drift-x: 0%;    --drift-y: 0%; }
-      50%  { --drift-scale: 1.16; --drift-rot: 1.2deg;--drift-x: -1.5%; --drift-y: 0.8%; }
-      100% { --drift-scale: 1.12; --drift-rot: 0deg;  --drift-x: 0%;    --drift-y: 0%; }
+      0%{
+        transform:
+          translate3d(calc(var(--px) + 0px), calc(var(--py) + 0px), 0)
+          scale(1.12)
+          rotate(0deg);
+      }
+      50%{
+        transform:
+          translate3d(calc(var(--px) - 18px), calc(var(--py) + 10px), 0)
+          scale(1.16)
+          rotate(1.2deg);
+      }
+      100%{
+        transform:
+          translate3d(calc(var(--px) + 0px), calc(var(--py) + 0px), 0)
+          scale(1.12)
+          rotate(0deg);
+      }
     }
 
     /* ============ HEADER ============ */
@@ -378,7 +376,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       * { scroll-behavior: auto !important; }
-      .bg::before { animation: none; transform: none; }
+      .bg-layer { animation: none !important; transform: none !important; }
       .scroll-indicator { animation: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
       .hero-claim { transition: none; }
@@ -387,7 +385,11 @@
 </head>
 
 <body>
-  <div class="bg" id="bg"></div>
+  <!-- Background now has real layers -->
+  <div class="bg" id="bg">
+    <div class="bg-layer"></div>
+    <div class="bg-overlay"></div>
+  </div>
 
   <header id="siteHeader">
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
@@ -510,11 +512,13 @@
   </footer>
 
   <script>
-    // Header: solid/compact on scroll + claim hide on scroll
     const header = document.getElementById('siteHeader');
     const heroClaim = document.getElementById('heroClaim');
     const bg = document.getElementById('bg');
 
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Header scroll + claim hide
     const onScroll = () => {
       const y = window.scrollY || 0;
       header.classList.toggle('scrolled', y > 20);
@@ -557,57 +561,47 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => io.observe(el));
 
-    // ===== Parallax (mouse + device orientation) combined with world drift =====
-    // We only update CSS variables (--px/--py), drift keeps running via CSS animation.
+    // ===== Parallax (mouse) + (device orientation) =====
+    // This updates CSS vars on .bg, and the drift animation adds to it.
     let targetX = 0, targetY = 0;
     let currentX = 0, currentY = 0;
-    const maxShift = 18; // px (subtle)
 
-    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Make it clearly visible; if you want subtler later, set to 10–14
+    const maxShift = 22; // px
 
-    function setTargetFromNormalized(nx, ny) {
-      // nx, ny in [-1..1]
+    function setTarget(nx, ny) {
       targetX = nx * maxShift;
       targetY = ny * maxShift;
     }
 
-    function animateParallax() {
+    function tick() {
       if (!bg || prefersReduced) return;
 
-      // Smooth easing
       currentX += (targetX - currentX) * 0.08;
       currentY += (targetY - currentY) * 0.08;
 
       bg.style.setProperty('--px', currentX.toFixed(2) + 'px');
       bg.style.setProperty('--py', currentY.toFixed(2) + 'px');
 
-      requestAnimationFrame(animateParallax);
+      requestAnimationFrame(tick);
     }
-    requestAnimationFrame(animateParallax);
+    requestAnimationFrame(tick);
 
-    // Mouse parallax
     window.addEventListener('mousemove', (e) => {
       if (prefersReduced) return;
-      const nx = (e.clientX / window.innerWidth) * 2 - 1;
-      const ny = (e.clientY / window.innerHeight) * 2 - 1;
-      setTargetFromNormalized(nx, ny);
+      const nx = (e.clientX / window.innerWidth) * 2 - 1;  // -1..1
+      const ny = (e.clientY / window.innerHeight) * 2 - 1; // -1..1
+      setTarget(nx, ny);
     }, { passive: true });
 
-    // Touch/gyro parallax (mobile)
-    // Uses device orientation if available; otherwise harmless.
+    // NOTE: iOS needs user permission to access deviceorientation.
     window.addEventListener('deviceorientation', (e) => {
       if (prefersReduced) return;
-      // gamma: left/right (-90..90), beta: front/back (-180..180)
       const gamma = Math.max(-25, Math.min(25, e.gamma || 0));
       const beta  = Math.max(-25, Math.min(25, e.beta || 0));
-
-      const nx = gamma / 25; // normalize to [-1..1]
-      const ny = beta / 25;
-
-      setTargetFromNormalized(nx, ny);
+      setTarget(gamma / 25, beta / 25);
     }, true);
 
-    // Optional: gently reset when mouse leaves window
     window.addEventListener('mouseleave', () => {
       if (prefersReduced) return;
       targetX = 0; targetY = 0;
