@@ -3,211 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basys Analytics | Observe · Learn · Lead</title>
+    <title>Basys Analytics | Kontakt</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Grunddesign & Farben */
         :root {
-            --orange: #f7931a;
-            --dark-bg: #050a12;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --text-gray: #bdc3c7;
+            --accent: #f2a900; /* Bitcoin Orange aus deinem Logo */
+            --glass: rgba(255, 255, 255, 0.1);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-            background-color: var(--dark-bg);
+            height: 100%;
+            font-family: 'Inter', sans-serif;
             color: white;
             scroll-behavior: smooth;
+            background-color: #0b0d17;
         }
 
-        /* Logo oben links */
-        .top-logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+        /* Hintergrundbild fixiert */
+        .bg-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), 
+                        url('1000081562.jpg') no-repeat center center;
+            background-size: cover;
+            z-index: -1;
+        }
+
+        /* Navigation Links Top Left */
+        nav {
+            position: fixed;
+            top: 30px;
+            left: 40px;
             z-index: 100;
         }
-        .top-logo img {
-            height: 80px; /* Größe des Logos oben links */
-            border-radius: 50%;
-            border: 2px solid var(--orange);
-            box-shadow: 0 0 15px rgba(247, 147, 26, 0.3);
-        }
 
-        /* Hero Bereich */
-        header {
-            height: 100vh;
-            background: linear-gradient(rgba(5, 10, 18, 0.6), rgba(5, 10, 18, 0.8)), 
-                        url('background.jpg'); 
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
-            margin: 0;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-
-        .orange { color: var(--orange); }
-
-        .claim {
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            letter-spacing: 8px;
-            margin-top: 15px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-        }
-
-        /* Layout Container */
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 100px 20px;
-        }
-
-        h2 {
-            color: var(--orange);
-            font-size: 2.5rem;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-
-        /* OLL Prozess Cards */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 15px;
-            border-bottom: 4px solid transparent;
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-bottom: 4px solid var(--orange);
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .card h3 {
-            color: var(--orange);
-            font-size: 1.8rem;
-            margin-top: 0;
-        }
-
-        /* Kontaktformular */
-        .contact-box {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 15px;
-            max-width: 600px;
-            margin: 40px auto;
-        }
-
-        .contact-box input, .contact-box textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #333;
+        nav a {
             color: white;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        .submit-btn {
-            background: var(--orange);
-            color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 100%;
+            text-decoration: none;
+            margin-right: 25px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+            font-weight: 600;
             transition: 0.3s;
         }
 
+        nav a:hover { color: var(--accent); }
+
+        /* Sektionen */
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+        }
+
+        /* Home Sektion - Text unten rechts vom Logo halten */
+        #home { justify-content: flex-start; align-items: flex-end; padding-bottom: 80px; }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+
+        /* Kontakt Formular Styling */
+        #contact { justify-content: center; background: rgba(0,0,0,0.4); }
+
+        .contact-form { width: 100%; max-width: 500px; }
+
+        .input-group { margin-bottom: 20px; }
+
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; opacity: 0.8; }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            border: none;
+            border-radius: 8px;
+            color: black;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
         .submit-btn:hover {
-            background: #e08215;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(242, 169, 0, 0.4);
         }
 
-        footer {
-            text-align: center;
-            padding: 60px 20px;
-            font-size: 0.9rem;
-            color: #555;
-            border-top: 1px solid #111;
-        }
+        h2 { font-size: 2.2rem; margin-bottom: 20px; color: var(--accent); }
 
+        @media (max-width: 600px) {
+            nav { left: 20px; width: 100%; }
+            .glass-box { padding: 25px; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="top-logo">
-        <img src="IMG-20260111-WA0008.jpg" alt="Basys Analytics Logo">
-    </div>
+    <div class="bg-image"></div>
 
-    
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#contact">Kontakt</a>
+    </nav>
 
-    <div class="container">
-        <h2>Unser Analyse-System</h2>
-        <div class="grid">
-            <div class="card">
-                <h3>Observe</h3>
-                <p>Wir nutzen fortschrittliche Analyse-Tools zur strukturierten Beobachtung der globalen Digital-Asset-Märkte. Wir trennen das Rauschen von den echten Signalen.</p>
-            </div>
-            <div class="card">
-                <h3>Learn</h3>
-                <p>Daten allein sind wertlos. Wir interpretieren Marktbewegungen und technologische Entwicklungen, um tiefes Verständnis und echte Orientierung zu schaffen.</p>
-            </div>
-            <div class="card">
-                <h3>Lead</h3>
-                <p>Verantwortungsvolles Handeln erfordert Wissen. Wir unterstützen Sie dabei, aus Erkenntnissen klare Strategien und souveräne Entscheidungen zu entwickeln.</p>
-            </div>
+    <section id="home">
+        <div class="glass-box">
+            <h1>Basys Insights</h1>
+            <p>Smarte Datenanalyse für die Blockchain von morgen. Wir machen komplexe On-Chain Daten verständlich.</p>
         </div>
-    </div>
+    </section>
 
-    <div style="background: #0a111e;">
-        <div class="container">
-            <h2>Persönliche Expertise</h2>
-            <p style="text-align: center; font-size: 1.2rem; line-height: 1.8;">
-                Hinter <strong>Basys Analytics</strong> stehen Oliver und Lion Leininger. <br>
-                Wir verbinden ein stabiles methodisches Fundament mit persönlichen Werten, um in der digitalen Ökonomie Orientierung zu geben.
-            </p>
-        </div>
-    </div>
-
-    <div class="container">
-        <h2>Kontaktieren Sie uns</h2>
-        <div class="contact-box">
+    <section id="contact">
+        <div class="glass-box contact-form">
+            <h2>Kontakt aufnehmen</h2>
             <form action="#">
-                <input type="text" placeholder="Name" required>
-                <input type="email" placeholder="E-Mail" required>
-                <textarea rows="5" placeholder="Ihre Nachricht"></textarea>
+                <div class="input-group">
+                    <label>Name</label>
+                    <input type="text" placeholder="Dein Name" required>
+                </div>
+                <div class="input-group">
+                    <label>E-Mail</label>
+                    <input type="email" placeholder="mail@beispiel.de" required>
+                </div>
+                <div class="input-group">
+                    <label>Nachricht</label>
+                    <textarea rows="4" placeholder="Wie können wir helfen?"></textarea>
+                </div>
                 <button type="submit" class="submit-btn">Nachricht senden</button>
             </form>
         </div>
-    </div>
-
-    <footer>
-        &copy; 2026 Basys Analytics | Oliver & Lion Leininger | basysanalytics.com<br>
-        Strukturiert. Methodisch. Führend.
-    </footer>
+    </section>
 
 </body>
 </html>
