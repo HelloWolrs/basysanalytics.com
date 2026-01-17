@@ -21,6 +21,7 @@
             background-color: #0b0d17;
             scroll-behavior: smooth;
             line-height: 1.7;
+            overflow-x: hidden;
         }
 
         /* Hintergrund Setup */
@@ -36,24 +37,21 @@
             background-size: cover;
         }
 
-        /* Verbesserte Navigation */
+        /* Navigation Header */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px 50px;
+            padding: 25px 50px;
             z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
         }
 
-        .nav-links {
+        nav {
             display: flex;
-            gap: 35px;
             align-items: center;
+            gap: 30px;
         }
 
         nav a {
@@ -69,146 +67,13 @@
 
         nav a:hover { opacity: 1; color: var(--accent); }
 
-        /* Login Link als Button */
-        .login-btn {
+        .login-link {
             border: 1px solid var(--accent);
-            padding: 8px 20px;
-            border-radius: 8px;
-            opacity: 1 !important;
+            padding: 6px 15px;
+            border-radius: 6px;
             color: var(--accent) !important;
+            opacity: 1 !important;
         }
 
-        .login-btn:hover {
+        .login-link:hover {
             background: var(--accent);
-            color: #000 !important;
-        }
-
-        /* Sektions Design */
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 100px 8%;
-        }
-
-        #home { justify-content: flex-end; padding-bottom: 10vh; }
-
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 50px;
-            width: 100%;
-            max-width: 900px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.6);
-            margin: 20px 0;
-        }
-
-        .small-card { max-width: 550px; }
-
-        h1 { font-size: 3.5rem; margin-bottom: 1rem; line-height: 1.1; font-weight: 700; }
-        h2 { font-size: 1.3rem; color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 4px; }
-        
-        .highlight { color: var(--accent); font-weight: 600; }
-        
-        .summary-box {
-            margin-top: 35px;
-            padding: 25px;
-            border-left: 4px solid var(--accent);
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 0 15px 15px 0;
-        }
-
-        /* Buttons & Formular */
-        input, textarea {
-            width: 100%;
-            padding: 16px;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            color: #fff;
-            outline: none;
-        }
-
-        .btn {
-            display: inline-block;
-            width: 100%;
-            padding: 18px;
-            background: var(--accent);
-            color: #000;
-            font-weight: 700;
-            border-radius: 12px;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(242, 169, 0, 0.3); }
-
-        @media (max-width: 768px) {
-            header { padding: 20px; flex-direction: column; gap: 15px; }
-            h1 { font-size: 2.5rem; }
-            section { padding: 100px 5%; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="bg-container"></div>
-
-    <header>
-        <nav class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#vision">Konzept</a>
-            <a href="#contact">Kontakt</a>
-        </nav>
-        <nav>
-            <a href="/login" class="login-btn">Login</a>
-        </nav>
-    </header>
-
-    <section id="home">
-        <div class="glass-card small-card">
-            <h2>Basys Analytics</h2>
-            <h1>Observe.<br>Learn.<br><span style="color:var(--accent);">Lead.</span></h1>
-            <p style="font-size: 1.1rem; opacity: 0.8;">Expertise für Krypto- und Digital Asset Märkte.</p>
-        </div>
-    </section>
-
-    <section id="vision">
-        <div class="glass-card">
-            <h2>Das System</h2>
-            <div style="margin-bottom: 25px;">
-                <p><span class="highlight">Analytics</span> ist ein analytisches System zur strukturierten Beobachtung, Interpretation und Einordnung von Krypto- und Digital Asset märkten. Der name <span class="highlight">Basys</span> leitet sich von Base, Basis und System ab und steht für ein stabiles, methodisches Fundament, auf dem erkentnisse aufgebaut und entscheidungen entwickelt werden.</p>
-            </div>
-            <div style="margin-bottom: 25px;">
-                <p>Der Claim <span class="highlight">Observer Learn Lead</span> beschreibt den inneren prozess diese systems: aus Beobachtung ensteht Verständniss, aus verständniss ensteht orientierung und aus orientierung entsteht verantwortungvolle führung.</p>
-            </div>
-            <div>
-                <p><span class="highlight">OLL</span> steht dabei für Observer Learn Lead als Konzeptionelles leitmodell als auch für <span class="highlight">Oliver und Lion Leininger</span> als Persönliche Referenz und verbindung individueller Motivation mit systematischer Analyse.</p>
-            </div>
-            <div class="summary-box">
-                <p><strong>Zusammengefasst:</strong> Basys Analytics vereint ein stabiles alalytisches Fundament (Basys), einen klaren Erkenntnisprozess (OLL) und persönliche Werte um aus daten orientierung und aus orientierung verantwortungvolle entscheidungen in einer digitalen ökonimie zu ermöglichen.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="glass-card small-card">
-            <h2>Kontakt</h2>
-            <form action="#">
-                <input type="text" placeholder="Ihr Name" required>
-                <input type="email" placeholder="E-Mail Adresse" required>
-                <textarea rows="4" placeholder="Ihre Nachricht"></textarea>
-                <button type="submit" class="btn">Anfrage senden</button>
-            </form>
-        </div>
-    </section>
-
-</body>
-</html>
