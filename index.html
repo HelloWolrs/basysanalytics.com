@@ -19,7 +19,7 @@ html, body{
   scroll-behavior:smooth;
 }
 
-/* ===== GLOBAL BACKGROUND (ab Analytics sichtbar, Hero überschreibt) ===== */
+/* ===== GLOBAL BACKGROUND (ab Analytics sichtbar) ===== */
 body{
   background:
     linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.72)),
@@ -102,9 +102,7 @@ nav a.login-link.active::after{ display:none; }
   position:relative;
 }
 .nav-group-toggle:hover{ opacity:1; color:var(--accent); }
-.nav-group.has-active .nav-group-toggle{
-  opacity:1; color:#fff;
-}
+.nav-group.has-active .nav-group-toggle{ opacity:1; color:#fff; }
 .nav-group.has-active .nav-group-toggle::after{
   content:"";
   position:absolute;
@@ -177,7 +175,7 @@ section{
   scroll-margin-top:90px;
 }
 
-/* ===== HERO background overrides global bg ===== */
+/* ===== HERO overrides global bg ===== */
 #home{
   position:relative;
   overflow:hidden;
@@ -185,12 +183,26 @@ section{
     linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.70)),
     url("hero-sky.png") no-repeat center top;
   background-size:cover;
+  /* Parallax will update background-position via JS */
 }
 
-/* Hero stage */
+/* ===== subtle film grain over hero only (tick further) ===== */
+#home::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.10;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+  background-size:220px 220px;
+}
+#home > *{ position:relative; z-index:1; }
+
+/* Hero stage (requested) */
 .hero-stage{
   position:relative;
-  width:min(660px, 94vw); /* etwas größer */
+  width:min(560px, 90vw);
   aspect-ratio: 1 / 1;
   display:flex;
   align-items:center;
@@ -200,20 +212,28 @@ section{
 
 @keyframes rotate-earth { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
-/* Globe (masked), slower, bigger, smaller black rim */
+/* ===== Globe ===== */
 .globe-rotator{
   position:absolute;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  animation: rotate-earth 240s linear infinite; /* langsamer */
+  animation: rotate-earth 240s linear infinite;
   border-radius:50%;
-  overflow:hidden; /* schneidet schwarzen Rand weg */
+  overflow:hidden;
   will-change: transform;
+
+  /* Terminator base shading */
+  background:
+    radial-gradient(circle at 70% 50%,
+      rgba(0,0,0,0) 45%,
+      rgba(0,0,0,.30) 70%,
+      rgba(0,0,0,.52) 100%);
 }
+
+/* Soft halo behind earth */
 .globe-rotator::before{
-  /* weicher Rand / Glow */
   content:"";
   position:absolute;
   width:96%;
@@ -227,17 +247,48 @@ section{
   opacity:0.65;
   pointer-events:none;
 }
+
+/* Atmosphere glow (requested) */
+.globe-rotator::after{
+  content:"";
+  position:absolute;
+  inset:4%;
+  border-radius:50%;
+  box-shadow:
+    0 0 18px rgba(120,170,255,.18),
+    0 0 40px rgba(120,170,255,.10);
+  pointer-events:none;
+  opacity:.9;
+}
+
 .globe-rotator img{
   position:relative;
-  width:104%;   /* Zoom -> schwarzer Rand wird kleiner */
-  height:104%;
+  width:100%;
+  height:100%;
   object-fit:cover;
   border-radius:50%;
   filter:
-    drop-shadow(0 26px 55px rgba(0,0,0,.38))
-    contrast(0.93)       /* weniger Kontrast */
+    drop-shadow(0 26px 55px rgba(0,0,0,.35))
+    contrast(0.92)
     saturate(0.95)
     brightness(1.05);
+}
+
+/* ===== Micro “twinkle” layer (tick further), super subtle ===== */
+.twinkle{
+  position:absolute;
+  inset:-20%;
+  pointer-events:none;
+  opacity:.10;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.55) 0 1px, rgba(0,0,0,0) 2px) 0 0/120px 120px,
+    radial-gradient(circle, rgba(255,255,255,.40) 0 1px, rgba(0,0,0,0) 2px) 40px 60px/160px 160px;
+  animation: twinkleMove 14s ease-in-out infinite alternate;
+  filter: blur(.2px);
+}
+@keyframes twinkleMove{
+  from{ transform:translate3d(0,0,0); }
+  to{ transform:translate3d(10px,-14px,0); }
 }
 
 /* Text sits on globe (static) */
@@ -433,7 +484,7 @@ footer{
   section{ padding:135px 8% 110px; }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
-  .hero-stage{ width:min(560px, 94vw); }
+  .hero-stage{ width:min(520px, 92vw); }
 }
 @media (max-width: 768px){
   header{ padding:16px 16px; }
@@ -528,6 +579,8 @@ footer{
 
 <!-- HOME -->
 <section id="home" data-section="home">
+  <div class="twinkle" aria-hidden="true"></div>
+
   <div class="hero-stage reveal">
     <div class="globe-rotator">
       <img src="hero-globe.png" alt="Earth">
@@ -588,7 +641,7 @@ footer{
   </a>
 </section>
 
-<!-- ANALYTICS (ab hier soll global background 1000081562.jpg sichtbar sein) -->
+<!-- ANALYTICS -->
 <section id="analytics" data-section="analytics">
   <div class="glass-card reveal">
     <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
@@ -749,15 +802,9 @@ const navLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
 const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
 
 function setActive(id){
-  navLinks.forEach(a => {
-    const isActive = a.getAttribute('data-nav') === id;
-    a.classList.toggle('active', isActive);
-  });
-
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
   const hasInitiativeActive = (id === 'token' || id === 'fund');
   group?.classList.toggle('has-active', hasInitiativeActive);
-
-  // mark submenu active too
   document.querySelectorAll('.nav-group-menu a[data-nav]').forEach(a => {
     a.classList.toggle('active', a.getAttribute('data-nav') === id);
   });
@@ -790,6 +837,13 @@ copyBtn?.addEventListener('click', async () => {
     setTimeout(() => (copyBtn.textContent = prev), 900);
   }
 });
+
+/* Parallax in hero sky (subtle) */
+const home = document.getElementById('home');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY * 0.15;
+  home.style.backgroundPosition = `center ${-y}px`;
+}, { passive:true });
 </script>
 
 </body>
