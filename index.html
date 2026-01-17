@@ -8,12 +8,12 @@
     <style>
         :root {
             --accent: #f2a900;
-            --glass: rgba(10, 15, 25, 0.8);
+            --glass: rgba(10, 15, 25, 0.85);
             --border: rgba(255, 255, 255, 0.1);
         }
 
+        /* Basis-Setup */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
         body, html {
             height: 100%;
             font-family: 'Inter', sans-serif;
@@ -23,7 +23,7 @@
             line-height: 1.6;
         }
 
-        /* Hintergrund-Fixierung oben */
+        /* Hintergrundbild - Fixiert oben */
         .bg-container {
             position: fixed;
             top: 0;
@@ -31,7 +31,8 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), 
+            /* WICHTIG: Prüfe ob der Dateiname exakt stimmt */
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.7)), 
                         url('1000081562.jpg') no-repeat center top;
             background-size: cover;
         }
@@ -42,61 +43,151 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 30px 50px;
-            z-index: 100;
+            padding: 25px 40px;
+            z-index: 1000;
             display: flex;
-            gap: 40px;
+            gap: 30px;
             background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
         }
 
         nav a {
             color: #fff;
             text-decoration: none;
-            font-size: 0.8rem;
-            letter-spacing: 2.5px;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 700;
-            transition: 0.4s;
+            transition: 0.3s;
             opacity: 0.6;
         }
 
         nav a:hover { opacity: 1; color: var(--accent); }
 
-        /* Sektions-Layout */
+        /* Sektionen untereinander */
         section {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 120px 10%;
+            padding: 100px 10%;
         }
 
-        #home { justify-content: flex-end; padding-bottom: 15vh; }
+        /* Home-Sektion schiebt Text nach unten (wegen Logo im Bild) */
+        #home { justify-content: flex-end; padding-bottom: 10vh; }
 
-        /* Glass-Karten */
+        /* Glass-Karten Design */
         .glass-card {
             background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            border-radius: 30px;
-            padding: 60px;
+            border-radius: 25px;
+            padding: 40px;
             width: 100%;
-            max-width: 900px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-            margin-bottom: 50px;
+            max-width: 800px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            margin: 20px 0;
         }
 
-        .small-card { max-width: 550px; }
+        .small-card { max-width: 500px; }
 
-        h1 { font-size: 3.5rem; margin-bottom: 1.5rem; line-height: 1.1; letter-spacing: -1px; }
-        h2 { font-size: 1.2rem; color: var(--accent); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 4px; }
+        h1 { font-size: 3rem; margin-bottom: 1rem; line-height: 1.1; font-weight: 700; }
+        h2 { font-size: 1.4rem; color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 3px; }
         
-        .vision-grid {
-            display: grid;
-            gap: 30px;
-            margin-top: 20px;
+        .highlight { color: var(--accent); font-weight: 600; }
+
+        .vision-content { margin-top: 10px; }
+        .vision-item {
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 3px solid var(--accent);
         }
 
-        .vision-item {
+        /* Formular */
+        form { width: 100%; }
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: #fff;
+            font-family: inherit;
+            outline: none;
+        }
+        input:focus { border-color: var(--accent); }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: #000;
+            font-weight: 700;
+            border-radius: 10px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover { transform: scale(1.02); }
+
+        /* Mobile Optimierung */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            nav { padding: 20px; gap: 15px; }
+            .glass-card { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-container"></div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#vision">Vision</a>
+        <a href="#contact">Kontakt</a>
+    </nav>
+
+    <section id="home">
+        <div class="glass-card small-card">
+            <h2>Basys Analytics</h2>
+            <h1>Observe.<br>Learn.<br><span style="color:var(--accent);">Lead.</span></h1>
+            <p style="opacity: 0.8;">Strukturierte Analyse für digitale Asset-Märkte.</p>
+        </div>
+    </section>
+
+    <section id="vision">
+        <div class="glass-card">
+            <h2>Unsere Vision</h2>
+            <div class="vision-content">
+                <div class="vision-item">
+                    <p><span class="highlight">Basys Analytics</span> leitet sich von Base, Basis und System ab – ein stabiles Fundament für fundierte Krypto-Marktanalysen.</p>
+                </div>
+                <div class="vision-item">
+                    <p>Der Claim <span class="highlight">Observe · Learn · Lead</span> beschreibt unseren Weg: Aus Beobachtung folgt Verständnis, daraus Orientierung und schließlich Führung.</p>
+                </div>
+                <div class="vision-item">
+                    <p><span class="highlight">OLL</span> steht für unser konzeptionelles Modell sowie persönlich für <span class="highlight">Oliver und Lion Leininger</span>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="glass-card small-card">
+            <h2>Kontakt</h2>
+            <form action="#">
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="E-Mail" required>
+                <textarea rows="4" placeholder="Ihre Nachricht"></textarea>
+                <button type="submit" class="btn">Nachricht senden</button>
+            </form>
+        </div>
+    </section>
+
+</body>
+</html>
