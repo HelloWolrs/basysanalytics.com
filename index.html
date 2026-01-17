@@ -65,7 +65,6 @@ header.scrolled{
   align-items:center;
   justify-content:center;
 }
-
 .nav-toggle svg{display:block}
 
 /* Desktop nav */
@@ -123,9 +122,7 @@ nav a.active::after{
 nav a.login-link.active::after{ display:none; }
 
 /* ===== Initiatives dropdown (always visible) ===== */
-.nav-group{
-  position:relative;
-}
+.nav-group{ position:relative; }
 
 .nav-group-toggle{
   display:inline-flex;
@@ -139,7 +136,6 @@ nav a.login-link.active::after{ display:none; }
   transition:transform .25s ease;
   opacity:.9;
 }
-
 .nav-group.open .chevron{ transform:rotate(180deg); }
 
 /* If Token/Fund active, mark Initiatives too */
@@ -147,7 +143,6 @@ nav a.login-link.active::after{ display:none; }
   opacity:1;
   color:var(--accent);
 }
-
 .nav-group.has-active .nav-group-toggle::after{
   content:"";
   position:absolute;
@@ -171,7 +166,6 @@ nav a.login-link.active::after{ display:none; }
   border:1px solid rgba(255,255,255,.10);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
 }
-
 .nav-group.open .nav-group-menu{
   display:grid;
   gap:6px;
@@ -190,13 +184,11 @@ nav a.login-link.active::after{ display:none; }
   color:#fff;
   opacity:.95;
 }
-
 .nav-group-menu a:hover{
   background:rgba(242,169,0,.10);
   border-color:rgba(242,169,0,.25);
   color:#fff;
 }
-
 .nav-group-menu a.active{
   background:rgba(242,169,0,.12);
   border-color:rgba(242,169,0,.45);
@@ -255,7 +247,7 @@ section{
   to{ transform:translate3d(10px,-14px,0); }
 }
 
-/* Hero stage */
+/* Hero stage (desktop) */
 .hero-stage{
   position:relative;
   width:min(560px, 90vw);
@@ -349,8 +341,9 @@ section{
   pointer-events:none;
 }
 
+/* ✅ Brand bigger vs tagline */
 .brand{
-  font-size:clamp(2.4rem, 5vw, 3.4rem);
+  font-size:clamp(2.9rem, 6vw, 4.1rem);
   font-weight:800;
   letter-spacing:.04em;
   text-shadow:0 14px 30px rgba(0,0,0,.6);
@@ -358,7 +351,7 @@ section{
 .brand .btc{ color:var(--accent); }
 .brand .light{ font-weight:700; opacity:.92; }
 
-/* Observe · Learn · Lead (bigger, initials accent, rest white, bigger dark dots) */
+/* Observe · Learn · Lead (bigger, initials accent, dots WHITE) */
 .brand-claim{
   margin-top:14px;
   font-size:1.35rem;
@@ -380,21 +373,22 @@ section{
   font-weight:900;
 }
 
+/* ✅ dots white now */
 .dot{
   width:10px;
   height:10px;
   border-radius:50%;
-  background:rgba(0,0,0,.75);
+  background:rgba(255,255,255,.88);
   display:inline-block;
   margin:0 22px;
-  box-shadow:0 0 12px rgba(0,0,0,.35);
+  box-shadow:0 0 12px rgba(255,255,255,.18);
 }
 
 .hero-claim{
-  margin-top:22px;
+  margin-top:18px;
   text-align:center;
   max-width:980px;
-  font-size:clamp(.98rem, 1.35vw, 1.18rem);
+  font-size:clamp(.90rem, 1.15vw, 1.05rem); /* slightly smaller vs brand */
   letter-spacing:1.6px;
   opacity:.92;
   text-shadow:0 10px 30px rgba(0,0,0,.38);
@@ -610,11 +604,13 @@ footer{
   .copy-btn{ width:100%; }
 }
 
-@media (max-width: 900px){
+/* ✅ Make globe smaller on phones so it doesn't get cut off */
+@media (max-width: 480px){
   section{ padding:135px 8% 110px; }
-  .glass-card{ padding:36px; }
-  .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
-  .hero-stage{ width:min(520px, 92vw); }
+  .hero-stage{ width:min(380px, 92vw); } /* smaller globe container */
+  .brand{ font-size:clamp(2.55rem, 7vw, 3.35rem); }
+  .brand-claim{ font-size:1.18rem; }
+  .hero-claim{ white-space:normal; line-height:1.35; }
 }
 </style>
 </head>
@@ -633,13 +629,11 @@ footer{
     <a href="#basys" data-nav="basys">Basys</a>
     <a href="#analytics" data-nav="analytics">Analytics</a>
 
-    <!-- Initiatives always visible -->
     <div class="nav-group" id="initiativeGroup">
       <button class="nav-group-toggle" aria-expanded="false" type="button">
         Initiatives <span class="chevron">▾</span>
       </button>
       <div class="nav-group-menu" aria-label="Initiatives submenu">
-        <!-- correct order: Token then Education Fund -->
         <a href="#token" data-nav="token">Token</a>
         <a href="#fund" data-nav="fund">Education Fund</a>
       </div>
