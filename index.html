@@ -3,156 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basys Analytics | Observe · Learn · Lead</title>
+    <title>Mein GitHub Projekt</title>
     <style>
-        /* Grunddesign */
-        body, html {
+        /* Grundlegendes Design */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: #24292e; /* GitHub Dunkelgrau */
+            color: #ffffff;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #050a12;
-            color: white;
-            scroll-behavior: smooth;
         }
 
-        /* Hero Bereich mit deinem Bild */
-        header {
-            height: 100vh;
-            background: linear-gradient(rgba(5, 10, 18, 0.7), rgba(5, 10, 18, 0.7)), 
-                        url('background.jpg'); /* Hier dein Bild hochladen */
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+        .nav-links li {
+            margin-left: 20px;
         }
 
-        .logo-container {
-            max-width: 80%;
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #007bff; /* Blau beim Drüberfahren */
+        }
+
+        /* Hauptinhalt */
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
 
         h1 {
-            font-size: 3.5rem;
-            margin: 0;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        .orange { color: #f7931a; }
-
-        .claim {
-            font-size: 1.2rem;
-            letter-spacing: 6px;
-            margin-top: 10px;
-            color: #bdc3c7;
-            text-transform: uppercase;
-        }
-
-        /* Content Sektionen */
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 80px 20px;
-        }
-
-        h2 {
-            color: #f7931a;
-            font-size: 2.2rem;
-            border-bottom: 2px solid #f7931a;
-            display: inline-block;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .card {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 40px;
-            border-radius: 15px;
-            border: 1px solid rgba(247, 147, 26, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: #f7931a;
-        }
-
-        .card h3 {
-            color: #f7931a;
-            font-size: 1.5rem;
-            margin-top: 0;
-        }
-
-        /* Über OLL Sektion */
-        .about-section {
-            background-color: #0a111e;
-            padding: 80px 0;
+            color: #24292e;
         }
 
         footer {
             text-align: center;
-            padding: 40px;
+            padding: 2rem;
             font-size: 0.8rem;
-            color: #555;
-            background: #050a12;
-        }
-
-        /* Mobile Anpassung */
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .claim { font-size: 0.9rem; letter-spacing: 3px; }
+            color: #777;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-container">
-            <h1><span class="orange">B</span>asys Analytics</h1>
-            <div class="claim">Observe · Learn · Lead</div>
-        </div>
+        <nav>
+            <div class="logo">Meine Website</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#projekte">Projekte</a></li>
+                <li><a href="#ueber-mich">Über mich</a></li>
+                <li><a href="#kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
     </header>
 
-    <div class="container">
-        <h2>Unser Fundament</h2>
-        <p style="font-size: 1.2rem; max-width: 800px;">
-            Basys Analytics bietet ein methodisches System zur strukturierten Beobachtung und Einordnung von Digital-Asset-Märkten. 
-            Auf einer stabilen Basis entwickeln wir Erkenntnisse für die digitale Ökonomie.
-        </p>
+    <main class="container">
+        <section id="home">
+            <h1>Willkommen auf meiner neuen GitHub Page!</h1>
+            <p>Dies ist der komplette Code inklusive eines responsiven Headers. Du kannst diesen Text einfach löschen und deinen eigenen Inhalt hinzufügen.</p>
+        </section>
 
-        <div class="grid">
-            <div class="card">
-                <h3>Observe</h3>
-                <p>Präzise Marktbeobachtung filtert das Rauschen der Datenströme und identifiziert die wesentlichen Trends.</p>
-            </div>
-            <div class="card">
-                <h3>Learn</h3>
-                <p>Systematische Interpretation schafft tiefes Verständnis für komplexe Zusammenhänge und Marktdynamiken.</p>
-            </div>
-            <div class="card">
-                <h3>Lead</h3>
-                <p>Aus Orientierung entsteht Führung. Wir ermöglichen verantwortungsvolle Entscheidungen in einer volatilen Welt.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="about-section">
-        <div class="container">
-            <h2>Persönliche Expertise</h2>
-            <p><strong>OLL</strong> steht für mehr als einen Prozess – es ist die Verbindung aus der systematischen Analyse und der persönlichen Motivation von <strong>Oliver und Lion Leininger</strong>.</p>
-        </div>
-    </div>
+        <section id="projekte" style="margin-top: 40px;">
+            <h2>Meine Projekte</h2>
+            <p>Hier wird bald eine Liste meiner Arbeiten erscheinen.</p>
+        </section>
+    </main>
 
     <footer>
-        &copy; 2026 Basys Analytics | Oliver & Lion Leininger | basysanalytics.com
+        &copy; 2026 Erstellt mit GitHub Pages
     </footer>
 
 </body>
