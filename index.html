@@ -10,7 +10,7 @@
 <style>
 :root{
   --accent:#f2a900;
-  --glass:rgba(10,15,25,.95);
+  --glass:rgba(10,15,25,.92);
 }
 *{margin:0;padding:0;box-sizing:border-box}
 
@@ -18,8 +18,15 @@ html,body{
   height:100%;
   font-family:'Inter',sans-serif;
   color:#fff;
-  background:#0b0d17;
   scroll-behavior:smooth;
+}
+
+/* ===== GLOBAL BACKGROUND (CITY) ===== */
+body{
+  background:
+    linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.75)),
+    url("city-bg.jpg") no-repeat center center fixed;
+  background-size:cover;
 }
 
 /* ================= HEADER ================= */
@@ -49,18 +56,9 @@ nav a, .nav-group-toggle{
   color:#fff;
   opacity:.75;
   text-decoration:none;
-  position:relative;
 }
 nav a:hover, .nav-group-toggle:hover{opacity:1;color:var(--accent)}
-nav a.active{opacity:1}
-nav a.active::after{
-  content:"";
-  position:absolute;
-  left:0;right:0;bottom:-6px;
-  height:2px;
-  background:var(--accent);
-  border-radius:999px;
-}
+nav a.active{opacity:1;border-bottom:2px solid var(--accent)}
 
 .login-link{
   border:1px solid var(--accent);
@@ -68,32 +66,6 @@ nav a.active::after{
   border-radius:8px;
   color:var(--accent);
   opacity:1;
-}
-
-/* Dropdown */
-.nav-group{position:relative}
-.nav-group-toggle{
-  background:none;border:none;cursor:pointer;
-}
-.nav-group-menu{
-  position:absolute;
-  top:120%;
-  left:0;
-  background:rgba(10,15,25,.95);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:14px;
-  padding:10px;
-  display:none;
-  min-width:220px;
-}
-.nav-group.open .nav-group-menu{display:block}
-.nav-group-menu a{
-  display:block;
-  padding:10px 12px;
-  border-radius:10px;
-}
-.nav-group-menu a:hover{
-  background:rgba(242,169,0,.1);
 }
 
 /* ================= HERO ================= */
@@ -111,9 +83,10 @@ nav a.active::after{
   background-size:cover;
 }
 
+/* ===== GLOBE ===== */
 .hero-stage{
   position:relative;
-  width:min(600px,94vw); /* a bit larger stage */
+  width:min(600px,94vw);
   aspect-ratio:1/1;
 }
 
@@ -122,49 +95,43 @@ nav a.active::after{
   to{transform:rotate(360deg)}
 }
 
-/* Globe (masked circle), slower rotation, softer edge glow */
 .globe{
   position:absolute;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  animation:rotate-earth 220s linear infinite; /* SLOWER */
+  animation:rotate-earth 220s linear infinite;
   border-radius:50%;
-  overflow:hidden; /* crop away black JPG bg */
+  overflow:hidden;
 }
 
-/* Soft halo behind earth */
 .globe::before{
   content:"";
   position:absolute;
   width:92%;
   height:92%;
   border-radius:50%;
-  background: radial-gradient(circle,
-    rgba(120,170,255,0.22) 0%,
-    rgba(120,170,255,0.10) 35%,
-    rgba(0,0,0,0.00) 70%);
-  filter: blur(10px);
-  opacity:0.55;
+  background:radial-gradient(circle,
+    rgba(120,170,255,.25) 0%,
+    rgba(120,170,255,.12) 35%,
+    rgba(0,0,0,0) 70%);
+  filter:blur(12px);
 }
 
 .globe img{
-  position:relative;
-  width:92%;   /* EARTH BIGGER */
+  width:92%;
   height:92%;
   object-fit:cover;
   border-radius:50%;
-
-  /* LESS CONTRAST + softer look */
   filter:
-    drop-shadow(0 26px 55px rgba(0,0,0,.42))
-    contrast(0.95)
-    saturate(0.95)
+    drop-shadow(0 26px 55px rgba(0,0,0,.4))
+    contrast(.95)
+    saturate(.95)
     brightness(1.04);
 }
 
-/* Text on Globe */
+/* ===== TEXT ON GLOBE ===== */
 .hero-text{
   position:absolute;
   inset:0;
@@ -174,23 +141,23 @@ nav a.active::after{
   justify-content:center;
   pointer-events:none;
 }
+
 .brand{
   font-size:clamp(2.4rem,5vw,3.4rem);
   font-weight:800;
   text-shadow:0 14px 30px rgba(0,0,0,.6);
 }
 .brand .btc{color:var(--accent)}
+
 .brand-claim{
   margin-top:10px;
   letter-spacing:.35em;
   font-size:.9rem;
   opacity:.9;
 }
-.accent-initial{
-  color:var(--accent);
-  font-weight:800;
-}
+.accent-initial{color:var(--accent);font-weight:800}
 
+/* ===== CLAIM ===== */
 .hero-claim{
   margin-top:24px;
   font-size:1.15rem;
@@ -198,10 +165,7 @@ nav a.active::after{
 }
 .hero-claim span{color:var(--accent)}
 
-.scroll{
-  margin-top:40px;
-  animation:bounce 2s infinite;
-}
+.scroll{margin-top:40px;animation:bounce 2s infinite}
 @keyframes bounce{
   0%,20%,50%,80%,100%{transform:translateY(0)}
   40%{transform:translateY(-10px)}
@@ -216,21 +180,24 @@ section{
   justify-content:center;
 }
 
+/* Glass Card */
 .card{
   max-width:900px;
   background:var(--glass);
+  backdrop-filter:blur(18px);
   border-radius:20px;
   padding:48px;
   border:1px solid rgba(255,255,255,.1);
   box-shadow:0 20px 50px rgba(0,0,0,.5);
 }
+
 .highlight{color:var(--accent)}
 
 .wallet{
   margin-top:18px;
   padding:14px;
   border-radius:12px;
-  background:rgba(255,255,255,.05);
+  background:rgba(255,255,255,.06);
   font-family:monospace;
   word-break:break-all;
 }
@@ -245,37 +212,21 @@ footer{
 }
 .footer-strong{color:#ccc;font-weight:700}
 .footer-tagline{color:var(--accent);margin-top:6px}
-
-/* ================= RESPONSIVE ================= */
-@media (max-width: 900px){
-  header{ padding:18px 18px; }
-  header.scrolled{ padding:12px 18px; }
-  nav{ gap:18px; flex-wrap:wrap; }
-  .hero-stage{ width:min(520px,94vw); }
-  .globe img{ width:92%; height:92%; }
-}
 </style>
 </head>
 
 <body>
 
 <header id="header">
-  <nav>
-    <a href="#home" class="active">Home</a>
-    <a href="#basys">Basys</a>
-    <a href="#analytics">Analytics</a>
-
-    <div class="nav-group" id="navGroup">
-      <button class="nav-group-toggle">Initiatives ▾</button>
-      <div class="nav-group-menu">
-        <a href="#token">Token</a>
-        <a href="#fund">Education Fund</a>
-      </div>
-    </div>
-
-    <a href="#contact">Contact</a>
-    <a href="/login" class="login-link">Login</a>
-  </nav>
+<nav>
+  <a href="#home" class="active">Home</a>
+  <a href="#basys">Basys</a>
+  <a href="#analytics">Analytics</a>
+  <a href="#token">Token</a>
+  <a href="#fund">Education Fund</a>
+  <a href="#contact">Contact</a>
+  <a href="/login" class="login-link">Login</a>
+</nav>
 </header>
 
 <!-- HOME -->
@@ -284,7 +235,6 @@ footer{
     <div class="globe">
       <img src="hero-globe.png" alt="Earth">
     </div>
-
     <div class="hero-text">
       <div class="brand"><span class="btc">₿</span>asys Analytics</div>
       <div class="brand-claim">
@@ -321,10 +271,6 @@ footer{
       <span class="highlight">BasysAnalytics</span> is an analytical system designed for the
       structured observation, interpretation, and classification of crypto
       and digital asset markets.
-    </p>
-    <p style="margin-top:14px;">
-      The name <span class="highlight">Basys</span> is derived from Base, Basis, and System,
-      representing a stable, methodical foundation.
     </p>
   </div>
 </section>
@@ -377,21 +323,10 @@ footer{
 </footer>
 
 <script>
-  const header = document.getElementById("header");
-  const navGroup = document.getElementById("navGroup");
-
-  window.addEventListener("scroll", () => {
-    header.classList.toggle("scrolled", window.scrollY > 20);
-  });
-
-  navGroup.querySelector("button").onclick = () => {
-    navGroup.classList.toggle("open");
-  };
-
-  // close dropdown when clicking outside
-  document.addEventListener("click", (e) => {
-    if (!navGroup.contains(e.target)) navGroup.classList.remove("open");
-  });
+const header=document.getElementById("header");
+window.addEventListener("scroll",()=>{
+  header.classList.toggle("scrolled",window.scrollY>20);
+});
 </script>
 
 </body>
