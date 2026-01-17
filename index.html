@@ -61,13 +61,18 @@
             opacity: 1 !important;
         }
 
+        .login-link:hover {
+            background: var(--accent);
+            color: #000 !important;
+        }
+
         section {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 100px 10%;
+            padding: 120px 10%; /* Mehr Padding für besseren Flow */
         }
 
         #home { padding-top: 10vh; }
@@ -99,6 +104,7 @@
             margin-top: 60px;
             animation: bounce 2.5s infinite;
             cursor: pointer;
+            text-decoration: none;
         }
 
         @keyframes bounce {
@@ -111,80 +117,4 @@
         
         .summary-box {
             margin-top: 30px;
-            padding: 25px;
-            border-left: 4px solid var(--accent);
-            background: rgba(255,255,255,0.05);
-            text-align: left;
-            line-height: 1.6;
-        }
-
-        input, textarea {
-            width: 100%; padding: 18px; margin-bottom: 15px;
-            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; border-radius: 10px; outline: none; font-family: inherit;
-        }
-
-        .btn {
-            width: 100%; padding: 18px; background: var(--accent);
-            border: none; border-radius: 10px; font-weight: 700; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 1px;
-        }
-
-        @media (max-width: 768px) {
-            .hero-row span { font-size: 2.5rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="bg-container"></div>
-
-    <header>
-        <nav class="nav-links">
-            <a href="#home">Home</a>
-            <a href="#concept">Concept</a>
-            <a href="#contact">Contact</a>
-        </nav>
-        <nav>
-            <a href="/login" class="login-link">Login</a>
-        </nav>
-    </header>
-
-    <section id="home">
-        <div class="glass-card hero-card">
-            <div class="hero-row">
-                <span>Observe</span><span class="dot">·</span>
-                <span>Learn</span><span class="dot">·</span>
-                <span>Lead</span>
-            </div>
-            <p style="margin-top: 25px; opacity: 0.8; font-size: 1.3rem; letter-spacing: 1px;">Expertise for Crypto and Digital Asset Markets.</p>
-        </div>
-        <a href="#concept" class="scroll-indicator">
-            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-            </svg>
-        </a>
-    </section>
-
-    <section id="concept">
-        <div class="glass-card">
-            <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">The System</h2>
-            <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
-                <span class="highlight">Analytics</span> is an analytical system designed for the structured observation, interpretation, and classification of crypto and digital asset markets. The name <span class="highlight">Basys</span> is derived from Base, Basis, and System, representing a stable, methodical foundation.
-            </p>
-            <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
-                The claim <span class="highlight">Observe Learn Lead</span> describes the internal process: Understanding grows from observation, orientation emerges from understanding, and responsible leadership arises from orientation.
-            </p>
-            <p style="font-size: 1.1rem; line-height: 1.7;">
-                <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
-            </p>
-            <div class="summary-box">
-                <strong>In short:</strong> Basys Analytics combines a stable analytical foundation, a clear process of insight, and personal values for responsible decision-making in the digital economy.
-            </div>
-        </div>
-        <a href="#contact" class="scroll-indicator">
-            <svg width="45" height="45" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-            </svg>
-        </a>
-    </section
+            padding:
