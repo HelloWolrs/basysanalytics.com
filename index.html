@@ -17,14 +17,34 @@
       scroll-behavior: smooth;
     }
 
-    .bg {
+    /* ============ BACKGROUND (SUBTLE ROTATION / DRIFT) ============ */
+    .bg{
       position: fixed;
       inset: 0;
       z-index: -1;
-      background:
-        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.72)),
-        url('1000081562.jpg') no-repeat center center;
+      overflow: hidden;
+    }
+    .bg::before{
+      content:"";
+      position:absolute;
+      inset:-12%;
+      background: url('1000081562.jpg') no-repeat center center;
       background-size: cover;
+      transform-origin: 50% 50%;
+      animation: worldDrift 60s linear infinite;
+      will-change: transform;
+      filter: saturate(1.02) contrast(1.02);
+    }
+    .bg::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.72));
+    }
+    @keyframes worldDrift{
+      0%   { transform: scale(1.12) rotate(0deg) translate3d(0,0,0); }
+      50%  { transform: scale(1.16) rotate(1.2deg) translate3d(-1.5%, 0.8%, 0); }
+      100% { transform: scale(1.12) rotate(0deg) translate3d(0,0,0); }
     }
 
     /* ============ HEADER ============ */
@@ -108,8 +128,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      /* Hero editorial: more whitespace */
-      padding: 150px 10% 120px;
+      padding: 150px 10% 120px; /* editorial whitespace */
     }
 
     .glass-card {
@@ -142,14 +161,14 @@
       object-fit: cover;
     }
 
-    /* ===== HERO CLAIM: minimalist + thinner + spacing ===== */
+    /* ===== HERO CLAIM ===== */
     .hero-claim {
-      margin-top: 38px;              /* more white space */
+      margin-top: 38px;
       text-align: center;
       max-width: 980px;
       font-size: clamp(0.98rem, 1.35vw, 1.22rem);
-      font-weight: 500;              /* thinner */
-      letter-spacing: 1.6px;         /* more spacing */
+      font-weight: 500;
+      letter-spacing: 1.6px;
       opacity: 0.86;
       text-shadow: 0 8px 28px rgba(0,0,0,0.42);
       transition: opacity 0.35s ease, transform 0.35s ease;
@@ -157,7 +176,6 @@
     }
     .hero-claim .accent { color: var(--accent); }
 
-    /* Claim disappears on scroll */
     .hero-claim.hidden {
       opacity: 0;
       transform: translateY(-10px);
@@ -165,7 +183,7 @@
     }
 
     .scroll-indicator {
-      margin-top: 48px;              /* more editorial whitespace */
+      margin-top: 48px;
       animation: bounce 2s infinite;
       cursor: pointer;
     }
@@ -187,10 +205,7 @@
     }
 
     /* ===== CONCEPT: structured 2-column ===== */
-    .concept-grid {
-      display: grid;
-      gap: 26px;
-    }
+    .concept-grid { display: grid; gap: 26px; }
     .concept-left h2 {
       color: var(--accent);
       text-transform: uppercase;
@@ -208,13 +223,8 @@
       line-height: 1.75;
       margin-bottom: 18px;
     }
-    .concept-right p:last-child { margin-bottom: 0; }
 
-    .concept-points {
-      margin-top: 18px;
-      display: grid;
-      gap: 10px;
-    }
+    .concept-points { margin-top: 18px; display: grid; gap: 10px; }
     .concept-point {
       display: flex;
       gap: 12px;
@@ -254,10 +264,7 @@
       transform: translateY(14px);
       transition: opacity 0.8s ease, transform 0.8s ease;
     }
-    .reveal.in {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
 
     /* ===== Form ===== */
     input, textarea {
@@ -284,11 +291,7 @@
       color: #000;
       transition: 0.25s;
     }
-
-    .btn:hover {
-      background: #d99800;
-      transform: translateY(-2px);
-    }
+    .btn:hover { background: #d99800; transform: translateY(-2px); }
 
     footer {
       background: rgba(10,15,25,0.9);
@@ -301,10 +304,7 @@
 
     /* ===== Responsive ===== */
     @media (min-width: 980px) {
-      .concept-grid {
-        grid-template-columns: 1fr 1.35fr;
-        align-items: start;
-      }
+      .concept-grid { grid-template-columns: 1fr 1.35fr; align-items: start; }
     }
 
     @media (max-width: 900px) {
@@ -315,8 +315,6 @@
     @media (max-width: 768px) {
       header { padding: 16px 16px; }
       header.scrolled { padding: 12px 16px; }
-
-      /* Burger appears, nav becomes dropdown */
       .nav-toggle { display: inline-flex; }
 
       nav {
@@ -332,7 +330,6 @@
         border: 1px solid rgba(255,255,255,0.10);
         backdrop-filter: blur(16px);
         box-shadow: 0 20px 50px rgba(0,0,0,0.55);
-
         opacity: 0;
         transform: translateY(-8px);
         pointer-events: none;
@@ -359,20 +356,20 @@
         background: rgba(242,169,0,0.12);
       }
 
-      /* allow wrapping on very small screens */
       .hero-claim { white-space: normal; letter-spacing: 1.2px; line-height: 1.35; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       * { scroll-behavior: auto !important; }
+      .bg::before { animation: none; transform: none; }
       .scroll-indicator { animation: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
       .hero-claim { transition: none; }
     }
   </style>
 </head>
-<body>
 
+<body>
   <div class="bg"></div>
 
   <header id="siteHeader">
@@ -503,8 +500,6 @@
     const onScroll = () => {
       const y = window.scrollY || 0;
       header.classList.toggle('scrolled', y > 20);
-
-      // claim disappears after a small scroll
       if (heroClaim) heroClaim.classList.toggle('hidden', y > 120);
     };
 
@@ -525,17 +520,15 @@
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
 
-    // Close menu when clicking a link (mobile)
     nav.addEventListener('click', (e) => {
       if (e.target.tagName.toLowerCase() === 'a') closeNav();
     });
 
-    // Close menu on escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeNav();
     });
 
-    // Reveal on scroll (IntersectionObserver)
+    // Reveal on scroll
     const revealEls = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -548,6 +541,5 @@
 
     revealEls.forEach(el => io.observe(el));
   </script>
-
 </body>
 </html>
