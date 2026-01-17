@@ -51,7 +51,6 @@
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-
     nav { display: flex; gap: 30px; align-items: center; }
     nav a {
       color: #fff; text-decoration: none;
@@ -160,35 +159,32 @@
       position:relative;
     }
 
-    /* Rotating world layer (fills ellipse) */
-    @-webkit-keyframes world-rotate {
-      from { -webkit-transform: rotate(0deg) scale(1.18); transform: rotate(0deg) scale(1.18); }
-      to   { -webkit-transform: rotate(360deg) scale(1.18); transform: rotate(360deg) scale(1.18); }
-    }
-    @keyframes world-rotate {
-      from { transform: rotate(0deg) scale(1.18); }
-      to   { transform: rotate(360deg) scale(1.18); }
-    }
-
-    .world-rotator{
+    /* Static base (stars + everything) */
+    .static-layer{
       position:absolute;
-      inset:-12%;                 /* MORE overscan -> less sky cutoff */
-      will-change:transform;
-      -webkit-animation: world-rotate 30s linear infinite;
-      animation: world-rotate 30s linear infinite;
+      inset:0;
     }
-    .world-rotator img{
+    .static-layer img{
       width:100%;
       height:100%;
       object-fit:cover;
-      object-position:center 35%; /* shifts view up -> more sky */
+      object-position:center 35%;
       display:block;
       user-select:none;
       pointer-events:none;
     }
 
-    /* Static overlay (text stays still) */
-    .world-overlay{
+    /* Rotating globe only (masked circle) */
+    @-webkit-keyframes globe-rotate {
+      from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
+      to   { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+    }
+    @keyframes globe-rotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .globe-layer{
       position:absolute;
       inset:0;
       display:flex;
@@ -197,23 +193,30 @@
       pointer-events:none;
     }
 
-    /*
-      This overlay uses the SAME image as a quick test.
-      We "crop" to the central area to keep text visible and fixed.
-      For perfect results later:
-      - Replace logo.png here with a separate transparent text mark: mark.png
-    */
-    .world-overlay img{
+    .globe-rotator{
+      width: 62%;              /* <<< smaller globe (fix "too big") */
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      overflow: hidden;
+      will-change: transform;
+      -webkit-animation: globe-rotate 90s linear infinite; /* <<< slower */
+      animation: globe-rotate 90s linear infinite;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    }
+
+    .globe-rotator img{
       width:100%;
       height:100%;
-      object-fit:cover;
-      object-position:center center;
-      opacity:0.98;
-      filter: drop-shadow(0 14px 30px rgba(0,0,0,0.55));
-      /* mask to keep mainly the text/center area, not the whole globe */
-      -webkit-mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 0 42%, rgba(0,0,0,0) 70%);
-      mask-image: radial-gradient(circle at center, rgba(0,0,0,1) 0 42%, rgba(0,0,0,0) 70%);
+      object-fit: cover;
+      object-position: center center;
+      display:block;
+      user-select:none;
     }
+
+    /* Optional: keep mark/text fixed (only if you have mark.png later)
+       .mark-layer { position:absolute; inset:0; pointer-events:none; }
+       .mark-layer img{ width:100%; height:100%; object-fit:cover; object-position:center 35%; }
+    */
 
     /* Claim */
     .hero-claim{
@@ -340,6 +343,7 @@
       section:not(#home){ padding:120px 8% 120px; }
       .glass-card{ padding:36px; }
       .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
+      .globe-rotator{ width: 68%; } /* slightly bigger on small screens */
     }
     @media (max-width: 768px){
       header{ padding:16px 16px; }
@@ -361,10 +365,7 @@
         pointer-events:none;
         transition:.2s ease;
       }
-      header.nav-open nav{
-        opacity:1; transform:translateY(0); pointer-events:auto;
-      }
-
+      header.nav-open nav{ opacity:1; transform:translateY(0); pointer-events:auto; }
       nav a, .nav-group-toggle{
         padding:12px 12px;
         border-radius:12px;
@@ -375,7 +376,6 @@
         text-align:left;
         justify-content:space-between;
       }
-
       nav a.active::after{ display:none; }
       nav a.active{ color:var(--accent); }
 
@@ -432,16 +432,17 @@
   <!-- Home -->
   <section id="home" data-section="home">
     <div class="logo-container reveal">
-      <!-- rotating globe layer -->
-      <div class="world-rotator">
-        <!-- later: replace src="logo.png" with src="world.png" for perfect separation -->
-        <img src="logo.png" alt="World" />
+      <!-- STATIC (stars stay still) -->
+      <div class="static-layer">
+        <img src="logo.png" alt="Static sky layer" />
       </div>
 
-      <!-- static overlay layer (text stays still) -->
-      <div class="world-overlay">
-        <!-- best later: replace src="logo.png" with src="mark.png" (transparent text/logo only) -->
-        <img src="logo.png" alt="Mark" />
+      <!-- ROTATING GLOBE ONLY -->
+      <div class="globe-layer">
+        <div class="globe-rotator">
+          <!-- using same image for now; later replace with world-only image -->
+          <img src="logo.png" alt="Rotating globe" />
+        </div>
       </div>
     </div>
 
@@ -460,8 +461,8 @@
   <section id="concept" data-section="concept">
     <div class="glass-card reveal">
       <div class="concept-head">
-        <h2>Basys</h2>
-        <div class="concept-kicker">
+        <h2 style="color:var(--accent);text-transform:uppercase;letter-spacing:3px;margin-bottom:10px;">Basys</h2>
+        <div style="margin-top:6px;opacity:.88;line-height:1.7;font-size:1.02rem;">
           A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
         </div>
       </div>
@@ -503,20 +504,20 @@
     <div class="glass-card reveal analytics-card">
       <h2 style="color:var(--accent);margin-bottom:14px;letter-spacing:3px;text-transform:uppercase;">Analytics</h2>
 
-      <p style="margin-bottom: 25px;">
+      <p style="margin-bottom: 25px;font-size:1.07rem;line-height:1.75;opacity:.95;">
         <span class="highlight">BasysAnalytics</span> is an analytical system designed for the structured observation,
         interpretation, and classification of crypto and digital asset markets.
         The name <span class="highlight">Basys</span> is derived from Base, Basis, and System,
         representing a stable, methodical foundation.
       </p>
 
-      <p style="margin-bottom: 25px;">
+      <p style="margin-bottom: 25px;font-size:1.07rem;line-height:1.75;opacity:.95;">
         The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
         Understanding grows from observation, orientation emerges from understanding,
         and responsible leadership arises from orientation.
       </p>
 
-      <p>
+      <p style="font-size:1.07rem;line-height:1.75;opacity:.95;">
         <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
         <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
       </p>
@@ -585,7 +586,7 @@
       <h2 style="color:var(--accent);margin-bottom:18px;text-align:center;letter-spacing:3px;text-transform:uppercase;">
         Contact
       </h2>
-      <p class="contact-kicker">
+      <p style="margin:-8px 0 16px;text-align:center;opacity:.88;line-height:1.6;font-size:.98rem;">
         For inquiries, partnerships, or strategic dialogue.
       </p>
       <form>
@@ -608,7 +609,6 @@
   </footer>
 
   <script>
-    // Header scroll + claim hide
     const header = document.getElementById('siteHeader');
     const heroClaim = document.getElementById('heroClaim');
 
@@ -620,7 +620,6 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    // Mobile burger
     const navToggle = document.getElementById('navToggle');
     const nav = document.getElementById('siteNav');
     const closeNav = () => {
@@ -641,7 +640,6 @@
       if (e.key === 'Escape') closeNav();
     });
 
-    // Initiatives dropdown/accordion
     const group = document.getElementById('initiativeGroup');
     const toggle = group?.querySelector('.nav-group-toggle');
 
@@ -658,7 +656,6 @@
 
     document.addEventListener('click', () => closeGroup());
 
-    // Reveal on scroll
     const revealEls = document.querySelectorAll('.reveal');
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -670,56 +667,43 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => io.observe(el));
 
-    // Active nav
     const navLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
-    const sections = navLinks
-      .map(a => document.querySelector(a.getAttribute('href')))
-      .filter(Boolean);
+    const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
 
     const setActive = (id) => {
       navLinks.forEach(a => {
         const isActive = a.getAttribute('data-nav') === id;
         a.classList.toggle('active', isActive);
-        if (isActive) a.setAttribute('aria-current', 'page');
-        else a.removeAttribute('aria-current');
       });
-
       const hasInitiativeActive = (id === 'token' || id === 'fund');
       group?.classList.toggle('has-active', hasInitiativeActive);
     };
 
-    function getActiveLinePx() {
-      return header.getBoundingClientRect().height + 80;
-    }
+    function getActiveLinePx() { return header.getBoundingClientRect().height + 80; }
 
     let ticking = false;
     function updateActive() {
       ticking = false;
       const line = getActiveLinePx();
       let current = sections[0]?.id || 'home';
-
       for (const sec of sections) {
         const top = sec.getBoundingClientRect().top;
         if (top <= line) current = sec.id;
       }
       setActive(current);
     }
-
     function onSpyScroll() {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(updateActive);
     }
-
     window.addEventListener('scroll', onSpyScroll, { passive: true });
     window.addEventListener('resize', onSpyScroll);
     window.addEventListener('load', onSpyScroll);
     onSpyScroll();
 
-    // Copy BTC
     const copyBtn = document.getElementById('copyBtn');
     const btcAddress = document.getElementById('btcAddress');
-
     if (copyBtn && btcAddress) {
       copyBtn.addEventListener('click', async () => {
         try {
