@@ -217,10 +217,17 @@ section{
   justify-content:center;
   align-items:center;
 
-  /* ✅ Boxen/Content etwas höher (war 150px) */
+  /* Basis bleibt (leicht höher als ganz am Anfang) */
   padding:135px 10% 120px;
 
   scroll-margin-top:90px;
+}
+
+/* ✅ Alle Sections (außer Home) so hoch, dass Box + Pfeil direkt sichtbar sind */
+section:not(#home){
+  justify-content:flex-start;
+  padding-top:120px;   /* höher starten */
+  padding-bottom:95px; /* etwas kompakter */
 }
 
 /* ===== HERO overrides global bg ===== */
@@ -422,6 +429,11 @@ section{
 @keyframes bounce{
   0%,20%,50%,80%,100%{ transform:translateY(0); }
   40%{ transform:translateY(-10px); }
+}
+
+/* ✅ Wenn Sections oben starten, Pfeil etwas kompakter */
+section:not(#home) .scroll-indicator{
+  margin-top:28px;
 }
 
 /* ===================== CARDS ===================== */
@@ -652,31 +664,31 @@ footer{
 }
 
 @media (max-width: 900px){
-  section{ padding:125px 8% 110px; } /* ✅ proportional etwas höher (war 135px/8%) */
+  section{ padding:125px 8% 110px; }
+  section:not(#home){ padding-top:110px; padding-bottom:90px; }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
   .hero-stage{ width:min(520px, 92vw); }
 }
 
 /* =========================================================
-   ✅ HERO höher: Welt + Text + Claim nahe an Header
-   (Alles andere bleibt unverändert)
+   ✅ HERO etwas weiter runter unter den Header (wie gewünscht)
    ========================================================= */
 #home{
-  padding-top: 95px !important;      /* weniger Abstand zum Header */
+  padding-top: 120px !important;     /* war 95px -> weiter runter */
   padding-bottom: 110px !important;
 }
 
 .hero-stage{
-  margin-top: -50px;                 /* Welt + Brand höher */
+  margin-top: -20px;                /* war -50px -> weiter runter */
 }
 
 .hero-claim{
-  margin-top: 10px;                  /* Claim näher an die Welt */
+  margin-top: 14px;                 /* leicht mehr Luft */
 }
 
 #home .scroll-indicator{
-  margin-top: 26px;                  /* Pfeil etwas höher */
+  margin-top: 30px;                 /* passend zur neuen Position */
 }
 </style>
 </head>
@@ -879,10 +891,8 @@ footer{
       <button class="btn" type="submit">Send Message</button>
     </form>
   </div>
-</section>
 
-<!-- ✅ NEU: Pfeil nach oben zurück zu Home -->
-<section style="min-height:auto; padding:0 10% 40px; display:flex; justify-content:center; align-items:center;">
+  <!-- ✅ Pfeil direkt wie bei den anderen, nur nach oben zu Home -->
   <a href="#home" class="scroll-indicator reveal" aria-label="Back to Home">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
       <path d="M7 11l5-5 5 5M7 18l5-5 5 5"></path>
