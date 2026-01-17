@@ -17,58 +17,19 @@
       scroll-behavior: smooth;
     }
 
-    /* ============ BACKGROUND (ROBUST: WORLD DRIFT + PARALLAX) ============ */
+    /* ============ BACKGROUND (NO EFFECTS) ============ */
     .bg{
       position: fixed;
       inset: 0;
       z-index: -1;
-      overflow: hidden;
-      pointer-events: none;
-
-      /* parallax vars (JS updates these) */
-      --px: 0px;
-      --py: 0px;
+      background:
+        linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.72)),
+        url('1000081562.jpg') no-repeat center center;
+      /* zoom OUT (shows more of the image) */
+      background-size: 100% auto;
     }
-
-    /* The animated image layer (real element, not pseudo) */
-    .bg-layer{
-      position: absolute;
-      inset: -12%;
-      background: url('1000081562.jpg') no-repeat center center;
-      background-size: cover;
-      will-change: transform;
-      filter: saturate(1.02) contrast(1.02);
-      transform-origin: 50% 50%;
-      animation: worldDrift 70s ease-in-out infinite;
-    }
-
-    /* Dark overlay */
-    .bg-overlay{
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.72));
-    }
-
-    /* Combine drift + parallax using calc() inside keyframes */
-    @keyframes worldDrift{
-      0%{
-        transform:
-          translate3d(calc(var(--px) + 0px), calc(var(--py) + 0px), 0)
-          scale(1.12)
-          rotate(0deg);
-      }
-      50%{
-        transform:
-          translate3d(calc(var(--px) - 18px), calc(var(--py) + 10px), 0)
-          scale(1.16)
-          rotate(1.2deg);
-      }
-      100%{
-        transform:
-          translate3d(calc(var(--px) + 0px), calc(var(--py) + 0px), 0)
-          scale(1.12)
-          rotate(0deg);
-      }
+    @media (max-width: 900px){
+      .bg{ background-size: auto 110%; } /* keeps it nicely filled on mobile */
     }
 
     /* ============ HEADER ============ */
@@ -225,26 +186,19 @@
       border-radius: 14px;
     }
 
-    /* ===== CONCEPT: structured 2-column ===== */
-    .concept-grid { display: grid; gap: 26px; }
-    .concept-left h2 {
+    /* ===== CONCEPT: structured box ===== */
+    .concept-head h2{
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 3px;
       margin-bottom: 10px;
     }
-    .concept-left .kicker {
+    .concept-kicker{
       margin-top: 8px;
       opacity: 0.78;
       line-height: 1.7;
       font-size: 1.02rem;
     }
-    .concept-right p {
-      font-size: 1.07rem;
-      line-height: 1.75;
-      margin-bottom: 18px;
-    }
-
     .concept-points { margin-top: 18px; display: grid; gap: 10px; }
     .concept-point {
       display: flex;
@@ -278,6 +232,14 @@
       line-height: 1.6;
       font-size: 0.98rem;
     }
+
+    /* ===== ANALYTICS BOX ===== */
+    .analytics-card p{
+      font-size: 1.07rem;
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+    .analytics-card p:last-of-type { margin-bottom: 0; }
 
     /* ===== Reveal on scroll ===== */
     .reveal {
@@ -323,13 +285,11 @@
     }
 
     /* ===== Responsive ===== */
-    @media (min-width: 980px) {
-      .concept-grid { grid-template-columns: 1fr 1.35fr; align-items: start; }
-    }
     @media (max-width: 900px) {
       .logo-container { width: min(600px, 92vw); height: min(360px, 55vw); }
       section { padding: 135px 8% 110px; }
     }
+
     @media (max-width: 768px) {
       header { padding: 16px 16px; }
       header.scrolled { padding: 12px 16px; }
@@ -376,7 +336,6 @@
 
     @media (prefers-reduced-motion: reduce) {
       * { scroll-behavior: auto !important; }
-      .bg-layer { animation: none !important; transform: none !important; }
       .scroll-indicator { animation: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
       .hero-claim { transition: none; }
@@ -385,11 +344,7 @@
 </head>
 
 <body>
-  <!-- Background now has real layers -->
-  <div class="bg" id="bg">
-    <div class="bg-layer"></div>
-    <div class="bg-overlay"></div>
-  </div>
+  <div class="bg"></div>
 
   <header id="siteHeader">
     <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
@@ -401,6 +356,7 @@
     <nav id="siteNav">
       <a href="#home">Home</a>
       <a href="#concept">Concept</a>
+      <a href="#analytics">Analytics</a>
       <a href="#contact">Contact</a>
       <a href="/login" class="login-link">Login</a>
     </nav>
@@ -422,65 +378,74 @@
     </a>
   </section>
 
+  <!-- CONCEPT: box 1 -->
   <section id="concept">
     <div class="glass-card reveal">
-      <div class="concept-grid">
-        <div class="concept-left">
-          <h2>Concept</h2>
-          <div class="kicker">
-            A structured framework for observing, interpreting, and classifying crypto and digital asset markets —
-            built on a stable methodological foundation.
-          </div>
+      <div class="concept-head">
+        <h2>Concept</h2>
+        <div class="concept-kicker">
+          A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
+        </div>
+      </div>
 
-          <div class="concept-points">
-            <div class="concept-point">
-              <div class="concept-dot"></div>
-              <div>
-                <strong>Observe</strong>
-                <span>Capture market behavior with discipline and consistency.</span>
-              </div>
-            </div>
-            <div class="concept-point">
-              <div class="concept-dot"></div>
-              <div>
-                <strong>Learn</strong>
-                <span>Turn signals into understanding and orientation.</span>
-              </div>
-            </div>
-            <div class="concept-point">
-              <div class="concept-dot"></div>
-              <div>
-                <strong>Lead</strong>
-                <span>Act responsibly — decisions guided by insight, not noise.</span>
-              </div>
-            </div>
+      <div class="concept-points">
+        <div class="concept-point">
+          <div class="concept-dot"></div>
+          <div>
+            <strong>Observe</strong>
+            <span>Capture market behavior with discipline and consistency.</span>
           </div>
         </div>
-
-        <div class="concept-right">
-          <p>
-            <span class="highlight">BasysAnalytics</span> is an analytical system designed for the structured observation,
-            interpretation, and classification of crypto and digital asset markets. The name
-            <span class="highlight">Basys</span> is derived from Base, Basis, and System — representing a stable,
-            methodical foundation.
-          </p>
-
-          <p>
-            The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
-            understanding grows from observation, orientation emerges from understanding, and responsible leadership
-            arises from orientation.
-          </p>
-
-          <p>
-            <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
-            <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
-          </p>
-
-          <div class="summary-box">
-            <strong>In short:</strong> Basys Analytics combines a stable analytical foundation, a clear process of insight,
-            and personal values for responsible decision-making in the digital economy.
+        <div class="concept-point">
+          <div class="concept-dot"></div>
+          <div>
+            <strong>Learn</strong>
+            <span>Turn signals into understanding and orientation.</span>
           </div>
         </div>
+        <div class="concept-point">
+          <div class="concept-dot"></div>
+          <div>
+            <strong>Lead</strong>
+            <span>Act responsibly — decisions guided by insight, not noise.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#analytics" class="scroll-indicator reveal" aria-label="Scroll to analytics">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
+    </a>
+  </section>
+
+  <!-- ANALYTICS: box 2 -->
+  <section id="analytics">
+    <div class="glass-card reveal analytics-card">
+      <h2 style="color:var(--accent);margin-bottom:14px;letter-spacing:3px;text-transform:uppercase;">Analytics</h2>
+
+      <p>
+        <span class="highlight">BasysAnalytics</span> is an analytical system designed for the structured observation,
+        interpretation, and classification of crypto and digital asset markets. The name
+        <span class="highlight">Basys</span> is derived from Base, Basis, and System — representing a stable,
+        methodical foundation.
+      </p>
+
+      <p>
+        The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
+        understanding grows from observation, orientation emerges from understanding, and responsible leadership
+        arises from orientation.
+      </p>
+
+      <p>
+        <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
+        <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
+      </p>
+
+      <div class="summary-box">
+        <strong>In short:</strong> Basys Analytics combines a stable analytical foundation, a clear process of insight,
+        and personal values for responsible decision-making in the digital economy.
       </div>
     </div>
 
@@ -512,13 +477,10 @@
   </footer>
 
   <script>
+    // Header: solid/compact on scroll + claim hide on scroll
     const header = document.getElementById('siteHeader');
     const heroClaim = document.getElementById('heroClaim');
-    const bg = document.getElementById('bg');
 
-    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    // Header scroll + claim hide
     const onScroll = () => {
       const y = window.scrollY || 0;
       header.classList.toggle('scrolled', y > 20);
@@ -541,10 +503,12 @@
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
 
+    // Close menu when clicking a link (mobile)
     nav.addEventListener('click', (e) => {
       if (e.target.tagName.toLowerCase() === 'a') closeNav();
     });
 
+    // Close menu on escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeNav();
     });
@@ -559,53 +523,8 @@
         }
       });
     }, { threshold: 0.12 });
+
     revealEls.forEach(el => io.observe(el));
-
-    // ===== Parallax (mouse) + (device orientation) =====
-    // This updates CSS vars on .bg, and the drift animation adds to it.
-    let targetX = 0, targetY = 0;
-    let currentX = 0, currentY = 0;
-
-    // Make it clearly visible; if you want subtler later, set to 10–14
-    const maxShift = 22; // px
-
-    function setTarget(nx, ny) {
-      targetX = nx * maxShift;
-      targetY = ny * maxShift;
-    }
-
-    function tick() {
-      if (!bg || prefersReduced) return;
-
-      currentX += (targetX - currentX) * 0.08;
-      currentY += (targetY - currentY) * 0.08;
-
-      bg.style.setProperty('--px', currentX.toFixed(2) + 'px');
-      bg.style.setProperty('--py', currentY.toFixed(2) + 'px');
-
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-
-    window.addEventListener('mousemove', (e) => {
-      if (prefersReduced) return;
-      const nx = (e.clientX / window.innerWidth) * 2 - 1;  // -1..1
-      const ny = (e.clientY / window.innerHeight) * 2 - 1; // -1..1
-      setTarget(nx, ny);
-    }, { passive: true });
-
-    // NOTE: iOS needs user permission to access deviceorientation.
-    window.addEventListener('deviceorientation', (e) => {
-      if (prefersReduced) return;
-      const gamma = Math.max(-25, Math.min(25, e.gamma || 0));
-      const beta  = Math.max(-25, Math.min(25, e.beta || 0));
-      setTarget(gamma / 25, beta / 25);
-    }, true);
-
-    window.addEventListener('mouseleave', () => {
-      if (prefersReduced) return;
-      targetX = 0; targetY = 0;
-    });
   </script>
 </body>
 </html>
