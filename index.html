@@ -120,7 +120,7 @@ nav a.active::after{
 }
 nav a.login-link.active::after{ display:none; }
 
-/* ===== Initiatives dropdown (always visible) ===== */
+/* ===== Initiatives dropdown ===== */
 .nav-group{ position:relative; }
 
 .nav-group-toggle{
@@ -246,7 +246,7 @@ section{
   to{ transform:translate3d(10px,-14px,0); }
 }
 
-/* Hero stage */
+/* Hero stage (desktop/tablet baseline) */
 .hero-stage{
   position:relative;
   width:min(560px, 90vw);
@@ -338,6 +338,7 @@ section{
   pointer-events:none;
 }
 
+/* Brand */
 .brand{
   font-size:clamp(2.9rem, 6vw, 4.1rem);
   font-weight:800;
@@ -370,6 +371,7 @@ section{
   box-shadow:0 0 12px rgba(255,255,255,.18);
 }
 
+/* Tagline */
 .hero-claim{
   margin-top:16px;
   text-align:center;
@@ -382,7 +384,7 @@ section{
 }
 .hero-claim span{ color:var(--accent); }
 
-/* White scroll arrow */
+/* White arrow */
 .scroll-indicator{
   margin-top:40px;
   animation:bounce 2s infinite;
@@ -567,46 +569,67 @@ footer{
   .copy-btn{ width:100%; }
 }
 
-/* ✅ STRONGER phone fix */
+/* ===== HARD phone layout: compact hero ===== */
 @media (max-width: 480px){
-  /* less top padding so everything fits */
+  /* Use safe viewport height so it never overflows */
   #home{
-    padding-top:110px;
-    padding-bottom:70px;
+    min-height:100svh;
+    padding:92px 6% 24px;   /* compact */
+    justify-content:flex-start;
   }
-  section{
+
+  /* Other sections keep normal spacing */
+  section:not(#home){
     padding:120px 8% 100px;
   }
+
+  /* Globe MUCH smaller */
   .hero-stage{
-    width:min(300px, 84vw);   /* MUCH smaller */
-    margin-top:-10px;
+    width:240px;            /* hard cap */
+    max-width:72vw;         /* responsive */
+    margin-top:0;
   }
+
+  /* Slightly reduce rim zoom to keep inside small circle */
   .globe-rotator img{
     width:112%;
     height:112%;
   }
+
+  /* Typography compact */
   .brand{
-    font-size:clamp(2.15rem, 7.4vw, 3.0rem);
+    font-size:2.25rem;
+    line-height:1.05;
   }
   .brand-claim{
-    font-size:1.05rem;
+    font-size:.98rem;
+    letter-spacing:.12em;
+    margin-top:10px;
   }
   .dot{
-    width:9px;
-    height:9px;
-    margin:0 18px;
+    width:8px;
+    height:8px;
+    margin:0 14px;
   }
   .hero-claim{
+    margin-top:12px;
     white-space:normal;
-    font-size:.92rem;
-    letter-spacing:1.2px;
+    max-width:90vw;
+    font-size:.90rem;
+    letter-spacing:1.0px;
     line-height:1.35;
-    margin-top:14px;
-    max-width:92vw;
   }
+
   .scroll-indicator{
-    margin-top:28px;
+    margin-top:18px;
   }
+}
+
+/* Even smaller phones */
+@media (max-width: 360px){
+  .hero-stage{ width:210px; max-width:70vw; }
+  .brand{ font-size:2.05rem; }
+  .brand-claim{ font-size:.92rem; }
 }
 </style>
 </head>
@@ -640,6 +663,7 @@ footer{
   </nav>
 </header>
 
+<!-- HOME -->
 <section id="home" data-section="home">
   <div class="twinkle" aria-hidden="true"></div>
 
@@ -674,12 +698,15 @@ footer{
   </a>
 </section>
 
+<!-- BASYS -->
 <section id="basys" data-section="basys">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); text-transform:uppercase; letter-spacing:3px; margin-bottom:10px;">Basys</h2>
+
     <p style="margin-top:6px; opacity:.90; line-height:1.7; font-size:1.02rem;">
       A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
     </p>
+
     <div style="margin-top:18px; display:grid; gap:12px;">
       <div style="display:flex; gap:12px; align-items:flex-start;">
         <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:7px;flex:0 0 auto;"></div>
@@ -703,24 +730,31 @@ footer{
   </a>
 </section>
 
+<!-- ANALYTICS -->
 <section id="analytics" data-section="analytics">
   <div class="glass-card reveal">
-    <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">Analytics</h2>
+    <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
+      Analytics
+    </h2>
+
     <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
       <span class="highlight">BasysAnalytics</span> is an analytical system designed for the structured observation,
       interpretation, and classification of crypto and digital asset markets.
       The name <span class="highlight">Basys</span> is derived from Base, Basis, and System,
       representing a stable, methodical foundation.
     </p>
+
     <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
       The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
       Understanding grows from observation, orientation emerges from understanding,
       and responsible leadership arises from orientation.
     </p>
+
     <p style="font-size: 1.1rem; line-height: 1.7;">
       <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
       <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
     </p>
+
     <div class="summary-box">
       <strong>In short:</strong> Basys Analytics combines a stable analytical foundation,
       a clear process of insight, and personal values for responsible decision-making
@@ -735,6 +769,7 @@ footer{
   </a>
 </section>
 
+<!-- TOKEN -->
 <section id="token" data-section="token">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Token</h2>
@@ -751,6 +786,7 @@ footer{
   </a>
 </section>
 
+<!-- FUND -->
 <section id="fund" data-section="fund">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Education Fund</h2>
@@ -777,9 +813,12 @@ footer{
   </a>
 </section>
 
+<!-- CONTACT -->
 <section id="contact" data-section="contact">
   <div class="glass-card reveal" style="max-width:550px;">
-    <h2 style="color:var(--accent); margin-bottom:18px; text-align:center; letter-spacing:3px; text-transform:uppercase;">Contact</h2>
+    <h2 style="color:var(--accent); margin-bottom:18px; text-align:center; letter-spacing:3px; text-transform:uppercase;">
+      Contact
+    </h2>
     <p style="margin:-8px 0 16px; text-align:center; opacity:.88; line-height:1.6; font-size:.98rem;">
       For inquiries, partnerships, or strategic dialogue.
     </p>
@@ -861,7 +900,6 @@ function setActive(id){
     a.classList.toggle('active', a.getAttribute('data-nav') === id);
   });
 }
-
 function spy(){
   const line = header.getBoundingClientRect().height + 80;
   let current = 'home';
