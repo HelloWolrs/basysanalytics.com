@@ -1,485 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Basys Analytics</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Basys Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
-  <style>
-    :root { --accent: #f2a900; --glass: rgba(10, 15, 25, 0.95); }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body, html {
-      height: 100%;
-      font-family: 'Inter', sans-serif;
-      color: #fff;
-      background-color: #0b0d17;
-      scroll-behavior: smooth;
-    }
+<style>
+  :root { --accent:#f2a900; --glass: rgba(10,15,25,.92); }
+  *{ margin:0; padding:0; box-sizing:border-box; }
 
-    .bg{
-      position: fixed; inset: 0; z-index: -1;
-      background:
-        linear-gradient(rgba(0,0,0,0.30), rgba(0,0,0,0.55)),
-        url('1000081562.jpg') no-repeat center top;
-      background-size: cover; background-position: center top;
-    }
-    @media (max-width: 900px){ .bg{ background-position: center 20%; } }
+  html,body{
+    height:100%;
+    font-family:'Inter', sans-serif;
+    color:#fff;
+    background:#0b0d17;
+    scroll-behavior:smooth;
+  }
 
-    header {
-      position: fixed; top: 0; width: 100%;
-      padding: 25px 50px; z-index: 1000;
-      display: flex; align-items: center; gap: 18px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
-      transition: padding 0.25s ease, background 0.25s ease, backdrop-filter 0.25s ease, border-color 0.25s ease;
-    }
-    header.scrolled {
-      padding: 14px 50px;
-      background: rgba(10, 15, 25, 0.75);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
+  /* ===== HEADER ===== */
+  header{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:24px 48px;
+    z-index:1000;
+    display:flex;
+    align-items:center;
+    gap:28px;
+    background:linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
+    transition:.25s;
+  }
+  header.scrolled{
+    background:rgba(10,15,25,.75);
+    backdrop-filter:blur(14px);
+    padding:14px 48px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
 
-    nav { display: flex; gap: 30px; align-items: center; }
-    nav a {
-      color: #fff; text-decoration: none;
-      font-size: 12px; letter-spacing: 2px;
-      text-transform: uppercase; font-weight: 700;
-      opacity: 0.75; transition: 0.25s;
-      position: relative; padding: 6px 0;
-    }
-    nav a:hover { opacity: 1; color: var(--accent); }
-    nav a.active { opacity: 1; color: #fff; }
-    nav a.active::after {
-      content: ""; position: absolute; left: 0; right: 0; bottom: -6px;
-      height: 2px; background: var(--accent); border-radius: 999px;
-      box-shadow: 0 0 18px rgba(242,169,0,0.25);
-    }
-    .login-link {
-      border: 1px solid var(--accent);
-      padding: 8px 18px;
-      border-radius: 8px;
-      color: var(--accent);
-      opacity: 1;
-    }
-    nav a.login-link.active::after { display: none; }
+  nav{ display:flex; gap:28px; align-items:center; }
+  nav a{
+    color:#fff;
+    text-decoration:none;
+    font-size:12px;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-weight:700;
+    opacity:.75;
+    transition:.2s;
+    position:relative;
+    padding:6px 0;
+  }
+  nav a:hover{ opacity:1; color:var(--accent); }
+  nav a.active{ opacity:1; }
+  nav a.active::after{
+    content:"";
+    position:absolute;
+    left:0; right:0; bottom:-6px;
+    height:2px;
+    background:var(--accent);
+    border-radius:999px;
+    box-shadow:0 0 18px rgba(242,169,0,.22);
+  }
 
-    .nav-group{ position: relative; }
-    .nav-group-toggle{
-      background:none; border:none; color:#fff;
-      font-size:12px; letter-spacing:2px; text-transform:uppercase; font-weight:700;
-      opacity:.75; cursor:pointer; transition:.25s;
-      display:inline-flex; align-items:center; gap:8px; padding:6px 0;
-      position:relative;
-    }
-    .nav-group-toggle:hover{ opacity:1; color:var(--accent); }
-    .nav-group.has-active .nav-group-toggle{ opacity:1; color:#fff; }
-    .nav-group.has-active .nav-group-toggle::after{
-      content:""; position:absolute; left:0; right:0; bottom:-6px;
-      height:2px; background:var(--accent); border-radius:999px;
-      box-shadow:0 0 18px rgba(242,169,0,.25);
-    }
-    .chevron{ font-size:10px; transition:transform .25s; opacity:.9; }
-    .nav-group.open .chevron{ transform:rotate(180deg); }
-    .nav-group-menu{
-      position:absolute; top:calc(100% + 10px); left:0; min-width:210px;
-      background:rgba(10,15,25,.92); backdrop-filter:blur(14px);
-      border:1px solid rgba(255,255,255,.10); border-radius:14px; padding:8px;
-      display:none; box-shadow:0 20px 50px rgba(0,0,0,.5);
-    }
-    .nav-group.open .nav-group-menu{ display:grid; gap:4px; }
-    .nav-group-menu a{
-      padding:10px 12px; border-radius:10px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.08);
-      font-size:11px; opacity:.95;
-    }
-    .nav-group-menu a:hover{ background:rgba(242,169,0,.10); border-color:rgba(242,169,0,.25); }
-    .nav-group-menu a.active{
-      border-color:rgba(242,169,0,.45);
-      background:rgba(242,169,0,.10);
-      color:#fff;
-    }
-    .nav-group-menu a.active::after{ display:none; }
+  .login-link{
+    border:1px solid var(--accent);
+    padding:8px 18px;
+    border-radius:8px;
+    color:var(--accent);
+    opacity:1;
+  }
+  nav a.login-link.active::after{ display:none; }
 
-    .nav-toggle{
-      display:none; margin-left:auto; width:44px; height:44px;
-      border-radius:10px; border:1px solid rgba(255,255,255,.12);
-      background:rgba(255,255,255,.06); color:#fff;
-      cursor:pointer; align-items:center; justify-content:center;
-    }
-    .nav-toggle svg{ display:block; }
+  /* ===== HERO (full width with graded sky) ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    padding:160px 10% 120px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    overflow:hidden;
+    background:#0b0d17;
+  }
 
-    section{
-      min-height:100vh;
-      display:flex; flex-direction:column;
-      justify-content:center; align-items:center;
-      padding:150px 10% 120px;
-      scroll-margin-top:90px;
-    }
-    section:not(#home){ min-height:auto; padding:140px 10% 140px; }
+  /* Sky image layer (your new stars) */
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:url("hero-sky.jpg") no-repeat center top;
+    background-size:cover;
 
-    .glass-card{
-      background:var(--glass);
-      backdrop-filter:blur(20px);
-      border-radius:20px;
-      padding:48px;
-      width:100%;
-      max-width:950px;
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow:0 20px 50px rgba(0,0,0,.5);
-    }
+    /* Helligkeit/Look anpassen */
+    filter: brightness(0.75) contrast(1.10) saturate(0.95);
+    transform: scale(1.03);
+    z-index:0;
+  }
 
-    /* ===== HERO ELLIPSE ===== */
-    .logo-container{
-      width:600px; height:360px;
-      border-radius:50%;
-      overflow:hidden;
-      border:2px solid rgba(255,255,255,.35);
-      background:rgba(10,15,25,.55);
-      box-shadow:0 0 30px rgba(242,169,0,.18);
-      margin-top:-28px;
-      position:relative;
-    }
+  /* Color grade + vignette (makes it match the glass cards + site tone) */
+  .hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(80% 70% at 50% 35%, rgba(12,18,35,0.10) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.78) 100%),
+      linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0.65));
+    z-index:1;
+  }
 
-    /* Static base (stars + text stay still) */
-    .static-layer{
-      position:absolute; inset:0;
-    }
-    .static-layer img{
-      width:100%; height:100%;
-      object-fit:cover;
-      object-position:center 35%;
-      display:block;
-      user-select:none;
-      pointer-events:none;
-    }
+  /* content above background layers */
+  .hero > *{
+    position:relative;
+    z-index:2;
+  }
 
-    /* Rotating globe only (masked tighter) */
-    @-webkit-keyframes globe-rotate {
-      from { -webkit-transform: rotate(0deg); transform: rotate(0deg); }
-      to   { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
-    }
-    @keyframes globe-rotate {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
+  /* Stage that holds globe+mark */
+  .hero-stage{
+    position:relative;
+    width:min(520px, 88vw);
+    aspect-ratio: 1 / 1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-top:-10px;
+  }
 
-    .globe-layer{
-      position:absolute; inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      pointer-events:none;
-    }
+  /* Globe rotation */
+  @keyframes rotate-earth { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
-    .globe-rotator{
-      width: 52%;            /* tighter -> fewer stars/text inside */
-      aspect-ratio: 1 / 1;
-      border-radius: 50%;
-      overflow: hidden;
-      will-change: transform;
-      -webkit-animation: globe-rotate 120s linear infinite; /* slower */
-      animation: globe-rotate 120s linear infinite;
-      box-shadow: 0 18px 36px rgba(0,0,0,0.35);
-      opacity: 0.82;         /* reduce star visibility */
-      mix-blend-mode: screen;/* stars blend away more, earth pops */
-      filter: contrast(1.15) saturate(1.10);
-    }
+  .globe-rotator{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    animation: rotate-earth 120s linear infinite;
+    will-change: transform;
+  }
 
-    .globe-rotator img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      object-position: center center;
-      display:block;
-      user-select:none;
-    }
+  .globe-rotator img{
+    width:82%;
+    height:82%;
+    object-fit:contain;
+    filter: drop-shadow(0 22px 44px rgba(0,0,0,.35));
+  }
 
-    /* Claim */
-    .hero-claim{
-      margin-top:26px; text-align:center; max-width:980px;
-      font-size:clamp(.98rem,1.35vw,1.22rem);
-      font-weight:500; letter-spacing:1.6px; opacity:.90;
-      text-shadow:0 8px 28px rgba(0,0,0,.42);
-      transition:opacity .35s ease, transform .35s ease;
-      white-space:nowrap;
-    }
-    .hero-claim .accent{ color:var(--accent); }
-    .hero-claim.hidden{ opacity:0; transform:translateY(-10px); pointer-events:none; }
+  /* Mark sits ON TOP of the globe, but doesn't rotate */
+  .hero-mark{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    pointer-events:none;
+  }
 
-    .scroll-indicator{
-      margin-top:44px;
-      animation:bounce 2s infinite;
-      cursor:pointer;
-      display:inline-flex;
-      justify-content:center;
-      opacity:.95;
-    }
-    @keyframes bounce{
-      0%,20%,50%,80%,100%{ transform:translateY(0); }
-      40%{ transform:translateY(-10px); }
-    }
+  .hero-mark img{
+    width:88%;
+    height:auto;
+    object-fit:contain;
+    opacity:0.98;
+    filter: drop-shadow(0 10px 26px rgba(0,0,0,.45));
+  }
 
-    .highlight{ color:var(--accent); font-weight:600; }
-    .summary-box{
-      margin-top:18px; padding:18px;
-      border-left:4px solid var(--accent);
-      background:rgba(255,255,255,.05);
-      line-height:1.7; border-radius:14px; opacity:.98;
-    }
-    .sub-kicker{
-      margin-top:10px; opacity:.90; line-height:1.7;
-      font-size:1.02rem; max-width:900px;
-    }
+  /* Claim */
+  .hero-claim{
+    margin-top:22px;
+    font-size:1.12rem;
+    letter-spacing:1.6px;
+    opacity:.92;
+    text-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  .hero-claim span{ color:var(--accent); }
 
-    .wallet-box{
-      margin-top:16px;
-      display:flex; gap:12px;
-      align-items:center; justify-content:space-between;
-      padding:14px 16px;
-      border-radius:14px;
-      background:rgba(255,255,255,.04);
-      border:1px solid rgba(255,255,255,.10);
-    }
-    .wallet-address{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:.95rem; letter-spacing:.4px; opacity:.95; overflow-wrap:anywhere;
-    }
-    .copy-btn{
-      flex:0 0 auto;
-      padding:10px 14px;
-      border-radius:10px;
-      border:1px solid rgba(242,169,0,.35);
-      background:rgba(242,169,0,.12);
-      color:#fff; cursor:pointer;
-      font-weight:700; letter-spacing:1px; text-transform:uppercase; font-size:.72rem;
-      transition:.2s ease;
-    }
-    .copy-btn:hover{
-      transform:translateY(-1px);
-      background:rgba(242,169,0,.18);
-      border-color:rgba(242,169,0,.55);
-    }
-    .fund-note{ margin-top:10px; opacity:.82; font-size:.9rem; line-height:1.6; }
+  /* Scroll indicator */
+  .scroll-indicator{
+    margin-top:48px;
+    animation:bounce 2s infinite;
+    opacity:.95;
+    display:inline-flex;
+  }
+  @keyframes bounce{
+    0%,20%,50%,80%,100%{ transform:translateY(0) }
+    40%{ transform:translateY(-10px) }
+  }
 
-    .reveal{ opacity:0; transform:translateY(14px); transition:opacity .8s ease, transform .8s ease; }
-    .reveal.in{ opacity:1; transform:translateY(0); }
+  /* ===== CONTENT SECTIONS ===== */
+  section.content{
+    padding:140px 10%;
+    background:#0b0d17;
+  }
 
-    input, textarea{
-      width:100%;
-      padding:14px;
-      margin-bottom:10px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.1);
-      color:#fff;
-      border-radius:10px;
-      font-family:inherit;
-      outline:none;
-    }
-    .btn{
-      width:100%;
-      padding:15px;
-      background:var(--accent);
-      border:none;
-      border-radius:10px;
-      font-weight:800;
-      cursor:pointer;
-      text-transform:uppercase;
-      color:#000;
-      transition:.25s;
-    }
-    .btn:hover{ background:#d99800; transform:translateY(-2px); }
+  .glass-card{
+    max-width:950px;
+    margin:0 auto;
+    background:var(--glass);
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:20px;
+    padding:48px;
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+  }
 
-    footer{
-      background:rgba(10,15,25,.9);
-      padding:42px 10%;
-      text-align:center;
-      border-top:1px solid rgba(255,255,255,.1);
-      font-size:.85rem;
-      color:#888;
-    }
-    .footer-strong{ color:#cfcfcf; font-weight:700; letter-spacing:.6px; }
-    .footer-meta{ margin-top:10px; opacity:.85; }
-    .footer-tagline{ margin-top:6px; color:rgba(242,169,0,.9); letter-spacing:1px; text-transform:uppercase; font-weight:700; font-size:.78rem; }
-    .footer-legal{ margin-top:8px; opacity:.75; line-height:1.6; font-size:.8rem; }
+  .title{
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:3px;
+    margin-bottom:14px;
+  }
 
-    @media (max-width: 900px){
-      .logo-container{ width:min(600px,92vw); height:min(360px,55vw); margin-top:-16px; }
-      section{ padding:135px 8% 110px; }
-      section:not(#home){ padding:120px 8% 120px; }
-      .glass-card{ padding:36px; }
-      .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
-      .globe-rotator{ width: 58%; }
-    }
-    @media (max-width: 768px){
-      header{ padding:16px 16px; }
-      header.scrolled{ padding:12px 16px; }
-      .nav-toggle{ display:inline-flex; }
+  .p{
+    font-size:1.07rem;
+    line-height:1.75;
+    opacity:.95;
+    margin-bottom:14px;
+  }
+  .p:last-child{ margin-bottom:0; }
 
-      nav{
-        position:absolute;
-        top:calc(100% + 10px);
-        left:16px; right:16px;
-        display:grid; gap:10px;
-        padding:14px;
-        border-radius:16px;
-        background:rgba(10,15,25,.9);
-        border:1px solid rgba(255,255,255,.10);
-        backdrop-filter:blur(16px);
-        box-shadow:0 20px 50px rgba(0,0,0,.55);
-        opacity:0; transform:translateY(-8px);
-        pointer-events:none;
-        transition:.2s ease;
-      }
-      header.nav-open nav{ opacity:1; transform:translateY(0); pointer-events:auto; }
-      nav a, .nav-group-toggle{
-        padding:12px 12px;
-        border-radius:12px;
-        background:rgba(255,255,255,.04);
-        border:1px solid rgba(255,255,255,.08);
-        opacity:.95;
-        width:100%;
-        text-align:left;
-        justify-content:space-between;
-      }
-      nav a.active::after{ display:none; }
-      nav a.active{ color:var(--accent); }
+  footer{
+    background:rgba(10,15,25,.9);
+    padding:42px 10%;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,.1);
+    font-size:.85rem;
+    color:#888;
+  }
+  .footer-strong{ color:#cfcfcf; font-weight:700; letter-spacing:.6px; }
+  .footer-meta{ margin-top:10px; opacity:.85; }
+  .footer-tagline{
+    margin-top:6px;
+    color:rgba(242,169,0,.9);
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-weight:700;
+    font-size:.78rem;
+  }
+  .footer-legal{ margin-top:8px; opacity:.75; line-height:1.6; font-size:.8rem; }
 
-      .nav-group-menu{
-        position:static;
-        display:none;
-        background:transparent;
-        border:none;
-        padding:0;
-        box-shadow:none;
-      }
-      .nav-group.open .nav-group-menu{
-        display:grid;
-        gap:8px;
-        padding-top:10px;
-      }
-
-      .wallet-box{ flex-direction:column; align-items:stretch; }
-      .copy-btn{ width:100%; }
-    }
-  </style>
+  @media (max-width: 900px){
+    .hero{ padding:150px 8% 110px; }
+    .hero-stage{ width:min(420px, 90vw); }
+    .hero-mark img{ width:92%; }
+    .glass-card{ padding:36px; }
+  }
+  @media (max-width: 768px){
+    header{ padding:16px 16px; }
+    header.scrolled{ padding:12px 16px; }
+    nav{ gap:16px; flex-wrap:wrap; }
+  }
+</style>
 </head>
 
 <body>
-  <div class="bg"></div>
 
-  <header id="siteHeader">
-    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
-        <path d="M4 7h16M4 12h16M4 17h16"></path>
-      </svg>
-    </button>
+<header id="siteHeader">
+  <nav id="siteNav">
+    <a href="#home" class="active">Home</a>
+    <a href="#concept">Basys</a>
+    <a href="#analytics">Analytics</a>
+    <a href="#contact">Contact</a>
+    <a href="/login" class="login-link">Login</a>
+  </nav>
+</header>
 
-    <nav id="siteNav">
-      <a href="#home" data-nav="home">Home</a>
-      <a href="#concept" data-nav="concept">Basys</a>
-      <a href="#analytics" data-nav="analytics">Analytics</a>
-
-      <div class="nav-group" id="initiativeGroup">
-        <button class="nav-group-toggle" aria-expanded="false" type="button">
-          Initiatives <span class="chevron">▾</span>
-        </button>
-        <div class="nav-group-menu" aria-label="Initiatives submenu">
-          <a href="#token" data-nav="token">Token</a>
-          <a href="#fund" data-nav="fund">Education Fund</a>
-        </div>
-      </div>
-
-      <a href="#contact" data-nav="contact">Contact</a>
-      <a href="/login" class="login-link">Login</a>
-    </nav>
-  </header>
-
-  <section id="home" data-section="home">
-    <div class="logo-container reveal">
-      <div class="static-layer">
-        <img src="logo.png" alt="Static layer" />
-      </div>
-      <div class="globe-layer">
-        <div class="globe-rotator">
-          <img src="logo.png" alt="Rotating globe" />
-        </div>
-      </div>
+<section class="hero" id="home">
+  <div class="hero-stage">
+    <div class="globe-rotator">
+      <img src="hero-globe.png" alt="Earth" />
     </div>
-
-    <div class="hero-claim reveal" id="heroClaim">
-      From <span class="accent">Observation</span> to <span class="accent">Leadership</span> in Digital Markets
+    <div class="hero-mark">
+      <img src="hero-mark.png" alt="Basys Analytics" />
     </div>
+  </div>
 
-    <a href="#concept" class="scroll-indicator reveal" aria-label="Scroll to Basys">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
-      </svg>
-    </a>
-  </section>
+  <div class="hero-claim">
+    From <span>Observation</span> to <span>Leadership</span> in Digital Markets
+  </div>
 
-  <!-- The rest of your sections (Basys / Analytics / Token / Fund / Contact / Footer) stay the same as before. -->
-  <!-- IMPORTANT: Keep your existing sections below unchanged. -->
+  <a class="scroll-indicator" href="#concept" aria-label="Scroll">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+      <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+    </svg>
+  </a>
+</section>
 
-  <script>
-    const header = document.getElementById('siteHeader');
-    const heroClaim = document.getElementById('heroClaim');
+<section class="content" id="concept">
+  <div class="glass-card">
+    <h2 class="title">Basys</h2>
+    <p class="p">A clear process model for Observe · Learn · Lead — turning market behavior into orientation and responsible action.</p>
+  </div>
+</section>
 
-    const onScroll = () => {
-      const y = window.scrollY || 0;
-      header.classList.toggle('scrolled', y > 20);
-      if (heroClaim) heroClaim.classList.toggle('hidden', y > 140);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+<section class="content" id="analytics">
+  <div class="glass-card">
+    <h2 class="title">Analytics</h2>
+    <p class="p"><strong style="color:var(--accent);">BasysAnalytics</strong> is an analytical system designed for the structured observation, interpretation, and classification of crypto and digital asset markets.</p>
+    <p class="p">The claim <strong style="color:var(--accent);">Observe Learn Lead</strong> describes the internal process: understanding grows from observation, orientation emerges from understanding, and responsible leadership arises from orientation.</p>
+  </div>
+</section>
 
-    const navToggle = document.getElementById('navToggle');
-    const nav = document.getElementById('siteNav');
-    const closeNav = () => {
-      header.classList.remove('nav-open');
-      navToggle?.setAttribute('aria-expanded', 'false');
-    };
+<section class="content" id="contact">
+  <div class="glass-card" style="max-width:550px;">
+    <h2 class="title" style="text-align:center;">Contact</h2>
+    <form>
+      <input style="width:100%;padding:14px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;" type="text" placeholder="Full Name" required>
+      <input style="width:100%;padding:14px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;" type="email" placeholder="Email Address" required>
+      <textarea style="width:100%;padding:14px;margin-bottom:10px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#fff;" rows="5" placeholder="Your Message" required></textarea>
+      <button style="width:100%;padding:15px;border:none;border-radius:10px;background:var(--accent);font-weight:800;text-transform:uppercase;cursor:pointer;color:#000;" type="submit">
+        Send Message
+      </button>
+    </form>
+  </div>
+</section>
 
-    navToggle?.addEventListener('click', () => {
-      const open = header.classList.toggle('nav-open');
-      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
+<footer>
+  <div class="footer-strong">Basys Analytics</div>
+  <div class="footer-meta">Stuttgart · San Francisco · Santa Fe</div>
+  <div class="footer-tagline">Independent Research &amp; Analysis</div>
+  <div class="footer-legal">
+    BasysAnalytics is a subsidiary of Next-Gen-IT LLC, based in the USA.
+  </div>
+  <div style="margin-top:10px; opacity:.65;">© 2026 Basys Analytics. All rights reserved.</div>
+</footer>
 
-    nav?.addEventListener('click', (e) => {
-      if (e.target.tagName.toLowerCase() === 'a') closeNav();
-    });
+<script>
+  // header shrink on scroll
+  const header = document.getElementById("siteHeader");
+  window.addEventListener("scroll", () => {
+    header.classList.toggle("scrolled", window.scrollY > 20);
+  });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeNav();
-    });
+  // simple active nav (lightweight)
+  const links = [...document.querySelectorAll('#siteNav a[href^="#"]')];
+  const sections = links.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
 
-    const group = document.getElementById('initiativeGroup');
-    const toggle = group?.querySelector('.nav-group-toggle');
+  function setActive(id){
+    links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+  }
 
-    const closeGroup = () => {
-      group?.classList.remove('open');
-      toggle?.setAttribute('aria-expanded', 'false');
-    };
+  function spy(){
+    const line = header.getBoundingClientRect().height + 80;
+    let current = "home";
+    for(const sec of sections){
+      if(sec.getBoundingClientRect().top <= line) current = sec.id;
+    }
+    setActive(current);
+  }
+  window.addEventListener("scroll", () => requestAnimationFrame(spy), {passive:true});
+  window.addEventListener("load", spy);
+</script>
 
-    toggle?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const open = group.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-
-    document.addEventListener('click', () => closeGroup());
-
-    const revealEls = document.querySelectorAll('.reveal');
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => io.observe(el));
-  </script>
 </body>
 </html>
