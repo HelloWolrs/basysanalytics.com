@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basys Analytics</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Basys Analytics | Observe · Learn · Lead</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #f2a900;
+            --glass: rgba(10, 15, 25, 0.85);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,11 +17,11 @@
             height: 100%;
             font-family: 'Inter', sans-serif;
             color: white;
-            background-color: #0b0d17; /* Fallback Farbe */
+            background-color: #0b0d17;
             scroll-behavior: smooth;
         }
 
-        /* Hintergrund-Fix */
+        /* Hintergrundbild fixiert */
         .bg-container {
             position: fixed;
             top: 0;
@@ -28,88 +29,102 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            /* WICHTIG: Dateiname muss EXAKT stimmen */
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), 
-                        url('./1000081562.jpg') no-repeat center center;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), 
+                        url('1000081562.jpg') no-repeat center center;
             background-size: cover;
         }
 
-        /* Navigation Links oben links */
+        /* Navigations-Links oben links */
         nav {
             position: fixed;
-            top: 30px;
-            left: 30px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 40px;
             z-index: 100;
+            display: flex;
+            gap: 25px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            margin-right: 20px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             letter-spacing: 2px;
             text-transform: uppercase;
-            font-weight: 600;
+            font-weight: 700;
             transition: 0.3s;
+            opacity: 0.6;
         }
 
-        nav a:hover { color: var(--accent); }
+        nav a:hover { opacity: 1; color: var(--accent); }
 
-        /* Sektionen Styling */
         section {
             min-height: 100vh;
             display: flex;
             align-items: center;
-            padding: 0 10%;
+            padding: 100px 10%;
         }
 
-        #home { justify-content: flex-start; align-items: flex-end; padding-bottom: 10vh; }
-        #contact { justify-content: center; }
+        /* Home - Platz lassen für das Logo im Bild */
+        #home { justify-content: flex-start; align-items: flex-end; padding-bottom: 15vh; }
+        #vision, #contact { justify-content: center; }
 
-        /* Moderne Glas-Optik */
-        .glass {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        h1 { font-size: 2.5rem; margin-bottom: 15px; }
-        p { line-height: 1.6; opacity: 0.9; margin-bottom: 20px; }
-
-        /* Kontaktformular */
-        form input, form textarea {
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 50px;
             width: 100%;
-            padding: 12px;
+            max-width: 850px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+        }
+
+        .small-card { max-width: 500px; }
+
+        h1 { font-size: 3.5rem; font-weight: 700; margin-bottom: 1rem; line-height: 1; }
+        h2 { font-size: 1.8rem; color: var(--accent); margin-bottom: 2rem; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .vision-text { font-size: 1.1rem; line-height: 1.8; opacity: 0.95; }
+        .highlight { color: var(--accent); font-weight: 600; }
+
+        /* Formular */
+        .form-group { margin-top: 20px; }
+        input, textarea {
+            width: 100%;
+            padding: 16px;
             margin-bottom: 15px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
             color: white;
+            font-family: inherit;
             outline: none;
         }
-
-        form input:focus { border-color: var(--accent); }
+        input:focus { border-color: var(--accent); background: rgba(255,255,255,0.08); }
 
         .btn {
+            display: inline-block;
+            padding: 16px 40px;
             background: var(--accent);
             color: black;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
+            text-decoration: none;
+            font-weight: 800;
+            border-radius: 12px;
             text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease;
         }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(242, 169, 0, 0.4); }
 
-        @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
-            section { padding: 0 5%; }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            section { padding: 80px 5%; }
+            .glass-card { padding: 30px; }
         }
     </style>
 </head>
@@ -118,26 +133,49 @@
     <div class="bg-container"></div>
 
     <nav>
-        <a href="#home">Home</a>
+        <a href="#home">Start</a>
+        <a href="#vision">Vision</a>
         <a href="#contact">Kontakt</a>
     </nav>
 
     <section id="home">
-        <div class="glass">
-            <h1>Basys Insights</h1>
-            <p>Smarte Datenanalyse für Blockchain-Systeme. Wir machen On-Chain Daten für Sie nutzbar.</p>
-            <a href="#contact" style="color:var(--accent); text-decoration:none; font-weight:bold;">Jetzt anfragen →</a>
+        <div class="glass-card small-card">
+            <h1>Observe.<br>Learn.<br><span style="color:var(--accent);">Lead.</span></h1>
+            <p style="margin-top:20px; font-size:1.2rem; opacity:0.8;">Smarte Analyse für die digitale Ökonomie.</p>
+        </div>
+    </section>
+
+    <section id="vision">
+        <div class="glass-card">
+            <h2>Über Basys Analytics</h2>
+            <div class="vision-text">
+                <p>
+                    <span class="highlight">Basys Analytics</span> ist ein analytisches System zur strukturierten Beobachtung, Interpretation und Einordnung von Krypto- und Digital Asset Märkten. Der Name leitet sich von <span class="highlight">Base, Basis und System</span> ab und steht für ein stabiles, methodisches Fundament, auf dem Erkenntnisse aufgebaut und Entscheidungen entwickelt werden.
+                </p>
+                <br>
+                <p>
+                    Der Claim <span class="highlight">Observe · Learn · Lead</span> beschreibt den inneren Prozess dieses Systems: Aus Beobachtung entsteht Verständnis, aus Verständnis entsteht Orientierung und aus Orientierung entsteht verantwortungsvolle Führung. 
+                </p>
+                <br>
+                <p>
+                    <span class="highlight">OLL</span> steht dabei sowohl für „Observe · Learn · Lead“ als konzeptionelles Leitmodell als auch für <span class="highlight">Oliver und Lion Leininger</span> – als persönliche Referenz und Verbindung individueller Motivation mit systematischer Analyse.
+                </p>
+                <br>
+                <p style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px; font-style: italic;">
+                    Zusammengefasst: Basys Analytics vereint ein stabiles analytisches Fundament, einen klaren Erkenntnisprozess und persönliche Werte, um aus Daten Orientierung und verantwortungsvolle Entscheidungen zu ermöglichen.
+                </p>
+            </div>
         </div>
     </section>
 
     <section id="contact">
-        <div class="glass" style="width: 100%;">
-            <h2 style="margin-bottom:20px; color:var(--accent);">Kontakt</h2>
-            <form action="#">
+        <div class="glass-card small-card">
+            <h2>Kontakt</h2>
+            <form>
                 <input type="text" placeholder="Name" required>
                 <input type="email" placeholder="E-Mail" required>
-                <textarea rows="4" placeholder="Deine Nachricht"></textarea>
-                <button type="submit" class="btn">Absenden</button>
+                <textarea rows="4" placeholder="Ihre Nachricht"></textarea>
+                <button type="submit" class="btn" style="width:100%;">Nachricht senden</button>
             </form>
         </div>
     </section>
