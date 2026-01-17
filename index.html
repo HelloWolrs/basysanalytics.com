@@ -29,7 +29,7 @@
       background-size: 100% auto;
     }
     @media (max-width: 900px){
-      .bg{ background-size: auto 110%; } /* keeps it nicely filled on mobile */
+      .bg{ background-size: auto 110%; }
     }
 
     /* ============ HEADER ============ */
@@ -69,11 +69,30 @@
       font-weight: 700;
       opacity: 0.75;
       transition: 0.25s;
+      position: relative;
+      padding: 6px 0;
     }
 
     nav a:hover {
       opacity: 1;
       color: var(--accent);
+    }
+
+    /* Active nav item (scroll spy) */
+    nav a.active {
+      opacity: 1;
+      color: #fff;
+    }
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -6px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+      box-shadow: 0 0 18px rgba(242,169,0,0.25);
     }
 
     .login-link {
@@ -83,6 +102,9 @@
       color: var(--accent);
       opacity: 1;
     }
+
+    /* Keep login look even when "active" would apply */
+    nav a.login-link.active::after { display: none; }
 
     /* Mobile nav toggle */
     .nav-toggle {
@@ -114,6 +136,7 @@
       justify-content: center;
       align-items: center;
       padding: 150px 10% 120px;
+      scroll-margin-top: 90px; /* fixes anchor positions under fixed header */
     }
 
     .glass-card {
@@ -241,6 +264,15 @@
     }
     .analytics-card p:last-of-type { margin-bottom: 0; }
 
+    /* ===== CONTACT helper text ===== */
+    .contact-kicker{
+      margin: -8px 0 18px;
+      text-align: center;
+      opacity: 0.78;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
     /* ===== Reveal on scroll ===== */
     .reveal {
       opacity: 0;
@@ -277,12 +309,15 @@
 
     footer {
       background: rgba(10,15,25,0.9);
-      padding: 40px 10%;
+      padding: 42px 10%;
       text-align: center;
       border-top: 1px solid rgba(255,255,255,0.1);
       font-size: 0.85rem;
       color: #888;
     }
+    .footer-strong { color: #cfcfcf; font-weight: 700; letter-spacing: 0.6px; }
+    .footer-meta { margin-top: 10px; opacity: 0.85; }
+    .footer-tagline { margin-top: 6px; color: rgba(242,169,0,0.9); letter-spacing: 1px; text-transform: uppercase; font-weight: 700; font-size: 0.78rem; }
 
     /* ===== Responsive ===== */
     @media (max-width: 900px) {
@@ -325,6 +360,9 @@
         border: 1px solid rgba(255,255,255,0.08);
         opacity: 0.95;
       }
+      nav a.active::after { display: none; } /* underline not needed inside dropdown */
+      nav a.active { color: var(--accent); }
+
       nav a:hover {
         background: rgba(242,169,0,0.10);
         border-color: rgba(242,169,0,0.25);
@@ -362,7 +400,7 @@
     </nav>
   </header>
 
-  <section id="home">
+  <section id="home" data-section="home">
     <div class="logo-container reveal">
       <img src="logo.png" alt="Basys Analytics Logo" />
     </div>
@@ -379,7 +417,7 @@
   </section>
 
   <!-- CONCEPT: box 1 -->
-  <section id="concept">
+  <section id="concept" data-section="concept">
     <div class="glass-card reveal">
       <div class="concept-head">
         <h2>Concept</h2>
@@ -421,7 +459,7 @@
   </section>
 
   <!-- ANALYTICS: box 2 -->
-  <section id="analytics">
+  <section id="analytics" data-section="analytics">
     <div class="glass-card reveal analytics-card">
       <h2 style="color:var(--accent);margin-bottom:14px;letter-spacing:3px;text-transform:uppercase;">Analytics</h2>
 
@@ -456,11 +494,14 @@
     </a>
   </section>
 
-  <section id="contact">
+  <section id="contact" data-section="contact">
     <div class="glass-card reveal" style="max-width:550px;">
-      <h2 style="color:var(--accent);margin-bottom:30px;text-align:center;letter-spacing:3px;text-transform:uppercase;">
+      <h2 style="color:var(--accent);margin-bottom:18px;text-align:center;letter-spacing:3px;text-transform:uppercase;">
         Contact
       </h2>
+      <p class="contact-kicker">
+        For inquiries, partnerships, or strategic dialogue.
+      </p>
       <form>
         <input type="text" placeholder="Full Name" required />
         <input type="email" placeholder="Email Address" required />
@@ -471,9 +512,10 @@
   </section>
 
   <footer>
-    <strong>Basys Analytics</strong><br />
-    Oliver &amp; Lion Leininger<br />
-    <span style="opacity:.6;">© 2026 Basys Analytics</span>
+    <div class="footer-strong">Basys Analytics</div>
+    <div class="footer-meta">Stuttgart · San Francisco · Santa Fe</div>
+    <div class="footer-tagline">Independent Research &amp; Analysis</div>
+    <div style="margin-top:10px; opacity:.65;">© 2026 Basys Analytics. All rights reserved.</div>
   </footer>
 
   <script>
@@ -523,8 +565,37 @@
         }
       });
     }, { threshold: 0.12 });
-
     revealEls.forEach(el => io.observe(el));
+
+    // Active nav item (scroll spy)
+    const sectionIds = ['home', 'concept', 'analytics', 'contact'];
+    const sectionEls = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+    const navLinks = Array.from(document.querySelectorAll('#siteNav a[href^="#"]'))
+      .filter(a => a.getAttribute('href') !== '#');
+
+    const setActive = (id) => {
+      navLinks.forEach(a => {
+        const match = a.getAttribute('href') === '#' + id;
+        a.classList.toggle('active', match);
+        if (match) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      });
+    };
+
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, {
+      root: null,
+      threshold: 0.35,
+      rootMargin: '-20% 0px -60% 0px'
+    });
+
+    sectionEls.forEach(sec => spy.observe(sec));
+
+    // fallback initial state
+    setActive('home');
   </script>
 </body>
 </html>
