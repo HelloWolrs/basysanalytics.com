@@ -27,7 +27,6 @@
             background-attachment: fixed;
         }
 
-        /* Navigation */
         header {
             position: fixed;
             top: 0; left: 0; width: 100%;
@@ -36,11 +35,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            /* Stärkerer Verlauf oben für besseres Einfließen des Logos */
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
         }
 
-        .logo-area { display: flex; align-items: center; gap: 20px; }
-        .logo-img { height: 50px; width: auto; } /* Größe des Logos */
+        /* LOGO OPTIMIERUNG */
+        .logo-img { 
+            height: 90px; 
+            width: auto;
+            /* Lässt das Logo weich in den dunklen Header einfließen */
+            filter: drop-shadow(0 0 15px rgba(0,0,0,0.8));
+            transition: transform 0.3s ease;
+        }
+        .logo-img:hover { transform: scale(1.05); }
 
         .nav-links { display: flex; gap: 30px; align-items: center; }
         
@@ -52,7 +59,7 @@
             text-transform: uppercase;
             font-weight: 700;
             opacity: 0.7;
-            transition: color 0.3s ease, opacity 0.3s ease;
+            transition: 0.3s;
         }
 
         nav a:hover { opacity: 1; color: var(--accent); }
@@ -65,12 +72,6 @@
             opacity: 1 !important;
         }
 
-        .login-link:hover {
-            background: var(--accent);
-            color: #000 !important;
-        }
-
-        /* Sektionen */
         section {
             min-height: 100vh;
             display: flex;
@@ -79,24 +80,26 @@
         }
 
         #home { 
-            align-items: flex-start;
-            padding-top: 18vh; /* Weiter nach oben gesetzt */
+            align-items: center; 
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* WEISSER RAHMEN UM DIE BOX - WIE GEWÜNSCHT */
+        .hero-card {
+            max-width: 850px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
 
         .glass-card {
             background: var(--glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 20px;
             padding: 40px;
             width: 100%;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        .hero-card {
-            max-width: 850px;
-            text-align: center;
         }
 
         .hero-row { 
@@ -107,9 +110,23 @@
             flex-wrap: wrap; 
         }
         
-        .hero-row span { font-size: 3.5rem; font-weight: 700; letter-spacing: -1px; color: #fff; }
-        .hero-row span::first-letter { color: var(--accent); } /* Nur erster Buchstabe orange */
-        .dot { color: #fff; font-size: 3rem; opacity: 0.5; }
+        /* ANFANGSBUCHSTABEN ORANGE */
+        .hero-row span { font-size: 3.5rem; font-weight: 700; letter-spacing: -1px; }
+        .hero-row span::first-letter { color: var(--accent); }
+        .dot { color: #fff; font-size: 3rem; opacity: 0.4; }
+
+        /* SCROLL INDIKATOR */
+        .scroll-indicator {
+            margin-top: 50px;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
 
         .highlight { color: var(--accent); font-weight: 600; }
         
@@ -121,26 +138,21 @@
             text-align: left;
         }
 
-        #vision, #contact { align-items: center; }
-
         input, textarea {
             width: 100%; padding: 15px; margin-bottom: 12px;
             background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; border-radius: 8px; outline: none; font-family: inherit;
+            color: #fff; border-radius: 8px; outline: none;
         }
 
         .btn {
             width: 100%; padding: 16px; background: var(--accent);
             border: none; border-radius: 8px; font-weight: 700; cursor: pointer;
-            transition: transform 0.2s ease;
         }
-        .btn:hover { transform: scale(1.02); }
 
         @media (max-width: 768px) {
-            header { padding: 15px 20px; }
             .hero-row span { font-size: 2.2rem; }
-            .nav-links { gap: 15px; }
-            .logo-img { height: 40px; }
+            .logo-img { height: 60px; }
+            header { padding: 15px 25px; }
         }
     </style>
 </head>
@@ -149,15 +161,11 @@
     <div class="bg-container"></div>
 
     <header>
-        <div class="logo-area">
-            <img src="logo.png" alt="Basys Logo" class="logo-img">
-            <nav class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#vision">Konzept</a>
-                <a href="#contact">Kontakt</a>
-            </nav>
-        </div>
-        <nav>
+        <img src="logo.png" alt="Basys Logo" class="logo-img">
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#vision">Konzept</a>
+            <a href="#contact">Kontakt</a>
             <a href="/login" class="login-link">Login</a>
         </nav>
     </header>
@@ -169,37 +177,25 @@
                 <span>Learn</span><span class="dot">·</span>
                 <span>Lead</span>
             </div>
-            <p style="margin-top: 20px; opacity: 0.8; font-size: 1.2rem; letter-spacing: 1px;">Expertise für Krypto- und Digital Asset Märkte.</p>
+            <p style="margin-top: 15px; opacity: 0.8; font-size: 1.1rem; letter-spacing: 1px;">Expertise für Krypto- und Digital Asset Märkte.</p>
         </div>
+        
+        <a href="#vision" class="scroll-indicator">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </a>
     </section>
 
     <section id="vision">
         <div class="glass-card" style="max-width: 900px;">
-            <h2 style="color: var(--accent); margin-bottom: 25px; text-transform: uppercase; letter-spacing: 2px;">Das System</h2>
-            <p style="margin-bottom: 20px; font-size: 1.05rem;">
-                <span class="highlight">Analytics</span> ist ein analytisches System zur strukturierten Beobachtung, Interpretation und Einordnung von Krypto- und Digital Asset märkten. Der name <span class="highlight">Basys</span> leitet sich von Base, Basis und System ab und steht für ein stabiles, methodisches Fundament.
-            </p>
-            <p style="margin-bottom: 20px; font-size: 1.05rem;">
-                Der Claim <span class="highlight">Observer Learn Lead</span> beschreibt den inneren Prozess: Aus Beobachtung entsteht Verständnis, aus Verständnis entsteht Orientierung und aus Orientierung entsteht verantwortungsvolle Führung.
-            </p>
-            <p style="font-size: 1.05rem;">
-                <span class="highlight">OLL</span> steht für das konzeptionelle Leitmodell sowie persönlich für <span class="highlight">Oliver und Lion Leininger</span> als Verbindung individueller Motivation mit systematischer Analyse.
+            <h2 style="color: var(--accent); margin-bottom: 25px; text-transform: uppercase;">Das System</h2>
+            <p style="margin-bottom: 20px;">
+                <span class="highlight">Analytics</span> ist ein analytisches System zur strukturierten Beobachtung, Interpretation und Einordnung von Krypto- und Digital Asset märkten.
             </p>
             <div class="summary-box">
-                <strong>Zusammengefasst:</strong> Basys Analytics vereint ein stabiles analytisches Fundament, einen klaren Erkenntnisprozess und persönliche Werte für verantwortungsvolle Entscheidungen in der digitalen Ökonomie.
+                <strong>Zusammengefasst:</strong> Basys Analytics vereint ein stabiles analytisches Fundament, einen klaren Erkenntnisprozess und persönliche Werte.
             </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="glass-card" style="max-width: 500px;">
-            <h2 style="color: var(--accent); margin-bottom: 25px; text-align: center;">KONTAKT</h2>
-            <form>
-                <input type="text" placeholder="Name" required>
-                <input type="email" placeholder="E-Mail" required>
-                <textarea rows="4" placeholder="Nachricht"></textarea>
-                <button type="submit" class="btn">SENDEN</button>
-            </form>
         </div>
     </section>
 
