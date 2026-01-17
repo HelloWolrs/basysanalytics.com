@@ -17,18 +17,22 @@
       scroll-behavior: smooth;
     }
 
-    /* ============ BACKGROUND (NO EFFECTS) ============ */
+    /* ============ BACKGROUND (smaller / more sky) ============ */
     .bg{
       position: fixed;
       inset: 0;
       z-index: -1;
       background:
         linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.72)),
-        url('1000081562.jpg') no-repeat center center;
-      background-size: 100% auto;
+        url('1000081562.jpg') no-repeat center top;
+      background-size: cover;              /* key change */
+      background-position: center top;     /* key change */
     }
     @media (max-width: 900px){
-      .bg{ background-size: auto 110%; }
+      .bg{
+        background-size: cover;
+        background-position: center 20%;   /* shows a bit more sky on mobile */
+      }
     }
 
     /* ============ HEADER ============ */
@@ -136,10 +140,10 @@
       scroll-margin-top: 90px;
     }
 
-    /* Make non-hero sections NOT full height so cards don't "bleed" into next */
+    /* More air + visible scroll */
     section:not(#home){
       min-height: auto;
-      padding: 120px 10% 120px; /* a bit taller */
+      padding: 140px 10% 140px; /* higher */
     }
 
     .glass-card {
@@ -153,9 +157,9 @@
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
-    /* Slightly taller cards for sections (concept/analytics/contact) */
+    /* Slightly taller cards */
     section:not(#home) .glass-card{
-      padding: 42px; /* increased from 34px */
+      padding: 48px; /* higher */
     }
 
     .logo-container {
@@ -208,6 +212,7 @@
     }
 
     .highlight { color: var(--accent); font-weight: 600; }
+
     .summary-box {
       margin-top: 18px;
       padding: 18px;
@@ -217,7 +222,7 @@
       border-radius: 14px;
     }
 
-    /* ===== BASYS (formerly Concept) ===== */
+    /* ===== BASYS SECTION ===== */
     .concept-head h2{
       color: var(--accent);
       text-transform: uppercase;
@@ -271,6 +276,59 @@
       margin-bottom: 14px;
     }
     .analytics-card p:last-of-type { margin-bottom: 0; }
+
+    /* ===== TOKEN / FUND ===== */
+    .sub-kicker{
+      margin-top: 10px;
+      opacity: 0.78;
+      line-height: 1.7;
+      font-size: 1.02rem;
+      max-width: 900px;
+    }
+
+    .wallet-box{
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .wallet-address{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95rem;
+      letter-spacing: 0.4px;
+      opacity: 0.95;
+      overflow-wrap: anywhere;
+    }
+    .copy-btn{
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(242,169,0,0.35);
+      background: rgba(242,169,0,0.12);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      transition: 0.2s ease;
+    }
+    .copy-btn:hover{
+      transform: translateY(-1px);
+      background: rgba(242,169,0,0.18);
+      border-color: rgba(242,169,0,0.55);
+    }
+    .fund-note{
+      margin-top: 10px;
+      opacity: 0.72;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
 
     /* ===== CONTACT helper text ===== */
     .contact-kicker{
@@ -332,8 +390,8 @@
     @media (max-width: 900px) {
       .logo-container { width: min(600px, 92vw); height: min(360px, 55vw); }
       section { padding: 135px 8% 110px; }
-      section:not(#home){ padding: 105px 8% 105px; } /* a bit taller on mobile too */
-      section:not(#home) .glass-card{ padding: 32px; }
+      section:not(#home){ padding: 120px 8% 120px; }
+      section:not(#home) .glass-card{ padding: 36px; }
     }
 
     @media (max-width: 768px) {
@@ -381,6 +439,8 @@
       .login-link { text-align: center; background: rgba(242,169,0,0.12); }
 
       .hero-claim { white-space: normal; letter-spacing: 1.2px; line-height: 1.35; }
+      .wallet-box{ flex-direction: column; align-items: stretch; }
+      .copy-btn{ width: 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -406,6 +466,8 @@
       <a href="#home" data-nav="home">Home</a>
       <a href="#concept" data-nav="concept">Basys</a>
       <a href="#analytics" data-nav="analytics">Analytics</a>
+      <a href="#token" data-nav="token">Token</a>
+      <a href="#fund" data-nav="fund">Fund</a>
       <a href="#contact" data-nav="contact">Contact</a>
       <a href="/login" class="login-link">Login</a>
     </nav>
@@ -493,6 +555,48 @@
       <div class="summary-box">
         <strong>In short:</strong> Basys Analytics combines a stable analytical foundation, a clear process of insight,
         and personal values for responsible decision-making in the digital economy.
+      </div>
+    </div>
+
+    <a href="#token" class="scroll-indicator reveal" aria-label="Scroll to token">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
+    </a>
+  </section>
+
+  <section id="token" data-section="token">
+    <div class="glass-card reveal">
+      <h2 style="color:var(--accent);margin-bottom:12px;letter-spacing:3px;text-transform:uppercase;">Token</h2>
+      <div class="sub-kicker">
+        The Basys token is envisioned as a mechanism to support education, research, and charitable initiatives — including
+        contributions to children-focused educational causes.
+      </div>
+    </div>
+
+    <a href="#fund" class="scroll-indicator reveal" aria-label="Scroll to fund">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
+    </a>
+  </section>
+
+  <section id="fund" data-section="fund">
+    <div class="glass-card reveal">
+      <h2 style="color:var(--accent);margin-bottom:12px;letter-spacing:3px;text-transform:uppercase;">Lions Education Fund</h2>
+      <div class="sub-kicker">
+        Contributions support independent education and research initiatives. Bitcoin (BTC) only.
+      </div>
+
+      <div class="wallet-box">
+        <div class="wallet-address" id="btcAddress">
+          bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3
+        </div>
+        <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+      </div>
+
+      <div class="fund-note">
+        <span class="highlight">Note:</span> This is a placeholder address for layout/testing. Do not send funds to this address.
       </div>
     </div>
 
@@ -621,6 +725,25 @@
     window.addEventListener('resize', onSpyScroll);
     window.addEventListener('load', onSpyScroll);
     onSpyScroll();
+
+    // Copy BTC address (placeholder for now)
+    const copyBtn = document.getElementById('copyBtn');
+    const btcAddress = document.getElementById('btcAddress');
+
+    if (copyBtn && btcAddress) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(btcAddress.textContent.trim());
+          const prev = copyBtn.textContent;
+          copyBtn.textContent = 'Copied';
+          setTimeout(() => (copyBtn.textContent = prev), 900);
+        } catch (e) {
+          const prev = copyBtn.textContent;
+          copyBtn.textContent = 'Copy failed';
+          setTimeout(() => (copyBtn.textContent = prev), 900);
+        }
+      });
+    }
   </script>
 </body>
 </html>
