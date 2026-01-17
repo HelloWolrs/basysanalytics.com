@@ -217,21 +217,15 @@ section{
   align-items:center;
   padding:135px 10% 120px;
   scroll-margin-top:90px;
+  position:relative; /* ✅ damit Pfeil unten absolut in der Section sitzt */
 }
 
-/* ✅ Beim Klick soll die Section so hoch wie möglich sitzen,
-      aber der Pfeil unten im Viewport sichtbar bleiben */
+/* ✅ Boxen immer mittig + Pfeil unten sichtbar */
 section:not(#home){
-  justify-content:flex-start;
-  min-height:100vh;     /* wichtig: = Viewporthöhe */
-  padding-top:92px;     /* hoch, ohne unter Header zu rutschen */
-  padding-bottom:26px;  /* wenig Luft unten */
-}
-
-/* ✅ Contact: Box + Pfeil höher (wie von dir gewünscht) */
-#contact{
-  padding-top: 92px;     /* bewusst identisch – kann bleiben */
-  padding-bottom: 26px;
+  justify-content:center;   /* ✅ wieder Mitte */
+  min-height:100vh;
+  padding-top:120px;        /* Platz für Header */
+  padding-bottom:120px;     /* Platz für Pfeil, ohne dass es in die Box reinläuft */
 }
 
 /* ===== HERO overrides global bg ===== */
@@ -242,6 +236,10 @@ section:not(#home){
     linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.70)),
     url("hero-sky.png") no-repeat center top;
   background-size:cover;
+
+  /* ✅ alles 5px runter (Hero) */
+  padding-top: 125px !important;  /* war 120px */
+  padding-bottom: 110px !important;
 }
 
 /* Film grain overlay (hero only) */
@@ -274,15 +272,15 @@ section:not(#home){
   to{ transform:translate3d(10px,-14px,0); }
 }
 
-/* Hero stage (10% smaller globe already integrated) */
+/* Hero stage (✅ Welt kleiner) */
 .hero-stage{
   position:relative;
-  width:min(504px, 90vw);
+  width:min(470px, 88vw); /* ✅ kleiner (war 504px) */
   aspect-ratio: 1 / 1;
   display:flex;
   align-items:center;
   justify-content:center;
-  margin-top:-6px;
+  margin-top:-15px; /* ✅ +5px runter ggü. -20 */
 }
 
 @keyframes rotate-earth{
@@ -422,7 +420,7 @@ section:not(#home){
 }
 
 .hero-claim{
-  margin-top:22px;
+  margin-top:19px; /* ✅ 3px runter ggü. 14/22 Mischstand */
   text-align:center;
   max-width:980px;
   font-size:clamp(.98rem, 1.35vw, 1.18rem);
@@ -441,6 +439,7 @@ section:not(#home){
   display:inline-flex;
   justify-content:center;
   opacity:.95;
+  z-index:2;
 }
 
 @keyframes bounce{
@@ -448,12 +447,13 @@ section:not(#home){
   40%{ transform:translateY(-10px); }
 }
 
-/* ✅ Pfeil IMMER unten sichtbar bei Sprung/Scroll (außer Home) */
+/* ✅ Pfeil unten fix sichtbar, Box bleibt mittig */
 section:not(#home) .scroll-indicator{
-  margin-top:auto;        /* schiebt ihn nach unten */
-  padding-top:18px;
-  position: sticky;
-  bottom: 18px;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:18px;
+  margin-top:0;
 }
 
 /* ===================== CARDS ===================== */
@@ -683,39 +683,19 @@ footer{
 
   .wallet-box{ flex-direction:column; align-items:stretch; }
   .copy-btn{ width:100%; }
-
-  /* sticky bottom bei sehr kleinen Displays etwas sanfter */
-  section:not(#home) .scroll-indicator{
-    bottom: 12px;
-  }
 }
 
 @media (max-width: 900px){
   section{ padding:125px 8% 110px; }
   section:not(#home){
-    padding-top:88px;
-    padding-bottom:22px;
-  }
-  #contact{
-    padding-top: 88px;
-    padding-bottom: 22px;
+    padding-top:115px;
+    padding-bottom:115px;
   }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
-  .hero-stage{ width:min(470px, 92vw); }
+  .hero-stage{ width:min(440px, 92vw); }
+  section:not(#home) .scroll-indicator{ bottom: 14px; }
 }
-
-/* =========================================================
-   HERO: weiter unter den Header (wie vorher gewünscht)
-   ========================================================= */
-#home{
-  padding-top: 120px !important;
-  padding-bottom: 110px !important;
-}
-
-.hero-stage{ margin-top: -20px; }
-.hero-claim{ margin-top: 14px; }
-#home .scroll-indicator{ margin-top: 30px; }
 </style>
 </head>
 
