@@ -43,7 +43,6 @@ header{
   background:linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
   transition: padding .25s ease, background .25s ease, backdrop-filter .25s ease, border-color .25s ease;
 }
-
 header.scrolled{
   padding:14px 48px;
   background:rgba(10,15,25,.75);
@@ -89,17 +88,10 @@ nav a, .nav-group-toggle{
   border:none;
   cursor:pointer;
 }
+nav a:hover, .nav-group-toggle:hover{opacity:1;color:var(--accent)}
 
-nav a:hover, .nav-group-toggle:hover{
-  opacity:1;
-  color:var(--accent);
-}
-
-/* Active = accent orange like ₿ */
-nav a.active{
-  opacity:1;
-  color:var(--accent);
-}
+/* Active = accent */
+nav a.active{opacity:1;color:var(--accent)}
 nav a.active::after{
   content:"";
   position:absolute;
@@ -110,7 +102,7 @@ nav a.active::after{
   box-shadow:0 0 18px rgba(242,169,0,.25);
 }
 
-/* Login style */
+/* Login */
 .login-link{
   border:1px solid var(--accent);
   padding:8px 18px;
@@ -118,30 +110,15 @@ nav a.active::after{
   color:var(--accent);
   opacity:1;
 }
-nav a.login-link.active::after{ display:none; }
+nav a.login-link.active::after{display:none}
 
 /* ===== Initiatives dropdown ===== */
-.nav-group{ position:relative; }
+.nav-group{position:relative}
+.nav-group-toggle{display:inline-flex;align-items:center;gap:8px;opacity:.85}
+.chevron{font-size:10px;transition:transform .25s ease;opacity:.9}
+.nav-group.open .chevron{transform:rotate(180deg)}
 
-.nav-group-toggle{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  opacity:.85;
-}
-
-.chevron{
-  font-size:10px;
-  transition:transform .25s ease;
-  opacity:.9;
-}
-.nav-group.open .chevron{ transform:rotate(180deg); }
-
-/* If Token/Fund active, mark Initiatives too */
-.nav-group.has-active .nav-group-toggle{
-  opacity:1;
-  color:var(--accent);
-}
+.nav-group.has-active .nav-group-toggle{opacity:1;color:var(--accent)}
 .nav-group.has-active .nav-group-toggle::after{
   content:"";
   position:absolute;
@@ -165,10 +142,7 @@ nav a.login-link.active::after{ display:none; }
   border:1px solid rgba(255,255,255,.10);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
 }
-.nav-group.open .nav-group-menu{
-  display:grid;
-  gap:6px;
-}
+.nav-group.open .nav-group-menu{display:grid;gap:6px}
 
 .nav-group-menu a{
   display:block;
@@ -186,37 +160,59 @@ nav a.login-link.active::after{ display:none; }
 .nav-group-menu a:hover{
   background:rgba(242,169,0,.10);
   border-color:rgba(242,169,0,.25);
-  color:#fff;
 }
 .nav-group-menu a.active{
   background:rgba(242,169,0,.12);
   border-color:rgba(242,169,0,.45);
   color:var(--accent);
 }
-.nav-group-menu a.active::after{ display:none; }
+.nav-group-menu a.active::after{display:none}
 
 /* ================= SECTIONS ================= */
 section{
   min-height:100vh;
   display:flex;
   flex-direction:column;
-  justify-content:center;
   align-items:center;
+  justify-content:center;
   padding:150px 10% 120px;
   scroll-margin-top:90px;
 }
 
-/* ===== HERO overrides global bg ===== */
+/* ========= ALWAYS-VISIBLE SECTION ARROW ========= */
+.section-arrow{
+  margin-top:26px;
+  animation:bounce 2s infinite;
+  cursor:pointer;
+  display:inline-flex;
+  justify-content:center;
+  opacity:.95;
+}
+.section-arrow svg{display:block}
+@keyframes bounce{
+  0%,20%,50%,80%,100%{transform:translateY(0)}
+  40%{transform:translateY(-10px)}
+}
+
+/* ================= HERO (Fold-safe) ================= */
 #home{
   position:relative;
   overflow:hidden;
+
+  /* hero background (stars) */
   background:
     linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.70)),
     url("hero-sky.png") no-repeat center top;
   background-size:cover;
+
+  /* NEW: grid layout guarantees globe + text + arrow always fit */
+  min-height:100svh;             /* correct on mobile chrome + fold */
+  padding-top:calc(92px + env(safe-area-inset-top)); /* header safe */
+  padding-bottom:calc(18px + env(safe-area-inset-bottom));
+  justify-content:flex-start;
 }
 
-/* Film grain overlay (hero only) */
+/* grain */
 #home::after{
   content:"";
   position:absolute;
@@ -227,9 +223,9 @@ section{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   background-size:220px 220px;
 }
-#home > *{ position:relative; z-index:1; }
+#home > *{position:relative;z-index:1}
 
-/* Twinkle layer */
+/* twinkle */
 .twinkle{
   position:absolute;
   inset:-20%;
@@ -242,54 +238,63 @@ section{
   filter: blur(.2px);
 }
 @keyframes twinkleMove{
-  from{ transform:translate3d(0,0,0); }
-  to{ transform:translate3d(10px,-14px,0); }
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(10px,-14px,0)}
 }
 
-/* Hero stage (desktop/tablet baseline) */
+/* Hero content wrapper (grid) */
+.hero-wrap{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  display:grid;
+  grid-template-rows: 1fr auto auto;
+  align-items:center;
+  justify-items:center;
+  row-gap:14px;
+
+  /* critical: cap the usable height so nothing clips */
+  min-height:calc(100svh - 92px - 18px);
+}
+
+/* Globe container scales automatically on any device */
 .hero-stage{
-  position:relative;
-  width:min(560px, 90vw);
-  aspect-ratio: 1 / 1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-top:-6px;
+  width:clamp(200px, 42vw, 520px);   /* responsive */
+  aspect-ratio:1/1;
+  display:grid;
+  place-items:center;
+  max-height:45svh;                  /* never too tall */
 }
 
-@keyframes rotate-earth{
-  from{ transform:rotate(0deg); }
-  to{ transform:rotate(360deg); }
-}
+/* Rotation */
+@keyframes rotate-earth{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 
-/* Globe rotator */
 .globe-rotator{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  animation: rotate-earth 240s linear infinite;
+  position:relative;
+  width:100%;
+  height:100%;
   border-radius:50%;
   overflow:hidden;
-  will-change: transform;
+  animation: rotate-earth 240s linear infinite;
+  will-change:transform;
 
+  /* terminator */
   background:
     radial-gradient(circle at 70% 50%,
       rgba(0,0,0,0) 45%,
       rgba(0,0,0,.30) 70%,
       rgba(0,0,0,.52) 100%);
 
+  /* feather mask removes rims */
   -webkit-mask-image: radial-gradient(circle, #000 90%, transparent 100%);
   mask-image: radial-gradient(circle, #000 90%, transparent 100%);
 }
 
-/* Soft halo */
+/* halo */
 .globe-rotator::before{
   content:"";
   position:absolute;
-  width:96%;
-  height:96%;
+  inset:2%;
   border-radius:50%;
   background: radial-gradient(circle,
     rgba(120,170,255,0.26) 0%,
@@ -300,7 +305,7 @@ section{
   pointer-events:none;
 }
 
-/* Atmosphere */
+/* atmosphere */
 .globe-rotator::after{
   content:"";
   position:absolute;
@@ -314,9 +319,8 @@ section{
 }
 
 .globe-rotator img{
-  position:relative;
-  width:116%;
-  height:116%;
+  width:112%;      /* reduced zoom to reduce rims */
+  height:112%;
   object-fit:cover;
   object-position:center;
   border-radius:50%;
@@ -327,31 +331,27 @@ section{
     brightness(1.05);
 }
 
-/* Hero text (static) */
+/* Hero text (always fits) */
 .hero-text{
-  position:absolute;
-  inset:0;
+  text-align:center;
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
-  pointer-events:none;
+  gap:10px;
 }
 
-/* Brand */
+/* Brand bigger than tagline */
 .brand{
-  font-size:clamp(2.9rem, 6vw, 4.1rem);
+  font-size:clamp(2.1rem, 5.6vw, 4.1rem);
   font-weight:800;
   letter-spacing:.04em;
   text-shadow:0 14px 30px rgba(0,0,0,.6);
 }
-.brand .btc{ color:var(--accent); }
-.brand .light{ font-weight:700; opacity:.92; }
+.brand .btc{color:var(--accent)}
+.brand .light{font-weight:700;opacity:.92}
 
-/* Observe · Learn · Lead */
 .brand-claim{
-  margin-top:14px;
-  font-size:1.35rem;
+  font-size:clamp(.92rem, 2.6vw, 1.35rem);
   letter-spacing:.14em;
   opacity:.95;
   text-transform:uppercase;
@@ -359,46 +359,27 @@ section{
   align-items:center;
   justify-content:center;
 }
-.brand-claim > span{ color:#fff; font-weight:600; }
-.accent-initial{ color:var(--accent); font-weight:900; }
+.brand-claim > span{color:#fff;font-weight:600}
+.accent-initial{color:var(--accent);font-weight:900}
 .dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
+  width:9px;height:9px;border-radius:50%;
   background:rgba(255,255,255,.88);
-  display:inline-block;
-  margin:0 22px;
+  margin:0 16px;
   box-shadow:0 0 12px rgba(255,255,255,.18);
 }
 
-/* Tagline */
 .hero-claim{
-  margin-top:16px;
   text-align:center;
   max-width:980px;
-  font-size:clamp(.88rem, 1.05vw, 1.02rem);
-  letter-spacing:1.6px;
+  font-size:clamp(.86rem, 1.6vw, 1.02rem);
+  letter-spacing:1.2px;
   opacity:.92;
   text-shadow:0 10px 30px rgba(0,0,0,.38);
-  white-space:nowrap;
+  line-height:1.35;
 }
-.hero-claim span{ color:var(--accent); }
+.hero-claim span{color:var(--accent)}
 
-/* White arrow */
-.scroll-indicator{
-  margin-top:40px;
-  animation:bounce 2s infinite;
-  cursor:pointer;
-  display:inline-flex;
-  justify-content:center;
-  opacity:.95;
-}
-@keyframes bounce{
-  0%,20%,50%,80%,100%{ transform:translateY(0); }
-  40%{ transform:translateY(-10px); }
-}
-
-/* Cards */
+/* ================= CARDS ================= */
 .glass-card{
   background:var(--glass);
   backdrop-filter:blur(18px);
@@ -409,7 +390,8 @@ section{
   border:1px solid rgba(255,255,255,.10);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
 }
-.highlight{ color:var(--accent); font-weight:700; }
+.highlight{color:var(--accent);font-weight:700}
+
 .summary-box{
   margin-top:18px;
   padding:18px;
@@ -418,9 +400,15 @@ section{
   line-height:1.7;
   border-radius:14px;
 }
-.sub-kicker{ margin-top:10px; opacity:.90; line-height:1.7; font-size:1.02rem; }
 
-/* Wallet */
+.sub-kicker{
+  margin-top:10px;
+  opacity:.90;
+  line-height:1.7;
+  font-size:1.02rem;
+}
+
+/* Wallet + Copy */
 .wallet-box{
   margin-top:16px;
   display:flex;
@@ -458,11 +446,16 @@ section{
   background:rgba(242,169,0,.18);
   border-color:rgba(242,169,0,.55);
 }
-.fund-note{ margin-top:10px; opacity:.82; font-size:.9rem; line-height:1.6; }
+.fund-note{
+  margin-top:10px;
+  opacity:.82;
+  font-size:.9rem;
+  line-height:1.6;
+}
 
 /* Reveal */
-.reveal{ opacity:0; transform:translateY(14px); transition:opacity .8s ease, transform .8s ease; }
-.reveal.in{ opacity:1; transform:translateY(0); }
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .8s ease, transform .8s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
 
 /* Form */
 input, textarea{
@@ -488,7 +481,7 @@ input, textarea{
   color:#000;
   transition:.25s;
 }
-.btn:hover{ background:#d99800; transform:translateY(-2px); }
+.btn:hover{background:#d99800;transform:translateY(-2px)}
 
 /* Footer */
 footer{
@@ -499,8 +492,8 @@ footer{
   font-size:.85rem;
   color:#888;
 }
-.footer-strong{ color:#cfcfcf; font-weight:800; letter-spacing:.6px; }
-.footer-meta{ margin-top:10px; opacity:.85; }
+.footer-strong{color:#cfcfcf;font-weight:800;letter-spacing:.6px}
+.footer-meta{margin-top:10px;opacity:.85}
 .footer-tagline{
   margin-top:6px;
   color:rgba(242,169,0,.92);
@@ -509,13 +502,13 @@ footer{
   font-weight:800;
   font-size:.78rem;
 }
-.footer-legal{ margin-top:8px; opacity:.75; line-height:1.6; font-size:.8rem; }
+.footer-legal{margin-top:8px;opacity:.75;line-height:1.6;font-size:.8rem}
 
-/* ================= MOBILE MENU ================= */
+/* ================= MOBILE MENU (accordion) ================= */
 @media (max-width: 768px){
-  header{ padding:16px 16px; }
-  header.scrolled{ padding:12px 16px; }
-  .nav-toggle{ display:inline-flex; }
+  header{padding:16px 16px}
+  header.scrolled{padding:12px 16px}
+  .nav-toggle{display:inline-flex}
 
   nav{
     position:absolute;
@@ -539,6 +532,7 @@ footer{
     transform:translateY(0);
     pointer-events:auto;
   }
+
   nav a, .nav-group-toggle{
     width:100%;
     text-align:left;
@@ -548,8 +542,9 @@ footer{
     border:1px solid rgba(255,255,255,.08);
     opacity:.95;
   }
-  nav a.active::after{ display:none; }
-  nav a.active{ color:var(--accent); }
+
+  nav a.active::after{display:none}
+  nav a.active{color:var(--accent)}
 
   .nav-group-menu{
     position:static;
@@ -565,71 +560,15 @@ footer{
     gap:8px;
     padding-top:10px;
   }
-  .wallet-box{ flex-direction:column; align-items:stretch; }
-  .copy-btn{ width:100%; }
+
+  .wallet-box{flex-direction:column;align-items:stretch}
+  .copy-btn{width:100%}
 }
 
-/* ===== HARD phone layout: compact hero ===== */
-@media (max-width: 480px){
-  /* Use safe viewport height so it never overflows */
-  #home{
-    min-height:100svh;
-    padding:92px 6% 24px;   /* compact */
-    justify-content:flex-start;
-  }
-
-  /* Other sections keep normal spacing */
-  section:not(#home){
-    padding:120px 8% 100px;
-  }
-
-  /* Globe MUCH smaller */
-  .hero-stage{
-    width:240px;            /* hard cap */
-    max-width:72vw;         /* responsive */
-    margin-top:0;
-  }
-
-  /* Slightly reduce rim zoom to keep inside small circle */
-  .globe-rotator img{
-    width:112%;
-    height:112%;
-  }
-
-  /* Typography compact */
-  .brand{
-    font-size:2.25rem;
-    line-height:1.05;
-  }
-  .brand-claim{
-    font-size:.98rem;
-    letter-spacing:.12em;
-    margin-top:10px;
-  }
-  .dot{
-    width:8px;
-    height:8px;
-    margin:0 14px;
-  }
-  .hero-claim{
-    margin-top:12px;
-    white-space:normal;
-    max-width:90vw;
-    font-size:.90rem;
-    letter-spacing:1.0px;
-    line-height:1.35;
-  }
-
-  .scroll-indicator{
-    margin-top:18px;
-  }
-}
-
-/* Even smaller phones */
-@media (max-width: 360px){
-  .hero-stage{ width:210px; max-width:70vw; }
-  .brand{ font-size:2.05rem; }
-  .brand-claim{ font-size:.92rem; }
+/* Large cards spacing */
+@media (max-width: 900px){
+  section{padding:135px 8% 110px}
+  .glass-card{padding:36px}
 }
 </style>
 </head>
@@ -667,12 +606,14 @@ footer{
 <section id="home" data-section="home">
   <div class="twinkle" aria-hidden="true"></div>
 
-  <div class="hero-stage reveal">
-    <div class="globe-rotator">
-      <img src="hero-globe.png" alt="Earth">
+  <div class="hero-wrap">
+    <div class="hero-stage reveal">
+      <div class="globe-rotator">
+        <img src="hero-globe.png" alt="Earth">
+      </div>
     </div>
 
-    <div class="hero-text">
+    <div class="hero-text reveal">
       <div class="brand">
         <span class="btc">₿</span>asys <span class="light">Analytics</span>
       </div>
@@ -684,18 +625,18 @@ footer{
         <span class="dot" aria-hidden="true"></span>
         <span><span class="accent-initial">L</span>ead</span>
       </div>
+
+      <div class="hero-claim">
+        From <span>Observation</span> to <span>Leadership</span> in Digital Markets
+      </div>
     </div>
-  </div>
 
-  <div class="hero-claim reveal">
-    From <span>Observation</span> to <span>Leadership</span> in Digital Markets
+    <a href="#basys" class="section-arrow reveal" aria-label="Scroll to Basys">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
+    </a>
   </div>
-
-  <a href="#basys" class="scroll-indicator reveal" aria-label="Scroll to Basys">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-      <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
-    </svg>
-  </a>
 </section>
 
 <!-- BASYS -->
@@ -723,7 +664,7 @@ footer{
     </div>
   </div>
 
-  <a href="#analytics" class="scroll-indicator reveal" aria-label="Scroll to Analytics">
+  <a href="#analytics" class="section-arrow" aria-label="Scroll to Analytics">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
       <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
     </svg>
@@ -762,7 +703,7 @@ footer{
     </div>
   </div>
 
-  <a href="#token" class="scroll-indicator reveal" aria-label="Scroll to Token">
+  <a href="#token" class="section-arrow" aria-label="Scroll to Token">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
       <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
     </svg>
@@ -779,7 +720,7 @@ footer{
     </div>
   </div>
 
-  <a href="#fund" class="scroll-indicator reveal" aria-label="Scroll to Education Fund">
+  <a href="#fund" class="section-arrow" aria-label="Scroll to Education Fund">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
       <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
     </svg>
@@ -806,7 +747,7 @@ footer{
     </div>
   </div>
 
-  <a href="#contact" class="scroll-indicator reveal" aria-label="Scroll to Contact">
+  <a href="#contact" class="section-arrow" aria-label="Scroll to Contact">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
       <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
     </svg>
