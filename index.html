@@ -139,7 +139,7 @@
     /* Make non-hero sections NOT full height so cards don't "bleed" into next */
     section:not(#home){
       min-height: auto;
-      padding: 110px 10% 110px; /* tighter + balanced */
+      padding: 120px 10% 120px; /* a bit taller */
     }
 
     .glass-card {
@@ -153,9 +153,9 @@
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
     }
 
-    /* Slightly more compact cards for sections (concept/analytics/contact) */
+    /* Slightly taller cards for sections (concept/analytics/contact) */
     section:not(#home) .glass-card{
-      padding: 34px;
+      padding: 42px; /* increased from 34px */
     }
 
     .logo-container {
@@ -209,7 +209,7 @@
 
     .highlight { color: var(--accent); font-weight: 600; }
     .summary-box {
-      margin-top: 18px; /* slightly tighter */
+      margin-top: 18px;
       padding: 18px;
       border-left: 4px solid var(--accent);
       background: rgba(255,255,255,0.05);
@@ -217,7 +217,7 @@
       border-radius: 14px;
     }
 
-    /* ===== CONCEPT ===== */
+    /* ===== BASYS (formerly Concept) ===== */
     .concept-head h2{
       color: var(--accent);
       text-transform: uppercase;
@@ -235,7 +235,7 @@
       display: flex;
       gap: 12px;
       align-items: flex-start;
-      padding: 12px; /* tighter */
+      padding: 12px;
       border-radius: 14px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
@@ -268,7 +268,7 @@
     .analytics-card p{
       font-size: 1.07rem;
       line-height: 1.75;
-      margin-bottom: 14px; /* tighter */
+      margin-bottom: 14px;
     }
     .analytics-card p:last-of-type { margin-bottom: 0; }
 
@@ -293,7 +293,7 @@
     input, textarea {
       width: 100%;
       padding: 14px;
-      margin-bottom: 10px; /* tighter */
+      margin-bottom: 10px;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       color: #fff;
@@ -326,13 +326,14 @@
     .footer-strong { color: #cfcfcf; font-weight: 700; letter-spacing: 0.6px; }
     .footer-meta { margin-top: 10px; opacity: 0.85; }
     .footer-tagline { margin-top: 6px; color: rgba(242,169,0,0.9); letter-spacing: 1px; text-transform: uppercase; font-weight: 700; font-size: 0.78rem; }
+    .footer-legal { margin-top: 8px; opacity: 0.75; line-height: 1.6; font-size: 0.8rem; }
 
     /* ===== Responsive ===== */
     @media (max-width: 900px) {
       .logo-container { width: min(600px, 92vw); height: min(360px, 55vw); }
       section { padding: 135px 8% 110px; }
-      section:not(#home){ padding: 95px 8% 95px; }
-      section:not(#home) .glass-card{ padding: 26px; }
+      section:not(#home){ padding: 105px 8% 105px; } /* a bit taller on mobile too */
+      section:not(#home) .glass-card{ padding: 32px; }
     }
 
     @media (max-width: 768px) {
@@ -403,7 +404,7 @@
 
     <nav id="siteNav">
       <a href="#home" data-nav="home">Home</a>
-      <a href="#concept" data-nav="concept">Concept</a>
+      <a href="#concept" data-nav="concept">Basys</a>
       <a href="#analytics" data-nav="analytics">Analytics</a>
       <a href="#contact" data-nav="contact">Contact</a>
       <a href="/login" class="login-link">Login</a>
@@ -419,7 +420,7 @@
       From <span class="accent">Observation</span> to <span class="accent">Leadership</span> in Digital Markets
     </div>
 
-    <a href="#concept" class="scroll-indicator reveal" aria-label="Scroll to concept">
+    <a href="#concept" class="scroll-indicator reveal" aria-label="Scroll to Basys">
       <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
         <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
       </svg>
@@ -429,7 +430,7 @@
   <section id="concept" data-section="concept">
     <div class="glass-card reveal">
       <div class="concept-head">
-        <h2>Concept</h2>
+        <h2>Basys</h2>
         <div class="concept-kicker">
           A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
         </div>
@@ -523,6 +524,9 @@
     <div class="footer-strong">Basys Analytics</div>
     <div class="footer-meta">Stuttgart · San Francisco · Santa Fe</div>
     <div class="footer-tagline">Independent Research &amp; Analysis</div>
+    <div class="footer-legal">
+      BasysAnalytics is a subsidiary of Next-Gen-IT LLC, based in the USA.
+    </div>
     <div style="margin-top:10px; opacity:.65;">© 2026 Basys Analytics. All rights reserved.</div>
   </footer>
 
