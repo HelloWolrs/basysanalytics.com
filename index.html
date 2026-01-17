@@ -11,8 +11,8 @@
 :root{
   --accent:#f2a900;
 
-  /* ✅ sehr transparent: fast durchsichtig, aber nicht ganz */
-  --glass: rgba(10,15,25,.22);
+  /* ✅ noch transparenter */
+  --glass: rgba(10,15,25,.14);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -213,11 +213,12 @@ section{
   scroll-margin-top:90px;
 }
 
-/* ✅ Alle Sections (außer Home) so hoch, dass Box + Pfeil direkt sichtbar sind */
+/* ✅ ENGER ab Analytics bis Contact (gilt für alle außer Home) */
 section:not(#home){
   justify-content:flex-start;
-  padding-top:120px;
-  padding-bottom:95px;
+  min-height:86vh;       /* weniger Leerraum unten */
+  padding-top:112px;     /* startet etwas höher */
+  padding-bottom:60px;   /* enger */
 }
 
 /* ===== HERO overrides global bg ===== */
@@ -263,7 +264,7 @@ section:not(#home){
 /* Hero stage (✅ 10% smaller globe) */
 .hero-stage{
   position:relative;
-  width:min(504px, 90vw); /* ✅ 10% kleiner (560 -> 504) */
+  width:min(504px, 90vw); /* ✅ 10% kleiner */
   aspect-ratio: 1 / 1;
   display:flex;
   align-items:center;
@@ -352,9 +353,9 @@ section:not(#home){
 
 /* ✅ Brand skaliert + letter-spacing feiner */
 .brand{
-  font-size:clamp(2.2rem, 4.6vw, 3.1rem); /* ✅ kleiner */
+  font-size:clamp(2.2rem, 4.6vw, 3.1rem);
   font-weight:800;
-  letter-spacing:.03em;                 /* ✅ feiner abgestimmt */
+  letter-spacing:.03em;
   text-shadow:0 14px 30px rgba(0,0,0,.6);
   display:flex;
   align-items:baseline;
@@ -364,7 +365,7 @@ section:not(#home){
 /* ✅ ₿ minimal größer als asys */
 .brand .btc{
   color:var(--accent);
-  font-size:1.18em;      /* ✅ größer */
+  font-size:1.18em;
   line-height:1;
   transform: translateY(-0.02em);
 }
@@ -372,14 +373,14 @@ section:not(#home){
 .brand .light{
   font-weight:700;
   opacity:.92;
-  letter-spacing:.02em;  /* ✅ minimal feiner */
+  letter-spacing:.02em;
 }
 
-/* Observe · Learn · Lead (✅ leicht kleiner + spacing feiner) */
+/* Observe · Learn · Lead */
 .brand-claim{
   margin-top:14px;
-  font-size:1.25rem;         /* ✅ kleiner (war 1.35rem) */
-  letter-spacing:.13em;      /* ✅ feiner (war .14em) */
+  font-size:1.25rem;
+  letter-spacing:.13em;
   opacity:.95;
   text-transform:uppercase;
   display:flex;
@@ -434,9 +435,9 @@ section:not(#home){
   40%{ transform:translateY(-10px); }
 }
 
-/* ✅ wenn Sections oben starten, Pfeil kompakter */
+/* ✅ Pfeil näher an die Box (ab Analytics bis Contact) */
 section:not(#home) .scroll-indicator{
-  margin-top:28px;
+  margin-top:18px;
 }
 
 /* ===================== CARDS ===================== */
@@ -458,8 +459,9 @@ section:not(#home) .scroll-indicator{
     transform .35s ease;
 }
 
+/* ✅ Hover: noch transparenter */
 .glass-card:hover{
-  background-color: rgba(10,15,25,.12);
+  background-color: rgba(10,15,25,.07);
   backdrop-filter: blur(28px);
   -webkit-backdrop-filter: blur(28px);
   box-shadow:0 30px 70px rgba(0,0,0,.65);
@@ -504,9 +506,11 @@ section:not(#home) .scroll-indicator{
   padding:14px 16px;
   border-radius:14px;
 
-  background-color: rgba(10,15,25,.14);
+  /* ✅ transparenter */
+  background-color: rgba(10,15,25,.08);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
+
   border:1px solid rgba(255,255,255,.10);
 }
 
@@ -669,14 +673,18 @@ footer{
 
 @media (max-width: 900px){
   section{ padding:125px 8% 110px; }
-  section:not(#home){ padding-top:110px; padding-bottom:90px; }
+  section:not(#home){
+    min-height:84vh;
+    padding-top:105px;
+    padding-bottom:55px;
+  }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
-  .hero-stage{ width:min(470px, 92vw); } /* auf kleinen Screens harmonisch */
+  .hero-stage{ width:min(470px, 92vw); }
 }
 
 /* =========================================================
-   HERO etwas weiter runter unter den Header (wie gewünscht)
+   HERO: weiter unter den Header (wie vorher gewünscht)
    ========================================================= */
 #home{
   padding-top: 120px !important;
@@ -684,9 +692,7 @@ footer{
 }
 
 .hero-stage{ margin-top: -20px; }
-
 .hero-claim{ margin-top: 14px; }
-
 #home .scroll-indicator{ margin-top: 30px; }
 
 </style>
