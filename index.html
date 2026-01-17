@@ -216,9 +216,18 @@ section{
 /* ✅ ENGER ab Analytics bis Contact (gilt für alle außer Home) */
 section:not(#home){
   justify-content:flex-start;
-  min-height:86vh;       /* weniger Leerraum unten */
-  padding-top:112px;     /* startet etwas höher */
-  padding-bottom:60px;   /* enger */
+  min-height:86vh;
+  padding-top:112px;
+  padding-bottom:60px;
+}
+
+/* ✅ Contact: Box + Pfeil höher */
+#contact{
+  padding-top: 92px;
+  padding-bottom: 50px;
+}
+#contact .scroll-indicator{
+  margin-top: 14px;
 }
 
 /* ===== HERO overrides global bg ===== */
@@ -264,7 +273,7 @@ section:not(#home){
 /* Hero stage (✅ 10% smaller globe) */
 .hero-stage{
   position:relative;
-  width:min(504px, 90vw); /* ✅ 10% kleiner */
+  width:min(504px, 90vw);
   aspect-ratio: 1 / 1;
   display:flex;
   align-items:center;
@@ -677,6 +686,10 @@ footer{
     min-height:84vh;
     padding-top:105px;
     padding-bottom:55px;
+  }
+  #contact{
+    padding-top: 88px;
+    padding-bottom: 46px;
   }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
