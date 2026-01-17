@@ -1,167 +1,882 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Basys Analytics</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basys Analytics</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 
-<style>
-:root{--accent:#f2a900;--glass:rgba(10,15,25,.95)}
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;font-family:'Inter',sans-serif;color:#fff;background:#0b0d17;scroll-behavior:smooth}
+  <style>
+    :root { --accent: #f2a900; --glass: rgba(10, 15, 25, 0.95); }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html {
+      height: 100%;
+      font-family: 'Inter', sans-serif;
+      color: #fff;
+      background-color: #0b0d17;
+      scroll-behavior: smooth;
+    }
 
-/* ===== BACKGROUND ===== */
-.bg{
-  position:fixed;inset:0;z-index:-1;
-  background:
-    linear-gradient(rgba(0,0,0,.30),rgba(0,0,0,.55)),
-    url('1000081562.jpg') no-repeat center top;
-  background-size:cover;
-}
+    /* ============ BACKGROUND (lighter + more sky) ============ */
+    .bg{
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(
+          rgba(0,0,0,0.30),
+          rgba(0,0,0,0.55)
+        ),
+        url('1000081562.jpg') no-repeat center top;
+      background-size: cover;
+      background-position: center top;
+    }
+    @media (max-width: 900px){
+      .bg{
+        background-size: cover;
+        background-position: center 20%;
+      }
+    }
 
-/* ===== HEADER ===== */
-header{
-  position:fixed;top:0;width:100%;z-index:1000;
-  padding:25px 50px;
-  display:flex;align-items:center;gap:20px;
-  background:linear-gradient(to bottom,rgba(0,0,0,.9),transparent);
-}
-nav{display:flex;gap:30px;align-items:center}
-nav a{color:#fff;font-size:12px;letter-spacing:2px;text-transform:uppercase;
-font-weight:700;opacity:.8;text-decoration:none;position:relative}
-nav a.active::after{
-  content:"";position:absolute;left:0;right:0;bottom:-6px;
-  height:2px;background:var(--accent)
-}
+    /* ============ HEADER ============ */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 25px 50px;
+      z-index: 1000;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 18px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
+      transition: padding 0.25s ease, background 0.25s ease, backdrop-filter 0.25s ease, border-color 0.25s ease;
+    }
 
-/* ===== SECTIONS ===== */
-section{
-  min-height:100vh;
-  padding:150px 10% 120px;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  scroll-margin-top:100px;
-}
-section:not(#home){min-height:auto;padding:140px 10%}
+    header.scrolled {
+      padding: 14px 50px;
+      background: rgba(10, 15, 25, 0.75);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
 
-/* ===== HERO ===== */
-.logo-container{
-  width:600px;height:360px;border-radius:50%;
-  overflow:hidden;border:2px solid rgba(255,255,255,.35);
-  margin-top:-40px; /* FIX */
-}
-.logo-container img{width:100%;height:100%;object-fit:cover}
+    nav {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
 
-.hero-claim{
-  margin-top:30px;
-  font-size:1.1rem;
-  letter-spacing:1.6px;
-  opacity:.9;
-}
-.hero-claim span{color:var(--accent)}
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      opacity: 0.75;
+      transition: 0.25s;
+      position: relative;
+      padding: 6px 0;
+    }
 
-/* ===== SCROLL INDICATOR ===== */
-.scroll-indicator{
-  margin-top:50px;
-  animation:bounce 2s infinite;
-}
-@keyframes bounce{
-  0%,20%,50%,80%,100%{transform:translateY(0)}
-  40%{transform:translateY(-10px)}
-}
+    nav a:hover {
+      opacity: 1;
+      color: var(--accent);
+    }
 
-/* ===== CARDS ===== */
-.glass-card{
-  background:var(--glass);
-  border-radius:20px;
-  padding:48px;
-  max-width:950px;width:100%;
-  border:1px solid rgba(255,255,255,.1);
-  box-shadow:0 20px 50px rgba(0,0,0,.5);
-}
-.highlight{color:var(--accent);font-weight:600}
+    /* Active nav item */
+    nav a.active {
+      opacity: 1;
+      color: #fff;
+    }
+    nav a.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -6px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+      box-shadow: 0 0 18px rgba(242,169,0,0.25);
+    }
 
-/* ===== FOOTER ===== */
-footer{
-  padding:42px 10%;text-align:center;
-  background:rgba(10,15,25,.9);
-  border-top:1px solid rgba(255,255,255,.1);
-  font-size:.85rem;color:#888;
-}
-.footer-tagline{color:var(--accent);margin-top:6px}
-</style>
+    .login-link {
+      border: 1px solid var(--accent);
+      padding: 8px 18px;
+      border-radius: 8px;
+      color: var(--accent);
+      opacity: 1;
+    }
+    nav a.login-link.active::after { display: none; }
+
+    /* ===== NAV GROUP (Dropdown / Accordion) ===== */
+    .nav-group{ position: relative; }
+
+    .nav-group-toggle{
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      opacity: 0.75;
+      transition: 0.25s;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      position: relative;
+    }
+    .nav-group-toggle:hover{
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    .nav-group.has-active .nav-group-toggle{
+      opacity: 1;
+      color: #fff;
+    }
+    .nav-group.has-active .nav-group-toggle::after{
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -6px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 999px;
+      box-shadow: 0 0 18px rgba(242,169,0,0.25);
+    }
+
+    .chevron{
+      font-size: 10px;
+      line-height: 1;
+      transition: transform 0.25s ease;
+      opacity: 0.9;
+    }
+    .nav-group.open .chevron{ transform: rotate(180deg); }
+
+    /* Desktop dropdown */
+    .nav-group-menu{
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 0;
+      min-width: 210px;
+      background: rgba(10,15,25,0.92);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 14px;
+      padding: 8px;
+      display: none;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+    .nav-group.open .nav-group-menu{
+      display: grid;
+      gap: 4px;
+    }
+
+    .nav-group-menu a{
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      font-size: 11px;
+      opacity: 0.95;
+    }
+    .nav-group-menu a:hover{
+      background: rgba(242,169,0,0.10);
+      border-color: rgba(242,169,0,0.25);
+    }
+    .nav-group-menu a.active{
+      border-color: rgba(242,169,0,0.45);
+      background: rgba(242,169,0,0.10);
+      color: #fff;
+    }
+    .nav-group-menu a.active::after{ display:none; }
+
+    /* Mobile nav toggle */
+    .nav-toggle {
+      display: none;
+      margin-left: auto;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: #fff;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .nav-toggle:hover {
+      background: rgba(255,255,255,0.10);
+      border-color: rgba(255,255,255,0.18);
+      transform: translateY(-1px);
+    }
+    .nav-toggle svg { display:block; }
+
+    /* ============ SECTIONS ============ */
+    section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 150px 10% 120px;
+      scroll-margin-top: 90px;
+    }
+
+    /* more air so scroll is always visible */
+    section:not(#home){
+      min-height: auto;
+      padding: 140px 10% 140px;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border-radius: 20px;
+      padding: 48px;
+      width: 100%;
+      max-width: 950px;
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    /* ===== HERO ===== */
+    .logo-container {
+      width: 600px;
+      height: 360px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(255,255,255,0.35);
+      background: rgba(10, 15, 25, 0.55);
+      box-shadow: 0 0 30px rgba(242,169,0,0.18);
+      margin-top: -28px; /* raise the ellipse slightly */
+    }
+
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-claim {
+      margin-top: 26px;
+      text-align: center;
+      max-width: 980px;
+      font-size: clamp(0.98rem, 1.35vw, 1.22rem);
+      font-weight: 500;
+      letter-spacing: 1.6px;
+      opacity: 0.90;
+      text-shadow: 0 8px 28px rgba(0,0,0,0.42);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      white-space: nowrap;
+    }
+    .hero-claim .accent { color: var(--accent); }
+    .hero-claim.hidden { opacity: 0; transform: translateY(-10px); pointer-events: none; }
+
+    /* ===== SCROLL INDICATOR (white SVG) ===== */
+    .scroll-indicator {
+      margin-top: 44px;
+      animation: bounce 2s infinite;
+      cursor: pointer;
+      display: inline-flex;
+      justify-content: center;
+      opacity: 0.95;
+    }
+    @keyframes bounce {
+      0%,20%,50%,80%,100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+    }
+
+    /* ===== TEXT / BOXES ===== */
+    .highlight { color: var(--accent); font-weight: 600; }
+
+    .summary-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-left: 4px solid var(--accent);
+      background: rgba(255,255,255,0.05);
+      line-height: 1.7;
+      border-radius: 14px;
+      opacity: 0.98;
+    }
+
+    /* ===== BASYS SECTION (process points) ===== */
+    .concept-head h2{
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+    }
+    .concept-kicker{
+      margin-top: 6px;
+      opacity: 0.88;
+      line-height: 1.7;
+      font-size: 1.02rem;
+    }
+    .concept-points { margin-top: 14px; display: grid; gap: 10px; }
+    .concept-point {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .concept-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 6px;
+      flex: 0 0 auto;
+      box-shadow: 0 0 18px rgba(242,169,0,0.28);
+    }
+    .concept-point strong {
+      display: block;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.96;
+      margin-bottom: 4px;
+    }
+    .concept-point span {
+      display: block;
+      opacity: 0.90;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    /* ===== ANALYTICS (restore original text) ===== */
+    .analytics-card p{
+      font-size: 1.07rem;
+      line-height: 1.75;
+      margin-bottom: 14px;
+      opacity: 0.95;
+    }
+    .analytics-card p:last-of-type { margin-bottom: 0; }
+
+    /* ===== TOKEN / FUND ===== */
+    .sub-kicker{
+      margin-top: 10px;
+      opacity: 0.90;
+      line-height: 1.7;
+      font-size: 1.02rem;
+      max-width: 900px;
+    }
+
+    .wallet-box{
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .wallet-address{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.95rem;
+      letter-spacing: 0.4px;
+      opacity: 0.95;
+      overflow-wrap: anywhere;
+    }
+    .copy-btn{
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid rgba(242,169,0,0.35);
+      background: rgba(242,169,0,0.12);
+      color: #fff;
+      cursor: pointer;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      transition: 0.2s ease;
+    }
+    .copy-btn:hover{
+      transform: translateY(-1px);
+      background: rgba(242,169,0,0.18);
+      border-color: rgba(242,169,0,0.55);
+    }
+    .fund-note{
+      margin-top: 10px;
+      opacity: 0.82;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    /* ===== CONTACT helper text ===== */
+    .contact-kicker{
+      margin: -8px 0 16px;
+      text-align: center;
+      opacity: 0.88;
+      line-height: 1.6;
+      font-size: 0.98rem;
+    }
+
+    /* ===== Reveal on scroll ===== */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ===== Form ===== */
+    input, textarea {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 10px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      border-radius: 10px;
+      font-family: inherit;
+      outline: none;
+    }
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: var(--accent);
+      border: none;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      text-transform: uppercase;
+      color: #000;
+      transition: 0.25s;
+    }
+    .btn:hover { background: #d99800; transform: translateY(-2px); }
+
+    footer {
+      background: rgba(10,15,25,0.9);
+      padding: 42px 10%;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.85rem;
+      color: #888;
+    }
+    .footer-strong { color: #cfcfcf; font-weight: 700; letter-spacing: 0.6px; }
+    .footer-meta { margin-top: 10px; opacity: 0.85; }
+    .footer-tagline { margin-top: 6px; color: rgba(242,169,0,0.9); letter-spacing: 1px; text-transform: uppercase; font-weight: 700; font-size: 0.78rem; }
+    .footer-legal { margin-top: 8px; opacity: 0.75; line-height: 1.6; font-size: 0.8rem; }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 900px) {
+      .logo-container { width: min(600px, 92vw); height: min(360px, 55vw); margin-top: -16px; }
+      section { padding: 135px 8% 110px; }
+      section:not(#home){ padding: 120px 8% 120px; }
+      .glass-card{ padding: 36px; }
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 16px 16px; }
+      header.scrolled { padding: 12px 16px; }
+      .nav-toggle { display: inline-flex; }
+
+      nav {
+        position: absolute;
+        top: calc(100% + 10px);
+        left: 16px;
+        right: 16px;
+        display: grid;
+        gap: 10px;
+        padding: 14px;
+        border-radius: 16px;
+        background: rgba(10, 15, 25, 0.9);
+        border: 1px solid rgba(255,255,255,0.10);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.55);
+        opacity: 0;
+        transform: translateY(-8px);
+        pointer-events: none;
+        transition: 0.2s ease;
+      }
+      header.nav-open nav {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+      }
+
+      nav a, .nav-group-toggle {
+        padding: 12px 12px;
+        border-radius: 12px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.08);
+        opacity: 0.95;
+        width: 100%;
+        text-align: left;
+        justify-content: space-between;
+      }
+
+      nav a.active::after { display: none; }
+      nav a.active { color: var(--accent); }
+
+      nav a:hover, .nav-group-toggle:hover {
+        background: rgba(242,169,0,0.10);
+        border-color: rgba(242,169,0,0.25);
+      }
+      .login-link { text-align: center; background: rgba(242,169,0,0.12); }
+
+      /* Mobile: accordion (inline) */
+      .nav-group-menu{
+        position: static;
+        display: none;
+        background: transparent;
+        border: none;
+        padding: 0;
+        box-shadow: none;
+      }
+      .nav-group.open .nav-group-menu{
+        display: grid;
+        gap: 8px;
+        padding-top: 10px;
+      }
+      .nav-group-menu a{
+        font-size: 11px;
+      }
+
+      .hero-claim { white-space: normal; letter-spacing: 1.2px; line-height: 1.35; }
+      .wallet-box{ flex-direction: column; align-items: stretch; }
+      .copy-btn{ width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; }
+      .scroll-indicator { animation: none; }
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .hero-claim { transition: none; }
+    }
+  </style>
 </head>
 
 <body>
-<div class="bg"></div>
+  <div class="bg"></div>
 
-<header>
-<nav>
-<a href="#home" class="active">Home</a>
-<a href="#concept">Basys</a>
-<a href="#analytics">Analytics</a>
-<a href="#token">Token</a>
-<a href="#fund">Education Fund</a>
-<a href="#contact">Contact</a>
-</nav>
-</header>
+  <header id="siteHeader">
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+        <path d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
 
-<section id="home">
-<div class="logo-container">
-<img src="logo.png">
-</div>
-<div class="hero-claim">
-From <span>Observation</span> to <span>Leadership</span> in Digital Markets
-</div>
-<a href="#concept" class="scroll-indicator">↓</a>
-</section>
+    <nav id="siteNav">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#concept" data-nav="concept">Basys</a>
+      <a href="#analytics" data-nav="analytics">Analytics</a>
 
-<section id="concept">
-<div class="glass-card">
-<h2 class="highlight">Basys</h2>
-<p>Observe · Learn · Lead — a disciplined framework for market understanding.</p>
-</div>
-<a href="#analytics" class="scroll-indicator">↓</a>
-</section>
+      <div class="nav-group" id="initiativeGroup">
+        <button class="nav-group-toggle" aria-expanded="false" type="button">
+          Initiatives <span class="chevron">▾</span>
+        </button>
+        <div class="nav-group-menu" aria-label="Initiatives submenu">
+          <a href="#token" data-nav="token">Token</a>
+          <a href="#fund" data-nav="fund">Education Fund</a>
+        </div>
+      </div>
 
-<section id="analytics">
-<div class="glass-card">
-<h2 class="highlight">Analytics</h2>
-<p>Structured insight into crypto and digital asset markets.</p>
-</div>
-<a href="#token" class="scroll-indicator">↓</a>
-</section>
+      <a href="#contact" data-nav="contact">Contact</a>
+      <a href="/login" class="login-link">Login</a>
+    </nav>
+  </header>
 
-<section id="token">
-<div class="glass-card">
-<h2 class="highlight">Token</h2>
-<p>The Basys token is envisioned to support education, research, and charitable initiatives.</p>
-</div>
-<a href="#fund" class="scroll-indicator">↓</a>
-</section>
+  <section id="home" data-section="home">
+    <div class="logo-container reveal">
+      <img src="logo.png" alt="Basys Analytics Logo" />
+    </div>
 
-<section id="fund">
-<div class="glass-card">
-<h2 class="highlight">Education Fund</h2>
-<p>Bitcoin contributions support independent education initiatives.</p>
-</div>
-<a href="#contact" class="scroll-indicator">↓</a>
-</section>
+    <div class="hero-claim reveal" id="heroClaim">
+      From <span class="accent">Observation</span> to <span class="accent">Leadership</span> in Digital Markets
+    </div>
 
-<section id="contact">
-<div class="glass-card" style="max-width:550px">
-<h2 class="highlight" style="text-align:center">Contact</h2>
-<p style="text-align:center">For inquiries, partnerships, or strategic dialogue.</p>
-</div>
-</section>
+    <a href="#concept" class="scroll-indicator reveal" aria-label="Scroll to Basys">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
+    </a>
+  </section>
 
-<footer>
-<div><strong>Basys Analytics</strong></div>
-<div>Stuttgart · San Francisco · Santa Fe</div>
-<div class="footer-tagline">Independent Research & Analysis</div>
-<div>BasysAnalytics is a subsidiary of Next-Gen-IT LLC, USA</div>
-</footer>
+  <section id="concept" data-section="concept">
+    <div class="glass-card reveal">
+      <div class="concept-head">
+        <h2>Basys</h2>
+        <div class="concept-kicker">
+          A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
+        </div>
+      </div>
 
+      <div class="concept-points">
+        <div class="concept-point">
+          <div class="concept-dot"></div>
+          <div>
+            <strong>Observe</strong>
+            <span>Capture market behavior with discipline and consistency.</span>
+          </div>
+        </div>
+        <div class="concept-point">
+          <div class="concept-dot"></div>
+          <div>
+            <strong>Learn</strong>
+            <span>Turn signals into understanding and orientation.</span>
+          </div>
+        </div>
+        <div class="concept-point">
+          <div class="concept-dot"></div>
+          <div>
+            <strong>Lead</strong>
+            <span>Act responsibly — decisions guided by insight, not noise.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="#analytics" class="scroll-indicator reveal" aria-label="Scroll to analytics">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
+    </a>
+  </section>
+
+  <section id="analytics" data-section="analytics">
+    <div class="glass-card reveal analytics-card">
+      <h2 style="color:var(--accent);margin-bottom:14px;letter-spacing:3px;text-transform:uppercase;">Analytics</h2>
+
+      <!-- RESTORED ORIGINAL TEXT (as before) -->
+      <p style="margin-bottom: 25px;">
+        <span class="highlight">BasysAnalytics</span> is an analytical system designed for the structured observation,
+        interpretation, and classification of crypto and digital asset markets.
+        The name <span class="highlight">Basys</span> is derived from Base, Basis, and System,
+        representing a stable, methodical foundation.
+      </p>
+
+      <p style="margin-bottom: 25px;">
+        The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
+        Understanding grows from observation, orientation emerges from understanding,
+        and responsible leadership arises from orientation.
+      </p>
+
+      <p>
+        <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
+        <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
+      </p>
+
+      <div class="summary-box">
+        <strong>In short:</strong> Basys Analytics combines a stable analytical foundation,
+        a clear process of insight, and personal values for responsible decision-making
+        in the digital economy.
+      </div>
+    </div>
+
+    <a href="#token" class="scroll-indicator reveal" aria-label="Scroll to token">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
+    </a>
+  </section>
+
+  <section id="token" data-section="token">
+    <div class="glass-card reveal">
+      <h2 style="color:var(--accent);margin-bottom:12px;letter-spacing:3px;text-transform:uppercase;">Token</h2>
+      <div class="sub-kicker">
+        The Basys token is envisioned as a mechanism to support education, research, and charitable initiatives — including
+        contributions to children-focused educational causes.
+      </div>
+    </div>
+
+    <a href="#fund" class="scroll-indicator reveal" aria-label="Scroll to fund">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
+    </a>
+  </section>
+
+  <section id="fund" data-section="fund">
+    <div class="glass-card reveal">
+      <h2 style="color:var(--accent);margin-bottom:12px;letter-spacing:3px;text-transform:uppercase;">Education Fund</h2>
+      <div class="sub-kicker">
+        Contributions support independent education and research initiatives. Bitcoin (BTC) only.
+      </div>
+
+      <div class="wallet-box">
+        <div class="wallet-address" id="btcAddress">
+          bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3
+        </div>
+        <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+      </div>
+
+      <div class="fund-note">
+        <span class="highlight">Note:</span> This is a placeholder address for layout/testing. Do not send funds to this address.
+      </div>
+    </div>
+
+    <a href="#contact" class="scroll-indicator reveal" aria-label="Scroll to contact">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+      </svg>
+    </a>
+  </section>
+
+  <section id="contact" data-section="contact">
+    <div class="glass-card reveal" style="max-width:550px;">
+      <h2 style="color:var(--accent);margin-bottom:18px;text-align:center;letter-spacing:3px;text-transform:uppercase;">
+        Contact
+      </h2>
+      <p class="contact-kicker">
+        For inquiries, partnerships, or strategic dialogue.
+      </p>
+      <form>
+        <input type="text" placeholder="Full Name" required />
+        <input type="email" placeholder="Email Address" required />
+        <textarea rows="5" placeholder="Your Message" required></textarea>
+        <button class="btn" type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-strong">Basys Analytics</div>
+    <div class="footer-meta">Stuttgart · San Francisco · Santa Fe</div>
+    <div class="footer-tagline">Independent Research &amp; Analysis</div>
+    <div class="footer-legal">
+      BasysAnalytics is a subsidiary of Next-Gen-IT LLC, based in the USA.
+    </div>
+    <div style="margin-top:10px; opacity:.65;">© 2026 Basys Analytics. All rights reserved.</div>
+  </footer>
+
+  <script>
+    // Header scroll + claim hide
+    const header = document.getElementById('siteHeader');
+    const heroClaim = document.getElementById('heroClaim');
+
+    const onScroll = () => {
+      const y = window.scrollY || 0;
+      header.classList.toggle('scrolled', y > 20);
+      if (heroClaim) heroClaim.classList.toggle('hidden', y > 140);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Mobile burger
+    const navToggle = document.getElementById('navToggle');
+    const nav = document.getElementById('siteNav');
+    const closeNav = () => {
+      header.classList.remove('nav-open');
+      navToggle?.setAttribute('aria-expanded', 'false');
+    };
+
+    navToggle?.addEventListener('click', () => {
+      const open = header.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    nav?.addEventListener('click', (e) => {
+      if (e.target.tagName.toLowerCase() === 'a') closeNav();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeNav();
+    });
+
+    // Initiatives dropdown/accordion
+    const group = document.getElementById('initiativeGroup');
+    const toggle = group?.querySelector('.nav-group-toggle');
+
+    const closeGroup = () => {
+      group?.classList.remove('open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    };
+
+    toggle?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = group.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    document.addEventListener('click', () => closeGroup());
+
+    // Reveal on scroll
+    const revealEls = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+
+    // Active nav (incl. dropdown items)
+    const navLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
+    const sections = navLinks
+      .map(a => document.querySelector(a.getAttribute('href')))
+      .filter(Boolean);
+
+    const setActive = (id) => {
+      navLinks.forEach(a => {
+        const isActive = a.getAttribute('data-nav') === id;
+        a.classList.toggle('active', isActive);
+        if (isActive) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      });
+
+      const hasInitiativeActive = (id === 'token' || id === 'fund');
+      group?.classList.toggle('has-active', hasInitiativeActive);
+    };
+
+    function getActiveLinePx() {
+      return header.getBoundingClientRect().height + 80;
+    }
+
+    let ticking = false;
+    function updateActive() {
+      ticking = false;
+      const line = getActiveLinePx();
+      let current = sections[0]?.id || 'home';
+
+      for (const sec of sections) {
+        const top = sec.getBoundingClientRect().top;
+        if (top <= line) current = sec.id;
+      }
+      setActive(current);
+    }
+
+    function onSpyScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateActive);
+    }
+
+    window.addEventListener('scroll', onSpyScroll, { passive: true });
+    window.addEventListener('resize', onSpyScroll);
+    window.addEventListener('load', onSpyScroll);
+    onSpyScroll();
+
+    // Copy BTC address (placeholder)
+    const copyBtn = document.getElementById('copyBtn');
+    const btcAddress = document.getElementById('btcAddress');
+
+    if (copyBtn && btcAddress) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(btcAddress.textContent.trim());
+          const prev = copyBtn.textContent;
+          copyBtn.textContent = 'Copied';
+          setTimeout(() => (copyBtn.textContent = prev), 900);
+        } catch (e) {
+          const prev = copyBtn.textContent;
+          copyBtn.textContent = 'Copy failed';
+          setTimeout(() => (copyBtn.textContent = prev), 900);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
