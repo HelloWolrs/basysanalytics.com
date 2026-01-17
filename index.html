@@ -136,15 +136,26 @@
       scroll-margin-top: 90px;
     }
 
+    /* Make non-hero sections NOT full height so cards don't "bleed" into next */
+    section:not(#home){
+      min-height: auto;
+      padding: 110px 10% 110px; /* tighter + balanced */
+    }
+
     .glass-card {
       background: var(--glass);
       backdrop-filter: blur(20px);
       border-radius: 20px;
-      padding: 45px;
+      padding: 42px;
       width: 100%;
       max-width: 950px;
       border: 1px solid rgba(255,255,255,0.10);
       box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    }
+
+    /* Slightly more compact cards for sections (concept/analytics/contact) */
+    section:not(#home) .glass-card{
+      padding: 34px;
     }
 
     .logo-container {
@@ -198,8 +209,8 @@
 
     .highlight { color: var(--accent); font-weight: 600; }
     .summary-box {
-      margin-top: 25px;
-      padding: 22px;
+      margin-top: 18px; /* slightly tighter */
+      padding: 18px;
       border-left: 4px solid var(--accent);
       background: rgba(255,255,255,0.05);
       line-height: 1.7;
@@ -214,17 +225,17 @@
       margin-bottom: 10px;
     }
     .concept-kicker{
-      margin-top: 8px;
+      margin-top: 6px;
       opacity: 0.78;
       line-height: 1.7;
       font-size: 1.02rem;
     }
-    .concept-points { margin-top: 18px; display: grid; gap: 10px; }
+    .concept-points { margin-top: 14px; display: grid; gap: 10px; }
     .concept-point {
       display: flex;
       gap: 12px;
       align-items: flex-start;
-      padding: 14px;
+      padding: 12px; /* tighter */
       border-radius: 14px;
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
@@ -257,13 +268,13 @@
     .analytics-card p{
       font-size: 1.07rem;
       line-height: 1.75;
-      margin-bottom: 18px;
+      margin-bottom: 14px; /* tighter */
     }
     .analytics-card p:last-of-type { margin-bottom: 0; }
 
     /* ===== CONTACT helper text ===== */
     .contact-kicker{
-      margin: -8px 0 18px;
+      margin: -8px 0 16px;
       text-align: center;
       opacity: 0.78;
       line-height: 1.6;
@@ -281,8 +292,8 @@
     /* ===== Form ===== */
     input, textarea {
       width: 100%;
-      padding: 15px;
-      margin-bottom: 12px;
+      padding: 14px;
+      margin-bottom: 10px; /* tighter */
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
       color: #fff;
@@ -292,7 +303,7 @@
     }
     .btn {
       width: 100%;
-      padding: 16px;
+      padding: 15px;
       background: var(--accent);
       border: none;
       border-radius: 10px;
@@ -320,6 +331,8 @@
     @media (max-width: 900px) {
       .logo-container { width: min(600px, 92vw); height: min(360px, 55vw); }
       section { padding: 135px 8% 110px; }
+      section:not(#home){ padding: 95px 8% 95px; }
+      section:not(#home) .glass-card{ padding: 26px; }
     }
 
     @media (max-width: 768px) {
@@ -560,7 +573,7 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => io.observe(el));
 
-    // ===== Active nav item (FIX: not off by one) =====
+    // Active nav item
     const navLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
     const sections = navLinks
       .map(a => document.querySelector(a.getAttribute('href')))
@@ -576,7 +589,6 @@
     };
 
     function getActiveLinePx() {
-      // A line a bit below the header where we decide "this section is active"
       return header.getBoundingClientRect().height + 80;
     }
 
@@ -604,7 +616,7 @@
     window.addEventListener('scroll', onSpyScroll, { passive: true });
     window.addEventListener('resize', onSpyScroll);
     window.addEventListener('load', onSpyScroll);
-    onSpyScroll(); // initial
+    onSpyScroll();
   </script>
 </body>
 </html>
