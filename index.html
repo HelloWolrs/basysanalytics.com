@@ -77,7 +77,7 @@
       color: var(--accent);
     }
 
-    /* Active nav item (scroll spy) */
+    /* Active nav item */
     nav a.active {
       opacity: 1;
       color: #fff;
@@ -560,10 +560,10 @@
     }, { threshold: 0.12 });
     revealEls.forEach(el => io.observe(el));
 
-    // ===== Active nav item (ROBUST scroll spy) =====
+    // ===== Active nav item (FIX: not off by one) =====
     const navLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
     const sections = navLinks
-      .map(a => document.getElementById(a.getAttribute('href').slice(1)))
+      .map(a => document.querySelector(a.getAttribute('href')))
       .filter(Boolean);
 
     const setActive = (id) => {
@@ -575,36 +575,36 @@
       });
     };
 
-    const getHeaderOffset = () => {
-      const rect = header.getBoundingClientRect();
-      return rect.height + 18; // little breathing room
-    };
+    function getActiveLinePx() {
+      // A line a bit below the header where we decide "this section is active"
+      return header.getBoundingClientRect().height + 80;
+    }
 
     let ticking = false;
-    const updateActiveFromScroll = () => {
+    function updateActive() {
       ticking = false;
 
-      const offset = getHeaderOffset();
-      const y = window.scrollY + offset;
+      const line = getActiveLinePx();
+      let current = sections[0]?.id || 'home';
 
-      // pick the last section whose top is above the "active line"
-      let currentId = sections[0]?.id || 'home';
       for (const sec of sections) {
-        if (sec.offsetTop <= y) currentId = sec.id;
+        const top = sec.getBoundingClientRect().top;
+        if (top <= line) current = sec.id;
       }
-      setActive(currentId);
-    };
 
-    const onScrollSpy = () => {
+      setActive(current);
+    }
+
+    function onSpyScroll() {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(updateActiveFromScroll);
-    };
+      requestAnimationFrame(updateActive);
+    }
 
-    window.addEventListener('scroll', onScrollSpy, { passive: true });
-    window.addEventListener('resize', onScrollSpy);
-    window.addEventListener('load', onScrollSpy);
-    onScrollSpy(); // initial
+    window.addEventListener('scroll', onSpyScroll, { passive: true });
+    window.addEventListener('resize', onSpyScroll);
+    window.addEventListener('load', onSpyScroll);
+    onSpyScroll(); // initial
   </script>
 </body>
 </html>
