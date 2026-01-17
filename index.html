@@ -41,7 +41,7 @@ header.scrolled{
 }
 
 nav{display:flex;gap:28px;align-items:center}
-nav a, .nav-toggle{
+nav a, .nav-group-toggle{
   font-size:12px;
   letter-spacing:2px;
   text-transform:uppercase;
@@ -51,7 +51,7 @@ nav a, .nav-toggle{
   text-decoration:none;
   position:relative;
 }
-nav a:hover{opacity:1;color:var(--accent)}
+nav a:hover, .nav-group-toggle:hover{opacity:1;color:var(--accent)}
 nav a.active{opacity:1}
 nav a.active::after{
   content:"";
@@ -113,7 +113,7 @@ nav a.active::after{
 
 .hero-stage{
   position:relative;
-  width:min(560px,92vw);
+  width:min(600px,94vw); /* a bit larger stage */
   aspect-ratio:1/1;
 }
 
@@ -121,20 +121,50 @@ nav a.active::after{
   from{transform:rotate(0deg)}
   to{transform:rotate(360deg)}
 }
+
+/* Globe (masked circle), slower rotation, softer edge glow */
 .globe{
   position:absolute;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  animation:rotate-earth 140s linear infinite;
-}
-.globe img{
-  width:78%;
-  filter:drop-shadow(0 30px 60px rgba(0,0,0,.5));
+  animation:rotate-earth 220s linear infinite; /* SLOWER */
+  border-radius:50%;
+  overflow:hidden; /* crop away black JPG bg */
 }
 
-/* Text auf Globe */
+/* Soft halo behind earth */
+.globe::before{
+  content:"";
+  position:absolute;
+  width:92%;
+  height:92%;
+  border-radius:50%;
+  background: radial-gradient(circle,
+    rgba(120,170,255,0.22) 0%,
+    rgba(120,170,255,0.10) 35%,
+    rgba(0,0,0,0.00) 70%);
+  filter: blur(10px);
+  opacity:0.55;
+}
+
+.globe img{
+  position:relative;
+  width:92%;   /* EARTH BIGGER */
+  height:92%;
+  object-fit:cover;
+  border-radius:50%;
+
+  /* LESS CONTRAST + softer look */
+  filter:
+    drop-shadow(0 26px 55px rgba(0,0,0,.42))
+    contrast(0.95)
+    saturate(0.95)
+    brightness(1.04);
+}
+
+/* Text on Globe */
 .hero-text{
   position:absolute;
   inset:0;
@@ -154,7 +184,11 @@ nav a.active::after{
   margin-top:10px;
   letter-spacing:.35em;
   font-size:.9rem;
-  opacity:.85;
+  opacity:.9;
+}
+.accent-initial{
+  color:var(--accent);
+  font-weight:800;
 }
 
 .hero-claim{
@@ -212,39 +246,52 @@ footer{
 .footer-strong{color:#ccc;font-weight:700}
 .footer-tagline{color:var(--accent);margin-top:6px}
 
-/* ================= JS ================= */
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px){
+  header{ padding:18px 18px; }
+  header.scrolled{ padding:12px 18px; }
+  nav{ gap:18px; flex-wrap:wrap; }
+  .hero-stage{ width:min(520px,94vw); }
+  .globe img{ width:92%; height:92%; }
+}
 </style>
 </head>
 
 <body>
 
 <header id="header">
-<nav>
-  <a href="#home" class="active">Home</a>
-  <a href="#basys">Basys</a>
-  <a href="#analytics">Analytics</a>
+  <nav>
+    <a href="#home" class="active">Home</a>
+    <a href="#basys">Basys</a>
+    <a href="#analytics">Analytics</a>
 
-  <div class="nav-group" id="navGroup">
-    <button class="nav-group-toggle">Initiatives ▾</button>
-    <div class="nav-group-menu">
-      <a href="#token">Token</a>
-      <a href="#fund">Education Fund</a>
+    <div class="nav-group" id="navGroup">
+      <button class="nav-group-toggle">Initiatives ▾</button>
+      <div class="nav-group-menu">
+        <a href="#token">Token</a>
+        <a href="#fund">Education Fund</a>
+      </div>
     </div>
-  </div>
 
-  <a href="#contact">Contact</a>
-  <a href="/login" class="login-link">Login</a>
-</nav>
+    <a href="#contact">Contact</a>
+    <a href="/login" class="login-link">Login</a>
+  </nav>
 </header>
 
+<!-- HOME -->
 <section id="home">
   <div class="hero-stage">
     <div class="globe">
-      <img src="hero-globe.png">
+      <img src="hero-globe.png" alt="Earth">
     </div>
+
     <div class="hero-text">
       <div class="brand"><span class="btc">₿</span>asys Analytics</div>
-      <div class="brand-claim">Observe · Learn · Lead</div>
+      <div class="brand-claim">
+        <span class="accent-initial">O</span>bserve ·
+        <span class="accent-initial">L</span>earn ·
+        <span class="accent-initial">L</span>ead
+      </div>
     </div>
   </div>
 
@@ -255,37 +302,59 @@ footer{
   <div class="scroll">↓</div>
 </section>
 
+<!-- BASYS -->
 <section id="basys">
   <div class="card">
     <h2 class="highlight">Basys</h2>
-    A structured process model built on Observe · Learn · Lead.
+    <p>
+      A structured process model built on <strong>Observe · Learn · Lead</strong>,
+      transforming market behavior into clarity and responsible action.
+    </p>
   </div>
 </section>
 
+<!-- ANALYTICS -->
 <section id="analytics">
   <div class="card">
     <h2 class="highlight">Analytics</h2>
-    BasysAnalytics is an analytical system for structured observation and interpretation of digital asset markets.
+    <p>
+      <span class="highlight">BasysAnalytics</span> is an analytical system designed for the
+      structured observation, interpretation, and classification of crypto
+      and digital asset markets.
+    </p>
+    <p style="margin-top:14px;">
+      The name <span class="highlight">Basys</span> is derived from Base, Basis, and System,
+      representing a stable, methodical foundation.
+    </p>
   </div>
 </section>
 
+<!-- TOKEN -->
 <section id="token">
   <div class="card">
     <h2 class="highlight">Token</h2>
-    The Basys token is envisioned to support education, research and charitable initiatives.
+    <p>
+      The Basys token is envisioned as a future mechanism to support education,
+      research, and charitable initiatives focused on long-term societal impact.
+    </p>
   </div>
 </section>
 
+<!-- FUND -->
 <section id="fund">
   <div class="card">
     <h2 class="highlight">Education Fund</h2>
-    Bitcoin donations support independent education initiatives.
+    <p>
+      Contributions support independent education and research initiatives.
+      Bitcoin (BTC) only.
+    </p>
     <div class="wallet">
       bc1qexampleplaceholderxxxxxxxxxxxxxxxxxxxx
     </div>
   </div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
   <div class="card" style="max-width:520px">
     <h2 class="highlight">Contact</h2>
@@ -293,7 +362,7 @@ footer{
       <input type="text" placeholder="Name" required><br><br>
       <input type="email" placeholder="Email" required><br><br>
       <textarea rows="5" placeholder="Message"></textarea><br><br>
-      <button class="login-link">Send</button>
+      <button class="login-link" type="submit">Send</button>
     </form>
   </div>
 </section>
@@ -303,19 +372,26 @@ footer{
   Stuttgart · San Francisco · Santa Fe
   <div class="footer-tagline">Independent Research & Analysis</div>
   <div style="margin-top:10px">
-    BasysAnalytics is a subsidiary of Next-Gen-IT LLC (USA)
+    BasysAnalytics is a subsidiary of Next-Gen-IT LLC, USA
   </div>
 </footer>
 
 <script>
-const header=document.getElementById("header");
-const navGroup=document.getElementById("navGroup");
+  const header = document.getElementById("header");
+  const navGroup = document.getElementById("navGroup");
 
-window.addEventListener("scroll",()=>{
-  header.classList.toggle("scrolled",window.scrollY>20);
-});
+  window.addEventListener("scroll", () => {
+    header.classList.toggle("scrolled", window.scrollY > 20);
+  });
 
-navGroup.querySelector("button").onclick=()=>navGroup.classList.toggle("open");
+  navGroup.querySelector("button").onclick = () => {
+    navGroup.classList.toggle("open");
+  };
+
+  // close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!navGroup.contains(e.target)) navGroup.classList.remove("open");
+  });
 </script>
 
 </body>
