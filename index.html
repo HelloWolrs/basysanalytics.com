@@ -8,18 +8,25 @@
     <style>
         :root { --accent: #f2a900; --glass: rgba(10, 15, 25, 0.95); }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { height: 100%; font-family: 'Inter', sans-serif; color: #fff; background-color: #0b0d17; scroll-behavior: smooth; }
+        body, html {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+            background-color: #0b0d17;
+            scroll-behavior: smooth;
+        }
 
         .bg {
             position: fixed;
             inset: 0;
             z-index: -1;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
-                        url('1000081562.jpg') no-repeat center center;
+            background:
+                linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)),
+                url('1000081562.jpg') no-repeat center center;
             background-size: cover;
         }
 
-        /* ================= HEADER ================= */
+        /* ============ HEADER ============ */
         header {
             position: fixed;
             top: 0;
@@ -27,12 +34,11 @@
             padding: 25px 50px;
             z-index: 1000;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start; /* nur links */
             align-items: center;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
         }
 
-        /* LINKS LINKS */
         nav {
             display: flex;
             gap: 30px;
@@ -63,14 +69,7 @@
             opacity: 1;
         }
 
-        /* LOGO RECHTS */
-        .header-logo {
-            height: 36px;
-            width: auto;
-            opacity: 0.95;
-        }
-
-        /* ================= SECTIONS ================= */
+        /* ============ SECTIONS ============ */
         section {
             min-height: 100vh;
             display: flex;
@@ -121,8 +120,6 @@
             40% { transform: translateY(-10px); }
         }
 
-        .highlight { color: var(--accent); font-weight: 600; }
-
         input, textarea {
             width: 100%;
             padding: 15px;
@@ -162,7 +159,6 @@
         @media (max-width: 768px) {
             header { padding: 18px 20px; }
             nav { gap: 15px; }
-            .header-logo { height: 28px; }
         }
     </style>
 </head>
@@ -171,16 +167,13 @@
 <div class="bg"></div>
 
 <header>
-    <!-- LINKS LINKS -->
+    <!-- NUR LINKS, KEIN LOGO -->
     <nav>
         <a href="#home">Home</a>
         <a href="#concept">Concept</a>
         <a href="#contact">Contact</a>
         <a href="/login" class="login-link">Login</a>
     </nav>
-
-    <!-- LOGO RECHTS -->
-    <img src="logo.png" alt="Basys Analytics Logo" class="header-logo">
 </header>
 
 <section id="home">
@@ -203,8 +196,8 @@
     <div class="glass-card">
         <h2 style="color:var(--accent);margin-bottom:30px;letter-spacing:3px;">CONCEPT</h2>
         <p style="font-size:1.1rem;line-height:1.7;">
-            Basys Analytics is an analytical system designed for structured observation and interpretation
-            of crypto and digital asset markets.
+            Basys Analytics is an analytical system designed for structured observation
+            and interpretation of crypto and digital asset markets.
         </p>
     </div>
 </section>
