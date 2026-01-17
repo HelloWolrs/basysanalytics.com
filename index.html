@@ -10,19 +10,18 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { height: 100%; font-family: 'Inter', sans-serif; color: #fff; background-color: #0b0d17; scroll-behavior: smooth; }
         
-        /* Hintergrund fixiert */
         .bg { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; 
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('1000081562.jpg') no-repeat center center; 
             background-size: cover; 
         }
 
-        /* Header mit korrektem Logo-Case */
         header { 
             position: fixed; top: 0; width: 100%; padding: 25px 50px; z-index: 1000; 
             display: flex; justify-content: space-between; align-items: center; 
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent); 
         }
+        
         .logo-text { font-size: 26px; font-weight: 700; letter-spacing: 0.5px; color: #fff; text-decoration: none; }
         .logo-text span { color: var(--accent); }
 
@@ -33,10 +32,9 @@
 
         section { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 100px 10%; }
 
-        /* Optimierte Glass-Cards */
         .glass-card { 
             background: var(--glass); backdrop-filter: blur(20px); border-radius: 20px; 
-            padding: 50px; width: 100%; max-width: 850px; 
+            padding: 45px; width: 100%; max-width: 850px; 
             border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 50px rgba(0,0,0,0.5); 
         }
 
@@ -50,4 +48,90 @@
         @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} }
 
         .highlight { color: var(--accent); font-weight: 600; }
-        .summary-box { margin-top: 30px; padding:
+        .summary-box { margin-top: 25px; padding: 25px; border-left: 4px solid var(--accent); background: rgba(255,255,255,0.05); line-height: 1.6; }
+
+        input, textarea { width: 100%; padding: 15px; margin-bottom: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 8px; font-family: inherit; outline: none; }
+        .btn { width: 100%; padding: 16px; background: var(--accent); border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-transform: uppercase; transition: 0.3s; color: #000; }
+        .btn:hover { background: #d99800; transform: translateY(-2px); }
+
+        footer { 
+            background: rgba(10, 15, 25, 0.9); padding: 40px 10%; text-align: center; 
+            border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.85rem; color: #888; 
+        }
+        .footer-content { max-width: 850px; margin: 0 auto; line-height: 1.8; }
+        .footer-content strong { color: #fff; }
+
+        @media (max-width: 768px) { .logo-text { font-size: 18px; } .nav-links { gap: 15px; } .hero-row span { font-size: 2.2rem; } }
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <header>
+        <a href="#home" class="logo-text"><span>B</span>asys<span>A</span>nalytics</a>
+        <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#concept">Concept</a>
+            <a href="#contact">Contact</a>
+            <a href="/login" class="login-link">Login</a>
+        </nav>
+    </header>
+
+    <section id="home">
+        <div class="glass-card hero-card">
+            <div class="hero-row">
+                <span>Observe</span><span class="dot">·</span>
+                <span>Learn</span><span class="dot">·</span>
+                <span>Lead</span>
+            </div>
+            <p style="margin-top: 20px; opacity: 0.8; font-size: 1.2rem; letter-spacing: 1px;">Expertise for Crypto and Digital Asset Markets.</p>
+        </div>
+        <a href="#concept" class="scroll-indicator">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+        </a>
+    </section>
+
+    <section id="concept">
+        <div class="glass-card">
+            <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">Concept</h2>
+            <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
+                <span class="highlight">Analytics</span> is an analytical system designed for the structured observation, interpretation, and classification of crypto and digital asset markets. The name <span class="highlight">Basys</span> is derived from Base, Basis, and System, representing a stable, methodical foundation.
+            </p>
+            <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
+                The claim <span class="highlight">Observe Learn Lead</span> describes the internal process: Understanding grows from observation, orientation emerges from understanding, and responsible leadership arises from orientation.
+            </p>
+            <p style="font-size: 1.1rem; line-height: 1.7;">
+                <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
+            </p>
+            <div class="summary-box">
+                <strong>In short:</strong> Basys Analytics combines a stable analytical foundation, a clear process of insight, and personal values for responsible decision-making in the digital economy.
+            </div>
+        </div>
+        <a href="#contact" class="scroll-indicator">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
+        </a>
+    </section>
+
+    <section id="contact">
+        <div class="glass-card" style="max-width: 550px;">
+            <h2 style="color: var(--accent); margin-bottom: 30px; text-align: center; text-transform: uppercase; letter-spacing: 3px;">Contact</h2>
+            <form>
+                <input type="text" placeholder="Full Name" required>
+                <input type="email" placeholder="Email Address" required>
+                <textarea rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <strong>Basys Analytics</strong><br>
+            Oliver & Lion Leininger<br>
+            <span style="font-size: 0.75rem; opacity: 0.6;">&copy; 2026 Basys Analytics. All rights reserved. | 
+            <a href="#" style="color: #888; text-decoration: none;">Privacy Policy</a> | 
+            <a href="#" style="color: #888; text-decoration: none;">Legal Notice</a></span>
+        </div>
+    </footer>
+
+</body>
+</html>
