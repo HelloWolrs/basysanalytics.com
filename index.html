@@ -34,7 +34,7 @@
             padding: 25px 50px;
             z-index: 1000;
             display: flex;
-            justify-content: flex-start; /* nur links */
+            justify-content: flex-start;
             align-items: center;
             background: linear-gradient(to bottom, rgba(0,0,0,0.9), transparent);
         }
@@ -120,6 +120,19 @@
             40% { transform: translateY(-10px); }
         }
 
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .summary-box {
+            margin-top: 25px;
+            padding: 25px;
+            border-left: 4px solid var(--accent);
+            background: rgba(255,255,255,0.05);
+            line-height: 1.6;
+        }
+
         input, textarea {
             width: 100%;
             padding: 15px;
@@ -167,7 +180,6 @@
 <div class="bg"></div>
 
 <header>
-    <!-- NUR LINKS, KEIN LOGO -->
     <nav>
         <a href="#home">Home</a>
         <a href="#concept">Concept</a>
@@ -194,17 +206,47 @@
 
 <section id="concept">
     <div class="glass-card">
-        <h2 style="color:var(--accent);margin-bottom:30px;letter-spacing:3px;">CONCEPT</h2>
-        <p style="font-size:1.1rem;line-height:1.7;">
-            Basys Analytics is an analytical system designed for structured observation
-            and interpretation of crypto and digital asset markets.
+        <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
+            Concept
+        </h2>
+
+        <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
+            <span class="highlight">Analytics</span> is an analytical system designed for the structured observation,
+            interpretation, and classification of crypto and digital asset markets.
+            The name <span class="highlight">Basys</span> is derived from Base, Basis, and System,
+            representing a stable, methodical foundation.
         </p>
+
+        <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
+            The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
+            Understanding grows from observation, orientation emerges from understanding,
+            and responsible leadership arises from orientation.
+        </p>
+
+        <p style="font-size: 1.1rem; line-height: 1.7;">
+            <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
+            <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
+        </p>
+
+        <div class="summary-box">
+            <strong>In short:</strong> Basys Analytics combines a stable analytical foundation,
+            a clear process of insight, and personal values for responsible decision-making
+            in the digital economy.
+        </div>
     </div>
+
+    <a href="#contact" class="scroll-indicator">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+        </svg>
+    </a>
 </section>
 
 <section id="contact">
     <div class="glass-card" style="max-width:550px;">
-        <h2 style="color:var(--accent);margin-bottom:30px;text-align:center;letter-spacing:3px;">CONTACT</h2>
+        <h2 style="color:var(--accent);margin-bottom:30px;text-align:center;letter-spacing:3px;">
+            CONTACT
+        </h2>
         <form>
             <input type="text" placeholder="Full Name" required>
             <input type="email" placeholder="Email Address" required>
