@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Basys Analytics</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
+/* ======================================================
+   ROOT / RESET
+====================================================== */
 :root{
   --accent:#f2a900;
   --glass: rgba(10,15,25,.38);
-  --text-main: rgba(195,205,218,.92);
-  --text-muted: rgba(160,172,188,.88);
+  --text-main: rgba(232,238,248,.90);
+  --text-muted: rgba(160,172,188,.85);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -24,8 +27,11 @@ html,body{
   scroll-behavior:smooth;
 }
 
-/* ===== City Background (zoomed out, no borders) ===== */
+/* ======================================================
+   CITY BACKGROUND (ZOOMED OUT)
+====================================================== */
 body{ background:none; position:relative; }
+
 body::before{
   content:"";
   position:fixed;
@@ -36,10 +42,11 @@ body::before{
     url("1000081562.jpg") no-repeat center 40%;
   background-size:cover;
   transform:scale(0.92);
-  will-change:transform;
 }
 
-/* ================= HEADER ================= */
+/* ======================================================
+   HEADER / NAV
+====================================================== */
 header{
   position:fixed;
   top:0;
@@ -48,10 +55,10 @@ header{
   z-index:1000;
   display:flex;
   align-items:center;
-  gap:18px;
   background:linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
   transition:.25s;
 }
+
 header.scrolled{
   padding:14px 48px;
   background:rgba(10,15,25,.75);
@@ -66,14 +73,14 @@ header.scrolled{
   border-radius:10px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.06);
-  color:var(--text-main);
+  color:#fff;
   cursor:pointer;
 }
 
 nav{
   display:flex;
-  gap:28px;
   align-items:center;
+  gap:28px;
   width:100%;
 }
 
@@ -90,20 +97,19 @@ nav a, .nav-group-toggle{
   cursor:pointer;
 }
 
-nav a:hover, .nav-group-toggle:hover{ color:var(--accent); opacity:1; }
-nav a.active{ color:var(--accent); opacity:1; }
+nav a:hover,
+.nav-group-toggle:hover{
+  color:var(--accent);
+  opacity:1;
+}
 
-nav a.active::after{
-  content:"";
-  position:absolute;
-  left:0;right:0;bottom:-6px;
-  height:2px;
-  background:var(--accent);
-  border-radius:999px;
+nav a.active{
+  color:var(--accent);
+  opacity:1;
 }
 
 .login-link{
-  margin-left:auto;              /* 🔑 Login right */
+  margin-left:auto;
   border:1px solid var(--accent);
   padding:8px 18px;
   border-radius:8px;
@@ -111,25 +117,9 @@ nav a.active::after{
   opacity:1;
 }
 
-/* Initiatives */
-.nav-group{ position:relative; }
-.chevron{ font-size:13px; font-weight:900; }
-
-.nav-group-menu{
-  position:absolute;
-  top:calc(100% + 10px);
-  left:0;
-  min-width:240px;
-  display:none;
-  padding:10px;
-  border-radius:14px;
-  background:rgba(10,15,25,.78);
-  backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,.10);
-}
-.nav-group.open .nav-group-menu{ display:grid; gap:6px; }
-
-/* ================= SECTIONS ================= */
+/* ======================================================
+   SECTIONS (ANCHOR OFFSET)
+====================================================== */
 section{
   min-height:100vh;
   display:flex;
@@ -137,18 +127,19 @@ section{
   justify-content:center;
   align-items:center;
   padding:150px 10% 120px;
-  scroll-margin-top:130px;  /* 🔑 anchor offset */
+  scroll-margin-top:130px;
 }
 
-/* ===== HERO ===== */
+/* ======================================================
+   HERO / STAR SKY
+====================================================== */
 #home{
   position:relative;
   overflow:hidden;
   background:#000;
 }
 
-/* star sky */
-#home .sky-layer{
+.sky-layer{
   position:absolute;
   inset:-260px;
   background:
@@ -158,10 +149,12 @@ section{
   background-size:140px 140px,220px 220px,cover;
 }
 
-/* globe stage */
+/* ======================================================
+   GLOBE
+====================================================== */
 .hero-stage{
   position:relative;
-  width:min(368px,78vw);
+  width:min(320px,72vw);
   aspect-ratio:1/1;
   display:flex;
   align-items:center;
@@ -176,6 +169,7 @@ section{
   overflow:hidden;
   animation:rotate-earth 240s linear infinite;
 }
+
 @keyframes rotate-earth{
   from{transform:rotate(0)}
   to{transform:rotate(360deg)}
@@ -188,7 +182,9 @@ section{
   filter:brightness(.92) saturate(.92);
 }
 
-/* hero text */
+/* ======================================================
+   HERO TEXT
+====================================================== */
 .hero-text{
   position:absolute;
   inset:0;
@@ -200,9 +196,8 @@ section{
   pointer-events:none;
 }
 
-/* ===== BRAND ===== */
+/* BRAND */
 .brand{
-  display:inline-block;
   white-space:nowrap;
   font-weight:900;
   text-transform:uppercase;
@@ -215,13 +210,19 @@ section{
     0 2px 22px rgba(0,0,0,.76),
     0 0 36px rgba(0,0,0,.44);
 }
-.brand .btc{ color:var(--accent); margin-right:.03em; }
+
+.brand .btc{
+  color:var(--accent);
+  font-size:1.18em;
+  margin-right:.03em;
+}
+
 .analytics-rest{
   color:rgba(232,238,248,.90);
   font-weight:850;
 }
 
-/* claim */
+/* CLAIM */
 .brand-claim{
   margin-top:12px;
   display:flex;
@@ -229,8 +230,10 @@ section{
   justify-content:center;
   font-size:clamp(.7rem,3.1cqw,.92rem);
 }
+
 .cap{ color:var(--accent); font-size:1.25em; font-weight:900; }
 .rest{ text-transform:lowercase; font-weight:850; }
+
 .dot{
   width:9px;height:9px;
   background:rgba(232,238,248,.7);
@@ -238,7 +241,9 @@ section{
   margin:0 14px;
 }
 
-/* ===== CARDS ===== */
+/* ======================================================
+   GLASS CARDS
+====================================================== */
 .glass-card{
   background:var(--glass);
   backdrop-filter:blur(20px);
@@ -252,7 +257,9 @@ section{
 
 .highlight{ color:var(--accent); font-weight:700; }
 
-/* ===== FOOTER ===== */
+/* ======================================================
+   FOOTER
+====================================================== */
 footer{
   background:rgba(10,15,25,.90);
   padding:42px 10%;
@@ -260,15 +267,24 @@ footer{
   font-size:.85rem;
   color:rgba(160,172,188,.78);
 }
-.footer-strong{ color:var(--text-main); font-weight:800; }
 
+.footer-strong{
+  color:var(--text-main);
+  font-weight:800;
+}
+
+/* ======================================================
+   MOBILE
+====================================================== */
 @media (max-width:768px){
   header{ padding:16px; }
   .nav-toggle{ display:inline-flex; }
+
   nav{
     position:absolute;
     top:100%;
-    left:16px;right:16px;
+    left:16px;
+    right:16px;
     display:grid;
     background:rgba(10,15,25,.9);
     padding:14px;
@@ -276,6 +292,7 @@ footer{
     opacity:0;
     pointer-events:none;
   }
+
   header.nav-open nav{
     opacity:1;
     pointer-events:auto;
@@ -288,24 +305,18 @@ footer{
 
 <header id="siteHeader">
   <button class="nav-toggle" id="navToggle">☰</button>
-  <nav id="siteNav">
+  <nav>
     <a href="#home" class="active">Home</a>
     <a href="#basys">Basys</a>
     <a href="#analytics">Analytics</a>
-
-    <div class="nav-group">
-      <button class="nav-group-toggle">Initiatives <span class="chevron">▾</span></button>
-      <div class="nav-group-menu">
-        <a href="#token">Token</a>
-        <a href="#fund">Education Fund</a>
-      </div>
-    </div>
-
+    <a href="#token">Token</a>
+    <a href="#fund">Education Fund</a>
     <a href="#contact">Contact</a>
     <a href="/login" class="login-link">Login</a>
   </nav>
 </header>
 
+<!-- HOME -->
 <section id="home">
   <div class="sky-layer"></div>
 
@@ -331,6 +342,46 @@ footer{
   </div>
 </section>
 
+<!-- BASYS -->
+<section id="basys">
+  <div class="glass-card">
+    <h2 class="highlight">Basys</h2>
+    <p>A clear process model for <span class="highlight">Observe · Learn · Lead</span>.</p>
+  </div>
+</section>
+
+<!-- ANALYTICS -->
+<section id="analytics">
+  <div class="glass-card">
+    <h2 class="highlight">Analytics</h2>
+    <p>Structured observation and interpretation of digital markets.</p>
+  </div>
+</section>
+
+<!-- TOKEN -->
+<section id="token">
+  <div class="glass-card">
+    <h2 class="highlight">Token</h2>
+    <p>Future support mechanism for education and research.</p>
+  </div>
+</section>
+
+<!-- FUND -->
+<section id="fund">
+  <div class="glass-card">
+    <h2 class="highlight">Education Fund</h2>
+    <p>Bitcoin-only educational support.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="glass-card" style="max-width:520px">
+    <h2 class="highlight">Contact</h2>
+    <p>For inquiries and strategic dialogue.</p>
+  </div>
+</section>
+
 <footer>
   <div class="footer-strong">Basys Analytics</div>
   © 2026 Basys Analytics
@@ -338,9 +389,11 @@ footer{
 
 <script>
 const header=document.getElementById("siteHeader");
-window.addEventListener("scroll",()=>header.classList.toggle("scrolled",scrollY>20));
+window.addEventListener("scroll",()=>{
+  header.classList.toggle("scrolled",window.scrollY>20);
+});
 
-document.getElementById("navToggle")?.addEventListener("click",()=>{
+document.getElementById("navToggle").addEventListener("click",()=>{
   header.classList.toggle("nav-open");
 });
 </script>
