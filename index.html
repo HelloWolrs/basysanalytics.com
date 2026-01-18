@@ -26,9 +26,7 @@ html,body{
   font-family:"Inter",sans-serif;
   color:var(--text-main);
   scroll-behavior:smooth;
-
-  /* ✅ JS handles anchor offset now */
-  scroll-padding-top:0px;
+  scroll-padding-top:0px; /* JS handles anchor landing */
 }
 
 /* ===================== CITY BACKGROUND (ZOOMED OUT, NO BORDERS) ===================== */
@@ -132,7 +130,7 @@ nav a.active::after{
 
 /* Login style + push right */
 .login-link{
-  margin-left:auto; /* ✅ push away from other links */
+  margin-left:auto;
   border:1px solid var(--accent);
   padding:8px 18px;
   border-radius:8px;
@@ -154,7 +152,7 @@ nav a.login-link.active::after{ display:none; }
 .chevron{
   font-size:13px;
   font-weight:900;
-  transition:transform .25s ease;
+  transition:transform .25s ease, color .2s ease;
   opacity:1;
   color:var(--text-main);
   transform: translateY(-1px);
@@ -177,22 +175,33 @@ nav a.login-link.active::after{ display:none; }
   box-shadow:0 0 18px rgba(242,169,0,.25);
 }
 
+/* ✅ smoother dropdown animation */
 .nav-group-menu{
   position:absolute;
   top:calc(100% + 10px);
   left:0;
   min-width:240px;
-  display:none;
+
+  display:grid;
+  gap:6px;
   padding:10px;
   border-radius:14px;
+
   background:rgba(10,15,25,.78);
   backdrop-filter:blur(14px);
   border:1px solid rgba(255,255,255,.10);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
+
+  opacity:0;
+  transform: translateY(-6px) scale(.98);
+  pointer-events:none;
+  transition: opacity .18s ease, transform .18s ease;
 }
+
 .nav-group.open .nav-group-menu{
-  display:grid;
-  gap:6px;
+  opacity:1;
+  transform: translateY(0) scale(1);
+  pointer-events:auto;
 }
 
 .nav-group-menu a{
@@ -208,11 +217,13 @@ nav a.login-link.active::after{ display:none; }
   color:var(--text-main);
   opacity:.95;
 }
+
 .nav-group-menu a:hover{
   background:rgba(242,169,0,.10);
   border-color:rgba(242,169,0,.25);
   color:var(--text-main);
 }
+
 .nav-group-menu a.active{
   background:rgba(242,169,0,.12);
   border-color:rgba(242,169,0,.45);
@@ -228,9 +239,7 @@ section{
   justify-content:center;
   align-items:center;
   padding:150px 10% 120px;
-
-  /* ✅ JS controls anchor landing */
-  scroll-margin-top:0px;
+  scroll-margin-top:0px; /* JS controls anchor landing */
 }
 
 /* ===================== HERO ===================== */
@@ -398,7 +407,7 @@ section{
   text-align:center;
 }
 
-/* Brand: readable, globe-safe */
+/* ✅ crisper brand */
 .brand{
   display:inline-block;
   white-space:nowrap;
@@ -411,19 +420,21 @@ section{
   max-width: 74%;
   margin-inline:auto;
   transform: translateY(-1%);
+
   text-shadow:
-    0 2px 22px rgba(0,0,0,.76),
-    0 0 36px rgba(0,0,0,.44);
+    0 1px 0 rgba(0,0,0,.55),
+    0 2px 12px rgba(0,0,0,.72),
+    0 0 26px rgba(0,0,0,.42);
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
 }
 
-/* ✅ ₿ and A bigger now */
+/* ✅ ₿ and A bigger (requested) */
 .brand .btc{
   color:var(--accent);
   font-weight:900;
-
-  /* bigger */
   font-size: 1.34em;
-
   line-height: 0.95;
   vertical-align: baseline;
   margin-right: .03em;
@@ -438,6 +449,7 @@ section{
   font-weight:850;
   opacity:1;
   transition: color .35s ease, opacity .35s ease;
+  text-shadow: 0 1px 10px rgba(0,0,0,.55);
 }
 
 /* Observe / Learn / Lead */
@@ -479,15 +491,16 @@ section{
   font-weight:850;
 }
 
+/* ✅ orange separator line instead of dots */
 .dot{
-  width:9px;
-  height:9px;
-  border-radius:50%;
-  background: rgba(232, 238, 248, .72);
+  width:34px;
+  height:3px;
+  border-radius:999px;
+  background: var(--accent);
   display:inline-block;
-  margin:0 14px;
-  box-shadow:0 0 18px rgba(0,0,0,.38);
-  opacity:.85;
+  margin:0 16px;
+  box-shadow: 0 0 16px rgba(242,169,0,.18);
+  opacity:.95;
 }
 
 /* Scroll state: gray slightly darker on scroll */
@@ -784,12 +797,17 @@ footer{
 
   .nav-group-menu{
     position:static;
-    display:none;
     min-width:unset;
     background:transparent;
     border:none;
     padding:0;
     box-shadow:none;
+
+    opacity:1;
+    transform:none;
+    pointer-events:auto;
+    transition:none;
+    display:none;
   }
 
   .nav-group.open .nav-group-menu{
@@ -801,7 +819,6 @@ footer{
   .wallet-box{ flex-direction:column; align-items:stretch; }
   .copy-btn{ width:100%; }
 
-  /* login shouldn't push weirdly in grid */
   .login-link{ margin-left:0; text-align:center; }
 }
 
@@ -1142,16 +1159,25 @@ copyBtn?.addEventListener('click', async () => {
   }
 });
 
-/* Parallax (seam-free): move sky layer via transform */
+/* ✅ Parallax (lighter + throttled via rAF) */
 const sky = document.querySelector('#home .sky-layer');
-window.addEventListener('scroll', () => {
+let rafId = null;
+
+function onParallax(){
+  rafId = null;
   if(!sky) return;
-  const yRaw = window.scrollY * 0.08;
-  const y = Math.max(0, Math.min(90, yRaw));
+
+  const yRaw = window.scrollY * 0.04;   /* lighter */
+  const y = Math.max(0, Math.min(60, yRaw));
   sky.style.transform = `translate3d(0, ${-y}px, 0)`;
+}
+
+window.addEventListener('scroll', () => {
+  if(rafId) return;
+  rafId = requestAnimationFrame(onParallax);
 }, { passive:true });
 
-/* ===== Anchor scroll: scroll to CARD (not section) so it lands high ===== */
+/* ===== Anchor scroll: scroll to CARD so it lands high (now 5–10px deeper) ===== */
 function isHashLink(a){
   const href = a.getAttribute('href') || '';
   return href.startsWith('#') && href.length > 1;
@@ -1161,14 +1187,13 @@ function scrollToTarget(hash){
   const section = document.querySelector(hash);
   if(!section) return;
 
-  // ✅ target the card inside the section (lands higher!)
   const card = section.querySelector('.glass-card');
   const target = card || section;
 
   const headerH = header?.offsetHeight || 0;
 
-  // ✅ small gap below header (higher position)
-  const gap = 18;
+  /* ✅ 5–10px deeper than before */
+  const gap = 26;
 
   const y = target.getBoundingClientRect().top + window.scrollY - (headerH + gap);
 
