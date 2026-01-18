@@ -9,10 +9,9 @@
 
 <style>
 :root{
-  /* ✅ klares Bitcoin Orange */
-  --accent:#F7931A;
+  --accent:#f2a900;
 
-  /* ✅ sehr transparent */
+  /* ✅ noch transparenter */
   --glass: rgba(10,15,25,.14);
 }
 
@@ -23,11 +22,6 @@ html,body{
   font-family:"Inter",sans-serif;
   color:#fff;
   scroll-behavior:smooth;
-}
-
-/* ✅ Anchor Sprünge berücksichtigen fixed Header */
-html{
-  scroll-padding-top: 120px;
 }
 
 /* ===== Global City Background ===== */
@@ -103,7 +97,7 @@ nav a:hover, .nav-group-toggle:hover{
   color:var(--accent);
 }
 
-/* Active = accent orange */
+/* Active = accent orange like ₿ */
 nav a.active{
   opacity:1;
   color:var(--accent);
@@ -116,7 +110,7 @@ nav a.active::after{
   height:2px;
   background:var(--accent);
   border-radius:999px;
-  box-shadow:0 0 18px rgba(247,147,26,.25);
+  box-shadow:0 0 18px rgba(242,169,0,.25);
 }
 
 /* Login style */
@@ -159,7 +153,7 @@ nav a.login-link.active::after{ display:none; }
   height:2px;
   background:var(--accent);
   border-radius:999px;
-  box-shadow:0 0 18px rgba(247,147,26,.25);
+  box-shadow:0 0 18px rgba(242,169,0,.25);
 }
 
 .nav-group-menu{
@@ -196,14 +190,14 @@ nav a.login-link.active::after{ display:none; }
 }
 
 .nav-group-menu a:hover{
-  background:rgba(247,147,26,.10);
-  border-color:rgba(247,147,26,.25);
+  background:rgba(242,169,0,.10);
+  border-color:rgba(242,169,0,.25);
   color:#fff;
 }
 
 .nav-group-menu a.active{
-  background:rgba(247,147,26,.12);
-  border-color:rgba(247,147,26,.45);
+  background:rgba(242,169,0,.12);
+  border-color:rgba(242,169,0,.45);
   color:var(--accent);
 }
 .nav-group-menu a.active::after{ display:none; }
@@ -217,15 +211,23 @@ section{
   align-items:center;
   padding:135px 10% 120px;
   scroll-margin-top:90px;
-  position:relative; /* ✅ damit Pfeil unten absolut in der Section sitzt */
 }
 
-/* ✅ Boxen immer mittig + Pfeil unten sichtbar */
+/* ✅ ENGER ab Analytics bis Contact (gilt für alle außer Home) */
 section:not(#home){
-  justify-content:center;   /* ✅ Mitte */
-  min-height:100vh;
-  padding-top:120px;        /* Platz für Header */
-  padding-bottom:120px;     /* Platz für Pfeil */
+  justify-content:flex-start;
+  min-height:86vh;
+  padding-top:112px;
+  padding-bottom:60px;
+}
+
+/* ✅ Contact: Box + Pfeil höher */
+#contact{
+  padding-top: 92px;
+  padding-bottom: 50px;
+}
+#contact .scroll-indicator{
+  margin-top: 14px;
 }
 
 /* ===== HERO overrides global bg ===== */
@@ -236,10 +238,6 @@ section:not(#home){
     linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.70)),
     url("hero-sky.png") no-repeat center top;
   background-size:cover;
-
-  /* ✅ alles 5px runter (Hero) */
-  padding-top: 125px !important;
-  padding-bottom: 110px !important;
 }
 
 /* Film grain overlay (hero only) */
@@ -272,15 +270,15 @@ section:not(#home){
   to{ transform:translate3d(10px,-14px,0); }
 }
 
-/* Hero stage (✅ Welt kleiner) */
+/* Hero stage (✅ 10% smaller globe) */
 .hero-stage{
   position:relative;
-  width:min(470px, 88vw); /* ✅ kleiner */
+  width:min(504px, 90vw);
   aspect-ratio: 1 / 1;
   display:flex;
   align-items:center;
   justify-content:center;
-  margin-top:-15px; /* ✅ 5px runter */
+  margin-top:-6px;
 }
 
 @keyframes rotate-earth{
@@ -344,7 +342,6 @@ section:not(#home){
   object-fit:cover;
   object-position:center;
   border-radius:50%;
-  show: block;
   filter:
     drop-shadow(0 26px 55px rgba(0,0,0,.35))
     contrast(0.92)
@@ -363,7 +360,7 @@ section:not(#home){
   pointer-events:none;
 }
 
-/* Brand */
+/* ✅ Brand skaliert + letter-spacing feiner */
 .brand{
   font-size:clamp(2.2rem, 4.6vw, 3.1rem);
   font-weight:800;
@@ -374,7 +371,7 @@ section:not(#home){
   gap:0;
 }
 
-/* ₿ slightly bigger */
+/* ✅ ₿ minimal größer als asys */
 .brand .btc{
   color:var(--accent);
   font-size:1.18em;
@@ -421,7 +418,7 @@ section:not(#home){
 }
 
 .hero-claim{
-  margin-top:19px; /* ✅ etwas runter */
+  margin-top:22px;
   text-align:center;
   max-width:980px;
   font-size:clamp(.98rem, 1.35vw, 1.18rem);
@@ -440,7 +437,6 @@ section:not(#home){
   display:inline-flex;
   justify-content:center;
   opacity:.95;
-  z-index:2;
 }
 
 @keyframes bounce{
@@ -448,13 +444,9 @@ section:not(#home){
   40%{ transform:translateY(-10px); }
 }
 
-/* ✅ Pfeil unten fix sichtbar, Box bleibt mittig */
+/* ✅ Pfeil näher an die Box (ab Analytics bis Contact) */
 section:not(#home) .scroll-indicator{
-  position:absolute;
-  left:50%;
-  transform:translateX(-50%);
-  bottom:18px;
-  margin-top:0;
+  margin-top:18px;
 }
 
 /* ===================== CARDS ===================== */
@@ -476,6 +468,7 @@ section:not(#home) .scroll-indicator{
     transform .35s ease;
 }
 
+/* ✅ Hover: noch transparenter */
 .glass-card:hover{
   background-color: rgba(10,15,25,.07);
   backdrop-filter: blur(28px);
@@ -522,6 +515,7 @@ section:not(#home) .scroll-indicator{
   padding:14px 16px;
   border-radius:14px;
 
+  /* ✅ transparenter */
   background-color: rgba(10,15,25,.08);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -541,8 +535,8 @@ section:not(#home) .scroll-indicator{
   flex:0 0 auto;
   padding:10px 14px;
   border-radius:10px;
-  border:1px solid rgba(247,147,26,.35);
-  background:rgba(247,147,26,.12);
+  border:1px solid rgba(242,169,0,.35);
+  background:rgba(242,169,0,.12);
   color:#fff;
   cursor:pointer;
   font-weight:800;
@@ -554,8 +548,8 @@ section:not(#home) .scroll-indicator{
 
 .copy-btn:hover{
   transform:translateY(-1px);
-  background:rgba(247,147,26,.18);
-  border-color:rgba(247,147,26,.55);
+  background:rgba(242,169,0,.18);
+  border-color:rgba(242,169,0,.55);
 }
 
 .fund-note{
@@ -594,7 +588,7 @@ input, textarea{
   color:#000;
   transition:.25s;
 }
-.btn:hover{ background:#E07F00; transform:translateY(-2px); }
+.btn:hover{ background:#d99800; transform:translateY(-2px); }
 
 /* Footer */
 footer{
@@ -610,7 +604,7 @@ footer{
 .footer-meta{ margin-top:10px; opacity:.85; }
 .footer-tagline{
   margin-top:6px;
-  color:rgba(247,147,26,.92);
+  color:rgba(242,169,0,.92);
   letter-spacing:1px;
   text-transform:uppercase;
   font-weight:800;
@@ -689,25 +683,31 @@ footer{
 @media (max-width: 900px){
   section{ padding:125px 8% 110px; }
   section:not(#home){
-    padding-top:115px;
-    padding-bottom:115px;
+    min-height:84vh;
+    padding-top:105px;
+    padding-bottom:55px;
+  }
+  #contact{
+    padding-top: 88px;
+    padding-bottom: 46px;
   }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
-  .hero-stage{ width:min(440px, 92vw); }
-  section:not(#home) .scroll-indicator{ bottom: 14px; }
+  .hero-stage{ width:min(470px, 92vw); }
 }
 
 /* =========================================================
-   ✅ CONTACT FIX: Box + Pfeil höher (NUR Contact)
+   HERO: weiter unter den Header (wie vorher gewünscht)
    ========================================================= */
-#contact .glass-card{
-  transform: translateY(-22px);
+#home{
+  padding-top: 120px !important;
+  padding-bottom: 110px !important;
 }
 
-#contact .scroll-indicator{
-  bottom: 40px; /* war 18px -> höher */
-}
+.hero-stage{ margin-top: -20px; }
+.hero-claim{ margin-top: 14px; }
+#home .scroll-indicator{ margin-top: 30px; }
+
 </style>
 </head>
 
