@@ -536,41 +536,41 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   gap:12px;
 }
 
-/* 2x2 grid: BTC | USDT / CARD | REGION */
+/* 2x2 grid: tighter + smaller cards */
 .pay-grid{
   display:grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap:12px;
+  gap:10px;
 }
 
 .pay-card{
   position:relative;
   text-align:left;
-  padding:14px;
-  border-radius:16px;
+  padding:10px 12px;
+  border-radius:14px;
   border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.04);
+  background:rgba(255,255,255,.035);
   color:var(--text-main);
   cursor:pointer;
-  transition:.2s;
-  min-height:92px;
+  transition:.18s;
+  min-height:70px;
 }
 .pay-card:hover{
   transform: translateY(-1px);
   border-color: rgba(242,169,0,.22);
-  background: rgba(242,169,0,.06);
+  background: rgba(242,169,0,.055);
 }
 .pay-card.active{
   border-color: rgba(46,213,115,.35);
-  background: rgba(46,213,115,.06);
-  box-shadow: 0 0 0 1px rgba(46,213,115,.10), 0 18px 40px rgba(0,0,0,.28);
+  background: rgba(46,213,115,.055);
+  box-shadow: 0 0 0 1px rgba(46,213,115,.09), 0 14px 34px rgba(0,0,0,.22);
 }
 
 .pay-dot{
   position:absolute;
-  top:14px;
-  right:14px;
-  width:10px;height:10px;
+  top:10px;
+  right:10px;
+  width:9px;height:9px;
   border-radius:999px;
   background: rgba(255,255,255,.18);
   border:1px solid rgba(255,255,255,.18);
@@ -578,62 +578,62 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 .pay-card.active .pay-dot{
   background: var(--green);
   border-color: var(--green-border);
-  box-shadow: 0 0 14px var(--green-glow);
+  box-shadow: 0 0 12px var(--green-glow);
 }
 
 .pay-top{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
 }
 .pay-ico{
-  width:18px;height:18px;
+  width:16px;height:16px;
   opacity:.95;
 }
 .pay-title{
-  font-size:.76rem;
+  font-size:.70rem;
   font-weight:900;
   letter-spacing:.10em;
   text-transform:uppercase;
 }
 .pay-desc{
-  margin-top:8px;
-  font-size:.88rem;
-  line-height:1.35;
-  color: rgba(210,220,235,.88);
+  margin-top:6px;
+  font-size:.80rem;
+  line-height:1.25;
+  color: rgba(210,220,235,.86);
 }
 
-/* REGION CARD: same look/size as pay cards */
+/* REGION CARD: same size/style as cards */
 .region-card{
   position:relative;
   text-align:left;
-  padding:14px;
-  border-radius:16px;
+  padding:10px 12px;
+  border-radius:14px;
   border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.04);
+  background:rgba(255,255,255,.035);
   color:var(--text-main);
-  transition:.2s;
-  min-height:92px;
+  transition:.18s;
+  min-height:70px;
 }
 .region-card:hover{
   transform: translateY(-1px);
   border-color: rgba(242,169,0,.22);
-  background: rgba(242,169,0,.06);
+  background: rgba(242,169,0,.055);
 }
 .region-card .r-hint{
-  margin-top:8px;
-  font-size:.88rem;
-  line-height:1.35;
-  color: rgba(210,220,235,.88);
+  margin-top:6px;
+  font-size:.80rem;
+  line-height:1.25;
+  color: rgba(210,220,235,.86);
 }
 .region-card select{
-  margin-top:10px;
+  margin-top:8px;
   width:100%;
   border:1px solid rgba(255,255,255,.10);
-  background: rgba(10,15,25,.22);
+  background: rgba(10,15,25,.18);
   color: var(--text-main);
-  border-radius:12px;
-  padding:10px 10px;
+  border-radius:10px;
+  padding:8px 10px;
   outline:none;
   font-weight:900;
   letter-spacing:.04em;
@@ -644,46 +644,60 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 .fund-panel{ display:none; }
 .fund-panel.active{ display:block; }
 
+/* Compact fund layout */
 .fund-grid{
-  margin-top:14px;
+  margin-top:12px;
   display:grid;
-  grid-template-columns: 190px 1fr;
-  gap:16px;
+  grid-template-columns: 150px 1fr;
+  gap:14px;
   align-items:start;
 }
+
+/* QR container brighter + tighter */
 .qr-wrap{
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(10,15,25,.22);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  padding:12px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding:10px;
   display:flex;
   align-items:center;
   justify-content:center;
 }
+
+/* smaller QR */
 .qr{
-  width:166px;
-  height:166px;
+  width:140px;
+  height:140px;
   border-radius:12px;
   overflow:hidden;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
+  background:rgba(0,0,0,.18);
+  border:1px solid rgba(255,255,255,.14);
   display:flex;
   align-items:center;
   justify-content:center;
 }
-.qr img{ width:100%; height:100%; display:block; }
+
+/* crisp rendering */
+.qr img{
+  width:100%;
+  height:100%;
+  display:block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  transform: translateZ(0);
+}
 
 .addr-card{
   width:100%;
-  padding:14px 16px;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(10,15,25,.28);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow: 0 18px 45px rgba(0,0,0,.35);
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 14px 36px rgba(0,0,0,.30);
 }
 .addr-label{
   font-size:.72rem;
@@ -693,10 +707,10 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   color: rgba(180,195,214,.88);
 }
 .addr-value{
-  margin-top:10px;
+  margin-top:8px;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-  font-size:1.02rem;
-  letter-spacing:.3px;
+  font-size:.95rem;
+  letter-spacing:.2px;
   color: var(--text-main);
   line-height:1.45;
   overflow-wrap:anywhere;
@@ -704,27 +718,27 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 }
 
 .fund-actions{
-  margin-top:12px;
+  margin-top:10px;
   display:flex;
-  gap:10px;
+  gap:8px;
   flex-wrap:wrap;
 }
 .action-btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:10px;
-  padding:12px 14px;
-  border-radius:12px;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:10px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.04);
   color:var(--text-main);
   font-weight:900;
   letter-spacing:.06em;
   text-transform:uppercase;
-  font-size:.72rem;
+  font-size:.68rem;
   cursor:pointer;
-  transition:.2s;
+  transition:.18s;
   text-decoration:none;
 }
 .action-btn:hover{ transform:translateY(-1px); }
@@ -743,6 +757,14 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 .action-btn.card:hover{
   border-color: rgba(242,169,0,.60);
   background: rgba(242,169,0,.20);
+}
+
+/* tighter summary in fund panels */
+.fund-panel .summary-box{
+  margin-top:12px;
+  padding:14px;
+  font-size:.95rem;
+  line-height:1.6;
 }
 
 .copied-pill{
@@ -957,8 +979,7 @@ footer{
 
   .login-link{ margin-left:0; text-align:center; }
 
-  .fund-grid{ grid-template-columns: 1fr; }
-  .qr{ width:180px; height:180px; }
+  .fund-grid{ grid-template-columns: 1fr; gap:12px; }
   section{ padding:135px 8% 110px; }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
@@ -1130,7 +1151,7 @@ footer{
       Contributions support independent education and research initiatives.
     </div>
 
-    <!-- Selector: 2x2 grid (BTC | USDT) / (CARD | REGION) -->
+    <!-- Selector: 2x2 compact grid (BTC | USDT) / (CARD | REGION) -->
     <div class="pay-row">
       <div class="pay-grid" role="tablist" aria-label="Payment method selector">
 
@@ -1145,7 +1166,7 @@ footer{
             </svg>
             <div class="pay-title">Bitcoin</div>
           </div>
-          <div class="pay-desc">Send BTC directly (on-chain).</div>
+          <div class="pay-desc">Send BTC directly.</div>
         </button>
 
         <!-- USDT -->
@@ -1157,9 +1178,9 @@ footer{
               <path d="M12 6v14"></path>
               <path d="M8 10c1.4 1 3.2 1.5 4 1.5s2.6-.5 4-1.5"></path>
             </svg>
-            <div class="pay-title">USDT (ERC-20)</div>
+            <div class="pay-title">USDT</div>
           </div>
-          <div class="pay-desc">Stablecoin on Ethereum network.</div>
+          <div class="pay-desc">ERC-20 only.</div>
         </button>
 
         <!-- CARD/BANK -->
@@ -1173,7 +1194,7 @@ footer{
             </svg>
             <div class="pay-title">Card / Bank</div>
           </div>
-          <div class="pay-desc">Buy BTC via provider + send.</div>
+          <div class="pay-desc">Buy BTC + send.</div>
         </button>
 
         <!-- REGION (same size/style as cards) -->
@@ -1185,7 +1206,7 @@ footer{
             </svg>
             <div class="pay-title">Region</div>
           </div>
-          <div class="r-hint">Auto-detected. Used for card/bank providers.</div>
+          <div class="r-hint">For providers.</div>
           <select id="regionSelect">
             <option value="EU">EU</option>
             <option value="US">US</option>
@@ -1197,8 +1218,8 @@ footer{
     <div class="fund-panels">
       <!-- BTC PANEL -->
       <div class="fund-panel active" id="panelBtc" role="tabpanel" aria-label="Bitcoin panel">
-        <div class="summary-box" style="margin-top:14px;">
-          <strong>Bitcoin (On-chain):</strong> Scan the QR code or open your wallet. The address is shown below.
+        <div class="summary-box">
+          <strong>Bitcoin (On-chain):</strong> Scan QR or open your wallet.
         </div>
 
         <div class="fund-grid">
@@ -1208,7 +1229,7 @@ footer{
 
           <div>
             <div class="addr-card" aria-label="BTC Address">
-              <div class="addr-label">BTC Destination Address</div>
+              <div class="addr-label">BTC Destination</div>
               <div class="addr-value" id="btcAddrDisplay"></div>
             </div>
 
@@ -1224,8 +1245,8 @@ footer{
 
       <!-- USDT PANEL -->
       <div class="fund-panel" id="panelUsdt" role="tabpanel" aria-label="USDT panel">
-        <div class="summary-box" style="margin-top:14px;">
-          <strong>USDT (ERC-20):</strong> Send USDT on Ethereum network (ERC-20 only). Address shown below.
+        <div class="summary-box">
+          <strong>USDT (ERC-20):</strong> Send ERC-20 only.
         </div>
 
         <div class="fund-grid">
@@ -1235,7 +1256,7 @@ footer{
 
           <div>
             <div class="addr-card" aria-label="USDT ERC-20 Address">
-              <div class="addr-label">USDT Destination Address (ERC-20)</div>
+              <div class="addr-label">USDT Destination</div>
               <div class="addr-value" id="usdtAddrDisplay"></div>
             </div>
 
@@ -1255,13 +1276,12 @@ footer{
 
       <!-- CARD PANEL -->
       <div class="fund-panel" id="panelCard" role="tabpanel" aria-label="Card/Bank panel">
-        <div class="summary-box" style="margin-top:14px;">
-          <strong>Credit Card / Bank:</strong> You’ll be redirected to a regulated provider to buy <span class="highlight">BTC</span>
-          and send it to the fund address automatically.
+        <div class="summary-box">
+          <strong>Credit Card / Bank:</strong> Buy BTC via provider and send to destination.
         </div>
 
-        <div class="addr-card" style="margin-top:14px;">
-          <div class="addr-label">Destination BTC Address (auto-filled)</div>
+        <div class="addr-card" style="margin-top:12px;">
+          <div class="addr-label">Destination BTC (auto-filled)</div>
           <div class="addr-value" id="cardBtcAddrDisplay"></div>
         </div>
 
@@ -1283,7 +1303,7 @@ footer{
         </div>
 
         <div class="compliance">
-          Payments via card/bank are processed by third-party providers. Fees, exchange rates, and KYC/verification requirements may apply depending on region/provider.
+          Payments via third-party providers. Fees, exchange rates, and KYC may apply.
         </div>
       </div>
     </div>
@@ -1498,14 +1518,14 @@ async function copyText(text, pill){
 function btcUri(){ return `bitcoin:${getBtcAddress()}`; }
 function usdtUri(){ return `ethereum:${getUsdtAddress()}`; }
 
-/* ALWAYS WORKING QR (image endpoint) */
+/* ALWAYS WORKING QR (sharper + smaller) */
 function renderQrImg(node, text){
   if(!node) return;
   node.innerHTML = '';
   const img = document.createElement('img');
   img.alt = 'QR';
   const data = encodeURIComponent(text);
-  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=166x166&data=${data}`;
+  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=140x140&ecc=Q&data=${data}`;
   img.referrerPolicy = 'no-referrer';
   node.appendChild(img);
 }
