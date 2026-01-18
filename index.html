@@ -9,9 +9,9 @@
 
 <style>
 :root{
-  --accent:#f2a900;
+  --accent:#f2a900; /* Bitcoin orange */
 
-  /* ✅ Global UI Scale (macht alles etwas kleiner) */
+  /* ✅ Global UI Scale */
   --ui: .93;
 
   /* ✅ viel transparenter (Default) */
@@ -23,31 +23,24 @@
 html,body{
   height:100%;
   font-family:"Inter",sans-serif;
-  color:#fff;
+  color:var(--accent); /* ✅ alles orange */
   scroll-behavior:smooth;
 }
 
-/* ===== Global City Background (visible ab Basys/Analytics etc.) ===== */
+/* ===== Global City Background ===== */
 body{
   background:
     linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.72)),
     url("1000081562.jpg") no-repeat center center fixed;
   background-size:cover;
-
-  /* leicht kleiner */
   font-size: calc(16px * var(--ui));
 }
 
 /* ✅ Mobile: City background weniger "gezoomt" (zwischen 80% und 110%) */
 @media (max-width: 768px){
   body{
-    /* fixed kann auf Mobile komisch skalieren -> scroll */
     background-attachment: scroll;
-
-    /* zwischen 80% und 110%, bevorzugt 100% */
     background-size: clamp(80%, 100%, 110%) auto;
-
-    /* Skyline/City oben oft besser */
     background-position: center top;
   }
 }
@@ -70,7 +63,7 @@ header.scrolled{
   padding: calc(14px * var(--ui)) calc(48px * var(--ui));
   background:rgba(10,15,25,.75);
   backdrop-filter:blur(14px);
-  border-bottom:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(242,169,0,.25);
 }
 
 /* Mobile burger button */
@@ -80,15 +73,15 @@ header.scrolled{
   width: calc(44px * var(--ui));
   height: calc(44px * var(--ui));
   border-radius:10px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.06);
-  color:#fff;
+  border:1px solid rgba(242,169,0,.35);
+  background:rgba(242,169,0,.08);
+  color:var(--accent);
   cursor:pointer;
   align-items:center;
   justify-content:center;
 }
-
 .nav-toggle svg{display:block}
+.nav-toggle svg *{ stroke: var(--accent) !important; }
 
 /* Desktop nav */
 nav{
@@ -102,8 +95,8 @@ nav a, .nav-group-toggle{
   letter-spacing:2px;
   text-transform:uppercase;
   font-weight:800;
-  color:#fff;
-  opacity:.75;
+  color:var(--accent);
+  opacity:.85;
   text-decoration:none;
   position:relative;
   padding:6px 0;
@@ -116,9 +109,9 @@ nav a, .nav-group-toggle{
 nav a:hover, .nav-group-toggle:hover{
   opacity:1;
   color:var(--accent);
+  filter: brightness(1.05);
 }
 
-/* Active = accent orange like ₿ */
 nav a.active{
   opacity:1;
   color:var(--accent);
@@ -141,30 +134,29 @@ nav a.active::after{
   border-radius:8px;
   color:var(--accent);
   opacity:1;
+  background:rgba(242,169,0,.06);
 }
 nav a.login-link.active::after{ display:none; }
 
-/* ===== Initiatives dropdown (always visible) ===== */
-.nav-group{
-  position:relative;
-}
+/* ===== Initiatives dropdown ===== */
+.nav-group{ position:relative; }
 
 .nav-group-toggle{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  opacity:.85;
+  opacity:.95;
 }
 
 .chevron{
   font-size:10px;
   transition:transform .25s ease;
-  opacity:.9;
+  opacity:.95;
+  color:var(--accent);
 }
 
 .nav-group.open .chevron{ transform:rotate(180deg); }
 
-/* If Token/Fund active, mark Initiatives too */
 .nav-group.has-active .nav-group-toggle{
   opacity:1;
   color:var(--accent);
@@ -188,12 +180,9 @@ nav a.login-link.active::after{ display:none; }
   display:none;
   padding: calc(10px * var(--ui));
   border-radius:14px;
-
-  /* keep readable vs super transparent cards */
   background:rgba(10,15,25,.78);
-
   backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,.10);
+  border:1px solid rgba(242,169,0,.25);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
 }
 
@@ -206,25 +195,24 @@ nav a.login-link.active::after{ display:none; }
   display:block;
   padding: calc(10px * var(--ui)) calc(12px * var(--ui));
   border-radius:10px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.08);
+  background:rgba(242,169,0,.06);
+  border:1px solid rgba(242,169,0,.20);
   font-size: calc(11px * var(--ui));
   letter-spacing:2px;
   text-transform:uppercase;
   font-weight:800;
-  color:#fff;
+  color:var(--accent);
   opacity:.95;
 }
 
 .nav-group-menu a:hover{
-  background:rgba(242,169,0,.10);
-  border-color:rgba(242,169,0,.25);
-  color:#fff;
+  background:rgba(242,169,0,.12);
+  border-color:rgba(242,169,0,.45);
 }
 
 .nav-group-menu a.active{
-  background:rgba(242,169,0,.12);
-  border-color:rgba(242,169,0,.45);
+  background:rgba(242,169,0,.14);
+  border-color:rgba(242,169,0,.65);
   color:var(--accent);
 }
 .nav-group-menu a.active::after{ display:none; }
@@ -270,8 +258,8 @@ section{
   pointer-events:none;
   opacity:.10;
   background:
-    radial-gradient(circle, rgba(255,255,255,.55) 0 1px, rgba(0,0,0,0) 2px) 0 0/120px 120px,
-    radial-gradient(circle, rgba(255,255,255,.40) 0 1px, rgba(0,0,0,0) 2px) 40px 60px/160px 160px;
+    radial-gradient(circle, rgba(242,169,0,.55) 0 1px, rgba(0,0,0,0) 2px) 0 0/120px 120px,
+    radial-gradient(circle, rgba(242,169,0,.40) 0 1px, rgba(0,0,0,0) 2px) 40px 60px/160px 160px;
   animation: twinkleMove 14s ease-in-out infinite alternate;
   filter: blur(.2px);
 }
@@ -303,7 +291,7 @@ section{
   display:flex;
   align-items:center;
   justify-content:center;
-  animation: rotate-earth 240s linear infinite; /* slow */
+  animation: rotate-earth 240s linear infinite;
   border-radius:50%;
   overflow:hidden;
   will-change: transform;
@@ -325,8 +313,8 @@ section{
   height:96%;
   border-radius:50%;
   background: radial-gradient(circle,
-    rgba(120,170,255,0.26) 0%,
-    rgba(120,170,255,0.12) 36%,
+    rgba(242,169,0,0.26) 0%,
+    rgba(242,169,0,0.12) 36%,
     rgba(0,0,0,0.00) 70%);
   filter: blur(12px);
   opacity:0.65;
@@ -339,8 +327,8 @@ section{
   inset:4%;
   border-radius:50%;
   box-shadow:
-    0 0 18px rgba(120,170,255,.18),
-    0 0 40px rgba(120,170,255,.10);
+    0 0 18px rgba(242,169,0,.18),
+    0 0 40px rgba(242,169,0,.10);
   pointer-events:none;
   opacity:.9;
 }
@@ -377,7 +365,7 @@ section{
   text-shadow:0 14px 30px rgba(0,0,0,.6);
 }
 .brand .btc{ color:var(--accent); }
-.brand .light{ font-weight:700; opacity:.92; }
+.brand .light{ font-weight:700; opacity:.95; color:var(--accent); }
 
 .brand-claim{
   margin-top: calc(14px * var(--ui));
@@ -389,7 +377,7 @@ section{
   align-items:center;
   justify-content:center;
 }
-.brand-claim > span{ color:#fff; font-weight:600; }
+.brand-claim > span{ color:var(--accent); font-weight:700; }
 
 .accent-initial{ color:var(--accent); font-weight:900; }
 
@@ -397,10 +385,10 @@ section{
   width:10px;
   height:10px;
   border-radius:50%;
-  background:rgba(0,0,0,.75);
+  background:rgba(242,169,0,.55);
   display:inline-block;
   margin:0 calc(22px * var(--ui));
-  box-shadow:0 0 12px rgba(0,0,0,.35);
+  box-shadow:0 0 12px rgba(242,169,0,.22);
 }
 
 .hero-claim{
@@ -424,6 +412,7 @@ section{
   justify-content:center;
   opacity:.95;
 }
+.scroll-indicator svg *{ stroke: var(--accent) !important; }
 @keyframes bounce{
   0%,20%,50%,80%,100%{ transform:translateY(0); }
   40%{ transform:translateY(-10px); }
@@ -438,9 +427,8 @@ section{
   padding: calc(48px * var(--ui));
   width:100%;
   max-width: calc(950px * var(--ui));
-  border:1px solid rgba(255,255,255,.12);
+  border:1px solid rgba(242,169,0,.22);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
-
   transition:
     background-color .35s ease,
     backdrop-filter .35s ease,
@@ -454,6 +442,7 @@ section{
   -webkit-backdrop-filter: blur(26px);
   box-shadow:0 30px 70px rgba(0,0,0,.65);
   transform: translateY(-2px);
+  border-color: rgba(242,169,0,.40);
 }
 
 @media (hover: none){
@@ -463,25 +452,27 @@ section{
     -webkit-backdrop-filter: blur(20px);
     box-shadow:0 20px 50px rgba(0,0,0,.55);
     transform: none;
+    border-color: rgba(242,169,0,.22);
   }
 }
 
-.highlight{ color:var(--accent); font-weight:700; }
+.highlight{ color:var(--accent); font-weight:800; }
 
 .summary-box{
   margin-top:18px;
   padding:18px;
   border-left:4px solid var(--accent);
-  background:rgba(255,255,255,.05);
+  background:rgba(242,169,0,.06);
   line-height:1.7;
   border-radius:14px;
 }
 
 .sub-kicker{
   margin-top:10px;
-  opacity:.90;
+  opacity:.92;
   line-height:1.7;
   font-size:1.02rem;
+  color:var(--accent);
 }
 
 /* Wallet + Copy */
@@ -493,12 +484,10 @@ section{
   justify-content:space-between;
   padding:14px 16px;
   border-radius:14px;
-
-  background-color: rgba(10,15,25,.22);
+  background-color: rgba(242,169,0,.06);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-
-  border:1px solid rgba(255,255,255,.10);
+  border:1px solid rgba(242,169,0,.25);
 }
 .wallet-address{
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
@@ -506,16 +495,18 @@ section{
   letter-spacing:.4px;
   opacity:.95;
   overflow-wrap:anywhere;
+  color:var(--accent);
 }
+
 .copy-btn{
   flex:0 0 auto;
   padding:10px 14px;
   border-radius:10px;
-  border:1px solid rgba(242,169,0,.35);
-  background:rgba(242,169,0,.12);
-  color:#fff;
+  border:1px solid rgba(242,169,0,.55);
+  background:rgba(242,169,0,.18);
+  color:var(--accent);
   cursor:pointer;
-  font-weight:800;
+  font-weight:900;
   letter-spacing:1px;
   text-transform:uppercase;
   font-size:.72rem;
@@ -523,14 +514,16 @@ section{
 }
 .copy-btn:hover{
   transform:translateY(-1px);
-  background:rgba(242,169,0,.18);
-  border-color:rgba(242,169,0,.55);
+  background:rgba(242,169,0,.24);
+  border-color:rgba(242,169,0,.85);
 }
+
 .fund-note{
   margin-top:10px;
-  opacity:.82;
+  opacity:.92;
   font-size:.9rem;
   line-height:1.6;
+  color:var(--accent);
 }
 
 /* Reveal */
@@ -542,13 +535,15 @@ input, textarea{
   width:100%;
   padding:14px;
   margin-bottom:10px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
-  color:#fff;
+  background:rgba(242,169,0,.06);
+  border:1px solid rgba(242,169,0,.35);
+  color:var(--accent);
   border-radius:10px;
   font-family:inherit;
   outline:none;
 }
+input::placeholder, textarea::placeholder{ color:rgba(242,169,0,.75); }
+
 .btn{
   width:100%;
   padding:15px;
@@ -558,7 +553,7 @@ input, textarea{
   font-weight:900;
   cursor:pointer;
   text-transform:uppercase;
-  color:#000;
+  color:#000; /* Button-Text schwarz für Kontrast */
   transition:.25s;
 }
 .btn:hover{ background:#d99800; transform:translateY(-2px); }
@@ -568,23 +563,23 @@ footer{
   background:rgba(10,15,25,.90);
   padding: calc(42px * var(--ui)) 10%;
   text-align:center;
-  border-top:1px solid rgba(255,255,255,.10);
+  border-top:1px solid rgba(242,169,0,.25);
   font-size:.85rem;
-  color:#888;
+  color:rgba(242,169,0,.85);
 }
-.footer-strong{ color:#cfcfcf; font-weight:800; letter-spacing:.6px; }
-.footer-meta{ margin-top:10px; opacity:.85; }
+.footer-strong{ color:var(--accent); font-weight:900; letter-spacing:.6px; }
+.footer-meta{ margin-top:10px; opacity:.90; }
 .footer-tagline{
   margin-top:6px;
-  color:rgba(242,169,0,.92);
+  color:var(--accent);
   letter-spacing:1px;
   text-transform:uppercase;
-  font-weight:800;
+  font-weight:900;
   font-size:.78rem;
 }
 .footer-legal{
   margin-top:8px;
-  opacity:.75;
+  opacity:.88;
   line-height:1.6;
   font-size:.8rem;
 }
@@ -604,7 +599,7 @@ footer{
     padding:14px;
     border-radius:16px;
     background:rgba(10,15,25,.90);
-    border:1px solid rgba(255,255,255,.10);
+    border:1px solid rgba(242,169,0,.25);
     backdrop-filter:blur(16px);
     box-shadow:0 20px 50px rgba(0,0,0,.55);
     opacity:0;
@@ -624,9 +619,9 @@ footer{
     text-align:left;
     padding:12px 12px;
     border-radius:12px;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.08);
-    opacity:.95;
+    background:rgba(242,169,0,.06);
+    border:1px solid rgba(242,169,0,.25);
+    opacity:.98;
   }
 
   nav a.active::after{ display:none; }
@@ -660,7 +655,6 @@ footer{
 }
 
 /* ================= REDUCED MOTION ================= */
-/* Globe soll weiter drehen -> KEIN animation:none fuer .globe-rotator */
 @media (prefers-reduced-motion: reduce){
   html,body{ scroll-behavior:auto; }
   .twinkle{ animation:none !important; }
@@ -740,22 +734,22 @@ footer{
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); text-transform:uppercase; letter-spacing:3px; margin-bottom:10px;">Basys</h2>
 
-    <p style="margin-top:6px; opacity:.90; line-height:1.7; font-size:1.02rem;">
+    <p style="margin-top:6px; opacity:.92; line-height:1.7; font-size:1.02rem;">
       A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
     </p>
 
     <div style="margin-top:18px; display:grid; gap:12px;">
       <div style="display:flex; gap:12px; align-items:flex-start;">
         <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:7px;flex:0 0 auto;"></div>
-        <div><strong>Observe</strong><div style="opacity:.9;margin-top:2px;">Capture market behavior with discipline and consistency.</div></div>
+        <div><strong>Observe</strong><div style="opacity:.92;margin-top:2px;">Capture market behavior with discipline and consistency.</div></div>
       </div>
       <div style="display:flex; gap:12px; align-items:flex-start;">
         <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:7px;flex:0 0 auto;"></div>
-        <div><strong>Learn</strong><div style="opacity:.9;margin-top:2px;">Turn signals into understanding and orientation.</div></div>
+        <div><strong>Learn</strong><div style="opacity:.92;margin-top:2px;">Turn signals into understanding and orientation.</div></div>
       </div>
       <div style="display:flex; gap:12px; align-items:flex-start;">
         <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:7px;flex:0 0 auto;"></div>
-        <div><strong>Lead</strong><div style="opacity:.9;margin-top:2px;">Act responsibly — decisions guided by insight, not noise.</div></div>
+        <div><strong>Lead</strong><div style="opacity:.92;margin-top:2px;">Act responsibly — decisions guided by insight, not noise.</div></div>
       </div>
     </div>
   </div>
@@ -856,7 +850,7 @@ footer{
     <h2 style="color:var(--accent); margin-bottom:18px; text-align:center; letter-spacing:3px; text-transform:uppercase;">
       Contact
     </h2>
-    <p style="margin:-8px 0 16px; text-align:center; opacity:.88; line-height:1.6; font-size:.98rem;">
+    <p style="margin:-8px 0 16px; text-align:center; opacity:.92; line-height:1.6; font-size:.98rem;">
       For inquiries, partnerships, or strategic dialogue.
     </p>
 
@@ -883,11 +877,10 @@ footer{
   <div class="footer-legal">
     BasysAnalytics is a subsidiary of Next-Gen-IT LLC, based in the USA.
   </div>
-  <div style="margin-top:10px; opacity:.65;">© 2026 Basys Analytics. All rights reserved.</div>
+  <div style="margin-top:10px; opacity:.85;">© 2026 Basys Analytics. All rights reserved.</div>
 </footer>
 
 <script>
-/* ========= A11Y / preferences ========= */
 const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* Header shrink on scroll */
@@ -921,7 +914,7 @@ document.addEventListener('click', (e) => {
   if (!insideHeader) closeNav();
 });
 
-/* ========= Initiatives dropdown: Hover on desktop, click on mobile ========= */
+/* Initiatives dropdown: Hover desktop, click mobile */
 const group = document.getElementById('initiativeGroup');
 const toggle = group?.querySelector('.nav-group-toggle');
 
@@ -932,13 +925,11 @@ const initiativeOpen = () => {
   group.classList.add('open');
   toggle?.setAttribute('aria-expanded', 'true');
 };
-
 const initiativeClose = () => {
   if (!group) return;
   group.classList.remove('open');
   toggle?.setAttribute('aria-expanded', 'false');
 };
-
 const initiativeToggle = () => {
   if (!group) return;
   const open = group.classList.toggle('open');
@@ -970,7 +961,7 @@ document.addEventListener('click', (e) => {
   if (!group.contains(e.target)) initiativeClose();
 });
 
-/* Close on Escape */
+/* Escape */
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape'){
     closeNav();
@@ -978,9 +969,8 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-/* ========= Reveal animations ========= */
+/* Reveal */
 const revealEls = document.querySelectorAll('.reveal');
-
 if (prefersReducedMotion){
   revealEls.forEach(el => el.classList.add('in'));
 } else {
@@ -995,7 +985,7 @@ if (prefersReducedMotion){
   revealEls.forEach(el => io.observe(el));
 }
 
-/* ========= Active nav on scroll (include dropdown links too) ========= */
+/* Active nav on scroll */
 const allNavLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
 const sectionById = new Map(
   allNavLinks
@@ -1018,8 +1008,7 @@ function setActive(id){
 function spy(){
   const line = header.getBoundingClientRect().height + 80;
   let current = 'home';
-
-  for (const [id, sec] of sectionById.entries()){
+  for (const [, sec] of sectionById.entries()){
     if (sec.getBoundingClientRect().top <= line) current = sec.id;
   }
   setActive(current);
@@ -1029,10 +1018,9 @@ window.addEventListener('scroll', () => requestAnimationFrame(spy), { passive:tr
 window.addEventListener('load', spy);
 window.addEventListener('resize', spy);
 
-/* ========= Copy BTC ========= */
+/* Copy BTC */
 const copyBtn = document.getElementById('copyBtn');
 const btcAddress = document.getElementById('btcAddress');
-
 copyBtn?.addEventListener('click', async () => {
   try{
     await navigator.clipboard.writeText(btcAddress.textContent.trim());
@@ -1046,9 +1034,8 @@ copyBtn?.addEventListener('click', async () => {
   }
 });
 
-/* ========= Parallax in hero sky (throttled) ========= */
+/* Parallax hero sky */
 const home = document.getElementById('home');
-
 if (home && !prefersReducedMotion){
   let parallaxTicking = false;
   const onScrollParallax = () => {
