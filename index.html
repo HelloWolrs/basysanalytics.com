@@ -11,14 +11,14 @@
 :root{
   --accent:#f2a900;
 
-  /* transparent glass default */
+  /* glass */
   --glass: rgba(10,15,25,.38);
 
-  /* readable text system */
+  /* text system */
   --text-main: rgba(232,238,248,.92);
   --text-muted: rgba(160,172,188,.82);
 
-  /* selection dot */
+  /* selection */
   --green: rgba(46, 213, 115, .95);
   --green-border: rgba(46, 213, 115, .45);
   --green-glow: rgba(46, 213, 115, .22);
@@ -33,7 +33,7 @@ html,body{
   scroll-behavior:smooth;
 }
 
-/* ===== Keyboard focus (visible, subtle) ===== */
+/* Keyboard focus */
 :focus-visible{
   outline:2px solid rgba(242,169,0,.65);
   outline-offset:3px;
@@ -121,8 +121,6 @@ nav a:hover, .nav-group-toggle:hover{
   opacity:1;
   color:var(--accent);
 }
-
-/* Active */
 nav a.active{
   opacity:1;
   color:var(--accent);
@@ -156,7 +154,6 @@ nav a.login-link.active::after{ display:none; }
   gap:8px;
   opacity:.85;
 }
-
 .chevron{
   font-size:14px;
   font-weight:900;
@@ -241,7 +238,6 @@ section{
   justify-content:center;
   align-items:center;
   padding:145px 10% 115px;
-  scroll-margin-top:0px;
 }
 
 /* ===== HERO ===== */
@@ -251,7 +247,7 @@ section{
   background:#000;
 }
 
-/* Star sky base layer (no stripe) */
+/* Star sky base layer */
 #home .sky-layer{
   position:absolute;
   inset:-260px;
@@ -267,7 +263,7 @@ section{
   z-index:0;
 }
 
-/* Hero overall shading */
+/* Hero shading */
 #home::before{
   content:"";
   position:absolute;
@@ -294,7 +290,6 @@ section{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   background-size:220px 220px;
 }
-
 #home > *{ position:relative; z-index:3; }
 
 /* subtle twinkle */
@@ -317,7 +312,7 @@ section{
   to{ background-position: 40px -30px, 100px 40px; }
 }
 
-/* Hero stage (20% smaller) */
+/* Hero stage */
 .hero-stage{
   position:relative;
   width:min(320px, 72vw);
@@ -334,7 +329,6 @@ section{
   to{ transform:rotate(360deg); }
 }
 
-/* Globe rotator */
 .globe-rotator{
   position:absolute;
   inset:0;
@@ -356,7 +350,6 @@ section{
   mask-image: radial-gradient(circle, #000 90%, transparent 100%);
 }
 
-/* Halo */
 .globe-rotator::before{
   content:"";
   position:absolute;
@@ -371,8 +364,6 @@ section{
   opacity:0.60;
   pointer-events:none;
 }
-
-/* Atmosphere */
 .globe-rotator::after{
   content:"";
   position:absolute;
@@ -399,7 +390,7 @@ section{
     brightness(0.90);
 }
 
-/* Hero text inside globe */
+/* Text inside globe */
 .hero-text{
   position:absolute;
   inset:0;
@@ -420,7 +411,7 @@ section{
   width:100%;
 }
 
-/* LINE 1: BASYS ANALYTICS (one line) */
+/* Line 1 */
 .brand.one-line{
   width:100%;
   max-width: 92%;
@@ -432,9 +423,7 @@ section{
   text-transform:uppercase;
   font-weight:900;
   line-height:1.02;
-
   font-size: clamp(1.02rem, 6.0cqw, 1.85rem);
-
   letter-spacing: 0;
   text-shadow:
     0 1px 0 rgba(0,0,0,.55),
@@ -446,7 +435,7 @@ section{
 .brand.one-line .btc{
   color:var(--accent);
   font-weight:900;
-  font-size: 1.50em; /* bigger B/A */
+  font-size: 1.50em;
   line-height: 0.95;
   text-shadow:
     0 0 10px rgba(242,169,0,.20),
@@ -458,12 +447,11 @@ section{
   font-weight:850;
   opacity:1;
   text-shadow: 0 1px 10px rgba(0,0,0,.55);
-  transition: color .35s ease;
 }
 body.scrolled .brand.one-line .analytics-rest{ color: var(--text-muted); }
 .brand.one-line .spacer{ display:inline-block; width:.55ch; }
 
-/* LINE 2: Observe | Learn | Lead (vertical dividers, subtle) */
+/* Line 2 */
 .brand-claim.inline{
   display:flex;
   align-items:baseline;
@@ -472,19 +460,12 @@ body.scrolled .brand.one-line .analytics-rest{ color: var(--text-muted); }
   width:100%;
   max-width: 92%;
   margin-inline:auto;
-
   font-size: clamp(.72rem, 2.55cqw, .96rem);
   letter-spacing:.08em;
-
   color: rgba(232,238,248,.98);
   text-shadow:
     0 2px 16px rgba(0,0,0,.62),
     0 0 28px rgba(0,0,0,.38);
-}
-.brand-claim.inline .word{
-  display:inline-flex;
-  align-items:baseline;
-  justify-content:center;
 }
 .brand-claim.inline .cap{
   display:inline-block;
@@ -492,9 +473,6 @@ body.scrolled .brand.one-line .analytics-rest{ color: var(--text-muted); }
   font-weight: 900;
   margin-right: 2px;
   color: var(--accent);
-  text-shadow:
-    0 0 8px rgba(242,169,0,.12),
-    0 2px 16px rgba(0,0,0,.62);
 }
 .brand-claim.inline .rest{
   text-transform:lowercase;
@@ -513,7 +491,6 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   transform: translateY(1px);
 }
 
-/* Hero claim */
 .hero-claim{
   margin-top:18px;
   text-align:center;
@@ -597,7 +574,7 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   color:var(--text-main);
 }
 
-/* Small stepper line under Fund intro */
+/* Steps */
 .fund-steps{
   margin-top:10px;
   display:flex;
@@ -614,26 +591,19 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
 .fund-steps .sep{
   width:6px;height:6px;border-radius:50%;
   background: rgba(242,169,0,.55);
-  box-shadow: 0 0 10px rgba(242,169,0,.10);
   opacity:.9;
 }
 
-/* ===================== EDUCATION FUND (compact) ===================== */
-.pay-row{
-  margin-top:16px;
-  display:grid;
-  grid-template-columns: 1fr;
-  gap:10px;
-}
+/* ===================== FUND ===================== */
+.pay-row{ margin-top:16px; display:grid; gap:10px; }
 
-/* 2x2 grid */
 .pay-grid{
   display:grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap:10px;
 }
 
-/* FORCE: all 4 tiles EXACT same size */
+/* same-size tiles */
 .pay-card,
 .region-card{
   position:relative;
@@ -701,13 +671,33 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   font-size:.78rem;
   line-height:1.2;
   color: rgba(210,220,235,.86);
-
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
-/* Region tile: keep everything in ONE line inside the fixed height */
+/* Apple Pay / Google Pay badges */
+.pay-badges{
+  margin-left:auto;
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
+}
+.pay-badge{
+  height:16px;
+  padding:0 7px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.04);
+  color:rgba(232,238,248,.92);
+  font-size:.62rem;
+  font-weight:900;
+  letter-spacing:.04em;
+  line-height:16px;
+  white-space:nowrap;
+}
+
+/* Region tile */
 .region-row{
   display:flex;
   align-items:center;
@@ -737,7 +727,7 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   font-size:.80rem;
 }
 
-/* geo warning under tiles (only on error) */
+/* geo warning */
 .geo-warn{
   margin-top:10px;
   padding:10px 12px;
@@ -750,12 +740,10 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   display:none;
 }
 
-/* panels */
 .fund-panels{ margin-top:14px; }
 .fund-panel{ display:none; }
 .fund-panel.active{ display:block; }
 
-/* compact fund layout */
 .fund-grid{
   margin-top:10px;
   display:grid;
@@ -764,7 +752,7 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   align-items:start;
 }
 
-/* QR container */
+/* QR container (no clipping) */
 .qr-wrap{
   border-radius:14px;
   border:1px solid rgba(255,255,255,.18);
@@ -776,7 +764,6 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   align-items:center;
   justify-content:center;
 }
-/* IMPORTANT: prevent QR clipping */
 .qr{
   width:128px;
   height:128px;
@@ -798,7 +785,7 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   transform: translateZ(0);
 }
 
-/* address box */
+/* Address */
 .addr-card{
   width:100%;
   padding:11px 13px;
@@ -830,7 +817,7 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   padding-right:44px;
 }
 
-/* compact buttons */
+/* Buttons */
 .fund-actions{
   margin-top:10px;
   display:flex;
@@ -873,7 +860,6 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   background: rgba(242,169,0,.20);
 }
 
-/* small copy button inside addr card */
 .copy-mini{
   position:absolute;
   top:10px;
@@ -894,13 +880,6 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   transform:translateY(-1px);
   background:rgba(242,169,0,.16);
   border-color:rgba(242,169,0,.55);
-}
-
-.fund-panel .summary-box{
-  margin-top:10px;
-  padding:13px;
-  font-size:.94rem;
-  line-height:1.6;
 }
 
 .warn{
@@ -924,7 +903,6 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   line-height:1.55;
 }
 
-/* Amount input */
 .amount-row{
   margin-top:12px;
   display:flex;
@@ -940,8 +918,6 @@ body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
   border-radius:12px;
   border:1px solid rgba(255,255,255,.10);
   background:rgba(10,15,25,.22);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
 }
 .amount label{
   font-size:.70rem;
@@ -1058,6 +1034,7 @@ footer{
     pointer-events:none;
     transition:.2s;
   }
+
   header.nav-open nav{
     opacity:1;
     transform:translateY(0);
@@ -1073,6 +1050,7 @@ footer{
     border:1px solid rgba(255,255,255,.08);
     opacity:.95;
   }
+
   nav a.active::after{ display:none; }
   nav a.active{ color:var(--accent); }
 
@@ -1089,13 +1067,12 @@ footer{
     transition:none;
     display:none;
   }
+
   .nav-group.open .nav-group-menu{
     display:grid;
     gap:8px;
     padding-top:10px;
   }
-
-  .login-link{ margin-left:0; text-align:center; }
 
   .fund-grid{ grid-template-columns: 1fr; gap:12px; }
   section{ padding:130px 8% 105px; }
@@ -1104,11 +1081,11 @@ footer{
   .hero-stage{ width:min(360px, 78vw); }
 }
 
-/* ✅ Desktop + Tablet: keep 2 columns */
+/* Desktop + Tablet: keep 2 columns */
 @media (max-width: 980px){
   .pay-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-/* ✅ Small phone: 1 column */
+/* Small phone: 1 column */
 @media (max-width: 520px){
   .pay-grid{ grid-template-columns: 1fr; }
 }
@@ -1332,11 +1309,16 @@ footer{
               <path d="M7 15h3"></path>
             </svg>
             <div class="pay-title">Card / Bank</div>
+
+            <div class="pay-badges" aria-label="Supported payment methods">
+              <span class="pay-badge">Apple&nbsp;Pay</span>
+              <span class="pay-badge">Google&nbsp;Pay</span>
+            </div>
           </div>
           <div class="pay-desc">Buy BTC &amp; send.</div>
         </button>
 
-        <!-- REGION (same height guaranteed) -->
+        <!-- REGION -->
         <div class="region-card" role="group" aria-label="Region selection (used for card/bank providers)" title="Auto-detected via IP (can be changed)">
           <div class="region-row">
             <div class="region-left">
@@ -1469,7 +1451,6 @@ footer{
       For inquiries, partnerships, or strategic dialogue.
     </p>
 
-    <!-- mailto fallback + honeypot + client rate-limit -->
     <form id="contactForm" action="mailto:contact@basysanalytics.com" method="POST" enctype="text/plain" novalidate>
       <input class="hp" type="text" name="company" id="hpCompany" tabindex="-1" autocomplete="off" />
       <input type="text" name="name" placeholder="Full Name" required>
@@ -1498,7 +1479,7 @@ footer{
 </footer>
 
 <script>
-/* ===================== SOURCE OF TRUTH (REAL ADDRESSES) ===================== */
+/* ===================== ADDRESSES ===================== */
 const BTC_ADDRESS  = 'bc1qgcfpwsn38adym4l5hgzx3j6twstdqa7ffah6hx';
 const USDT_ADDRESS = '0xbff372AF02600648f7198A1A25307de3429f1f0F';
 
@@ -1567,7 +1548,6 @@ const sections = navLinks.map(a => document.querySelector(a.getAttribute('href')
 
 function setActive(id){
   navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
-
   const hasInitiativeActive = (id === 'token' || id === 'fund');
   group?.classList.toggle('has-active', hasInitiativeActive);
 
@@ -1656,7 +1636,7 @@ payCards.forEach(btn => {
   btn.addEventListener('click', () => setPayment(btn.dataset.method));
 });
 
-/* Keyboard navigation for tabs (Left/Right/Up/Down + Home/End) */
+/* Keyboard navigation for tabs */
 const tablist = document.querySelector('.pay-grid[role="tablist"]');
 tablist?.addEventListener('keydown', (e) => {
   const keys = ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'];
@@ -1680,7 +1660,7 @@ tablist?.addEventListener('keydown', (e) => {
 function btcUri(){ return `bitcoin:${getBtcAddress()}`; }
 function usdtUri(){ return `ethereum:${getUsdtAddress()}`; }
 
-/* ALWAYS WORKING QR (bigger source, padded box, not clipped) */
+/* Reliable QR (no clipping) */
 function renderQrImg(node, text){
   if(!node) return;
   node.innerHTML = '';
@@ -1704,7 +1684,7 @@ function refreshFund(){
   document.getElementById('openUsdtWalletBtn').href = usdtUri();
 }
 
-/* Copy buttons (BTC/USDT only) */
+/* Copy buttons */
 async function copyText(text, btn){
   try{
     await navigator.clipboard.writeText(text);
@@ -1765,7 +1745,7 @@ onrampBtn?.addEventListener('click', () => {
   window.open(link, '_blank', 'noopener,noreferrer');
 });
 
-/* IP/Geo region autodetect (EU/US) + error message only on failure */
+/* Geo-IP region autodetect + error-only warning */
 async function detectRegionByIP(){
   const warn = document.getElementById('geoWarn');
   try{
@@ -1796,14 +1776,12 @@ function showContactMsg(text){
 }
 
 contactForm?.addEventListener('submit', (e) => {
-  // honeypot filled => bot
   if (hp && hp.value.trim().length > 0){
     e.preventDefault();
     showContactMsg('Message blocked.');
     return;
   }
 
-  // client rate limit: 60s
   try{
     const key = 'basys_contact_last_send';
     const last = Number(localStorage.getItem(key) || '0');
@@ -1814,15 +1792,12 @@ contactForm?.addEventListener('submit', (e) => {
       return;
     }
     localStorage.setItem(key, String(now));
-  }catch(_){
-    // ignore if storage blocked; still allow submit
-  }
+  }catch(_){}
 
-  // allow mailto submit
   showContactMsg('Opening your email client…');
 });
 
-/* ===================== INIT ===================== */
+/* INIT */
 window.addEventListener('load', () => {
   refreshFund();
   detectRegionByIP();
