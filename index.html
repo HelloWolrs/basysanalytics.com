@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Basys Analytics</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-/* ======================================================
-   ROOT / RESET
-====================================================== */
 :root{
   --accent:#f2a900;
+
+  /* glass */
   --glass: rgba(10,15,25,.38);
+
+  /* darker readable greys (site-wide) */
   --text-main: rgba(232,238,248,.90);
   --text-muted: rgba(160,172,188,.85);
 }
@@ -27,11 +28,11 @@ html,body{
   scroll-behavior:smooth;
 }
 
-/* ======================================================
-   CITY BACKGROUND (ZOOMED OUT)
-====================================================== */
-body{ background:none; position:relative; }
-
+/* ===================== CITY BACKGROUND (ZOOMED OUT, NO BORDERS) ===================== */
+body{
+  background:none;
+  position:relative;
+}
 body::before{
   content:"";
   position:fixed;
@@ -42,11 +43,10 @@ body::before{
     url("1000081562.jpg") no-repeat center 40%;
   background-size:cover;
   transform:scale(0.92);
+  will-change:transform;
 }
 
-/* ======================================================
-   HEADER / NAV
-====================================================== */
+/* ================= HEADER ================= */
 header{
   position:fixed;
   top:0;
@@ -55,8 +55,9 @@ header{
   z-index:1000;
   display:flex;
   align-items:center;
+  gap:18px;
   background:linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
-  transition:.25s;
+  transition: padding .25s ease, background .25s ease, backdrop-filter .25s ease, border-color .25s ease;
 }
 
 header.scrolled{
@@ -66,21 +67,27 @@ header.scrolled{
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 
+/* Mobile burger button */
 .nav-toggle{
   display:none;
   margin-left:auto;
-  width:44px;height:44px;
+  width:44px;
+  height:44px;
   border-radius:10px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.06);
-  color:#fff;
+  color:var(--text-main);
   cursor:pointer;
+  align-items:center;
+  justify-content:center;
 }
+.nav-toggle svg{display:block}
 
+/* Desktop nav */
 nav{
   display:flex;
-  align-items:center;
   gap:28px;
+  align-items:center;
   width:100%;
 }
 
@@ -92,34 +99,125 @@ nav a, .nav-group-toggle{
   color:var(--text-main);
   opacity:.78;
   text-decoration:none;
+  position:relative;
+  padding:6px 0;
+  transition:.2s;
   background:none;
   border:none;
   cursor:pointer;
 }
 
-nav a:hover,
-.nav-group-toggle:hover{
-  color:var(--accent);
+nav a:hover, .nav-group-toggle:hover{
   opacity:1;
+  color:var(--accent);
 }
 
+/* Active = accent orange */
 nav a.active{
-  color:var(--accent);
   opacity:1;
+  color:var(--accent);
+}
+nav a.active::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-6px;
+  height:2px;
+  background:var(--accent);
+  border-radius:999px;
+  box-shadow:0 0 18px rgba(242,169,0,.25);
 }
 
+/* Login style + push right */
 .login-link{
-  margin-left:auto;
+  margin-left:auto; /* ✅ push away from other links */
   border:1px solid var(--accent);
   padding:8px 18px;
   border-radius:8px;
   color:var(--accent);
   opacity:1;
 }
+nav a.login-link.active::after{ display:none; }
 
-/* ======================================================
-   SECTIONS (ANCHOR OFFSET)
-====================================================== */
+/* ===== Initiatives dropdown ===== */
+.nav-group{ position:relative; }
+
+.nav-group-toggle{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  opacity:.85;
+}
+
+.chevron{
+  font-size:13px;
+  font-weight:900;
+  transition:transform .25s ease;
+  opacity:1;
+  color:var(--text-main);
+  transform: translateY(-1px);
+}
+.nav-group-toggle:hover .chevron{ color:var(--accent); }
+.nav-group.open .chevron{ transform:translateY(-1px) rotate(180deg); }
+
+/* If Token/Fund active, mark Initiatives too */
+.nav-group.has-active .nav-group-toggle{
+  opacity:1;
+  color:var(--accent);
+}
+.nav-group.has-active .nav-group-toggle::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:-6px;
+  height:2px;
+  background:var(--accent);
+  border-radius:999px;
+  box-shadow:0 0 18px rgba(242,169,0,.25);
+}
+
+.nav-group-menu{
+  position:absolute;
+  top:calc(100% + 10px);
+  left:0;
+  min-width:240px;
+  display:none;
+  padding:10px;
+  border-radius:14px;
+  background:rgba(10,15,25,.78);
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.10);
+  box-shadow:0 20px 50px rgba(0,0,0,.55);
+}
+.nav-group.open .nav-group-menu{
+  display:grid;
+  gap:6px;
+}
+
+.nav-group-menu a{
+  display:block;
+  padding:10px 12px;
+  border-radius:10px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  font-weight:800;
+  color:var(--text-main);
+  opacity:.95;
+}
+.nav-group-menu a:hover{
+  background:rgba(242,169,0,.10);
+  border-color:rgba(242,169,0,.25);
+  color:var(--text-main);
+}
+.nav-group-menu a.active{
+  background:rgba(242,169,0,.12);
+  border-color:rgba(242,169,0,.45);
+  color:var(--accent);
+}
+.nav-group-menu a.active::after{ display:none; }
+
+/* ================= SECTIONS ================= */
 section{
   min-height:100vh;
   display:flex;
@@ -127,64 +225,162 @@ section{
   justify-content:center;
   align-items:center;
   padding:150px 10% 120px;
-  scroll-margin-top:130px;
+  scroll-margin-top:130px; /* ✅ anchor lands higher */
 }
 
-/* ======================================================
-   HERO / STAR SKY
-====================================================== */
+/* ===================== HERO ===================== */
 #home{
   position:relative;
   overflow:hidden;
   background:#000;
 }
 
-.sky-layer{
+/* Star-sky layer (constant stars + image) */
+#home .sky-layer{
   position:absolute;
   inset:-260px;
   background:
-    radial-gradient(circle, rgba(255,255,255,.18) 0 1px, transparent 2px) 0 0/140px 140px,
-    radial-gradient(circle, rgba(255,255,255,.10) 0 1px, transparent 2px) 60px 90px/220px 220px,
+    radial-gradient(circle, rgba(255,255,255,.20) 0 1px, rgba(0,0,0,0) 2px) 0 0/140px 140px,
+    radial-gradient(circle, rgba(255,255,255,.12) 0 1px, rgba(0,0,0,0) 2px) 60px 90px/220px 220px,
     url("hero-sky.png") no-repeat center top;
-  background-size:140px 140px,220px 220px,cover;
+  background-size: 140px 140px, 220px 220px, cover;
+  background-repeat: repeat, repeat, no-repeat;
+  background-color:#000;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  z-index:0;
 }
 
-/* ======================================================
-   GLOBE
-====================================================== */
+/* gentle darkening */
+#home::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,.18) 0%,
+    rgba(0,0,0,.30) 55%,
+    rgba(0,0,0,.42) 100%
+  );
+}
+
+/* Grain overlay */
+#home::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.05;
+  mix-blend-mode:overlay;
+  z-index:2;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+  background-size:220px 220px;
+}
+#home > *{ position:relative; z-index:3; }
+
+/* Twinkle */
+.twinkle{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.04;
+  mix-blend-mode:overlay;
+  background:
+    radial-gradient(circle, rgba(255,255,255,.40) 0 1px, rgba(0,0,0,0) 2px) 0 0/160px 160px,
+    radial-gradient(circle, rgba(255,255,255,.24) 0 1px, rgba(0,0,0,0) 2px) 60px 90px/220px 220px;
+  filter: blur(.50px);
+  transform: translateZ(0);
+  animation: twinklePan 24s ease-in-out infinite alternate;
+  z-index:2;
+}
+@keyframes twinklePan{
+  from{ background-position: 0 0, 60px 90px; }
+  to{ background-position: 40px -30px, 100px 40px; }
+}
+
+/* Hero stage (20% smaller) */
 .hero-stage{
   position:relative;
-  width:min(320px,72vw);
-  aspect-ratio:1/1;
+  width:min(320px, 72vw);
+  aspect-ratio: 1 / 1;
   display:flex;
   align-items:center;
   justify-content:center;
-  container-type:inline-size;
-}
-
-.globe-rotator{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  overflow:hidden;
-  animation:rotate-earth 240s linear infinite;
+  margin-top:-6px;
+  container-type: inline-size;
 }
 
 @keyframes rotate-earth{
-  from{transform:rotate(0)}
-  to{transform:rotate(360deg)}
+  from{ transform:rotate(0deg); }
+  to{ transform:rotate(360deg); }
+}
+
+/* Globe rotator */
+.globe-rotator{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  animation: rotate-earth 240s linear infinite;
+  border-radius:50%;
+  overflow:hidden;
+  will-change: transform;
+
+  background:
+    radial-gradient(circle at 70% 50%,
+      rgba(0,0,0,0) 42%,
+      rgba(0,0,0,.36) 70%,
+      rgba(0,0,0,.58) 100%);
+
+  -webkit-mask-image: radial-gradient(circle, #000 90%, transparent 100%);
+  mask-image: radial-gradient(circle, #000 90%, transparent 100%);
+}
+
+.globe-rotator::before{
+  content:"";
+  position:absolute;
+  width:96%;
+  height:96%;
+  border-radius:50%;
+  background: radial-gradient(circle,
+    rgba(120,170,255,0.22) 0%,
+    rgba(120,170,255,0.10) 36%,
+    rgba(0,0,0,0.00) 70%);
+  filter: blur(12px);
+  opacity:0.60;
+  pointer-events:none;
+}
+
+.globe-rotator::after{
+  content:"";
+  position:absolute;
+  inset:4%;
+  border-radius:50%;
+  box-shadow:
+    0 0 16px rgba(120,170,255,.14),
+    0 0 34px rgba(120,170,255,.08);
+  pointer-events:none;
+  opacity:.85;
 }
 
 .globe-rotator img{
+  position:relative;
   width:110%;
   height:110%;
   object-fit:cover;
-  filter:brightness(.92) saturate(.92);
+  object-position:center;
+  border-radius:50%;
+  filter:
+    drop-shadow(0 26px 55px rgba(0,0,0,.35))
+    contrast(0.98)
+    saturate(0.92)
+    brightness(0.92);
 }
 
-/* ======================================================
-   HERO TEXT
-====================================================== */
+/* Hero text */
 .hero-text{
   position:absolute;
   inset:0;
@@ -192,111 +388,420 @@ section{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  text-align:center;
   pointer-events:none;
+  padding: 0 10%;
+  text-align:center;
 }
 
-/* BRAND */
+/* Brand: no extra spacing, readable, globe-safe */
 .brand{
+  display:inline-block;
   white-space:nowrap;
-  font-weight:900;
   text-transform:uppercase;
-  font-size:clamp(.94rem,6cqw,1.58rem);
+  font-weight:900;
   line-height:1.03;
-  max-width:74%;
+  text-align:center;
+  font-size: clamp(.94rem, 6.0cqw, 1.58rem);
+  letter-spacing: 0;
+  max-width: 74%;
   margin-inline:auto;
-  transform:translateY(-1%);
+  transform: translateY(-1%);
   text-shadow:
     0 2px 22px rgba(0,0,0,.76),
     0 0 36px rgba(0,0,0,.44);
 }
 
+/* ₿ and A larger, subtle glow */
 .brand .btc{
   color:var(--accent);
-  font-size:1.18em;
-  margin-right:.03em;
+  font-weight:900;
+  font-size: 1.18em; /* ✅ bigger ₿ + A */
+  line-height: 0.95;
+  vertical-align: baseline;
+  margin-right: .03em;
+  text-shadow:
+    0 0 8px rgba(242,169,0,.22),
+    0 0 18px rgba(242,169,0,.14),
+    0 2px 20px rgba(0,0,0,.70);
 }
 
 .analytics-rest{
-  color:rgba(232,238,248,.90);
+  color: rgba(232,238,248,.90);
   font-weight:850;
+  opacity:1;
+  transition: color .35s ease, opacity .35s ease;
 }
 
-/* CLAIM */
+/* Observe / Learn / Lead */
 .brand-claim{
   margin-top:12px;
+  letter-spacing:.10em;
+  text-transform:none;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:clamp(.7rem,3.1cqw,.92rem);
+  white-space:nowrap;
+  font-size: clamp(.70rem, 3.1cqw, .92rem);
+  max-width: 88%;
+  margin-inline:auto;
+  color: rgba(232, 238, 248, .98);
+  text-shadow:
+    0 2px 16px rgba(0,0,0,.62),
+    0 0 28px rgba(0,0,0,.38);
 }
 
-.cap{ color:var(--accent); font-size:1.25em; font-weight:900; }
-.rest{ text-transform:lowercase; font-weight:850; }
+.brand-claim > span{
+  font-weight:900;
+  color: rgba(232, 238, 248, .98);
+}
+
+.brand-claim .cap{
+  display:inline-block;
+  font-size: 1.25em;
+  font-weight: 900;
+  letter-spacing: .02em;
+  margin-right: 1px;
+  color: var(--accent);
+  text-shadow:
+    0 0 8px rgba(242,169,0,.16),
+    0 2px 16px rgba(0,0,0,.62);
+}
+.brand-claim .rest{
+  text-transform:lowercase;
+  font-weight:850;
+}
 
 .dot{
-  width:9px;height:9px;
-  background:rgba(232,238,248,.7);
+  width:9px;
+  height:9px;
   border-radius:50%;
+  background: rgba(232, 238, 248, .72);
+  display:inline-block;
   margin:0 14px;
+  box-shadow:0 0 18px rgba(0,0,0,.38);
+  opacity:.85;
 }
 
-/* ======================================================
-   GLASS CARDS
-====================================================== */
+/* Scroll state: gray slightly darker on scroll */
+body.scrolled .analytics-rest{ color: var(--text-muted); }
+
+/* Hero claim */
+.hero-claim{
+  margin-top:22px;
+  text-align:center;
+  max-width:980px;
+  font-size:clamp(.98rem, 1.35vw, 1.18rem);
+  letter-spacing:1.6px;
+  opacity:.92;
+  text-shadow:0 10px 30px rgba(0,0,0,.38);
+  white-space:nowrap;
+  color:var(--text-main);
+}
+.hero-claim span{ color:var(--accent); }
+
+/* Scroll arrows */
+.scroll-indicator{
+  margin-top:44px;
+  animation:bounce 2s infinite;
+  cursor:pointer;
+  display:inline-flex;
+  justify-content:center;
+  opacity:.95;
+  color:var(--text-main);
+}
+@keyframes bounce{
+  0%,20%,50%,80%,100%{ transform:translateY(0); }
+  40%{ transform:translateY(-10px); }
+}
+.scroll-indicator.up{ margin-top:34px; }
+
+/* ===================== CARDS ===================== */
 .glass-card{
-  background:var(--glass);
-  backdrop-filter:blur(20px);
+  background-color: var(--glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius:20px;
   padding:48px;
-  max-width:950px;
   width:100%;
+  max-width:950px;
   border:1px solid rgba(255,255,255,.12);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
+  transition:
+    background-color .35s ease,
+    backdrop-filter .35s ease,
+    box-shadow .35s ease,
+    transform .35s ease;
+}
+.glass-card:hover{
+  background-color: rgba(10,15,25,.22);
+  backdrop-filter: blur(26px);
+  -webkit-backdrop-filter: blur(26px);
+  box-shadow:0 30px 70px rgba(0,0,0,.65);
+  transform: translateY(-2px);
+}
+@media (hover: none){
+  .glass-card:hover{
+    background-color: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow:0 20px 50px rgba(0,0,0,.55);
+    transform: none;
+  }
 }
 
 .highlight{ color:var(--accent); font-weight:700; }
 
-/* ======================================================
-   FOOTER
-====================================================== */
+.summary-box{
+  margin-top:18px;
+  padding:18px;
+  border-left:4px solid var(--accent);
+  background:rgba(255,255,255,.05);
+  line-height:1.7;
+  border-radius:14px;
+  color:var(--text-main);
+}
+
+.sub-kicker{
+  margin-top:10px;
+  opacity:.90;
+  line-height:1.7;
+  font-size:1.02rem;
+  color:var(--text-main);
+}
+
+/* ===== Education Fund polish ===== */
+.fund-meta{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:var(--text-main);
+}
+.badge.btc{
+  border-color: rgba(242,169,0,.28);
+  background: rgba(242,169,0,.10);
+  color: var(--text-main);
+}
+.badge .dot-mini{
+  width:9px;height:9px;border-radius:50%;
+  background: var(--accent);
+  box-shadow:0 0 12px rgba(242,169,0,.20);
+}
+
+.wallet-box{
+  margin-top:16px;
+  position:relative;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 16px;
+  border-radius:14px;
+  background-color: rgba(10,15,25,.22);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border:1px solid rgba(255,255,255,.10);
+}
+.wallet-address{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+  font-size:.96rem;
+  letter-spacing:.4px;
+  opacity:.95;
+  overflow-wrap:anywhere;
+  color:var(--text-main);
+  line-height:1.35;
+}
+.copy-btn{
+  flex:0 0 auto;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid rgba(242,169,0,.35);
+  background:rgba(242,169,0,.12);
+  color:var(--text-main);
+  cursor:pointer;
+  font-weight:800;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  font-size:.72rem;
+  transition:.2s;
+}
+.copy-btn:hover{
+  transform:translateY(-1px);
+  background:rgba(242,169,0,.18);
+  border-color:rgba(242,169,0,.55);
+}
+.copied-pill{
+  position:absolute;
+  right:14px;
+  top:-12px;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  border:1px solid rgba(242,169,0,.35);
+  background: rgba(10,15,25,.82);
+  color: var(--text-main);
+  opacity:0;
+  transform: translateY(4px);
+  transition: .22s ease;
+  pointer-events:none;
+}
+.copied-pill.show{
+  opacity:1;
+  transform: translateY(0);
+}
+
+.fund-note{
+  margin-top:10px;
+  opacity:.82;
+  font-size:.9rem;
+  line-height:1.6;
+  color:var(--text-main);
+}
+
+/* Reveal */
+.reveal{ opacity:0; transform:translateY(14px); transition:opacity .8s ease, transform .8s ease; }
+.reveal.in{ opacity:1; transform:translateY(0); }
+
+/* Form */
+input, textarea{
+  width:100%;
+  padding:14px;
+  margin-bottom:10px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  color:var(--text-main);
+  border-radius:10px;
+  font-family:inherit;
+  outline:none;
+}
+.btn{
+  width:100%;
+  padding:15px;
+  background:var(--accent);
+  border:none;
+  border-radius:10px;
+  font-weight:900;
+  cursor:pointer;
+  text-transform:uppercase;
+  color:#000;
+  transition:.25s;
+}
+.btn:hover{ background:#d99800; transform:translateY(-2px); }
+
+/* Footer */
 footer{
   background:rgba(10,15,25,.90);
   padding:42px 10%;
   text-align:center;
+  border-top:1px solid rgba(255,255,255,.10);
   font-size:.85rem;
   color:rgba(160,172,188,.78);
 }
-
-.footer-strong{
-  color:var(--text-main);
+.footer-strong{ color:var(--text-main); font-weight:800; letter-spacing:.6px; }
+.footer-meta{ margin-top:10px; opacity:.85; }
+.footer-tagline{
+  margin-top:6px;
+  color:rgba(242,169,0,.92);
+  letter-spacing:1px;
+  text-transform:uppercase;
   font-weight:800;
+  font-size:.78rem;
+}
+.footer-legal{
+  margin-top:8px;
+  opacity:.75;
+  line-height:1.6;
+  font-size:.8rem;
 }
 
-/* ======================================================
-   MOBILE
-====================================================== */
-@media (max-width:768px){
-  header{ padding:16px; }
+/* ================= MOBILE MENU ================= */
+@media (max-width: 768px){
+  header{ padding:16px 16px; }
+  header.scrolled{ padding:12px 16px; }
   .nav-toggle{ display:inline-flex; }
 
   nav{
     position:absolute;
-    top:100%;
-    left:16px;
-    right:16px;
+    top:calc(100% + 10px);
+    left:16px; right:16px;
     display:grid;
-    background:rgba(10,15,25,.9);
+    gap:10px;
     padding:14px;
     border-radius:16px;
+    background:rgba(10,15,25,.90);
+    border:1px solid rgba(255,255,255,.10);
+    backdrop-filter:blur(16px);
+    box-shadow:0 20px 50px rgba(0,0,0,.55);
     opacity:0;
+    transform:translateY(-8px);
     pointer-events:none;
+    transition:.2s;
   }
 
   header.nav-open nav{
     opacity:1;
+    transform:translateY(0);
     pointer-events:auto;
   }
+
+  nav a, .nav-group-toggle{
+    width:100%;
+    text-align:left;
+    padding:12px 12px;
+    border-radius:12px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    opacity:.95;
+  }
+
+  nav a.active::after{ display:none; }
+  nav a.active{ color:var(--accent); }
+
+  .nav-group-menu{
+    position:static;
+    display:none;
+    min-width:unset;
+    background:transparent;
+    border:none;
+    padding:0;
+    box-shadow:none;
+  }
+
+  .nav-group.open .nav-group-menu{
+    display:grid;
+    gap:8px;
+    padding-top:10px;
+  }
+
+  .wallet-box{ flex-direction:column; align-items:stretch; }
+  .copy-btn{ width:100%; }
+
+  /* login shouldn't push weirdly in grid */
+  .login-link{ margin-left:0; text-align:center; }
+}
+
+@media (max-width: 900px){
+  section{ padding:135px 8% 110px; }
+  .glass-card{ padding:36px; }
+  .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
+  .hero-stage{ width:min(360px, 78vw); } /* consistent on medium screens */
 }
 </style>
 </head>
@@ -304,98 +809,340 @@ footer{
 <body>
 
 <header id="siteHeader">
-  <button class="nav-toggle" id="navToggle">☰</button>
-  <nav>
-    <a href="#home" class="active">Home</a>
-    <a href="#basys">Basys</a>
-    <a href="#analytics">Analytics</a>
-    <a href="#token">Token</a>
-    <a href="#fund">Education Fund</a>
-    <a href="#contact">Contact</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M4 7h16M4 12h16M4 17h16"></path>
+    </svg>
+  </button>
+
+  <nav id="siteNav">
+    <a href="#home" data-nav="home" class="active">Home</a>
+    <a href="#basys" data-nav="basys">Basys</a>
+    <a href="#analytics" data-nav="analytics">Analytics</a>
+
+    <div class="nav-group" id="initiativeGroup">
+      <button class="nav-group-toggle" aria-expanded="false" type="button">
+        Initiatives <span class="chevron">▾</span>
+      </button>
+      <div class="nav-group-menu" aria-label="Initiatives submenu">
+        <a href="#token" data-nav="token">Token</a>
+        <a href="#fund" data-nav="fund">Education Fund</a>
+      </div>
+    </div>
+
+    <a href="#contact" data-nav="contact">Contact</a>
     <a href="/login" class="login-link">Login</a>
   </nav>
 </header>
 
 <!-- HOME -->
-<section id="home">
-  <div class="sky-layer"></div>
+<section id="home" data-section="home">
+  <div class="sky-layer" aria-hidden="true"></div>
+  <div class="twinkle" aria-hidden="true"></div>
 
-  <div class="hero-stage">
+  <div class="hero-stage reveal">
     <div class="globe-rotator">
       <img src="hero-globe.png" alt="Earth">
     </div>
 
     <div class="hero-text">
-      <div class="brand">
+      <div class="brand" aria-label="BASYS ANALYTICS">
         <span class="btc">₿</span><span class="analytics-rest">ASYS</span>
         <span class="btc">A</span><span class="analytics-rest">NALYTICS</span>
       </div>
 
-      <div class="brand-claim">
+      <div class="brand-claim" aria-label="Observe Learn Lead">
         <span><span class="cap">O</span><span class="rest">bserve</span></span>
-        <span class="dot"></span>
+        <span class="dot" aria-hidden="true"></span>
         <span><span class="cap">L</span><span class="rest">earn</span></span>
-        <span class="dot"></span>
+        <span class="dot" aria-hidden="true"></span>
         <span><span class="cap">L</span><span class="rest">ead</span></span>
       </div>
     </div>
   </div>
+
+  <div class="hero-claim reveal">
+    From <span>Observation</span> to <span>Leadership</span> in Digital Markets
+  </div>
+
+  <a href="#basys" class="scroll-indicator reveal" aria-label="Scroll to Basys">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+    </svg>
+  </a>
 </section>
 
 <!-- BASYS -->
-<section id="basys">
-  <div class="glass-card">
-    <h2 class="highlight">Basys</h2>
-    <p>A clear process model for <span class="highlight">Observe · Learn · Lead</span>.</p>
+<section id="basys" data-section="basys">
+  <div class="glass-card reveal">
+    <h2 style="color:var(--accent); text-transform:uppercase; letter-spacing:3px; margin-bottom:10px;">Basys</h2>
+
+    <p style="margin-top:6px; opacity:.90; line-height:1.7; font-size:1.02rem;">
+      A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
+    </p>
+
+    <div style="margin-top:18px; display:grid; gap:12px;">
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:7px;flex:0 0 auto;"></div>
+        <div><strong>Observe</strong><div style="opacity:.9;margin-top:2px;">Capture market behavior with discipline and consistency.</div></div>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:7px;flex:0 0 auto;"></div>
+        <div><strong>Learn</strong><div style="opacity:.9;margin-top:2px;">Turn signals into understanding and orientation.</div></div>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <div style="width:10px;height:10px;border-radius:50%;background:var(--accent);margin-top:7px;flex:0 0 auto;"></div>
+        <div><strong>Lead</strong><div style="opacity:.9;margin-top:2px;">Act responsibly — decisions guided by insight, not noise.</div></div>
+      </div>
+    </div>
   </div>
+
+  <a href="#analytics" class="scroll-indicator reveal" aria-label="Scroll to Analytics">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+    </svg>
+  </a>
 </section>
 
 <!-- ANALYTICS -->
-<section id="analytics">
-  <div class="glass-card">
-    <h2 class="highlight">Analytics</h2>
-    <p>Structured observation and interpretation of digital markets.</p>
+<section id="analytics" data-section="analytics">
+  <div class="glass-card reveal">
+    <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
+      Analytics
+    </h2>
+
+    <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
+      <span class="highlight">BasysAnalytics</span> is an analytical system designed for the structured observation,
+      interpretation, and classification of crypto and digital asset markets.
+      The name <span class="highlight">Basys</span> is derived from Base, Basis, and System,
+      representing a stable, methodical foundation.
+    </p>
+
+    <p style="margin-bottom: 25px; font-size: 1.1rem; line-height: 1.7;">
+      The claim <span class="highlight">Observe Learn Lead</span> describes the internal process:
+      Understanding grows from observation, orientation emerges from understanding,
+      and responsible leadership arises from orientation.
+    </p>
+
+    <p style="font-size: 1.1rem; line-height: 1.7;">
+      <span class="highlight">OLL</span> stands for the conceptual guiding model and personally represents
+      <span class="highlight">Oliver and Lion Leininger</span>, bridging individual motivation with systematic analysis.
+    </p>
+
+    <div class="summary-box">
+      <strong>In short:</strong> Basys Analytics combines a stable analytical foundation,
+      a clear process of insight, and personal values for responsible decision-making
+      in the digital economy.
+    </div>
   </div>
+
+  <a href="#token" class="scroll-indicator reveal" aria-label="Scroll to Token">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+    </svg>
+  </a>
 </section>
 
 <!-- TOKEN -->
-<section id="token">
-  <div class="glass-card">
-    <h2 class="highlight">Token</h2>
-    <p>Future support mechanism for education and research.</p>
+<section id="token" data-section="token">
+  <div class="glass-card reveal">
+    <h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Token</h2>
+    <div class="sub-kicker">
+      The Basys token is envisioned as a future mechanism to support education, research, and charitable initiatives — including
+      contributions to children-focused educational causes.
+    </div>
   </div>
+
+  <a href="#fund" class="scroll-indicator reveal" aria-label="Scroll to Education Fund">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+    </svg>
+  </a>
 </section>
 
 <!-- FUND -->
-<section id="fund">
-  <div class="glass-card">
-    <h2 class="highlight">Education Fund</h2>
-    <p>Bitcoin-only educational support.</p>
+<section id="fund" data-section="fund">
+  <div class="glass-card reveal">
+    <h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Education Fund</h2>
+
+    <div class="sub-kicker">
+      Contributions support independent education and research initiatives.
+    </div>
+
+    <div class="fund-meta">
+      <span class="badge btc"><span class="dot-mini"></span> Bitcoin Only</span>
+      <span class="badge">On-chain BTC address</span>
+    </div>
+
+    <div class="wallet-box">
+      <div class="wallet-address" id="btcAddress">
+        bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3
+      </div>
+
+      <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+      <div class="copied-pill" id="copiedPill">Copied</div>
+    </div>
+
+    <div class="fund-note">
+      <span class="highlight">Note:</span> This is a placeholder address for layout/testing. Do not send funds to this address.
+    </div>
   </div>
+
+  <a href="#contact" class="scroll-indicator reveal" aria-label="Scroll to Contact">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
+    </svg>
+  </a>
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
-  <div class="glass-card" style="max-width:520px">
-    <h2 class="highlight">Contact</h2>
-    <p>For inquiries and strategic dialogue.</p>
+<section id="contact" data-section="contact">
+  <div class="glass-card reveal" style="max-width:550px;">
+    <h2 style="color:var(--accent); margin-bottom:18px; text-align:center; letter-spacing:3px; text-transform:uppercase;">
+      Contact
+    </h2>
+    <p style="margin:-8px 0 16px; text-align:center; opacity:.88; line-height:1.6; font-size:.98rem;">
+      For inquiries, partnerships, or strategic dialogue.
+    </p>
+
+    <form>
+      <input type="text" placeholder="Full Name" required>
+      <input type="email" placeholder="Email Address" required>
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button class="btn" type="submit">Send Message</button>
+    </form>
   </div>
+
+  <!-- ✅ back to home arrow -->
+  <a href="#home" class="scroll-indicator reveal up" aria-label="Back to Home">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M7 11l5-5 5 5M7 18l5-5 5 5"></path>
+    </svg>
+  </a>
 </section>
 
 <footer>
   <div class="footer-strong">Basys Analytics</div>
-  © 2026 Basys Analytics
+  <div class="footer-meta">Stuttgart · San Francisco · Santa Fe</div>
+  <div class="footer-tagline">Independent Research &amp; Analysis</div>
+  <div class="footer-legal">
+    BasysAnalytics is a subsidiary of Next-Gen-IT LLC, based in the USA.
+  </div>
+  <div style="margin-top:10px; opacity:.65;">© 2026 Basys Analytics. All rights reserved.</div>
 </footer>
 
 <script>
-const header=document.getElementById("siteHeader");
-window.addEventListener("scroll",()=>{
-  header.classList.toggle("scrolled",window.scrollY>20);
+/* Header shrink on scroll + body scrolled class */
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY > 20;
+  header.classList.toggle('scrolled', scrolled);
+  document.body.classList.toggle('scrolled', scrolled);
+}, { passive:true });
+
+/* Mobile burger */
+const navToggle = document.getElementById('navToggle');
+const closeNav = () => {
+  header.classList.remove('nav-open');
+  navToggle?.setAttribute('aria-expanded', 'false');
+};
+navToggle?.addEventListener('click', () => {
+  const open = header.classList.toggle('nav-open');
+  navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+document.getElementById('siteNav')?.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === 'a') closeNav();
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+
+/* Initiatives dropdown / accordion */
+const group = document.getElementById('initiativeGroup');
+const toggle = group?.querySelector('.nav-group-toggle');
+
+toggle?.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const open = group.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
 
-document.getElementById("navToggle").addEventListener("click",()=>{
-  header.classList.toggle("nav-open");
+document.addEventListener('click', (e) => {
+  if (!group?.contains(e.target)) {
+    group?.classList.remove('open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  }
 });
+
+document.querySelectorAll('.nav-group-menu a').forEach(a => {
+  a.addEventListener('click', () => {
+    group?.classList.remove('open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  });
+});
+
+/* Reveal */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+/* Active nav on scroll */
+const navLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
+const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+function setActive(id){
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
+
+  const hasInitiativeActive = (id === 'token' || id === 'fund');
+  group?.classList.toggle('has-active', hasInitiativeActive);
+
+  document.querySelectorAll('.nav-group-menu a[data-nav]').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('data-nav') === id);
+  });
+}
+
+function spy(){
+  const line = header.getBoundingClientRect().height + 80;
+  let current = 'home';
+  for(const sec of sections){
+    if(sec.getBoundingClientRect().top <= line) current = sec.id;
+  }
+  setActive(current);
+}
+window.addEventListener('scroll', () => requestAnimationFrame(spy), { passive:true });
+window.addEventListener('load', spy);
+window.addEventListener('resize', spy);
+
+/* Copy BTC */
+const copyBtn = document.getElementById('copyBtn');
+const btcAddress = document.getElementById('btcAddress');
+const copiedPill = document.getElementById('copiedPill');
+
+copyBtn?.addEventListener('click', async () => {
+  try{
+    await navigator.clipboard.writeText(btcAddress.textContent.trim());
+    copiedPill?.classList.add('show');
+    setTimeout(() => copiedPill?.classList.remove('show'), 900);
+  }catch(e){
+    const prev = copyBtn.textContent;
+    copyBtn.textContent = 'Copy failed';
+    setTimeout(() => (copyBtn.textContent = prev), 900);
+  }
+});
+
+/* Parallax (seam-free): move sky layer via transform */
+const sky = document.querySelector('#home .sky-layer');
+window.addEventListener('scroll', () => {
+  if(!sky) return;
+  const yRaw = window.scrollY * 0.08;
+  const y = Math.max(0, Math.min(90, yRaw));
+  sky.style.transform = `translate3d(0, ${-y}px, 0)`;
+}, { passive:true });
 </script>
 
 </body>
