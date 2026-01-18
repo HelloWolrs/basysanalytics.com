@@ -217,7 +217,7 @@ section{
   background:#000;
 }
 
-/* Star-sky layer */
+/* Star-sky layer (constant stars + image) */
 #home .sky-layer{
   position:absolute;
   inset:-260px;
@@ -291,7 +291,7 @@ section{
   align-items:center;
   justify-content:center;
   margin-top:-6px;
-  container-type: inline-size;
+  container-type: inline-size; /* enables cqw */
 }
 
 @keyframes rotate-earth{
@@ -373,17 +373,28 @@ section{
   text-align:center;
 }
 
-/* ✅ Basys Analytics ALL CAPS */
+/* ✅ BEST SOLUTION: brand never leaves globe */
 .brand{
   font-weight:900;
   letter-spacing:.10em;
-  text-shadow:
-    0 2px 16px rgba(0,0,0,.55),
-    0 0 28px rgba(0,0,0,.35);
-  white-space:nowrap;
-  line-height:1.05;
-  font-size: clamp(1.45rem, 9.4cqw, 2.8rem);
   text-transform:uppercase;
+  white-space:nowrap;
+  line-height:1.04;
+  text-align:center;
+
+  /* container-based scaling */
+  font-size: clamp(1.15rem, 7.8cqw, 2.05rem);
+
+  /* hard safety */
+  max-width: 82%;
+  margin-inline:auto;
+
+  /* optical centering */
+  transform: translateY(-1%);
+
+  text-shadow:
+    0 2px 18px rgba(0,0,0,.62),
+    0 0 32px rgba(0,0,0,.38);
 }
 
 .btc{
@@ -401,16 +412,20 @@ section{
   transition: color .35s ease, opacity .35s ease;
 }
 
-/* ✅ Claim: first letter bigger, rest lowercase */
+/* Claim: first letter bigger, rest lowercase — globe-safe */
 .brand-claim{
   margin-top:12px;
   letter-spacing:.10em;
-  text-transform:none; /* ✅ we control case in markup */
+  text-transform:none;
   display:flex;
   align-items:center;
   justify-content:center;
   white-space:nowrap;
-  font-size: clamp(.86rem, 4.2cqw, 1.18rem);
+
+  font-size: clamp(.76rem, 3.6cqw, 1.02rem);
+  max-width: 88%;
+  margin-inline:auto;
+
   color: rgba(232, 238, 248, .98);
   text-shadow:
     0 2px 16px rgba(0,0,0,.62),
@@ -422,7 +437,6 @@ section{
   color: rgba(232, 238, 248, .98);
 }
 
-/* first letter bigger */
 .brand-claim .cap{
   display:inline-block;
   font-size: 1.25em;
@@ -434,7 +448,6 @@ section{
     0 0 8px rgba(242,169,0,.16),
     0 2px 16px rgba(0,0,0,.62);
 }
-
 .brand-claim .rest{
   text-transform:lowercase;
   font-weight:850;
@@ -549,9 +562,42 @@ body.scrolled .btc{
   color:var(--text-main);
 }
 
-/* Wallet + Copy */
+/* ===== Education Fund polish ===== */
+.fund-meta{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:var(--text-main);
+}
+.badge.btc{
+  border-color: rgba(242,169,0,.28);
+  background: rgba(242,169,0,.10);
+  color: var(--text-main);
+}
+.badge .dot-mini{
+  width:9px;height:9px;border-radius:50%;
+  background: var(--accent);
+  box-shadow:0 0 12px rgba(242,169,0,.20);
+}
+
 .wallet-box{
   margin-top:16px;
+  position:relative;
   display:flex;
   gap:12px;
   align-items:center;
@@ -565,11 +611,12 @@ body.scrolled .btc{
 }
 .wallet-address{
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-  font-size:.95rem;
+  font-size:.96rem;
   letter-spacing:.4px;
   opacity:.95;
   overflow-wrap:anywhere;
   color:var(--text-main);
+  line-height:1.35;
 }
 .copy-btn{
   flex:0 0 auto;
@@ -590,6 +637,29 @@ body.scrolled .btc{
   background:rgba(242,169,0,.18);
   border-color:rgba(242,169,0,.55);
 }
+.copied-pill{
+  position:absolute;
+  right:14px;
+  top:-12px;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  border:1px solid rgba(242,169,0,.35);
+  background: rgba(10,15,25,.82);
+  color: var(--text-main);
+  opacity:0;
+  transform: translateY(4px);
+  transition: .22s ease;
+  pointer-events:none;
+}
+.copied-pill.show{
+  opacity:1;
+  transform: translateY(0);
+}
+
 .fund-note{
   margin-top:10px;
   opacity:.82;
@@ -767,7 +837,6 @@ footer{
     </div>
 
     <div class="hero-text">
-      <!-- ✅ ALL CAPS inside globe -->
       <div class="brand" aria-label="BASYS ANALYTICS">
         <span class="btc">₿</span><span class="analytics-rest">ASYS</span>
         <span style="margin-left:10px;">
@@ -775,7 +844,6 @@ footer{
         </span>
       </div>
 
-      <!-- ✅ First letter bigger, rest lowercase -->
       <div class="brand-claim" aria-label="Observe Learn Lead">
         <span><span class="cap">O</span><span class="rest">bserve</span></span>
         <span class="dot" aria-hidden="true"></span>
@@ -889,15 +957,23 @@ footer{
 <section id="fund" data-section="fund">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Education Fund</h2>
+
     <div class="sub-kicker">
-      Contributions support independent education and research initiatives. Bitcoin (BTC) only.
+      Contributions support independent education and research initiatives.
+    </div>
+
+    <div class="fund-meta">
+      <span class="badge btc"><span class="dot-mini"></span> Bitcoin Only</span>
+      <span class="badge">On-chain BTC address</span>
     </div>
 
     <div class="wallet-box">
       <div class="wallet-address" id="btcAddress">
         bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3
       </div>
+
       <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+      <div class="copied-pill" id="copiedPill">Copied</div>
     </div>
 
     <div class="fund-note">
@@ -1031,12 +1107,13 @@ window.addEventListener('resize', spy);
 /* Copy BTC */
 const copyBtn = document.getElementById('copyBtn');
 const btcAddress = document.getElementById('btcAddress');
+const copiedPill = document.getElementById('copiedPill');
+
 copyBtn?.addEventListener('click', async () => {
   try{
     await navigator.clipboard.writeText(btcAddress.textContent.trim());
-    const prev = copyBtn.textContent;
-    copyBtn.textContent = 'Copied';
-    setTimeout(() => (copyBtn.textContent = prev), 900);
+    copiedPill?.classList.add('show');
+    setTimeout(() => copiedPill?.classList.remove('show'), 900);
   }catch(e){
     const prev = copyBtn.textContent;
     copyBtn.textContent = 'Copy failed';
