@@ -527,18 +527,22 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 }
 
 /* ===================== EDUCATION FUND ===================== */
+
+/* selector wrapper */
 .pay-row{
   margin-top:18px;
   display:grid;
-  grid-template-columns: 1fr 220px;
+  grid-template-columns: 1fr;
   gap:12px;
-  align-items:start;
 }
+
+/* 2x2 grid: BTC | USDT / CARD | REGION */
 .pay-grid{
   display:grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap:12px;
 }
+
 .pay-card{
   position:relative;
   text-align:left;
@@ -561,6 +565,7 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   background: rgba(46,213,115,.06);
   box-shadow: 0 0 0 1px rgba(46,213,115,.10), 0 18px 40px rgba(0,0,0,.28);
 }
+
 .pay-dot{
   position:absolute;
   top:14px;
@@ -575,6 +580,7 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   border-color: var(--green-border);
   box-shadow: 0 0 14px var(--green-glow);
 }
+
 .pay-top{
   display:flex;
   align-items:center;
@@ -597,33 +603,34 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   color: rgba(210,220,235,.88);
 }
 
-/* Region card (always visible, sits next to payment cards) */
+/* REGION CARD: same look/size as pay cards */
 .region-card{
+  position:relative;
+  text-align:left;
+  padding:14px;
   border-radius:16px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(10,15,25,.22);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  padding:12px 12px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  color:var(--text-main);
+  transition:.2s;
+  min-height:92px;
 }
-.region-card .r-label{
-  font-size:.72rem;
-  font-weight:900;
-  letter-spacing:.10em;
-  text-transform:uppercase;
-  color: rgba(180,195,214,.88);
+.region-card:hover{
+  transform: translateY(-1px);
+  border-color: rgba(242,169,0,.22);
+  background: rgba(242,169,0,.06);
 }
 .region-card .r-hint{
-  margin-top:6px;
-  font-size:.82rem;
-  color: rgba(160,172,188,.85);
-  line-height:1.25;
+  margin-top:8px;
+  font-size:.88rem;
+  line-height:1.35;
+  color: rgba(210,220,235,.88);
 }
 .region-card select{
   margin-top:10px;
   width:100%;
   border:1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.03);
+  background: rgba(10,15,25,.22);
   color: var(--text-main);
   border-radius:12px;
   padding:10px 10px;
@@ -644,7 +651,6 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   gap:16px;
   align-items:start;
 }
-
 .qr-wrap{
   border-radius:16px;
   border:1px solid rgba(255,255,255,.10);
@@ -667,11 +673,7 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   align-items:center;
   justify-content:center;
 }
-.qr img{
-  width:100%;
-  height:100%;
-  display:block;
-}
+.qr img{ width:100%; height:100%; display:block; }
 
 .addr-card{
   width:100%;
@@ -890,9 +892,7 @@ footer{
 
 /* ================= MOBILE + RESPONSIVE ================= */
 @media (max-width: 980px){
-  .pay-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .pay-row{ grid-template-columns: 1fr; }
-  .region-card{ max-width: 320px; }
+  .pay-grid{ grid-template-columns: 1fr; }
 }
 @media (max-width: 768px){
   header{ padding:16px 16px; }
@@ -1130,9 +1130,11 @@ footer{
       Contributions support independent education and research initiatives.
     </div>
 
-    <!-- Payment cards + always-visible region card -->
+    <!-- Selector: 2x2 grid (BTC | USDT) / (CARD | REGION) -->
     <div class="pay-row">
       <div class="pay-grid" role="tablist" aria-label="Payment method selector">
+
+        <!-- BTC -->
         <button class="pay-card active" type="button" data-method="btc" role="tab" aria-selected="true">
           <span class="pay-dot" aria-hidden="true"></span>
           <div class="pay-top">
@@ -1146,6 +1148,7 @@ footer{
           <div class="pay-desc">Send BTC directly (on-chain).</div>
         </button>
 
+        <!-- USDT -->
         <button class="pay-card" type="button" data-method="usdt" role="tab" aria-selected="false">
           <span class="pay-dot" aria-hidden="true"></span>
           <div class="pay-top">
@@ -1159,6 +1162,7 @@ footer{
           <div class="pay-desc">Stablecoin on Ethereum network.</div>
         </button>
 
+        <!-- CARD/BANK -->
         <button class="pay-card" type="button" data-method="card" role="tab" aria-selected="false">
           <span class="pay-dot" aria-hidden="true"></span>
           <div class="pay-top">
@@ -1171,15 +1175,22 @@ footer{
           </div>
           <div class="pay-desc">Buy BTC via provider + send.</div>
         </button>
-      </div>
 
-      <div class="region-card" title="Auto-detected via IP (can be changed)">
-        <div class="r-label">Region</div>
-        <div class="r-hint">Auto-detected. Used for card/bank providers.</div>
-        <select id="regionSelect">
-          <option value="EU">EU</option>
-          <option value="US">US</option>
-        </select>
+        <!-- REGION (same size/style as cards) -->
+        <div class="region-card" title="Auto-detected via IP (can be changed)">
+          <div class="pay-top">
+            <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"></path>
+              <path d="M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+            </svg>
+            <div class="pay-title">Region</div>
+          </div>
+          <div class="r-hint">Auto-detected. Used for card/bank providers.</div>
+          <select id="regionSelect">
+            <option value="EU">EU</option>
+            <option value="US">US</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -1351,7 +1362,7 @@ document.getElementById('siteNav')?.addEventListener('click', (e) => {
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
 
-/* Initiatives dropdown / accordion */
+/* Initiatives dropdown */
 const group = document.getElementById('initiativeGroup');
 const toggle = group?.querySelector('.nav-group-toggle');
 toggle?.addEventListener('click', (e) => {
@@ -1487,7 +1498,7 @@ async function copyText(text, pill){
 function btcUri(){ return `bitcoin:${getBtcAddress()}`; }
 function usdtUri(){ return `ethereum:${getUsdtAddress()}`; }
 
-/* ✅ ALWAYS WORKING QR (image endpoint, no JS library needed) */
+/* ALWAYS WORKING QR (image endpoint) */
 function renderQrImg(node, text){
   if(!node) return;
   node.innerHTML = '';
@@ -1504,7 +1515,6 @@ function refreshFund(){
   document.getElementById('usdtAddrDisplay').textContent = getUsdtAddress();
   document.getElementById('cardBtcAddrDisplay').textContent = getBtcAddress();
 
-  // QR: BTC uses bitcoin: URI, USDT uses raw address (wallet compatible)
   renderQrImg(document.getElementById('btcQr'), btcUri());
   renderQrImg(document.getElementById('usdtQr'), getUsdtAddress());
 
