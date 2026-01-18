@@ -56,7 +56,7 @@ header{
   position:fixed;
   top:0;
   width:100%;
-  padding:22px 44px; /* a bit smaller */
+  padding:22px 44px;
   z-index:1000;
   display:flex;
   align-items:center;
@@ -90,7 +90,7 @@ header.scrolled{
 /* Desktop nav */
 nav{
   display:flex;
-  gap:26px; /* a bit tighter */
+  gap:26px;
   align-items:center;
   width:100%;
 }
@@ -236,7 +236,7 @@ section{
   flex-direction:column;
   justify-content:center;
   align-items:center;
-  padding:145px 10% 115px; /* slightly smaller */
+  padding:145px 10% 115px;
   scroll-margin-top:0px;
 }
 
@@ -392,7 +392,7 @@ section{
     drop-shadow(0 26px 55px rgba(0,0,0,.35))
     contrast(0.98)
     saturate(0.92)
-    brightness(0.90); /* slightly darker earth */
+    brightness(0.90);
 }
 
 /* Hero text inside globe */
@@ -408,18 +408,34 @@ section{
   text-align:center;
 }
 
+.globe-stack{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+}
+
+/* BASYS + ANALYTICS: now stacked (under each other), slightly bigger but constrained */
 .brand{
-  display:inline-block;
-  white-space:nowrap;
+  width:100%;
+  max-width: 80%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  transform: translateY(-2%);
   text-transform:uppercase;
   font-weight:900;
-  line-height:1.03;
-  text-align:center;
-  font-size: clamp(1.05rem, 6.8cqw, 1.78rem); /* tiny smaller */
+  line-height:1.02;
+
+  /* slightly larger than before, but safe */
+  font-size: clamp(1.18rem, 7.2cqw, 2.05rem);
+
   letter-spacing: 0;
-  max-width: 74%;
-  margin-inline:auto;
-  transform: translateY(-1%);
+  white-space:nowrap;
   text-shadow:
     0 1px 0 rgba(0,0,0,.55),
     0 2px 12px rgba(0,0,0,.72),
@@ -427,20 +443,22 @@ section{
   -webkit-font-smoothing: antialiased;
   text-rendering: geometricPrecision;
 }
-
+.brand-line{
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap:.02em;
+}
 .brand .btc{
   color:var(--accent);
   font-weight:900;
-  font-size: 1.40em; /* bigger B/A */
+  font-size: 1.42em; /* bigger B/A */
   line-height: 0.95;
-  vertical-align: baseline;
-  margin-right: .02em;
   text-shadow:
     0 0 10px rgba(242,169,0,.22),
     0 0 20px rgba(242,169,0,.12),
     0 2px 20px rgba(0,0,0,.70);
 }
-
 .analytics-rest{
   color: var(--text-main);
   font-weight:850;
@@ -448,35 +466,36 @@ section{
   transition: color .35s ease, opacity .35s ease;
   text-shadow: 0 1px 10px rgba(0,0,0,.55);
 }
-
-/* darken on scroll */
 body.scrolled .analytics-rest{ color: var(--text-muted); }
 
+/* O/L/L now vertical (under each other) with subtle thin dividers */
 .brand-claim{
-  margin-top:10px; /* smaller */
-  letter-spacing:.10em;
-  text-transform:none;
   display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
-  white-space:nowrap;
-  font-size: clamp(.70rem, 3.05cqw, .90rem); /* smaller */
-  max-width: 88%;
+  gap:7px;
+  width:100%;
+  max-width: 78%;
   margin-inline:auto;
-  color: rgba(232, 238, 248, .98);
+
+  font-size: clamp(.82rem, 3.2cqw, 1.05rem);
+  letter-spacing:.10em;
+
   text-shadow:
     0 2px 16px rgba(0,0,0,.62),
     0 0 28px rgba(0,0,0,.38);
 }
-
-.brand-claim > span{ font-weight:900; color: rgba(232, 238, 248, .98); }
-
+.brand-claim .line{
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+}
 .brand-claim .cap{
   display:inline-block;
-  font-size: 1.25em;
+  font-size: 1.32em;
   font-weight: 900;
-  letter-spacing: .02em;
-  margin-right: 1px;
+  margin-right: 2px;
   color: var(--accent);
   text-shadow:
     0 0 8px rgba(242,169,0,.14),
@@ -489,20 +508,17 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 }
 body.scrolled .brand-claim .rest{ color: var(--text-muted); }
 
-/* Separator bars (orange) */
-.dot{
-  width:32px;           /* smaller */
-  height:3px;
+.divider{
+  width:34px;          /* thinner & less dominant */
+  height:2px;
   border-radius:999px;
-  background: var(--accent);
-  display:inline-block;
-  margin:0 14px;        /* tighter */
-  box-shadow: 0 0 16px rgba(242,169,0,.16);
-  opacity:.95;
+  background: rgba(242,169,0,.85);
+  box-shadow: 0 0 10px rgba(242,169,0,.12);
+  opacity:.85;
 }
 
 .hero-claim{
-  margin-top:18px; /* smaller */
+  margin-top:18px;
   text-align:center;
   max-width:980px;
   font-size:clamp(.96rem, 1.3vw, 1.14rem);
@@ -516,7 +532,7 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
 
 /* Scroll arrows */
 .scroll-indicator{
-  margin-top:36px; /* smaller */
+  margin-top:36px;
   animation:bounce 2s infinite;
   cursor:pointer;
   display:inline-flex;
@@ -536,9 +552,9 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius:20px;
-  padding:44px; /* smaller */
+  padding:44px;
   width:100%;
-  max-width:930px; /* tiny smaller */
+  max-width:930px;
   border:1px solid rgba(255,255,255,.12);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
   transition:
@@ -588,6 +604,27 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
   color:var(--text-main);
 }
 
+/* Small stepper line under Fund intro */
+.fund-steps{
+  margin-top:10px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:flex-start;
+  color: rgba(170,184,202,.88);
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:.72rem;
+}
+.fund-steps .sep{
+  width:6px;height:6px;border-radius:50%;
+  background: rgba(242,169,0,.55);
+  box-shadow: 0 0 10px rgba(242,169,0,.10);
+  opacity:.9;
+}
+
 /* ===================== EDUCATION FUND (compact) ===================== */
 .pay-row{
   margin-top:16px;
@@ -596,27 +633,29 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
   gap:10px;
 }
 
-/* 2x2 grid, compact */
+/* 2x2 grid */
 .pay-grid{
   display:grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap:10px;
 }
 
-/* compact tiles */
-.pay-card{
+/* All tiles SAME size (BTC/USDT/Card/Region) */
+.pay-card,
+.region-card{
   position:relative;
   text-align:left;
-  padding:9px 11px; /* smaller */
+  padding:9px 11px;
   border-radius:14px;
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.035);
   color:var(--text-main);
   cursor:pointer;
   transition:.18s;
-  min-height:64px; /* smaller */
+  min-height:64px;
 }
-.pay-card:hover{
+.pay-card:hover,
+.region-card:hover{
   transform: translateY(-1px);
   border-color: rgba(242,169,0,.22);
   background: rgba(242,169,0,.055);
@@ -649,35 +688,20 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
 }
 .pay-ico{ width:16px;height:16px; opacity:.95; }
 .pay-title{
-  font-size:.68rem; /* smaller */
+  font-size:.68rem;
   font-weight:900;
   letter-spacing:.10em;
   text-transform:uppercase;
 }
 .pay-desc{
   margin-top:5px;
-  font-size:.78rem; /* smaller */
+  font-size:.78rem;
   line-height:1.25;
   color: rgba(210,220,235,.86);
 }
 
-/* region card same size */
-.region-card{
-  position:relative;
-  text-align:left;
-  padding:9px 11px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.035);
-  color:var(--text-main);
-  transition:.18s;
-  min-height:64px;
-}
-.region-card:hover{
-  transform: translateY(-1px);
-  border-color: rgba(242,169,0,.22);
-  background: rgba(242,169,0,.055);
-}
+/* region card inner bits */
+.region-card{ cursor:default; }
 .region-card .r-hint{
   margin-top:5px;
   font-size:.78rem;
@@ -706,39 +730,35 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
 .fund-grid{
   margin-top:10px;
   display:grid;
-  grid-template-columns: 140px 1fr; /* smaller */
+  grid-template-columns: 140px 1fr;
   gap:12px;
   align-items:start;
 }
 
-/* QR container (lighter + tighter) */
+/* QR container */
 .qr-wrap{
   border-radius:14px;
   border:1px solid rgba(255,255,255,.18);
   background:rgba(255,255,255,.07);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  padding:9px; /* smaller */
+  padding:9px;
   display:flex;
   align-items:center;
   justify-content:center;
 }
-
-/* IMPORTANT: avoid clipped QR corners/quiet-zone
-   - no overflow hidden
-   - add inner padding with white background
-*/
+/* IMPORTANT: prevent QR clipping */
 .qr{
   width:128px;
   height:128px;
   border-radius:10px;
-  overflow:visible;               /* <-- prevents clipping */
-  background:#fff;                /* crisp QR background */
+  overflow:visible;
+  background:#fff;
   border:1px solid rgba(0,0,0,.10);
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:6px;                    /* <-- preserves quiet-zone */
+  padding:6px;
 }
 .qr img{
   width:100%;
@@ -752,7 +772,7 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
 /* address box */
 .addr-card{
   width:100%;
-  padding:11px 13px; /* smaller */
+  padding:11px 13px;
   border-radius:14px;
   border:1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.05);
@@ -790,7 +810,7 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
   align-items:center;
   justify-content:center;
   gap:8px;
-  padding:9px 11px; /* smaller */
+  padding:9px 11px;
   border-radius:10px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.04);
@@ -798,7 +818,7 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
   font-weight:900;
   letter-spacing:.06em;
   text-transform:uppercase;
-  font-size:.66rem; /* smaller */
+  font-size:.66rem;
   cursor:pointer;
   transition:.18s;
   text-decoration:none;
@@ -1072,17 +1092,25 @@ footer{
     </div>
 
     <div class="hero-text">
-      <div class="brand" aria-label="BASYS ANALYTICS">
-        <span class="btc">₿</span><span class="analytics-rest">ASYS</span>
-        <span class="btc">A</span><span class="analytics-rest">NALYTICS</span>
-      </div>
+      <div class="globe-stack">
 
-      <div class="brand-claim" aria-label="Observe Learn Lead">
-        <span><span class="cap">O</span><span class="rest">bserve</span></span>
-        <span class="dot" aria-hidden="true"></span>
-        <span><span class="cap">L</span><span class="rest">earn</span></span>
-        <span class="dot" aria-hidden="true"></span>
-        <span><span class="cap">L</span><span class="rest">ead</span></span>
+        <div class="brand" aria-label="BASYS ANALYTICS">
+          <div class="brand-line">
+            <span class="btc">₿</span><span class="analytics-rest">ASYS</span>
+          </div>
+          <div class="brand-line">
+            <span class="btc">A</span><span class="analytics-rest">NALYTICS</span>
+          </div>
+        </div>
+
+        <div class="brand-claim" aria-label="Observe Learn Lead">
+          <div class="line"><span class="cap">O</span><span class="rest">bserve</span></div>
+          <div class="divider" aria-hidden="true"></div>
+          <div class="line"><span class="cap">L</span><span class="rest">earn</span></div>
+          <div class="divider" aria-hidden="true"></div>
+          <div class="line"><span class="cap">L</span><span class="rest">ead</span></div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1193,6 +1221,13 @@ footer{
 
     <div class="sub-kicker">
       Contributions support independent education and research initiatives.
+    </div>
+
+    <!-- subtle steps -->
+    <div class="fund-steps" aria-label="Payment steps">
+      <span>Select payment</span><span class="sep" aria-hidden="true"></span>
+      <span>Select amount</span><span class="sep" aria-hidden="true"></span>
+      <span>Fund education &amp; research</span>
     </div>
 
     <!-- Selector 2x2 compact: BTC | USDT / Card-Bank | Region -->
@@ -1549,9 +1584,7 @@ payCards.forEach(btn => btn.addEventListener('click', () => setPayment(btn.datas
 function btcUri(){ return `bitcoin:${getBtcAddress()}`; }
 function usdtUri(){ return `ethereum:${getUsdtAddress()}`; }
 
-/* ALWAYS WORKING QR (image endpoint, sharper)
-   NOTE: we generate a slightly larger QR and it sits in a padded white box => no clipped corners.
-*/
+/* ALWAYS WORKING QR (bigger source image, placed into padded white box => no clipped corners) */
 function renderQrImg(node, text){
   if(!node) return;
   node.innerHTML = '';
