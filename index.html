@@ -13,9 +13,6 @@
 
   /* ✅ viel transparenter (Default) */
   --glass: rgba(10,15,25,.38);
-
-  /* ✅ Global scale (Desktop/Tablet) */
-  --page-scale: 0.92;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -27,42 +24,12 @@ html,body{
   scroll-behavior:smooth;
 }
 
-/* ✅ Slightly smaller base type without breaking layout */
-html{ font-size: 15.5px; }
-
 /* ===== Global City Background (visible ab Basys/Analytics etc.) ===== */
 body{
   background:
     linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.72)),
     url("1000081562.jpg") no-repeat center center fixed;
   background-size:cover;
-}
-
-/* ================= PAGE SCALE WRAPPER ================= */
-/* Default (Chrome/Edge/Safari): zoom scales *everything* including fixed header nicely */
-@media (min-width: 901px){
-  body{ zoom: var(--page-scale); }
-}
-
-/* Firefox fallback: wrapper transform scale */
-.page-wrap{
-  min-height:100%;
-}
-@supports not (zoom: 1){
-  @media (min-width: 901px){
-    body{ overflow-x:hidden; }
-    .page-wrap{
-      transform: scale(var(--page-scale));
-      transform-origin: top center;
-      width: calc(100% / var(--page-scale));
-    }
-  }
-}
-
-/* On small screens keep 1:1 to avoid tiny tap targets */
-@media (max-width: 900px){
-  :root{ --page-scale: 1; }
-  html{ font-size: 16px; }
 }
 
 /* ================= HEADER ================= */
@@ -455,8 +422,9 @@ section{
 }
 
 /* ===================== CARDS ===================== */
+/* ✅ Alle Boxen viel transparenter + Hover wirkt auf ALLE */
 .glass-card{
-  background-color: var(--glass);
+  background-color: var(--glass);     /* IMPORTANT: background-color */
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius:20px;
@@ -473,6 +441,7 @@ section{
     transform .35s ease;
 }
 
+/* Hover Transparenz */
 .glass-card:hover{
   background-color: rgba(10,15,25,.22);
   backdrop-filter: blur(26px);
@@ -481,6 +450,7 @@ section{
   transform: translateY(-2px);
 }
 
+/* Touch devices: no hover flicker */
 @media (hover: none){
   .glass-card:hover{
     background-color: var(--glass);
@@ -519,6 +489,7 @@ section{
   padding:14px 16px;
   border-radius:14px;
 
+  /* optional: slightly glassy too */
   background-color: rgba(10,15,25,.22);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -683,22 +654,10 @@ footer{
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
   .hero-stage{ width:min(520px, 92vw); }
 }
-
-/* ================= REDUCED MOTION (A11Y / polish) ================= */
-@media (prefers-reduced-motion: reduce){
-  html,body{ scroll-behavior:auto; }
-  .twinkle{ animation:none !important; }
-  .scroll-indicator{ animation:none !important; }
-  .globe-rotator{ animation:none !important; }
-  .reveal{ transition:none !important; transform:none !important; opacity:1 !important; }
-  .glass-card, .glass-card:hover{ transition:none !important; transform:none !important; }
-}
 </style>
 </head>
 
 <body>
-
-<div class="page-wrap">
 
 <header id="siteHeader">
   <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button">
@@ -712,11 +671,13 @@ footer{
     <a href="#basys" data-nav="basys">Basys</a>
     <a href="#analytics" data-nav="analytics">Analytics</a>
 
+    <!-- Initiatives always visible -->
     <div class="nav-group" id="initiativeGroup">
       <button class="nav-group-toggle" aria-expanded="false" type="button">
         Initiatives <span class="chevron">▾</span>
       </button>
       <div class="nav-group-menu" aria-label="Initiatives submenu">
+        <!-- correct order: Token then Education Fund -->
         <a href="#token" data-nav="token">Token</a>
         <a href="#fund" data-nav="fund">Education Fund</a>
       </div>
@@ -794,7 +755,7 @@ footer{
   </a>
 </section>
 
-<!-- ANALYTICS -->
+<!-- ANALYTICS (long version) -->
 <section id="analytics" data-section="analytics">
   <div class="glass-card reveal">
     <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
@@ -907,9 +868,6 @@ footer{
 </footer>
 
 <script>
-/* ========= A11Y / preferences ========= */
-const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
 /* Header shrink on scroll */
 const header = document.getElementById('siteHeader');
 window.addEventListener('scroll', () => {
@@ -918,148 +876,71 @@ window.addEventListener('scroll', () => {
 
 /* Mobile burger */
 const navToggle = document.getElementById('navToggle');
-const siteNav = document.getElementById('siteNav');
-
 const closeNav = () => {
   header.classList.remove('nav-open');
   navToggle?.setAttribute('aria-expanded', 'false');
 };
-
 navToggle?.addEventListener('click', () => {
   const open = header.classList.toggle('nav-open');
   navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
-
-/* Close mobile nav when clicking a link */
-siteNav?.addEventListener('click', (e) => {
-  if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === 'a') closeNav();
+document.getElementById('siteNav')?.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === 'a') closeNav();
 });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
 
-/* Close mobile nav when clicking outside */
-document.addEventListener('click', (e) => {
-  const isOpen = header.classList.contains('nav-open');
-  if (!isOpen) return;
-  const insideHeader = header.contains(e.target);
-  if (!insideHeader) closeNav();
-});
-
-/* ========= Initiatives dropdown: Hover on desktop, click on mobile ========= */
+/* Initiatives dropdown / accordion */
 const group = document.getElementById('initiativeGroup');
 const toggle = group?.querySelector('.nav-group-toggle');
-
-const isHoverCapable = () => window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-const initiativeOpen = () => {
-  if (!group) return;
-  group.classList.add('open');
-  toggle?.setAttribute('aria-expanded', 'true');
-};
-
-const initiativeClose = () => {
-  if (!group) return;
-  group.classList.remove('open');
-  toggle?.setAttribute('aria-expanded', 'false');
-};
-
-const initiativeToggle = () => {
-  if (!group) return;
-  const open = group.classList.toggle('open');
-  toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
-};
-
-/* Click always works */
 toggle?.addEventListener('click', (e) => {
   e.stopPropagation();
-  initiativeToggle();
+  const open = group.classList.toggle('open');
+  toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
+document.addEventListener('click', () => group?.classList.remove('open'));
 
-/* Desktop hover intent */
-let hoverCloseTimer = null;
-
-group?.addEventListener('mouseenter', () => {
-  if (!isHoverCapable()) return;
-  if (hoverCloseTimer) clearTimeout(hoverCloseTimer);
-  initiativeOpen();
-});
-
-group?.addEventListener('mouseleave', () => {
-  if (!isHoverCapable()) return;
-  if (hoverCloseTimer) clearTimeout(hoverCloseTimer);
-  hoverCloseTimer = setTimeout(() => {
-    initiativeClose();
-  }, 140);
-});
-
-/* Close dropdown when clicking outside */
-document.addEventListener('click', (e) => {
-  if (!group) return;
-  if (!group.classList.contains('open')) return;
-  if (!group.contains(e.target)) initiativeClose();
-});
-
-/* Close on Escape (also closes dropdown) */
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape'){
-    closeNav();
-    initiativeClose();
-  }
-});
-
-/* ========= Reveal animations ========= */
+/* Reveal animations */
 const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
 
-if (prefersReducedMotion){
-  revealEls.forEach(el => el.classList.add('in'));
-} else {
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting){
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  revealEls.forEach(el => io.observe(el));
-}
-
-/* ========= Active nav on scroll (includes dropdown links) ========= */
-const allNavLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
-const sectionById = new Map(
-  allNavLinks
-    .map(a => {
-      const href = a.getAttribute('href') || '';
-      if (!href.startsWith('#')) return null;
-      const sec = document.querySelector(href);
-      if (!sec) return null;
-      return [a.getAttribute('data-nav'), sec];
-    })
-    .filter(Boolean)
-);
+/* Active nav on scroll */
+const navLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
+const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
 
 function setActive(id){
-  allNavLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
+  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
+
   const hasInitiativeActive = (id === 'token' || id === 'fund');
   group?.classList.toggle('has-active', hasInitiativeActive);
+
+  document.querySelectorAll('.nav-group-menu a[data-nav]').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('data-nav') === id);
+  });
 }
 
 function spy(){
   const line = header.getBoundingClientRect().height + 80;
   let current = 'home';
-
-  for (const [id, sec] of sectionById.entries()){
-    if (sec.getBoundingClientRect().top <= line) current = sec.id;
+  for(const sec of sections){
+    if(sec.getBoundingClientRect().top <= line) current = sec.id;
   }
   setActive(current);
 }
-
 window.addEventListener('scroll', () => requestAnimationFrame(spy), { passive:true });
 window.addEventListener('load', spy);
 window.addEventListener('resize', spy);
 
-/* ========= Copy BTC ========= */
+/* Copy BTC */
 const copyBtn = document.getElementById('copyBtn');
 const btcAddress = document.getElementById('btcAddress');
-
 copyBtn?.addEventListener('click', async () => {
   try{
     await navigator.clipboard.writeText(btcAddress.textContent.trim());
@@ -1073,25 +954,13 @@ copyBtn?.addEventListener('click', async () => {
   }
 });
 
-/* ========= Parallax in hero sky (throttled via rAF) ========= */
+/* Parallax in hero sky (subtle) */
 const home = document.getElementById('home');
-
-if (home && !prefersReducedMotion){
-  let parallaxTicking = false;
-  const onScrollParallax = () => {
-    if (parallaxTicking) return;
-    parallaxTicking = true;
-    requestAnimationFrame(() => {
-      const y = window.scrollY * 0.15;
-      home.style.backgroundPosition = `center ${-y}px`;
-      parallaxTicking = false;
-    });
-  };
-  window.addEventListener('scroll', onScrollParallax, { passive:true });
-}
+window.addEventListener('scroll', () => {
+  const y = window.scrollY * 0.15;
+  home.style.backgroundPosition = `center ${-y}px`;
+}, { passive:true });
 </script>
-
-</div><!-- /page-wrap -->
 
 </body>
 </html>
