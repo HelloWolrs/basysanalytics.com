@@ -9,8 +9,8 @@
 
 <style>
 :root{
-  --accent:#f2a900;
-  --ui:.93;
+  --accent:#f2a900;                 /* Bitcoin Orange */
+  --ui:.93;                         /* globale leichte Verkleinerung */
   --glass: rgba(10,15,25,.38);
 }
 
@@ -23,7 +23,7 @@ html,body{
   scroll-behavior:smooth;
 }
 
-/* ===== Background ===== */
+/* ================= BACKGROUND ================= */
 body{
   background:
     linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.72)),
@@ -32,6 +32,7 @@ body{
   font-size:calc(16px * var(--ui));
 }
 
+/* Mobile Background Fix */
 @media (max-width:768px){
   body{
     background-attachment:scroll;
@@ -69,14 +70,13 @@ header.scrolled{
   border-radius:10px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.06);
-  color:#fff;
   cursor:pointer;
   align-items:center;
   justify-content:center;
 }
 .nav-toggle svg{display:block}
 
-/* Nav */
+/* Navigation */
 nav{display:flex;gap:28px;align-items:center}
 
 nav a,.nav-group-toggle{
@@ -123,19 +123,18 @@ nav a.active::after{
   opacity:1;
 }
 
-/* ===== Initiatives ===== */
+/* ================= INITIATIVES ================= */
 .nav-group{position:relative}
 
 .nav-group-toggle{
   display:inline-flex;
   align-items:center;
   gap:10px;
-  opacity:.85;
 }
 
-/* ✅ GRÖSSERER PFEIL */
+/* ✅ GROßER CHEVRON */
 .chevron{
-  font-size:16px;           /* <-- größer */
+  font-size:16px;
   line-height:1;
   display:inline-block;
   opacity:.95;
@@ -143,19 +142,10 @@ nav a.active::after{
   transform-origin:center;
   translate:0 1px;
 }
-
-/* Rotation bleibt gleich */
-.nav-group.open .chevron{
-  transform:rotate(180deg);
-}
+.nav-group.open .chevron{transform:rotate(180deg)}
 
 @media (max-width:768px){
   .chevron{font-size:18px}
-}
-
-.nav-group.has-active .nav-group-toggle{
-  opacity:1;
-  color:var(--accent);
 }
 
 .nav-group-menu{
@@ -202,9 +192,10 @@ section{
   justify-content:center;
   align-items:center;
   padding:150px 10% 120px;
+  scroll-margin-top:90px;
 }
 
-/* ===== HERO ===== */
+/* ================= HERO ================= */
 #home{
   position:relative;
   overflow:hidden;
@@ -223,6 +214,7 @@ section{
   justify-content:center;
 }
 
+/* Globe rotation */
 @keyframes rotate-earth{
   from{transform:rotate(0)}
   to{transform:rotate(360deg)}
@@ -246,6 +238,7 @@ section{
   border-radius:50%;
 }
 
+/* Hero text */
 .hero-text{
   position:absolute;
   inset:0;
@@ -273,6 +266,7 @@ section{
 
 .accent-initial{color:var(--accent);font-weight:900}
 
+/* ✅ weiße Punkte */
 .dot{
   width:10px;height:10px;
   border-radius:50%;
@@ -297,7 +291,7 @@ section{
   40%{transform:translateY(-10px)}
 }
 
-/* ================= CARDS ================= */
+/* ================= GLASS CARDS ================= */
 .glass-card{
   background:var(--glass);
   backdrop-filter:blur(20px);
@@ -311,7 +305,20 @@ section{
 
 .highlight{color:var(--accent);font-weight:700}
 
-/* ================= MOBILE ================= */
+/* ================= CONTACT ================= */
+.btn{
+  width:100%;
+  padding:15px;
+  background:var(--accent);
+  border:none;
+  border-radius:10px;
+  font-weight:900;
+  cursor:pointer;
+  text-transform:uppercase;
+  color:#000;
+}
+
+/* ================= MOBILE MENU ================= */
 @media (max-width:768px){
   .nav-toggle{display:inline-flex}
 
@@ -380,6 +387,7 @@ section{
     <div class="globe-rotator">
       <img src="hero-globe.png" alt="Earth">
     </div>
+
     <div class="hero-text">
       <div class="brand"><span class="btc">₿</span>asys Analytics</div>
       <div class="brand-claim">
