@@ -560,17 +560,17 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   color:var(--text-main);
 }
 
-/* ===================== EDUCATION FUND (Selector Cards) ===================== */
+/* ===================== EDUCATION FUND ===================== */
 .pay-grid{
   margin-top:18px;
   display:grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap:12px;
 }
 .pay-card{
   position:relative;
   text-align:left;
-  padding:14px 14px 14px 14px;
+  padding:14px;
   border-radius:16px;
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.04);
@@ -698,6 +698,35 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   justify-content:center;
 }
 .qr canvas, .qr img{ width:100% !important; height:100% !important; display:block; }
+
+/* Address shown (WIDER + CREDIT CARD LOOK) */
+.addr-card{
+  width:100%;
+  padding:14px 16px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(10,15,25,.28);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: 0 18px 45px rgba(0,0,0,.35);
+}
+.addr-label{
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color: rgba(180,195,214,.88);
+}
+.addr-value{
+  margin-top:10px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+  font-size:1.02rem;
+  letter-spacing:.3px;
+  color: var(--text-main);
+  line-height:1.45;
+  overflow-wrap:anywhere;
+  word-break: break-word;
+}
 
 /* action buttons */
 .fund-actions{
@@ -1127,12 +1156,10 @@ footer{
       Contributions support independent education and research initiatives.
     </div>
 
-    <!-- ✅ CLEAR SELECTOR (CARDS) + GREEN DOT + ICONS -->
     <div class="pay-grid" role="tablist" aria-label="Payment method selector">
       <button class="pay-card active" type="button" data-method="btc" role="tab" aria-selected="true">
         <span class="pay-dot" aria-hidden="true"></span>
         <div class="pay-top">
-          <!-- BTC icon -->
           <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <path d="M12 2v20"></path>
             <path d="M7 7h8a3 3 0 0 1 0 6H7z"></path>
@@ -1143,22 +1170,9 @@ footer{
         <div class="pay-desc">Send BTC directly (on-chain).</div>
       </button>
 
-      <button class="pay-card" type="button" data-method="ln" role="tab" aria-selected="false">
-        <span class="pay-dot" aria-hidden="true"></span>
-        <div class="pay-top">
-          <!-- Lightning icon -->
-          <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <path d="M13 2L3 14h8l-1 8 11-14h-8z"></path>
-          </svg>
-          <div class="pay-title">Lightning</div>
-        </div>
-        <div class="pay-desc">Instant + low fees (LN).</div>
-      </button>
-
       <button class="pay-card" type="button" data-method="usdt" role="tab" aria-selected="false">
         <span class="pay-dot" aria-hidden="true"></span>
         <div class="pay-top">
-          <!-- USDT icon (simple T) -->
           <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <path d="M6 6h12"></path>
             <path d="M12 6v14"></path>
@@ -1172,7 +1186,6 @@ footer{
       <button class="pay-card" type="button" data-method="card" role="tab" aria-selected="false">
         <span class="pay-dot" aria-hidden="true"></span>
         <div class="pay-top">
-          <!-- Credit card icon -->
           <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <rect x="3" y="5" width="18" height="14" rx="2"></rect>
             <path d="M3 10h18"></path>
@@ -1198,7 +1211,7 @@ footer{
       <!-- BTC PANEL -->
       <div class="fund-panel active" id="panelBtc" role="tabpanel" aria-label="Bitcoin panel">
         <div class="summary-box" style="margin-top:14px;">
-          <strong>Bitcoin (On-chain):</strong> Send BTC directly to the fund address. Widely supported.
+          <strong>Bitcoin (On-chain):</strong> Scan the QR code or open your wallet. The address is shown below.
         </div>
 
         <div class="fund-grid">
@@ -1207,42 +1220,17 @@ footer{
           </div>
 
           <div>
+            <div class="addr-card" aria-label="BTC Address">
+              <div class="addr-label">BTC Destination Address</div>
+              <div class="addr-value" id="btcAddrDisplay"></div>
+            </div>
+
             <div class="fund-actions">
               <a class="action-btn primary" id="openBtcWalletBtn" href="#" rel="noopener">Open Wallet</a>
-              <button class="action-btn" id="copyBtcBtn" type="button">Copy BTC Address</button>
+              <button class="action-btn" id="copyBtcBtn" type="button">Copy Address</button>
             </div>
 
             <div class="copied-pill" id="copiedPillBtc">Copied</div>
-
-            <div class="warn">
-              <strong>Note:</strong> This is a placeholder address for layout/testing. Do not send funds to this address.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- LIGHTNING PANEL -->
-      <div class="fund-panel" id="panelLn" role="tabpanel" aria-label="Lightning panel">
-        <div class="summary-box" style="margin-top:14px;">
-          <strong>Lightning:</strong> Best for small instant payments with low fees. Uses a Lightning Address (placeholder).
-        </div>
-
-        <div class="fund-grid">
-          <div class="qr-wrap">
-            <div class="qr" id="lnQr" aria-label="Lightning QR"></div>
-          </div>
-
-          <div>
-            <div class="fund-actions">
-              <a class="action-btn primary" id="openLnWalletBtn" href="#" rel="noopener">Open Lightning Wallet</a>
-              <button class="action-btn" id="copyLnBtn" type="button">Copy Lightning Address</button>
-            </div>
-
-            <div class="copied-pill" id="copiedPillLn">Copied</div>
-
-            <div class="warn">
-              <strong>Note:</strong> Lightning invoices (BOLT11) are typically generated dynamically.
-            </div>
           </div>
         </div>
       </div>
@@ -1250,7 +1238,7 @@ footer{
       <!-- USDT PANEL -->
       <div class="fund-panel" id="panelUsdt" role="tabpanel" aria-label="USDT panel">
         <div class="summary-box" style="margin-top:14px;">
-          <strong>USDT (ERC-20):</strong> Send USDT on Ethereum network (ERC-20 only).
+          <strong>USDT (ERC-20):</strong> Send USDT on Ethereum network (ERC-20 only). Address shown below.
         </div>
 
         <div class="fund-grid">
@@ -1259,15 +1247,20 @@ footer{
           </div>
 
           <div>
+            <div class="addr-card" aria-label="USDT ERC-20 Address">
+              <div class="addr-label">USDT Destination Address (ERC-20)</div>
+              <div class="addr-value" id="usdtAddrDisplay"></div>
+            </div>
+
             <div class="fund-actions">
               <a class="action-btn primary" id="openUsdtWalletBtn" href="#" rel="noopener">Open Wallet</a>
-              <button class="action-btn" id="copyUsdtBtn" type="button">Copy USDT Address</button>
+              <button class="action-btn" id="copyUsdtBtn" type="button">Copy Address</button>
             </div>
 
             <div class="copied-pill" id="copiedPillUsdt">Copied</div>
 
             <div class="warn">
-              <strong>Important:</strong> Only send <strong>USDT</strong> on <strong>Ethereum (ERC-20)</strong>. Wrong-network transfers may be lost.
+              <strong>Important:</strong> Only send <strong>USDT</strong> on <strong>Ethereum (ERC-20)</strong>.
             </div>
           </div>
         </div>
@@ -1276,7 +1269,13 @@ footer{
       <!-- CARD PANEL -->
       <div class="fund-panel" id="panelCard" role="tabpanel" aria-label="Card/Bank panel">
         <div class="summary-box" style="margin-top:14px;">
-          <strong>Credit Card / Bank:</strong> Redirects to a regulated onramp to buy <span class="highlight">BTC</span> and send it to the fund address.
+          <strong>Credit Card / Bank:</strong> You’ll be redirected to a regulated provider to buy <span class="highlight">BTC</span>
+          and send it to the fund address automatically.
+        </div>
+
+        <div class="addr-card" style="margin-top:14px;">
+          <div class="addr-label">Destination BTC Address (auto-filled)</div>
+          <div class="addr-value" id="cardBtcAddrDisplay"></div>
         </div>
 
         <div class="amount-row">
@@ -1294,8 +1293,6 @@ footer{
             </svg>
             Pay with Credit Card
           </button>
-
-          <button class="action-btn" id="copyOnrampBtn" type="button">Copy checkout link</button>
         </div>
 
         <div class="compliance">
@@ -1351,13 +1348,11 @@ footer{
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
 <script>
-/* ===================== SOURCE OF TRUTH (NO BIG ADDRESS BOX) ===================== */
-const BTC_ADDRESS  = 'bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3';
-const LN_ADDRESS   = 'donate@basys.io'; /* placeholder */
-const USDT_ADDRESS = '0xplaceholderERC20Addressxxxxxxxxxxxxxxxxxxxx'; /* placeholder */
+/* ===================== SOURCE OF TRUTH (REAL ADDRESSES) ===================== */
+const BTC_ADDRESS  = 'bc1qgcfpwsn38adym4l5hgzx3j6twstdqa7ffah6hx';
+const USDT_ADDRESS = '0xbff372AF02600648f7198A1A25307de3429f1f0F';
 
 function getBtcAddress(){ return BTC_ADDRESS; }
-function getLnAddress(){ return LN_ADDRESS; }
 function getUsdtAddress(){ return USDT_ADDRESS; }
 
 /* Header shrink on scroll + body scrolled class */
@@ -1486,11 +1481,10 @@ document.addEventListener('click', (e) => {
   scrollToTarget(hash);
 });
 
-/* ===================== FUND LOGIC (Selector Cards) ===================== */
+/* ===================== FUND LOGIC ===================== */
 const payCards = Array.from(document.querySelectorAll('.pay-card[data-method]'));
 const panels = {
   btc: document.getElementById('panelBtc'),
-  ln: document.getElementById('panelLn'),
   usdt: document.getElementById('panelUsdt'),
   card: document.getElementById('panelCard'),
 };
@@ -1501,15 +1495,11 @@ function setPayment(method){
     btn.classList.toggle('active', isActive);
     btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
   });
-
   Object.entries(panels).forEach(([key, panel]) => {
     panel?.classList.toggle('active', key === method);
   });
 }
-
-payCards.forEach(btn => {
-  btn.addEventListener('click', () => setPayment(btn.dataset.method));
-});
+payCards.forEach(btn => btn.addEventListener('click', () => setPayment(btn.dataset.method)));
 
 /* Copy helpers */
 function showPill(pill){
@@ -1523,18 +1513,8 @@ async function copyText(text, pill){
   }catch(e){}
 }
 
-const copiedPillBtc = document.getElementById('copiedPillBtc');
-const copiedPillLn = document.getElementById('copiedPillLn');
-const copiedPillUsdt = document.getElementById('copiedPillUsdt');
-
-document.getElementById('copyBtcBtn')?.addEventListener('click', () => copyText(getBtcAddress(), copiedPillBtc));
-document.getElementById('copyLnBtn')?.addEventListener('click', () => copyText(getLnAddress(), copiedPillLn));
-document.getElementById('copyUsdtBtn')?.addEventListener('click', () => copyText(getUsdtAddress(), copiedPillUsdt));
-
-/* URIs */
+/* URIs (always pass address to wallet) */
 function btcUri(){ return `bitcoin:${getBtcAddress()}`; }
-function lnUri(){ return `lightning:${getLnAddress()}`; }
-/* USDT ERC-20: best effort deeplink (some wallets accept ethereum:) */
 function usdtUri(){ return `ethereum:${getUsdtAddress()}`; }
 
 /* QR helper */
@@ -1553,33 +1533,28 @@ function renderQr(node, text){
 }
 
 function refreshFund(){
-  const btcQRNode = document.getElementById('btcQr');
-  const lnQRNode = document.getElementById('lnQr');
-  const usdtQRNode = document.getElementById('usdtQr');
+  document.getElementById('btcAddrDisplay').textContent = getBtcAddress();
+  document.getElementById('usdtAddrDisplay').textContent = getUsdtAddress();
+  document.getElementById('cardBtcAddrDisplay').textContent = getBtcAddress();
 
-  const b = btcUri();
-  const l = lnUri();
-  const u = usdtUri();
+  renderQr(document.getElementById('btcQr'), btcUri());
+  renderQr(document.getElementById('usdtQr'), getUsdtAddress());
 
-  renderQr(btcQRNode, b);
-  renderQr(lnQRNode, l);
-  renderQr(usdtQRNode, getUsdtAddress()); /* raw address is most interoperable */
+  document.getElementById('openBtcWalletBtn').href = btcUri();
+  document.getElementById('openUsdtWalletBtn').href = usdtUri();
 
-  const openBtc = document.getElementById('openBtcWalletBtn');
-  const openLn = document.getElementById('openLnWalletBtn');
-  const openUsdt = document.getElementById('openUsdtWalletBtn');
+  const copiedPillBtc = document.getElementById('copiedPillBtc');
+  const copiedPillUsdt = document.getElementById('copiedPillUsdt');
 
-  if(openBtc) openBtc.href = b;
-  if(openLn) openLn.href = l;
-  if(openUsdt) openUsdt.href = u;
+  document.getElementById('copyBtcBtn')?.addEventListener('click', () => copyText(getBtcAddress(), copiedPillBtc));
+  document.getElementById('copyUsdtBtn')?.addEventListener('click', () => copyText(getUsdtAddress(), copiedPillUsdt));
 }
 
-/* ===================== CARD/BANK ONRAMP (BTC) ===================== */
+/* ===================== CARD/BANK ONRAMP (BTC, auto-filled address) ===================== */
 const regionSelect = document.getElementById('regionSelect');
 const fiatAmount = document.getElementById('fiatAmount');
 const fiatUnit = document.getElementById('fiatUnit');
 const onrampBtn = document.getElementById('onrampBtn');
-const copyOnrampBtn = document.getElementById('copyOnrampBtn');
 
 function refreshFiatUnit(){
   const region = regionSelect?.value || 'EU';
@@ -1608,11 +1583,9 @@ function buildOnrampLink(){
 
   return `${base}?${params.toString()}`;
 }
-
 function refreshOnramp(){
   refreshFiatUnit();
-  const link = buildOnrampLink();
-  onrampBtn.dataset.href = link;
+  onrampBtn.dataset.href = buildOnrampLink();
 }
 regionSelect?.addEventListener('change', refreshOnramp);
 fiatAmount?.addEventListener('input', refreshOnramp);
@@ -1621,7 +1594,6 @@ onrampBtn?.addEventListener('click', () => {
   const link = onrampBtn.dataset.href || buildOnrampLink();
   window.open(link, '_blank', 'noopener,noreferrer');
 });
-copyOnrampBtn?.addEventListener('click', () => copyText(buildOnrampLink(), copiedPillBtc));
 
 /* ✅ IP/Geo region autodetect (EU/US) */
 async function detectRegionByIP(){
