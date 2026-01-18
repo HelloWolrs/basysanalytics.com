@@ -27,14 +27,11 @@ html,body{
   font-family:"Inter",sans-serif;
   color:var(--text-main);
   scroll-behavior:smooth;
-  scroll-padding-top:0px; /* JS handles anchor landing */
+  scroll-padding-top:0px;
 }
 
 /* ===================== CITY BACKGROUND (ZOOMED OUT) ===================== */
-body{
-  background:none;
-  position:relative;
-}
+body{ background:none; position:relative; }
 body::before{
   content:"";
   position:fixed;
@@ -218,7 +215,7 @@ section{
   justify-content:center;
   align-items:center;
   padding:150px 10% 120px;
-  scroll-margin-top:0px; /* JS controls anchor landing */
+  scroll-margin-top:0px;
 }
 
 /* ===================== HERO ===================== */
@@ -227,8 +224,6 @@ section{
   overflow:hidden;
   background:#000;
 }
-
-/* Star-sky layer */
 #home .sky-layer{
   position:absolute;
   inset:-260px;
@@ -243,8 +238,6 @@ section{
   will-change: transform;
   z-index:0;
 }
-
-/* gentle darkening */
 #home::before{
   content:"";
   position:absolute;
@@ -258,8 +251,6 @@ section{
     rgba(0,0,0,.42) 100%
   );
 }
-
-/* Grain overlay */
 #home::after{
   content:"";
   position:absolute;
@@ -273,7 +264,6 @@ section{
 }
 #home > *{ position:relative; z-index:3; }
 
-/* Twinkle */
 .twinkle{
   position:absolute;
   inset:0;
@@ -304,13 +294,10 @@ section{
   margin-top:-6px;
   container-type: inline-size;
 }
-
 @keyframes rotate-earth{
   from{ transform:rotate(0deg); }
   to{ transform:rotate(360deg); }
 }
-
-/* Globe rotator */
 .globe-rotator{
   position:absolute;
   inset:0;
@@ -321,13 +308,11 @@ section{
   border-radius:50%;
   overflow:hidden;
   will-change: transform;
-
   background:
     radial-gradient(circle at 70% 50%,
       rgba(0,0,0,0) 42%,
       rgba(0,0,0,.36) 70%,
       rgba(0,0,0,.58) 100%);
-
   -webkit-mask-image: radial-gradient(circle, #000 90%, transparent 100%);
   mask-image: radial-gradient(circle, #000 90%, transparent 100%);
 }
@@ -382,8 +367,6 @@ section{
   padding: 0 10%;
   text-align:center;
 }
-
-/* crisper brand */
 .brand{
   display:inline-block;
   white-space:nowrap;
@@ -403,8 +386,6 @@ section{
   -webkit-font-smoothing: antialiased;
   text-rendering: geometricPrecision;
 }
-
-/* bigger ₿ and A */
 .brand .btc{
   color:var(--accent);
   font-weight:900;
@@ -424,7 +405,6 @@ section{
   transition: color .35s ease, opacity .35s ease;
   text-shadow: 0 1px 10px rgba(0,0,0,.55);
 }
-
 .brand-claim{
   margin-top:12px;
   letter-spacing:.10em;
@@ -441,10 +421,7 @@ section{
     0 2px 16px rgba(0,0,0,.62),
     0 0 28px rgba(0,0,0,.38);
 }
-.brand-claim > span{
-  font-weight:900;
-  color: rgba(232, 238, 248, .98);
-}
+.brand-claim > span{ font-weight:900; color: rgba(232, 238, 248, .98); }
 .brand-claim .cap{
   display:inline-block;
   font-size: 1.25em;
@@ -456,12 +433,7 @@ section{
     0 0 8px rgba(242,169,0,.16),
     0 2px 16px rgba(0,0,0,.62);
 }
-.brand-claim .rest{
-  text-transform:lowercase;
-  font-weight:850;
-}
-
-/* orange separator line instead of dots */
+.brand-claim .rest{ text-transform:lowercase; font-weight:850; }
 .dot{
   width:34px;
   height:3px;
@@ -472,11 +444,8 @@ section{
   box-shadow: 0 0 16px rgba(242,169,0,.18);
   opacity:.95;
 }
-
-/* Scroll state */
 body.scrolled .analytics-rest{ color: var(--text-muted); }
 
-/* Hero claim */
 .hero-claim{
   margin-top:22px;
   text-align:center;
@@ -490,7 +459,6 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 }
 .hero-claim span{ color:var(--accent); }
 
-/* Scroll arrows */
 .scroll-indicator{
   margin-top:44px;
   animation:bounce 2s infinite;
@@ -541,7 +509,6 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 }
 
 .highlight{ color:var(--accent); font-weight:700; }
-
 .summary-box{
   margin-top:18px;
   padding:18px;
@@ -551,7 +518,6 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   border-radius:14px;
   color:var(--text-main);
 }
-
 .sub-kicker{
   margin-top:10px;
   opacity:.90;
@@ -561,8 +527,14 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 }
 
 /* ===================== EDUCATION FUND ===================== */
-.pay-grid{
+.pay-row{
   margin-top:18px;
+  display:grid;
+  grid-template-columns: 1fr 220px;
+  gap:12px;
+  align-items:start;
+}
+.pay-grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap:12px;
@@ -625,6 +597,41 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   color: rgba(210,220,235,.88);
 }
 
+/* Region card (always visible, sits next to payment cards) */
+.region-card{
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+  background: rgba(10,15,25,.22);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding:12px 12px;
+}
+.region-card .r-label{
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+  color: rgba(180,195,214,.88);
+}
+.region-card .r-hint{
+  margin-top:6px;
+  font-size:.82rem;
+  color: rgba(160,172,188,.85);
+  line-height:1.25;
+}
+.region-card select{
+  margin-top:10px;
+  width:100%;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  color: var(--text-main);
+  border-radius:12px;
+  padding:10px 10px;
+  outline:none;
+  font-weight:900;
+  letter-spacing:.04em;
+}
+
 /* panels */
 .fund-panels{ margin-top:16px; }
 .fund-panel{ display:none; }
@@ -660,9 +667,12 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   align-items:center;
   justify-content:center;
 }
-.qr canvas, .qr img{ width:100% !important; height:100% !important; display:block; }
+.qr img{
+  width:100%;
+  height:100%;
+  display:block;
+}
 
-/* Address shown (WIDER + CREDIT CARD LOOK) */
 .addr-card{
   width:100%;
   padding:14px 16px;
@@ -691,7 +701,6 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   word-break: break-word;
 }
 
-/* action buttons */
 .fund-actions{
   margin-top:12px;
   display:flex;
@@ -777,15 +786,9 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   line-height:1.55;
 }
 
-/* Amount input + region card beside credit card button */
+/* Amount input */
 .amount-row{
   margin-top:14px;
-  display:grid;
-  grid-template-columns: 1fr 220px;
-  gap:10px;
-  align-items:start;
-}
-.amount-left{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
@@ -827,33 +830,6 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   letter-spacing:.08em;
   opacity:.85;
   text-transform:uppercase;
-}
-.region-card{
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.12);
-  background: rgba(10,15,25,.22);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  padding:12px 12px;
-}
-.region-card .r-label{
-  font-size:.72rem;
-  font-weight:900;
-  letter-spacing:.10em;
-  text-transform:uppercase;
-  color: rgba(180,195,214,.88);
-}
-.region-card select{
-  margin-top:10px;
-  width:100%;
-  border:1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.03);
-  color: var(--text-main);
-  border-radius:12px;
-  padding:10px 10px;
-  outline:none;
-  font-weight:900;
-  letter-spacing:.04em;
 }
 
 /* Reveal */
@@ -912,11 +888,11 @@ footer{
   font-size:.8rem;
 }
 
-/* ================= MOBILE MENU + RESPONSIVE ================= */
+/* ================= MOBILE + RESPONSIVE ================= */
 @media (max-width: 980px){
   .pay-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .amount-row{ grid-template-columns: 1fr; }
-  .region-card{ max-width: 280px; }
+  .pay-row{ grid-template-columns: 1fr; }
+  .region-card{ max-width: 320px; }
 }
 @media (max-width: 768px){
   header{ padding:16px 16px; }
@@ -1154,45 +1130,57 @@ footer{
       Contributions support independent education and research initiatives.
     </div>
 
-    <div class="pay-grid" role="tablist" aria-label="Payment method selector">
-      <button class="pay-card active" type="button" data-method="btc" role="tab" aria-selected="true">
-        <span class="pay-dot" aria-hidden="true"></span>
-        <div class="pay-top">
-          <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <path d="M12 2v20"></path>
-            <path d="M7 7h8a3 3 0 0 1 0 6H7z"></path>
-            <path d="M7 13h9a3 3 0 0 1 0 6H7z"></path>
-          </svg>
-          <div class="pay-title">Bitcoin</div>
-        </div>
-        <div class="pay-desc">Send BTC directly (on-chain).</div>
-      </button>
+    <!-- Payment cards + always-visible region card -->
+    <div class="pay-row">
+      <div class="pay-grid" role="tablist" aria-label="Payment method selector">
+        <button class="pay-card active" type="button" data-method="btc" role="tab" aria-selected="true">
+          <span class="pay-dot" aria-hidden="true"></span>
+          <div class="pay-top">
+            <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 2v20"></path>
+              <path d="M7 7h8a3 3 0 0 1 0 6H7z"></path>
+              <path d="M7 13h9a3 3 0 0 1 0 6H7z"></path>
+            </svg>
+            <div class="pay-title">Bitcoin</div>
+          </div>
+          <div class="pay-desc">Send BTC directly (on-chain).</div>
+        </button>
 
-      <button class="pay-card" type="button" data-method="usdt" role="tab" aria-selected="false">
-        <span class="pay-dot" aria-hidden="true"></span>
-        <div class="pay-top">
-          <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <path d="M6 6h12"></path>
-            <path d="M12 6v14"></path>
-            <path d="M8 10c1.4 1 3.2 1.5 4 1.5s2.6-.5 4-1.5"></path>
-          </svg>
-          <div class="pay-title">USDT (ERC-20)</div>
-        </div>
-        <div class="pay-desc">Stablecoin on Ethereum network.</div>
-      </button>
+        <button class="pay-card" type="button" data-method="usdt" role="tab" aria-selected="false">
+          <span class="pay-dot" aria-hidden="true"></span>
+          <div class="pay-top">
+            <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M6 6h12"></path>
+              <path d="M12 6v14"></path>
+              <path d="M8 10c1.4 1 3.2 1.5 4 1.5s2.6-.5 4-1.5"></path>
+            </svg>
+            <div class="pay-title">USDT (ERC-20)</div>
+          </div>
+          <div class="pay-desc">Stablecoin on Ethereum network.</div>
+        </button>
 
-      <button class="pay-card" type="button" data-method="card" role="tab" aria-selected="false">
-        <span class="pay-dot" aria-hidden="true"></span>
-        <div class="pay-top">
-          <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-            <path d="M3 10h18"></path>
-            <path d="M7 15h3"></path>
-          </svg>
-          <div class="pay-title">Card / Bank</div>
-        </div>
-        <div class="pay-desc">Buy BTC via provider + send.</div>
-      </button>
+        <button class="pay-card" type="button" data-method="card" role="tab" aria-selected="false">
+          <span class="pay-dot" aria-hidden="true"></span>
+          <div class="pay-top">
+            <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <path d="M3 10h18"></path>
+              <path d="M7 15h3"></path>
+            </svg>
+            <div class="pay-title">Card / Bank</div>
+          </div>
+          <div class="pay-desc">Buy BTC via provider + send.</div>
+        </button>
+      </div>
+
+      <div class="region-card" title="Auto-detected via IP (can be changed)">
+        <div class="r-label">Region</div>
+        <div class="r-hint">Auto-detected. Used for card/bank providers.</div>
+        <select id="regionSelect">
+          <option value="EU">EU</option>
+          <option value="US">US</option>
+        </select>
+      </div>
     </div>
 
     <div class="fund-panels">
@@ -1267,30 +1255,20 @@ footer{
         </div>
 
         <div class="amount-row">
-          <div class="amount-left">
-            <div class="amount">
-              <label for="fiatAmount">Amount</label>
-              <input id="fiatAmount" inputmode="decimal" placeholder="50" value="50" />
-              <div class="unit" id="fiatUnit">EUR</div>
-            </div>
-
-            <button class="action-btn card" id="onrampBtn" type="button">
-              <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                <path d="M3 10h18"></path>
-                <path d="M7 15h3"></path>
-              </svg>
-              Pay with Credit Card
-            </button>
+          <div class="amount">
+            <label for="fiatAmount">Amount</label>
+            <input id="fiatAmount" inputmode="decimal" placeholder="50" value="50" />
+            <div class="unit" id="fiatUnit">EUR</div>
           </div>
 
-          <div class="region-card" title="Auto-detected via IP (can be changed)">
-            <div class="r-label">Region</div>
-            <select id="regionSelect">
-              <option value="EU">EU</option>
-              <option value="US">US</option>
-            </select>
-          </div>
+          <button class="action-btn card" id="onrampBtn" type="button">
+            <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <path d="M3 10h18"></path>
+              <path d="M7 15h3"></path>
+            </svg>
+            Pay with Credit Card
+          </button>
         </div>
 
         <div class="compliance">
@@ -1342,9 +1320,6 @@ footer{
   <div style="margin-top:10px; opacity:.65;">© 2026 Basys Analytics. All rights reserved.</div>
 </footer>
 
-<!-- QR generator -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-
 <script>
 /* ===================== SOURCE OF TRUTH (REAL ADDRESSES) ===================== */
 const BTC_ADDRESS  = 'bc1qgcfpwsn38adym4l5hgzx3j6twstdqa7ffah6hx';
@@ -1379,7 +1354,6 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav()
 /* Initiatives dropdown / accordion */
 const group = document.getElementById('initiativeGroup');
 const toggle = group?.querySelector('.nav-group-toggle');
-
 toggle?.addEventListener('click', (e) => {
   e.stopPropagation();
   const open = group.classList.toggle('open');
@@ -1434,7 +1408,7 @@ window.addEventListener('scroll', () => requestAnimationFrame(spy), { passive:tr
 window.addEventListener('load', spy);
 window.addEventListener('resize', spy);
 
-/* ✅ Parallax (lighter + throttled via rAF) */
+/* Parallax (lighter + rAF) */
 const sky = document.querySelector('#home .sky-layer');
 let rafId = null;
 function onParallax(){
@@ -1449,7 +1423,7 @@ window.addEventListener('scroll', () => {
   rafId = requestAnimationFrame(onParallax);
 }, { passive:true });
 
-/* ===== Anchor scroll: scroll to CARD so it lands high ===== */
+/* Anchor scroll: land on card */
 function isHashLink(a){
   const href = a.getAttribute('href') || '';
   return href.startsWith('#') && href.length > 1;
@@ -1474,7 +1448,6 @@ document.addEventListener('click', (e) => {
 
   e.preventDefault();
   const hash = a.getAttribute('href');
-
   closeNav?.();
   scrollToTarget(hash);
 });
@@ -1486,7 +1459,6 @@ const panels = {
   usdt: document.getElementById('panelUsdt'),
   card: document.getElementById('panelCard'),
 };
-
 function setPayment(method){
   payCards.forEach(btn => {
     const isActive = btn.dataset.method === method;
@@ -1511,46 +1483,20 @@ async function copyText(text, pill){
   }catch(e){}
 }
 
-/* URIs (always pass address to wallet) */
+/* URIs */
 function btcUri(){ return `bitcoin:${getBtcAddress()}`; }
 function usdtUri(){ return `ethereum:${getUsdtAddress()}`; }
 
-/* ✅ QR helper (white QR on dark background + fallback) */
-function renderQr(node, text){
+/* ✅ ALWAYS WORKING QR (image endpoint, no JS library needed) */
+function renderQrImg(node, text){
   if(!node) return;
   node.innerHTML = '';
-
-  const opts = {
-    margin: 1,
-    width: 166,
-    errorCorrectionLevel: 'M',
-    color: { dark: '#ffffff', light: 'rgba(0,0,0,0)' } // ✅ visible on dark
-  };
-
-  if (window.QRCode && typeof QRCode.toCanvas === 'function') {
-    const canvas = document.createElement('canvas');
-    node.appendChild(canvas);
-
-    QRCode.toCanvas(canvas, text, opts, (err) => {
-      if (err) {
-        node.innerHTML = '';
-        if (typeof QRCode.toDataURL === 'function') {
-          QRCode.toDataURL(text, opts, (e2, url) => {
-            if (e2) { node.textContent = 'QR unavailable'; return; }
-            const img = document.createElement('img');
-            img.alt = 'QR';
-            img.src = url;
-            node.appendChild(img);
-          });
-        } else {
-          node.textContent = 'QR unavailable';
-        }
-      }
-    });
-    return;
-  }
-
-  node.textContent = 'QR library not loaded';
+  const img = document.createElement('img');
+  img.alt = 'QR';
+  const data = encodeURIComponent(text);
+  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=166x166&data=${data}`;
+  img.referrerPolicy = 'no-referrer';
+  node.appendChild(img);
 }
 
 function refreshFund(){
@@ -1558,8 +1504,9 @@ function refreshFund(){
   document.getElementById('usdtAddrDisplay').textContent = getUsdtAddress();
   document.getElementById('cardBtcAddrDisplay').textContent = getBtcAddress();
 
-  renderQr(document.getElementById('btcQr'), btcUri());
-  renderQr(document.getElementById('usdtQr'), getUsdtAddress()); // wallet-compatible
+  // QR: BTC uses bitcoin: URI, USDT uses raw address (wallet compatible)
+  renderQrImg(document.getElementById('btcQr'), btcUri());
+  renderQrImg(document.getElementById('usdtQr'), getUsdtAddress());
 
   document.getElementById('openBtcWalletBtn').href = btcUri();
   document.getElementById('openUsdtWalletBtn').href = usdtUri();
@@ -1571,7 +1518,7 @@ function refreshFund(){
   document.getElementById('copyUsdtBtn')?.addEventListener('click', () => copyText(getUsdtAddress(), copiedPillUsdt));
 }
 
-/* ===================== CARD/BANK ONRAMP (BTC, auto-filled address) ===================== */
+/* ===================== CARD/BANK ONRAMP (BTC auto-filled address) ===================== */
 const regionSelect = document.getElementById('regionSelect');
 const fiatAmount = document.getElementById('fiatAmount');
 const fiatUnit = document.getElementById('fiatUnit');
@@ -1616,7 +1563,7 @@ onrampBtn?.addEventListener('click', () => {
   window.open(link, '_blank', 'noopener,noreferrer');
 });
 
-/* ✅ IP/Geo region autodetect (EU/US) */
+/* IP/Geo region autodetect (EU/US) */
 async function detectRegionByIP(){
   try{
     const res = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
