@@ -10,11 +10,7 @@
 <style>
 :root{
   --accent:#f2a900;
-
-  /* glass */
   --glass: rgba(10,15,25,.38);
-
-  /* darker readable greys (site-wide) */
   --text-main: rgba(232,238,248,.90);
   --text-muted: rgba(160,172,188,.85);
 }
@@ -29,7 +25,7 @@ html,body{
   scroll-padding-top:0px; /* JS handles anchor landing */
 }
 
-/* ===================== CITY BACKGROUND (ZOOMED OUT, NO BORDERS) ===================== */
+/* ===================== CITY BACKGROUND (ZOOMED OUT) ===================== */
 body{
   background:none;
   position:relative;
@@ -60,7 +56,6 @@ header{
   background:linear-gradient(to bottom, rgba(0,0,0,.85), transparent);
   transition: padding .25s ease, background .25s ease, backdrop-filter .25s ease, border-color .25s ease;
 }
-
 header.scrolled{
   padding:14px 48px;
   background:rgba(10,15,25,.75);
@@ -68,12 +63,11 @@ header.scrolled{
   border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-/* Mobile burger button */
+/* Mobile burger */
 .nav-toggle{
   display:none;
   margin-left:auto;
-  width:44px;
-  height:44px;
+  width:44px;height:44px;
   border-radius:10px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.06);
@@ -107,13 +101,10 @@ nav a, .nav-group-toggle{
   border:none;
   cursor:pointer;
 }
-
 nav a:hover, .nav-group-toggle:hover{
   opacity:1;
   color:var(--accent);
 }
-
-/* Active = accent orange */
 nav a.active{
   opacity:1;
   color:var(--accent);
@@ -128,7 +119,7 @@ nav a.active::after{
   box-shadow:0 0 18px rgba(242,169,0,.25);
 }
 
-/* Login style + push right */
+/* Login pushed right */
 .login-link{
   margin-left:auto;
   border:1px solid var(--accent);
@@ -160,7 +151,6 @@ nav a.login-link.active::after{ display:none; }
 .nav-group-toggle:hover .chevron{ color:var(--accent); }
 .nav-group.open .chevron{ transform:translateY(-1px) rotate(180deg); }
 
-/* If Token/Fund active, mark Initiatives too */
 .nav-group.has-active .nav-group-toggle{
   opacity:1;
   color:var(--accent);
@@ -175,7 +165,7 @@ nav a.login-link.active::after{ display:none; }
   box-shadow:0 0 18px rgba(242,169,0,.25);
 }
 
-/* ✅ smoother dropdown animation */
+/* Smooth dropdown */
 .nav-group-menu{
   position:absolute;
   top:calc(100% + 10px);
@@ -197,13 +187,11 @@ nav a.login-link.active::after{ display:none; }
   pointer-events:none;
   transition: opacity .18s ease, transform .18s ease;
 }
-
 .nav-group.open .nav-group-menu{
   opacity:1;
   transform: translateY(0) scale(1);
   pointer-events:auto;
 }
-
 .nav-group-menu a{
   display:block;
   padding:10px 12px;
@@ -217,13 +205,11 @@ nav a.login-link.active::after{ display:none; }
   color:var(--text-main);
   opacity:.95;
 }
-
 .nav-group-menu a:hover{
   background:rgba(242,169,0,.10);
   border-color:rgba(242,169,0,.25);
   color:var(--text-main);
 }
-
 .nav-group-menu a.active{
   background:rgba(242,169,0,.12);
   border-color:rgba(242,169,0,.45);
@@ -249,7 +235,7 @@ section{
   background:#000;
 }
 
-/* Star-sky layer (constant stars + image) */
+/* Star-sky layer */
 #home .sky-layer{
   position:absolute;
   inset:-260px;
@@ -352,7 +338,6 @@ section{
   -webkit-mask-image: radial-gradient(circle, #000 90%, transparent 100%);
   mask-image: radial-gradient(circle, #000 90%, transparent 100%);
 }
-
 .globe-rotator::before{
   content:"";
   position:absolute;
@@ -367,7 +352,6 @@ section{
   opacity:0.60;
   pointer-events:none;
 }
-
 .globe-rotator::after{
   content:"";
   position:absolute;
@@ -379,7 +363,6 @@ section{
   pointer-events:none;
   opacity:.85;
 }
-
 .globe-rotator img{
   position:relative;
   width:110%;
@@ -407,7 +390,7 @@ section{
   text-align:center;
 }
 
-/* ✅ crisper brand */
+/* crisper brand */
 .brand{
   display:inline-block;
   white-space:nowrap;
@@ -430,7 +413,7 @@ section{
   text-rendering: geometricPrecision;
 }
 
-/* ✅ ₿ and A bigger (requested) */
+/* bigger ₿ and A */
 .brand .btc{
   color:var(--accent);
   font-weight:900;
@@ -443,7 +426,6 @@ section{
     0 0 22px rgba(242,169,0,.14),
     0 2px 20px rgba(0,0,0,.70);
 }
-
 .analytics-rest{
   color: rgba(232,238,248,.90);
   font-weight:850;
@@ -452,7 +434,6 @@ section{
   text-shadow: 0 1px 10px rgba(0,0,0,.55);
 }
 
-/* Observe / Learn / Lead */
 .brand-claim{
   margin-top:12px;
   letter-spacing:.10em;
@@ -469,12 +450,10 @@ section{
     0 2px 16px rgba(0,0,0,.62),
     0 0 28px rgba(0,0,0,.38);
 }
-
 .brand-claim > span{
   font-weight:900;
   color: rgba(232, 238, 248, .98);
 }
-
 .brand-claim .cap{
   display:inline-block;
   font-size: 1.25em;
@@ -491,7 +470,7 @@ section{
   font-weight:850;
 }
 
-/* ✅ orange separator line instead of dots */
+/* orange separator line instead of dots */
 .dot{
   width:34px;
   height:3px;
@@ -503,7 +482,7 @@ section{
   opacity:.95;
 }
 
-/* Scroll state: gray slightly darker on scroll */
+/* Scroll state */
 body.scrolled .analytics-rest{ color: var(--text-muted); }
 
 /* Hero claim */
@@ -590,7 +569,7 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   color:var(--text-main);
 }
 
-/* ===== Education Fund polish ===== */
+/* ===================== EDUCATION FUND (Wallet + Card/Bank) ===================== */
 .fund-meta{
   margin-top:14px;
   display:flex;
@@ -623,8 +602,119 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   box-shadow:0 0 12px rgba(242,169,0,.20);
 }
 
-.wallet-box{
+/* fund controls */
+.fund-controls{
   margin-top:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.seg{
+  display:inline-flex;
+  border-radius:14px;
+  padding:6px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.10);
+}
+.seg button{
+  appearance:none;
+  border:0;
+  background:transparent;
+  color:var(--text-main);
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  font-size:.72rem;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  opacity:.86;
+  transition:.2s;
+}
+.seg button:hover{ opacity:1; }
+.seg button.active{
+  opacity:1;
+  background:rgba(242,169,0,.12);
+  border:1px solid rgba(242,169,0,.35);
+  color:var(--text-main);
+  box-shadow:0 14px 30px rgba(0,0,0,.25);
+}
+
+.region{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-left:auto;
+}
+.select{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(10,15,25,.22);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.select label{
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  opacity:.85;
+}
+.select select{
+  border:0;
+  outline:none;
+  background:transparent;
+  color:var(--text-main);
+  font-weight:900;
+  letter-spacing:.04em;
+  cursor:pointer;
+}
+
+/* fund panels */
+.fund-panels{ margin-top:16px; }
+.fund-panel{ display:none; }
+.fund-panel.active{ display:block; }
+
+.fund-grid{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns: 180px 1fr;
+  gap:16px;
+  align-items:start;
+}
+.qr-wrap{
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(10,15,25,.22);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  padding:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.qr{
+  width:156px;
+  height:156px;
+  border-radius:12px;
+  overflow:hidden;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.qr canvas, .qr img{ width:100% !important; height:100% !important; display:block; }
+
+.wallet-box{
+  margin-top:0;
   position:relative;
   display:flex;
   gap:12px;
@@ -686,6 +776,48 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 .copied-pill.show{
   opacity:1;
   transform: translateY(0);
+}
+
+.fund-actions{
+  margin-top:12px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.action-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:12px 14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
+  color:var(--text-main);
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-size:.72rem;
+  cursor:pointer;
+  transition:.2s;
+  text-decoration:none;
+}
+.action-btn:hover{ transform:translateY(-1px); }
+.action-btn.primary{
+  border-color: rgba(242,169,0,.35);
+  background: rgba(242,169,0,.12);
+}
+.action-btn.primary:hover{
+  border-color: rgba(242,169,0,.55);
+  background: rgba(242,169,0,.18);
+}
+
+.small-note{
+  margin-top:10px;
+  color:var(--text-muted);
+  font-size:.92rem;
+  line-height:1.55;
+  opacity:.92;
 }
 
 .fund-note{
@@ -816,10 +948,14 @@ footer{
     padding-top:10px;
   }
 
+  .login-link{ margin-left:0; text-align:center; }
+
+  .fund-grid{ grid-template-columns: 1fr; }
+  .qr{ width:170px; height:170px; }
+  .fund-controls{ align-items:stretch; }
+  .region{ margin-left:0; }
   .wallet-box{ flex-direction:column; align-items:stretch; }
   .copy-btn{ width:100%; }
-
-  .login-link{ margin-left:0; text-align:center; }
 }
 
 @media (max-width: 900px){
@@ -997,19 +1133,77 @@ footer{
     <div class="fund-meta">
       <span class="badge btc"><span class="dot-mini"></span> Bitcoin Only</span>
       <span class="badge">On-chain BTC address</span>
+      <span class="badge">Card/Bank via onramp</span>
     </div>
 
-    <div class="wallet-box">
-      <div class="wallet-address" id="btcAddress">
-        bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3
+    <div class="fund-controls">
+      <div class="seg" role="tablist" aria-label="Payment method">
+        <button class="active" id="tabBtc" type="button" role="tab" aria-selected="true">Bitcoin</button>
+        <button id="tabCard" type="button" role="tab" aria-selected="false">Card / Bank</button>
       </div>
 
-      <button class="copy-btn" id="copyBtn" type="button">Copy</button>
-      <div class="copied-pill" id="copiedPill">Copied</div>
+      <div class="region">
+        <div class="select" title="Auto-detected from browser, can be changed">
+          <label for="regionSelect">Region</label>
+          <select id="regionSelect">
+            <option value="EU">EU</option>
+            <option value="US">US</option>
+          </select>
+        </div>
+      </div>
     </div>
 
-    <div class="fund-note">
-      <span class="highlight">Note:</span> This is a placeholder address for layout/testing. Do not send funds to this address.
+    <div class="fund-panels">
+      <!-- BTC PANEL -->
+      <div class="fund-panel active" id="panelBtc" role="tabpanel" aria-labelledby="tabBtc">
+        <div class="fund-grid">
+          <div class="qr-wrap">
+            <div class="qr" id="btcQr" aria-label="Bitcoin QR"></div>
+          </div>
+
+          <div>
+            <div class="wallet-box">
+              <div class="wallet-address" id="btcAddress">
+                bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3
+              </div>
+
+              <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+              <div class="copied-pill" id="copiedPill">Copied</div>
+            </div>
+
+            <div class="fund-actions">
+              <a class="action-btn primary" id="openWalletBtn" href="#" rel="noopener">Open in Wallet</a>
+              <button class="action-btn" id="copyUriBtn" type="button">Copy bitcoin: link</button>
+            </div>
+
+            <div class="small-note">
+              This opens a standard <span class="highlight">bitcoin:</span> payment request in compatible wallets.
+            </div>
+          </div>
+        </div>
+
+        <div class="fund-note">
+          <span class="highlight">Note:</span> This is a placeholder address for layout/testing. Do not send funds to this address.
+        </div>
+      </div>
+
+      <!-- CARD / BANK PANEL -->
+      <div class="fund-panel" id="panelCard" role="tabpanel" aria-labelledby="tabCard">
+        <div class="summary-box" style="margin-top:14px;">
+          <strong>Card / Bank (EU/US):</strong> This option redirects to a regulated onramp that lets you buy BTC and send it to the fund address.
+        </div>
+
+        <div class="fund-actions" style="margin-top:14px;">
+          <a class="action-btn primary" id="onrampBtn" href="#" target="_blank" rel="noopener">
+            Buy BTC & Send
+          </a>
+          <button class="action-btn" id="copyOnrampBtn" type="button">Copy checkout link</button>
+        </div>
+
+        <div class="small-note">
+          Provider availability depends on your region. If one provider is unavailable, try switching region or use direct on-chain BTC.
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1054,6 +1248,9 @@ footer{
   </div>
   <div style="margin-top:10px; opacity:.65;">© 2026 Basys Analytics. All rights reserved.</div>
 </footer>
+
+<!-- QR generator (small, reliable) -->
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
 <script>
 /* Header shrink on scroll + body scrolled class */
@@ -1121,10 +1318,8 @@ const sections = navLinks.map(a => document.querySelector(a.getAttribute('href')
 
 function setActive(id){
   navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
-
   const hasInitiativeActive = (id === 'token' || id === 'fund');
   group?.classList.toggle('has-active', hasInitiativeActive);
-
   document.querySelectorAll('.nav-group-menu a[data-nav]').forEach(a => {
     a.classList.toggle('active', a.getAttribute('data-nav') === id);
   });
@@ -1162,27 +1357,23 @@ copyBtn?.addEventListener('click', async () => {
 /* ✅ Parallax (lighter + throttled via rAF) */
 const sky = document.querySelector('#home .sky-layer');
 let rafId = null;
-
 function onParallax(){
   rafId = null;
   if(!sky) return;
-
-  const yRaw = window.scrollY * 0.04;   /* lighter */
+  const yRaw = window.scrollY * 0.04;
   const y = Math.max(0, Math.min(60, yRaw));
   sky.style.transform = `translate3d(0, ${-y}px, 0)`;
 }
-
 window.addEventListener('scroll', () => {
   if(rafId) return;
   rafId = requestAnimationFrame(onParallax);
 }, { passive:true });
 
-/* ===== Anchor scroll: scroll to CARD so it lands high (now 5–10px deeper) ===== */
+/* ===== Anchor scroll: scroll to CARD so it lands high (deeper by 5–10px) ===== */
 function isHashLink(a){
   const href = a.getAttribute('href') || '';
   return href.startsWith('#') && href.length > 1;
 }
-
 function scrollToTarget(hash){
   const section = document.querySelector(hash);
   if(!section) return;
@@ -1191,15 +1382,11 @@ function scrollToTarget(hash){
   const target = card || section;
 
   const headerH = header?.offsetHeight || 0;
-
-  /* ✅ 5–10px deeper than before */
   const gap = 26;
 
   const y = target.getBoundingClientRect().top + window.scrollY - (headerH + gap);
-
   window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
 }
-
 document.addEventListener('click', (e) => {
   const a = e.target.closest('a');
   if(!a) return;
@@ -1210,6 +1397,144 @@ document.addEventListener('click', (e) => {
 
   closeNav?.();
   scrollToTarget(hash);
+});
+
+/* ===================== FUND: BTC QR + Wallet URI + Onramp ===================== */
+
+/* Tabs */
+const tabBtc = document.getElementById('tabBtc');
+const tabCard = document.getElementById('tabCard');
+const panelBtc = document.getElementById('panelBtc');
+const panelCard = document.getElementById('panelCard');
+
+function setFundTab(which){
+  const btcActive = which === 'btc';
+  tabBtc.classList.toggle('active', btcActive);
+  tabCard.classList.toggle('active', !btcActive);
+  tabBtc.setAttribute('aria-selected', btcActive ? 'true' : 'false');
+  tabCard.setAttribute('aria-selected', !btcActive ? 'true' : 'false');
+  panelBtc.classList.toggle('active', btcActive);
+  panelCard.classList.toggle('active', !btcActive);
+}
+tabBtc?.addEventListener('click', () => setFundTab('btc'));
+tabCard?.addEventListener('click', () => setFundTab('card'));
+
+/* Region detection (simple: US if en-US, otherwise EU) + manual override */
+const regionSelect = document.getElementById('regionSelect');
+
+function autoRegion(){
+  const lang = (navigator.language || '').toLowerCase();
+  const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+
+  // strong US hints
+  if (lang.includes('en-us') || tz.includes('america/')) return 'US';
+  return 'EU';
+}
+if (regionSelect){
+  regionSelect.value = autoRegion();
+}
+
+/* Build bitcoin: URI + QR */
+const openWalletBtn = document.getElementById('openWalletBtn');
+const copyUriBtn = document.getElementById('copyUriBtn');
+const btcQr = document.getElementById('btcQr');
+
+function getBtcAddress(){
+  return (btcAddress?.textContent || '').trim();
+}
+
+function buildBitcoinUri(){
+  const addr = getBtcAddress();
+  // Keep simple + compatible: bitcoin:<address>
+  // (Optional params like amount= are omitted because we’d need conversion UI)
+  return `bitcoin:${addr}`;
+}
+
+function refreshBtcQr(){
+  if (!btcQr) return;
+  const uri = buildBitcoinUri();
+
+  // clear previous
+  btcQr.innerHTML = '';
+
+  // generate QR (uses qrcode library loaded above)
+  if (window.QRCode && typeof QRCode.toCanvas === 'function') {
+    const canvas = document.createElement('canvas');
+    btcQr.appendChild(canvas);
+    QRCode.toCanvas(canvas, uri, {
+      margin: 1,
+      width: 156,
+      errorCorrectionLevel: 'M'
+    }, (err) => {
+      if (err) {
+        btcQr.textContent = 'QR unavailable';
+      }
+    });
+  } else {
+    btcQr.textContent = uri;
+  }
+
+  // update wallet open link
+  if (openWalletBtn) openWalletBtn.href = uri;
+}
+window.addEventListener('load', refreshBtcQr);
+
+copyUriBtn?.addEventListener('click', async () => {
+  try{
+    await navigator.clipboard.writeText(buildBitcoinUri());
+    copiedPill?.classList.add('show');
+    setTimeout(() => copiedPill?.classList.remove('show'), 900);
+  }catch(e){
+    // no-op
+  }
+});
+
+/* Onramp link (EU/US) — uses Onramper aggregator link (placeholder-friendly).
+   You can swap this to Ramp/Transak/MoonPay later. */
+const onrampBtn = document.getElementById('onrampBtn');
+const copyOnrampBtn = document.getElementById('copyOnrampBtn');
+
+function buildOnrampLink(){
+  const addr = encodeURIComponent(getBtcAddress());
+
+  // Basic intent:
+  // - buy BTC
+  // - withdraw/send to the given address
+  // - set a region hint
+  const region = (regionSelect?.value || 'EU');
+
+  // Country hint: EU -> DE (default), US -> US
+  const country = region === 'US' ? 'US' : 'DE';
+
+  // Onramper style link (works as an external checkout page)
+  // Note: parameter names can vary by provider; this is a practical, common pattern.
+  const base = 'https://buy.onramper.com/';
+  const params = new URLSearchParams({
+    defaultCrypto: 'BTC',
+    defaultFiat: region === 'US' ? 'USD' : 'EUR',
+    country,
+    walletAddress: addr
+  });
+
+  return `${base}?${params.toString()}`;
+}
+
+function refreshOnramp(){
+  const link = buildOnrampLink();
+  if (onrampBtn) onrampBtn.href = link;
+}
+
+regionSelect?.addEventListener('change', refreshOnramp);
+window.addEventListener('load', refreshOnramp);
+
+copyOnrampBtn?.addEventListener('click', async () => {
+  try{
+    await navigator.clipboard.writeText(buildOnrampLink());
+    copiedPill?.classList.add('show');
+    setTimeout(() => copiedPill?.classList.remove('show'), 900);
+  }catch(e){
+    // no-op
+  }
 });
 </script>
 
