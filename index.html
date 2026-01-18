@@ -13,6 +13,9 @@
 
   /* ✅ viel transparenter (Default) */
   --glass: rgba(10,15,25,.38);
+
+  /* ✅ Global scale (Desktop/Tablet) */
+  --page-scale: 0.92;
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -24,12 +27,42 @@ html,body{
   scroll-behavior:smooth;
 }
 
+/* ✅ Slightly smaller base type without breaking layout */
+html{ font-size: 15.5px; }
+
 /* ===== Global City Background (visible ab Basys/Analytics etc.) ===== */
 body{
   background:
     linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.72)),
     url("1000081562.jpg") no-repeat center center fixed;
   background-size:cover;
+}
+
+/* ================= PAGE SCALE WRAPPER ================= */
+/* Default (Chrome/Edge/Safari): zoom scales *everything* including fixed header nicely */
+@media (min-width: 901px){
+  body{ zoom: var(--page-scale); }
+}
+
+/* Firefox fallback: wrapper transform scale */
+.page-wrap{
+  min-height:100%;
+}
+@supports not (zoom: 1){
+  @media (min-width: 901px){
+    body{ overflow-x:hidden; }
+    .page-wrap{
+      transform: scale(var(--page-scale));
+      transform-origin: top center;
+      width: calc(100% / var(--page-scale));
+    }
+  }
+}
+
+/* On small screens keep 1:1 to avoid tiny tap targets */
+@media (max-width: 900px){
+  :root{ --page-scale: 1; }
+  html{ font-size: 16px; }
 }
 
 /* ================= HEADER ================= */
@@ -422,9 +455,8 @@ section{
 }
 
 /* ===================== CARDS ===================== */
-/* ✅ Alle Boxen viel transparenter + Hover wirkt auf ALLE */
 .glass-card{
-  background-color: var(--glass);     /* IMPORTANT: background-color */
+  background-color: var(--glass);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius:20px;
@@ -441,7 +473,6 @@ section{
     transform .35s ease;
 }
 
-/* Hover Transparenz */
 .glass-card:hover{
   background-color: rgba(10,15,25,.22);
   backdrop-filter: blur(26px);
@@ -450,7 +481,6 @@ section{
   transform: translateY(-2px);
 }
 
-/* Touch devices: no hover flicker */
 @media (hover: none){
   .glass-card:hover{
     background-color: var(--glass);
@@ -489,7 +519,6 @@ section{
   padding:14px 16px;
   border-radius:14px;
 
-  /* optional: slightly glassy too */
   background-color: rgba(10,15,25,.22);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -669,6 +698,8 @@ footer{
 
 <body>
 
+<div class="page-wrap">
+
 <header id="siteHeader">
   <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
@@ -681,13 +712,11 @@ footer{
     <a href="#basys" data-nav="basys">Basys</a>
     <a href="#analytics" data-nav="analytics">Analytics</a>
 
-    <!-- Initiatives always visible -->
     <div class="nav-group" id="initiativeGroup">
       <button class="nav-group-toggle" aria-expanded="false" type="button">
         Initiatives <span class="chevron">▾</span>
       </button>
       <div class="nav-group-menu" aria-label="Initiatives submenu">
-        <!-- correct order: Token then Education Fund -->
         <a href="#token" data-nav="token">Token</a>
         <a href="#fund" data-nav="fund">Education Fund</a>
       </div>
@@ -765,7 +794,7 @@ footer{
   </a>
 </section>
 
-<!-- ANALYTICS (long version) -->
+<!-- ANALYTICS -->
 <section id="analytics" data-section="analytics">
   <div class="glass-card reveal">
     <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
@@ -914,14 +943,6 @@ document.addEventListener('click', (e) => {
   if (!insideHeader) closeNav();
 });
 
-/* Close on Escape */
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape'){
-    closeNav();
-    initiativeClose();
-  }
-});
-
 /* ========= Initiatives dropdown: Hover on desktop, click on mobile ========= */
 const group = document.getElementById('initiativeGroup');
 const toggle = group?.querySelector('.nav-group-toggle');
@@ -946,7 +967,7 @@ const initiativeToggle = () => {
   toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
 };
 
-/* Click always works (esp. mobile); on desktop it also works as fallback */
+/* Click always works */
 toggle?.addEventListener('click', (e) => {
   e.stopPropagation();
   initiativeToggle();
@@ -969,19 +990,19 @@ group?.addEventListener('mouseleave', () => {
   }, 140);
 });
 
-/* Close dropdown when clicking outside (but not when clicking toggle/menu itself) */
+/* Close dropdown when clicking outside */
 document.addEventListener('click', (e) => {
   if (!group) return;
   if (!group.classList.contains('open')) return;
   if (!group.contains(e.target)) initiativeClose();
 });
 
-/* Keyboard: close dropdown on Tab-out / focusout (desktop polish) */
-group?.addEventListener('focusout', (e) => {
-  if (!isHoverCapable()) return;
-  const related = e.relatedTarget;
-  if (related && group.contains(related)) return;
-  initiativeClose();
+/* Close on Escape (also closes dropdown) */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape'){
+    closeNav();
+    initiativeClose();
+  }
 });
 
 /* ========= Reveal animations ========= */
@@ -1001,7 +1022,7 @@ if (prefersReducedMotion){
   revealEls.forEach(el => io.observe(el));
 }
 
-/* ========= Active nav on scroll (FIX: include dropdown links too) ========= */
+/* ========= Active nav on scroll (includes dropdown links) ========= */
 const allNavLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
 const sectionById = new Map(
   allNavLinks
@@ -1016,15 +1037,11 @@ const sectionById = new Map(
 );
 
 function setActive(id){
-  /* mark active on ALL nav links (top + dropdown) */
   allNavLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
-
-  /* underline Initiatives when token/fund active */
   const hasInitiativeActive = (id === 'token' || id === 'fund');
   group?.classList.toggle('has-active', hasInitiativeActive);
 }
 
-/* Scroll spy: determine current section by viewport line */
 function spy(){
   const line = header.getBoundingClientRect().height + 80;
   let current = 'home';
@@ -1056,7 +1073,7 @@ copyBtn?.addEventListener('click', async () => {
   }
 });
 
-/* ========= Parallax in hero sky (subtle) - throttled via rAF ========= */
+/* ========= Parallax in hero sky (throttled via rAF) ========= */
 const home = document.getElementById('home');
 
 if (home && !prefersReducedMotion){
@@ -1073,6 +1090,8 @@ if (home && !prefersReducedMotion){
   window.addEventListener('scroll', onScrollParallax, { passive:true });
 }
 </script>
+
+</div><!-- /page-wrap -->
 
 </body>
 </html>
