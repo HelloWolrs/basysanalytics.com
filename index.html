@@ -26,6 +26,9 @@ html,body{
   font-family:"Inter",sans-serif;
   color:var(--text-main);
   scroll-behavior:smooth;
+
+  /* ✅ anchor offset for fixed header */
+  scroll-padding-top:92px;
 }
 
 /* ===================== CITY BACKGROUND (ZOOMED OUT, NO BORDERS) ===================== */
@@ -225,7 +228,9 @@ section{
   justify-content:center;
   align-items:center;
   padding:150px 10% 120px;
-  scroll-margin-top:130px; /* ✅ anchor lands higher */
+
+  /* ✅ anchor lands higher (no home strip visible) */
+  scroll-margin-top:92px;
 }
 
 /* ===================== HERO ===================== */
@@ -393,7 +398,7 @@ section{
   text-align:center;
 }
 
-/* Brand: no extra spacing, readable, globe-safe */
+/* Brand: slightly bigger (requested) + readable, globe-safe */
 .brand{
   display:inline-block;
   white-space:nowrap;
@@ -401,7 +406,10 @@ section{
   font-weight:900;
   line-height:1.03;
   text-align:center;
-  font-size: clamp(.94rem, 6.0cqw, 1.58rem);
+
+  /* ✅ slightly bigger */
+  font-size: clamp(1.02rem, 6.6cqw, 1.72rem);
+
   letter-spacing: 0;
   max-width: 74%;
   margin-inline:auto;
@@ -415,7 +423,7 @@ section{
 .brand .btc{
   color:var(--accent);
   font-weight:900;
-  font-size: 1.18em; /* ✅ bigger ₿ + A */
+  font-size: 1.18em;
   line-height: 0.95;
   vertical-align: baseline;
   margin-right: .03em;
@@ -737,6 +745,9 @@ footer{
   header.scrolled{ padding:12px 16px; }
   .nav-toggle{ display:inline-flex; }
 
+  html,body{ scroll-padding-top:84px; } /* ✅ mobile header smaller */
+  section{ scroll-margin-top:84px; }
+
   nav{
     position:absolute;
     top:calc(100% + 10px);
@@ -801,7 +812,7 @@ footer{
   section{ padding:135px 8% 110px; }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
-  .hero-stage{ width:min(360px, 78vw); } /* consistent on medium screens */
+  .hero-stage{ width:min(360px, 78vw); }
 }
 </style>
 </head>
@@ -1013,7 +1024,6 @@ footer{
     </form>
   </div>
 
-  <!-- ✅ back to home arrow -->
   <a href="#home" class="scroll-indicator reveal up" aria-label="Back to Home">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M7 11l5-5 5 5M7 18l5-5 5 5"></path>
