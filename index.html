@@ -38,6 +38,20 @@ body{
   font-size: calc(16px * var(--ui));
 }
 
+/* ✅ Mobile: City background weniger "gezoomt" (zwischen 80% und 110%) */
+@media (max-width: 768px){
+  body{
+    /* fixed kann auf Mobile komisch skalieren -> scroll */
+    background-attachment: scroll;
+
+    /* zwischen 80% und 110%, bevorzugt 100% */
+    background-size: clamp(80%, 100%, 110%) auto;
+
+    /* Skyline/City oben oft besser */
+    background-position: center top;
+  }
+}
+
 /* ================= HEADER ================= */
 header{
   position:fixed;
@@ -645,8 +659,8 @@ footer{
   .hero-stage{ width:min(calc(520px * var(--ui)), 92vw); }
 }
 
-/* ================= REDUCED MOTION (A11Y / polish) ================= */
-/* Wichtig: Globe soll weiter drehen -> KEIN animation:none fuer .globe-rotator */
+/* ================= REDUCED MOTION ================= */
+/* Globe soll weiter drehen -> KEIN animation:none fuer .globe-rotator */
 @media (prefers-reduced-motion: reduce){
   html,body{ scroll-behavior:auto; }
   .twinkle{ animation:none !important; }
@@ -854,7 +868,7 @@ footer{
     </form>
   </div>
 
-  <!-- ✅ Pfeil zurück zu Home -->
+  <!-- Pfeil zurück zu Home -->
   <a href="#home" class="scroll-indicator reveal" aria-label="Back to Home" style="margin-top:calc(34px * var(--ui));">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
       <path d="M7 11l5-5 5 5M7 18l5-5 5 5"></path>
@@ -954,13 +968,6 @@ document.addEventListener('click', (e) => {
   if (!group) return;
   if (!group.classList.contains('open')) return;
   if (!group.contains(e.target)) initiativeClose();
-});
-
-group?.addEventListener('focusout', (e) => {
-  if (!isHoverCapable()) return;
-  const related = e.relatedTarget;
-  if (related && group.contains(related)) return;
-  initiativeClose();
 });
 
 /* Close on Escape */
