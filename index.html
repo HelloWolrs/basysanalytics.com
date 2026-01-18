@@ -11,7 +11,7 @@
 :root{
   --accent:#f2a900;
 
-  /* ✅ viel transparenter (Default) */
+  /* glass */
   --glass: rgba(10,15,25,.38);
 
   /* ✅ deutlich dunkleres Grau (mehr Kontrast, weniger "weiß") */
@@ -28,16 +28,16 @@ html,body{
   scroll-behavior:smooth;
 }
 
-/* ===== Global City Background (smaller / more visible) ===== */
+/* ===== Global City Background (NO black side borders) ===== */
 body{
   background:
     linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.72)),
-    url("1000081562.jpg") no-repeat center top fixed;
-  background-size:100% auto;   /* ✅ zoomed out */
-  background-color:#000;       /* in case empty space appears */
+    url("1000081562.jpg") no-repeat center center fixed;
+  background-size:cover;           /* ✅ no black borders */
+  background-position:center 30%;  /* ✅ shows more sky / higher framing */
 }
-@media (min-width: 1200px){
-  body{ background-size: 92% auto; } /* ✅ show even more on large screens */
+@media (min-width: 1400px){
+  body{ background-position:center 22%; }
 }
 
 /* ================= HEADER ================= */
@@ -237,10 +237,34 @@ section{
 #home{
   position:relative;
   overflow:hidden;
-  background:
-    linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.70)),
-    url("hero-sky.png") no-repeat center top;
-  background-size:cover;
+  background: linear-gradient(rgba(0,0,0,.30), rgba(0,0,0,.70));
+}
+
+/* ✅ star-sky as its own layer (seam-free parallax) */
+#home .sky-layer{
+  position:absolute;
+  inset:0;
+  background: url("hero-sky.png") no-repeat center top;
+  background-size: cover;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  z-index:0;
+}
+
+/* ✅ hide any residual seam at bottom */
+#home::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,0) 65%,
+    rgba(0,0,0,.22) 85%,
+    rgba(0,0,0,.48) 100%
+  );
 }
 
 /* Film grain overlay (hero only) */
@@ -249,14 +273,17 @@ section{
   position:absolute;
   inset:0;
   pointer-events:none;
-  opacity:.05; /* ✅ reduced to avoid lighter overlap */
+  opacity:.05; /* ✅ reduced (avoid bright band) */
   mix-blend-mode:overlay;
+  z-index:1;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   background-size:220px 220px;
 }
-#home > *{ position:relative; z-index:1; }
 
-/* ✅ Twinkle layer FIX (no transform seams, pan background instead) */
+/* Ensure content stays above sky/grain */
+#home > *{ position:relative; z-index:2; }
+
+/* ✅ Twinkle layer FIX (pan bg, no transform seams) */
 .twinkle{
   position:absolute;
   inset:0;
@@ -269,16 +296,17 @@ section{
   filter: blur(.45px);
   transform: translateZ(0);
   animation: twinklePan 22s ease-in-out infinite alternate;
+  z-index:1;
 }
 @keyframes twinklePan{
   from{ background-position: 0 0, 60px 90px; }
   to{ background-position: 40px -30px, 100px 40px; }
 }
 
-/* Hero stage */
+/* Hero stage (✅ 20% smaller) */
 .hero-stage{
   position:relative;
-  width:min(560px, 90vw);
+  width:min(368px, 78vw); /* ✅ ~20% smaller */
   aspect-ratio: 1 / 1;
   display:flex;
   align-items:center;
@@ -346,8 +374,8 @@ section{
 
 .globe-rotator img{
   position:relative;
-  width:116%;
-  height:116%;
+  width:110%;   /* ✅ slightly less zoomed than before */
+  height:110%;
   object-fit:cover;
   object-position:center;
   border-radius:50%;
@@ -370,7 +398,7 @@ section{
 }
 
 .brand{
-  font-size:clamp(2.4rem, 5vw, 3.4rem);
+  font-size:clamp(2.2rem, 4.6vw, 3.2rem);
   font-weight:800;
   letter-spacing:.04em;
   text-shadow:0 14px 30px rgba(0,0,0,.6);
@@ -385,7 +413,7 @@ section{
   transition:text-shadow .4s ease;
 }
 
-/* same grey/off-white for "asys" + "nalytics" */
+/* same grey for "asys" + "nalytics" */
 .analytics-rest{
   color: var(--text-main);
   font-weight:700;
@@ -393,7 +421,7 @@ section{
   transition: color .35s ease, opacity .35s ease;
 }
 
-/* Scroll state: text slightly calmer */
+/* Scroll state: text slightly calmer, glow slightly reduced */
 body.scrolled .analytics-rest{
   color: var(--text-muted);
 }
@@ -406,7 +434,7 @@ body.scrolled .btc{
 /* Observe · Learn · Lead */
 .brand-claim{
   margin-top:14px;
-  font-size:1.35rem;
+  font-size:1.25rem;
   letter-spacing:.14em;
   opacity:.95;
   text-transform:uppercase;
@@ -425,7 +453,7 @@ body.scrolled .btc{
   font-weight:900;
 }
 
-/* dots in same grey */
+/* ✅ dots in same grey (not black) */
 .dot{
   width:10px;
   height:10px;
@@ -698,7 +726,7 @@ footer{
   section{ padding:135px 8% 110px; }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
-  .hero-stage{ width:min(520px, 92vw); }
+  .hero-stage{ width:min(416px, 86vw); } /* ✅ ~20% smaller for mobile */
 }
 </style>
 </head>
@@ -732,7 +760,11 @@ footer{
   </nav>
 </header>
 
+<!-- HOME -->
 <section id="home" data-section="home">
+  <!-- ✅ seam-free sky layer -->
+  <div class="sky-layer" aria-hidden="true"></div>
+
   <div class="twinkle" aria-hidden="true"></div>
 
   <div class="hero-stage reveal">
@@ -741,6 +773,7 @@ footer{
     </div>
 
     <div class="hero-text">
+      <!-- ✅ ₿ + A orange, asys/nalytics grey -->
       <div class="brand" aria-label="Basys Analytics">
         <span class="btc">₿</span><span class="analytics-rest">asys</span>
         <span style="margin-left:6px;">
@@ -769,6 +802,7 @@ footer{
   </a>
 </section>
 
+<!-- BASYS -->
 <section id="basys" data-section="basys">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); text-transform:uppercase; letter-spacing:3px; margin-bottom:10px;">Basys</h2>
@@ -800,6 +834,7 @@ footer{
   </a>
 </section>
 
+<!-- ANALYTICS (long version) -->
 <section id="analytics" data-section="analytics">
   <div class="glass-card reveal">
     <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
@@ -838,6 +873,7 @@ footer{
   </a>
 </section>
 
+<!-- TOKEN -->
 <section id="token" data-section="token">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Token</h2>
@@ -854,6 +890,7 @@ footer{
   </a>
 </section>
 
+<!-- FUND -->
 <section id="fund" data-section="fund">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Education Fund</h2>
@@ -880,6 +917,7 @@ footer{
   </a>
 </section>
 
+<!-- CONTACT -->
 <section id="contact" data-section="contact">
   <div class="glass-card reveal" style="max-width:550px;">
     <h2 style="color:var(--accent); margin-bottom:18px; text-align:center; letter-spacing:3px; text-transform:uppercase;">
@@ -897,6 +935,7 @@ footer{
     </form>
   </div>
 
+  <!-- ✅ Back to Home arrow -->
   <a href="#home" class="scroll-indicator reveal up" aria-label="Back to Home">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M7 11l5-5 5 5M7 18l5-5 5 5"></path>
@@ -1003,11 +1042,13 @@ copyBtn?.addEventListener('click', async () => {
   }
 });
 
-/* Parallax in hero sky (subtle) */
-const home = document.getElementById('home');
+/* ✅ Parallax (seam-free): move sky layer via transform */
+const sky = document.querySelector('#home .sky-layer');
 window.addEventListener('scroll', () => {
-  const y = window.scrollY * 0.15;
-  home.style.backgroundPosition = `center ${-y}px`;
+  if(!sky) return;
+  const yRaw = window.scrollY * 0.12;
+  const y = Math.max(0, Math.min(140, yRaw)); // clamp => stable, no seam
+  sky.style.transform = `translate3d(0, ${-y}px, 0)`;
 }, { passive:true });
 </script>
 
