@@ -14,9 +14,9 @@
   /* ✅ viel transparenter (Default) */
   --glass: rgba(10,15,25,.38);
 
-  /* ✅ Global text palette (dunkler/ruhiger als hartes Weiß, besser lesbar) */
-  --text-main: rgba(232, 236, 242, .96);
-  --text-muted: rgba(205, 212, 222, .92);
+  /* ✅ deutlich dunkleres Grau (mehr Kontrast, weniger "weiß") */
+  --text-main: rgba(195, 205, 218, .92);
+  --text-muted: rgba(160, 172, 188, .88);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -249,29 +249,30 @@ section{
   position:absolute;
   inset:0;
   pointer-events:none;
-  opacity:.07; /* ✅ reduced to avoid lighter overlap */
+  opacity:.05; /* ✅ reduced to avoid lighter overlap */
   mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   background-size:220px 220px;
 }
 #home > *{ position:relative; z-index:1; }
 
-/* Twinkle layer (fixed to avoid bright overlap band) */
+/* ✅ Twinkle layer FIX (no transform seams, pan background instead) */
 .twinkle{
   position:absolute;
-  inset:0;                 /* ✅ no -20% => no visible seam/band */
+  inset:0;
   pointer-events:none;
-  opacity:.06;             /* ✅ calmer */
-  mix-blend-mode:overlay;  /* ✅ softer */
+  opacity:.05;
+  mix-blend-mode:overlay;
   background:
-    radial-gradient(circle, rgba(255,255,255,.50) 0 1px, rgba(0,0,0,0) 2px) 0 0/140px 140px,
-    radial-gradient(circle, rgba(255,255,255,.35) 0 1px, rgba(0,0,0,0) 2px) 50px 70px/190px 190px;
-  animation: twinkleMove 18s ease-in-out infinite alternate;
-  filter: blur(.35px);
+    radial-gradient(circle, rgba(255,255,255,.45) 0 1px, rgba(0,0,0,0) 2px) 0 0/160px 160px,
+    radial-gradient(circle, rgba(255,255,255,.28) 0 1px, rgba(0,0,0,0) 2px) 60px 90px/220px 220px;
+  filter: blur(.45px);
+  transform: translateZ(0);
+  animation: twinklePan 22s ease-in-out infinite alternate;
 }
-@keyframes twinkleMove{
-  from{ transform:translate3d(0,0,0); }
-  to{ transform:translate3d(10px,-14px,0); }
+@keyframes twinklePan{
+  from{ background-position: 0 0, 60px 90px; }
+  to{ background-position: 40px -30px, 100px 40px; }
 }
 
 /* Hero stage */
@@ -375,7 +376,7 @@ section{
   text-shadow:0 14px 30px rgba(0,0,0,.6);
 }
 
-/* ✅ Orange ₿ + A glow (subtle) + calmer on scroll */
+/* Orange ₿ + A glow (subtle) + calmer on scroll */
 .btc{
   color:var(--accent);
   text-shadow:
@@ -384,7 +385,7 @@ section{
   transition:text-shadow .4s ease;
 }
 
-/* ✅ same grey/off-white for "asys" + "nalytics" */
+/* same grey/off-white for "asys" + "nalytics" */
 .analytics-rest{
   color: var(--text-main);
   font-weight:700;
@@ -424,7 +425,7 @@ body.scrolled .btc{
   font-weight:900;
 }
 
-/* ✅ dots in same grey (not black) */
+/* dots in same grey */
 .dot{
   width:10px;
   height:10px;
@@ -484,7 +485,6 @@ body.scrolled .btc{
     transform .35s ease;
 }
 
-/* Hover Transparenz */
 .glass-card:hover{
   background-color: rgba(10,15,25,.22);
   backdrop-filter: blur(26px);
@@ -493,7 +493,6 @@ body.scrolled .btc{
   transform: translateY(-2px);
 }
 
-/* Touch devices: no hover flicker */
 @media (hover: none){
   .glass-card:hover{
     background-color: var(--glass);
@@ -612,7 +611,7 @@ footer{
   text-align:center;
   border-top:1px solid rgba(255,255,255,.10);
   font-size:.85rem;
-  color:rgba(205,212,222,.78);
+  color:rgba(160,172,188,.78);
 }
 .footer-strong{ color:var(--text-main); font-weight:800; letter-spacing:.6px; }
 .footer-meta{ margin-top:10px; opacity:.85; }
@@ -718,7 +717,6 @@ footer{
     <a href="#basys" data-nav="basys">Basys</a>
     <a href="#analytics" data-nav="analytics">Analytics</a>
 
-    <!-- Initiatives always visible -->
     <div class="nav-group" id="initiativeGroup">
       <button class="nav-group-toggle" aria-expanded="false" type="button">
         Initiatives <span class="chevron">▾</span>
@@ -734,7 +732,6 @@ footer{
   </nav>
 </header>
 
-<!-- HOME -->
 <section id="home" data-section="home">
   <div class="twinkle" aria-hidden="true"></div>
 
@@ -744,7 +741,6 @@ footer{
     </div>
 
     <div class="hero-text">
-      <!-- ✅ ₿ + A orange, asys/nalytics grey/off-white -->
       <div class="brand" aria-label="Basys Analytics">
         <span class="btc">₿</span><span class="analytics-rest">asys</span>
         <span style="margin-left:6px;">
@@ -773,7 +769,6 @@ footer{
   </a>
 </section>
 
-<!-- BASYS -->
 <section id="basys" data-section="basys">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); text-transform:uppercase; letter-spacing:3px; margin-bottom:10px;">Basys</h2>
@@ -805,7 +800,6 @@ footer{
   </a>
 </section>
 
-<!-- ANALYTICS (long version) -->
 <section id="analytics" data-section="analytics">
   <div class="glass-card reveal">
     <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
@@ -844,7 +838,6 @@ footer{
   </a>
 </section>
 
-<!-- TOKEN -->
 <section id="token" data-section="token">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Token</h2>
@@ -861,7 +854,6 @@ footer{
   </a>
 </section>
 
-<!-- FUND -->
 <section id="fund" data-section="fund">
   <div class="glass-card reveal">
     <h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Education Fund</h2>
@@ -888,7 +880,6 @@ footer{
   </a>
 </section>
 
-<!-- CONTACT -->
 <section id="contact" data-section="contact">
   <div class="glass-card reveal" style="max-width:550px;">
     <h2 style="color:var(--accent); margin-bottom:18px; text-align:center; letter-spacing:3px; text-transform:uppercase;">
@@ -906,7 +897,6 @@ footer{
     </form>
   </div>
 
-  <!-- ✅ Back to Home arrow -->
   <a href="#home" class="scroll-indicator reveal up" aria-label="Back to Home">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M7 11l5-5 5 5M7 18l5-5 5 5"></path>
