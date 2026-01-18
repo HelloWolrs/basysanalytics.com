@@ -654,6 +654,16 @@ footer{
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
   .hero-stage{ width:min(520px, 92vw); }
 }
+
+/* ================= REDUCED MOTION (A11Y / polish) ================= */
+@media (prefers-reduced-motion: reduce){
+  html,body{ scroll-behavior:auto; }
+  .twinkle{ animation:none !important; }
+  .scroll-indicator{ animation:none !important; }
+  .globe-rotator{ animation:none !important; }
+  .reveal{ transition:none !important; transform:none !important; opacity:1 !important; }
+  .glass-card, .glass-card:hover{ transition:none !important; transform:none !important; }
+}
 </style>
 </head>
 
@@ -868,6 +878,9 @@ footer{
 </footer>
 
 <script>
+/* ========= A11Y / preferences ========= */
+const prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 /* Header shrink on scroll */
 const header = document.getElementById('siteHeader');
 window.addEventListener('scroll', () => {
@@ -876,71 +889,160 @@ window.addEventListener('scroll', () => {
 
 /* Mobile burger */
 const navToggle = document.getElementById('navToggle');
+const siteNav = document.getElementById('siteNav');
+
 const closeNav = () => {
   header.classList.remove('nav-open');
   navToggle?.setAttribute('aria-expanded', 'false');
 };
+
 navToggle?.addEventListener('click', () => {
   const open = header.classList.toggle('nav-open');
   navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
-document.getElementById('siteNav')?.addEventListener('click', (e) => {
-  if (e.target.tagName.toLowerCase() === 'a') closeNav();
-});
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
 
-/* Initiatives dropdown / accordion */
+/* Close mobile nav when clicking a link */
+siteNav?.addEventListener('click', (e) => {
+  if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === 'a') closeNav();
+});
+
+/* Close mobile nav when clicking outside */
+document.addEventListener('click', (e) => {
+  const isOpen = header.classList.contains('nav-open');
+  if (!isOpen) return;
+  const insideHeader = header.contains(e.target);
+  if (!insideHeader) closeNav();
+});
+
+/* Close on Escape */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape'){
+    closeNav();
+    initiativeClose();
+  }
+});
+
+/* ========= Initiatives dropdown: Hover on desktop, click on mobile ========= */
 const group = document.getElementById('initiativeGroup');
 const toggle = group?.querySelector('.nav-group-toggle');
+
+const isHoverCapable = () => window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+const initiativeOpen = () => {
+  if (!group) return;
+  group.classList.add('open');
+  toggle?.setAttribute('aria-expanded', 'true');
+};
+
+const initiativeClose = () => {
+  if (!group) return;
+  group.classList.remove('open');
+  toggle?.setAttribute('aria-expanded', 'false');
+};
+
+const initiativeToggle = () => {
+  if (!group) return;
+  const open = group.classList.toggle('open');
+  toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+};
+
+/* Click always works (esp. mobile); on desktop it also works as fallback */
 toggle?.addEventListener('click', (e) => {
   e.stopPropagation();
-  const open = group.classList.toggle('open');
-  toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  initiativeToggle();
 });
-document.addEventListener('click', () => group?.classList.remove('open'));
 
-/* Reveal animations */
+/* Desktop hover intent */
+let hoverCloseTimer = null;
+
+group?.addEventListener('mouseenter', () => {
+  if (!isHoverCapable()) return;
+  if (hoverCloseTimer) clearTimeout(hoverCloseTimer);
+  initiativeOpen();
+});
+
+group?.addEventListener('mouseleave', () => {
+  if (!isHoverCapable()) return;
+  if (hoverCloseTimer) clearTimeout(hoverCloseTimer);
+  hoverCloseTimer = setTimeout(() => {
+    initiativeClose();
+  }, 140);
+});
+
+/* Close dropdown when clicking outside (but not when clicking toggle/menu itself) */
+document.addEventListener('click', (e) => {
+  if (!group) return;
+  if (!group.classList.contains('open')) return;
+  if (!group.contains(e.target)) initiativeClose();
+});
+
+/* Keyboard: close dropdown on Tab-out / focusout (desktop polish) */
+group?.addEventListener('focusout', (e) => {
+  if (!isHoverCapable()) return;
+  const related = e.relatedTarget;
+  if (related && group.contains(related)) return;
+  initiativeClose();
+});
+
+/* ========= Reveal animations ========= */
 const revealEls = document.querySelectorAll('.reveal');
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting){
-      entry.target.classList.add('in');
-      io.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
-revealEls.forEach(el => io.observe(el));
 
-/* Active nav on scroll */
-const navLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
-const sections = navLinks.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-
-function setActive(id){
-  navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
-
-  const hasInitiativeActive = (id === 'token' || id === 'fund');
-  group?.classList.toggle('has-active', hasInitiativeActive);
-
-  document.querySelectorAll('.nav-group-menu a[data-nav]').forEach(a => {
-    a.classList.toggle('active', a.getAttribute('data-nav') === id);
-  });
+if (prefersReducedMotion){
+  revealEls.forEach(el => el.classList.add('in'));
+} else {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
 }
 
+/* ========= Active nav on scroll (FIX: include dropdown links too) ========= */
+const allNavLinks = Array.from(document.querySelectorAll('#siteNav a[data-nav]'));
+const sectionById = new Map(
+  allNavLinks
+    .map(a => {
+      const href = a.getAttribute('href') || '';
+      if (!href.startsWith('#')) return null;
+      const sec = document.querySelector(href);
+      if (!sec) return null;
+      return [a.getAttribute('data-nav'), sec];
+    })
+    .filter(Boolean)
+);
+
+function setActive(id){
+  /* mark active on ALL nav links (top + dropdown) */
+  allNavLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === id));
+
+  /* underline Initiatives when token/fund active */
+  const hasInitiativeActive = (id === 'token' || id === 'fund');
+  group?.classList.toggle('has-active', hasInitiativeActive);
+}
+
+/* Scroll spy: determine current section by viewport line */
 function spy(){
   const line = header.getBoundingClientRect().height + 80;
   let current = 'home';
-  for(const sec of sections){
-    if(sec.getBoundingClientRect().top <= line) current = sec.id;
+
+  for (const [id, sec] of sectionById.entries()){
+    if (sec.getBoundingClientRect().top <= line) current = sec.id;
   }
   setActive(current);
 }
+
 window.addEventListener('scroll', () => requestAnimationFrame(spy), { passive:true });
 window.addEventListener('load', spy);
 window.addEventListener('resize', spy);
 
-/* Copy BTC */
+/* ========= Copy BTC ========= */
 const copyBtn = document.getElementById('copyBtn');
 const btcAddress = document.getElementById('btcAddress');
+
 copyBtn?.addEventListener('click', async () => {
   try{
     await navigator.clipboard.writeText(btcAddress.textContent.trim());
@@ -954,12 +1056,22 @@ copyBtn?.addEventListener('click', async () => {
   }
 });
 
-/* Parallax in hero sky (subtle) */
+/* ========= Parallax in hero sky (subtle) - throttled via rAF ========= */
 const home = document.getElementById('home');
-window.addEventListener('scroll', () => {
-  const y = window.scrollY * 0.15;
-  home.style.backgroundPosition = `center ${-y}px`;
-}, { passive:true });
+
+if (home && !prefersReducedMotion){
+  let parallaxTicking = false;
+  const onScrollParallax = () => {
+    if (parallaxTicking) return;
+    parallaxTicking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY * 0.15;
+      home.style.backgroundPosition = `center ${-y}px`;
+      parallaxTicking = false;
+    });
+  };
+  window.addEventListener('scroll', onScrollParallax, { passive:true });
+}
 </script>
 
 </body>
