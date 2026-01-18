@@ -13,6 +13,10 @@
 
   /* ✅ viel transparenter (Default) */
   --glass: rgba(10,15,25,.38);
+
+  /* ✅ Off-White Palette (statt hartem Weiß) */
+  --text-main: rgba(245, 248, 252, .94); /* Variante 2 */
+  --text-muted: rgba(226, 232, 242, .88); /* Scroll / ruhiger */
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -20,7 +24,7 @@
 html,body{
   height:100%;
   font-family:"Inter",sans-serif;
-  color:#fff;
+  color:var(--text-main);
   scroll-behavior:smooth;
 }
 
@@ -62,7 +66,7 @@ header.scrolled{
   border-radius:10px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.06);
-  color:#fff;
+  color:var(--text-main);
   cursor:pointer;
   align-items:center;
   justify-content:center;
@@ -82,8 +86,8 @@ nav a, .nav-group-toggle{
   letter-spacing:2px;
   text-transform:uppercase;
   font-weight:800;
-  color:#fff;
-  opacity:.75;
+  color:var(--text-main);
+  opacity:.78;
   text-decoration:none;
   position:relative;
   padding:6px 0;
@@ -192,14 +196,14 @@ nav a.login-link.active::after{ display:none; }
   letter-spacing:2px;
   text-transform:uppercase;
   font-weight:800;
-  color:#fff;
+  color:var(--text-main);
   opacity:.95;
 }
 
 .nav-group-menu a:hover{
   background:rgba(242,169,0,.10);
   border-color:rgba(242,169,0,.25);
-  color:#fff;
+  color:var(--text-main);
 }
 
 .nav-group-menu a.active{
@@ -370,26 +374,24 @@ section{
   transition:text-shadow .4s ease;
 }
 
-/* ✅ Same grey for "asys" + "nalytics" */
+/* ✅ Off-White for "asys" + "nalytics" (Variante 2) */
 .analytics-rest{
-  color: rgba(230, 236, 245, .78);
+  color: var(--text-main);
   font-weight:700;
-  opacity:.92;
+  opacity:1;
   transition: color .35s ease, opacity .35s ease;
 }
 
 /* Scroll state: grey slightly darker, glow slightly reduced */
 body.scrolled .analytics-rest{
-  color: rgba(200, 206, 215, .62);
-  opacity:.90;
+  color: var(--text-muted);
+  opacity:1;
 }
 body.scrolled .btc{
   text-shadow:
     0 0 4px rgba(242,169,0,.12),
     0 0 10px rgba(242,169,0,.08);
 }
-
-.brand .light{ font-weight:700; opacity:.92; }
 
 /* Observe · Learn · Lead */
 .brand-claim{
@@ -404,7 +406,7 @@ body.scrolled .btc{
 }
 
 .brand-claim > span{
-  color:#fff;
+  color:var(--text-main);
   font-weight:600;
 }
 
@@ -435,7 +437,7 @@ body.scrolled .btc{
 }
 .hero-claim span{ color:var(--accent); }
 
-/* White scroll arrow */
+/* White scroll arrow -> Off-White via currentColor */
 .scroll-indicator{
   margin-top:44px;
   animation:bounce 2s infinite;
@@ -443,6 +445,7 @@ body.scrolled .btc{
   display:inline-flex;
   justify-content:center;
   opacity:.95;
+  color:var(--text-main);
 }
 @keyframes bounce{
   0%,20%,50%,80%,100%{ transform:translateY(0); }
@@ -498,6 +501,7 @@ body.scrolled .btc{
   background:rgba(255,255,255,.05);
   line-height:1.7;
   border-radius:14px;
+  color:var(--text-main);
 }
 
 .sub-kicker{
@@ -505,6 +509,7 @@ body.scrolled .btc{
   opacity:.90;
   line-height:1.7;
   font-size:1.02rem;
+  color:var(--text-main);
 }
 
 /* Wallet + Copy */
@@ -517,7 +522,6 @@ body.scrolled .btc{
   padding:14px 16px;
   border-radius:14px;
 
-  /* optional: slightly glassy too */
   background-color: rgba(10,15,25,.22);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
@@ -530,6 +534,7 @@ body.scrolled .btc{
   letter-spacing:.4px;
   opacity:.95;
   overflow-wrap:anywhere;
+  color:var(--text-main);
 }
 .copy-btn{
   flex:0 0 auto;
@@ -537,7 +542,7 @@ body.scrolled .btc{
   border-radius:10px;
   border:1px solid rgba(242,169,0,.35);
   background:rgba(242,169,0,.12);
-  color:#fff;
+  color:var(--text-main);
   cursor:pointer;
   font-weight:800;
   letter-spacing:1px;
@@ -555,6 +560,7 @@ body.scrolled .btc{
   opacity:.82;
   font-size:.9rem;
   line-height:1.6;
+  color:var(--text-main);
 }
 
 /* Reveal */
@@ -568,7 +574,7 @@ input, textarea{
   margin-bottom:10px;
   background:rgba(255,255,255,.05);
   border:1px solid rgba(255,255,255,.1);
-  color:#fff;
+  color:var(--text-main);
   border-radius:10px;
   font-family:inherit;
   outline:none;
@@ -594,9 +600,9 @@ footer{
   text-align:center;
   border-top:1px solid rgba(255,255,255,.10);
   font-size:.85rem;
-  color:#888;
+  color:rgba(226,232,242,.78);
 }
-.footer-strong{ color:#cfcfcf; font-weight:800; letter-spacing:.6px; }
+.footer-strong{ color:var(--text-main); font-weight:800; letter-spacing:.6px; }
 .footer-meta{ margin-top:10px; opacity:.85; }
 .footer-tagline{
   margin-top:6px;
@@ -651,6 +657,7 @@ footer{
     background:rgba(255,255,255,.04);
     border:1px solid rgba(255,255,255,.08);
     opacity:.95;
+    color:var(--text-main);
   }
 
   nav a.active::after{ display:none; }
@@ -689,7 +696,7 @@ footer{
 
 <header id="siteHeader">
   <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
       <path d="M4 7h16M4 12h16M4 17h16"></path>
     </svg>
   </button>
@@ -726,10 +733,10 @@ footer{
     </div>
 
     <div class="hero-text">
-      <!-- ✅ UPDATED BRAND: ₿ + A orange, asys/nalytics grey -->
+      <!-- ✅ UPDATED BRAND -->
       <div class="brand" aria-label="Basys Analytics">
         <span class="btc">₿</span><span class="analytics-rest">asys</span>
-        <span class="analytics-word">
+        <span style="margin-left:6px;">
           <span class="btc">A</span><span class="analytics-rest">nalytics</span>
         </span>
       </div>
@@ -749,7 +756,7 @@ footer{
   </div>
 
   <a href="#basys" class="scroll-indicator reveal" aria-label="Scroll to Basys">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
     </svg>
   </a>
@@ -781,7 +788,7 @@ footer{
   </div>
 
   <a href="#analytics" class="scroll-indicator reveal" aria-label="Scroll to Analytics">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
     </svg>
   </a>
@@ -820,7 +827,7 @@ footer{
   </div>
 
   <a href="#token" class="scroll-indicator reveal" aria-label="Scroll to Token">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
     </svg>
   </a>
@@ -837,7 +844,7 @@ footer{
   </div>
 
   <a href="#fund" class="scroll-indicator reveal" aria-label="Scroll to Education Fund">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
     </svg>
   </a>
@@ -864,7 +871,7 @@ footer{
   </div>
 
   <a href="#contact" class="scroll-indicator reveal" aria-label="Scroll to Contact">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path>
     </svg>
   </a>
@@ -900,7 +907,7 @@ footer{
 </footer>
 
 <script>
-/* Header shrink on scroll + ✅ body scrolled class (for grey/ glow tuning) */
+/* Header shrink on scroll + ✅ body scrolled class (for Off-White tuning + glow) */
 const header = document.getElementById('siteHeader');
 window.addEventListener('scroll', () => {
   const scrolled = window.scrollY > 20;
