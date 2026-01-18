@@ -17,10 +17,6 @@
   /* main palette */
   --text-main: rgba(195, 205, 218, .92);
   --text-muted: rgba(160, 172, 188, .88);
-
-  /* ✅ claim readability boost */
-  --claim-text: rgba(226, 234, 246, .96);     /* brighter than global text */
-  --claim-shadow: rgba(0,0,0,.55);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -264,8 +260,6 @@ section{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
   background-size:220px 220px;
 }
-
-/* Ensure content stays above sky layers */
 #home > *{ position:relative; z-index:3; }
 
 /* Twinkle */
@@ -379,68 +373,82 @@ section{
   text-align:center;
 }
 
+/* ✅ Basys Analytics ALL CAPS */
 .brand{
-  font-weight:800;
-  letter-spacing:.03em;
-  text-shadow:0 14px 30px rgba(0,0,0,.6);
+  font-weight:900;
+  letter-spacing:.10em;
+  text-shadow:
+    0 2px 16px rgba(0,0,0,.55),
+    0 0 28px rgba(0,0,0,.35);
   white-space:nowrap;
   line-height:1.05;
-  font-size: clamp(1.6rem, 10cqw, 3.0rem);
+  font-size: clamp(1.45rem, 9.4cqw, 2.8rem);
+  text-transform:uppercase;
 }
 
 .btc{
   color:var(--accent);
   text-shadow:
     0 0 6px rgba(242,169,0,.18),
-    0 0 14px rgba(242,169,0,.12);
+    0 0 14px rgba(242,169,0,.12),
+    0 2px 16px rgba(0,0,0,.50);
   transition:text-shadow .4s ease;
 }
 .analytics-rest{
   color: var(--text-main);
-  font-weight:700;
+  font-weight:800;
   opacity:1;
   transition: color .35s ease, opacity .35s ease;
 }
 
-/* ✅ CLAIM readability improved */
+/* ✅ Claim: first letter bigger, rest lowercase */
 .brand-claim{
   margin-top:12px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
+  letter-spacing:.10em;
+  text-transform:none; /* ✅ we control case in markup */
   display:flex;
   align-items:center;
   justify-content:center;
   white-space:nowrap;
-  font-size: clamp(.82rem, 4.25cqw, 1.18rem);
-
-  /* stronger readability */
-  color: var(--claim-text);
+  font-size: clamp(.86rem, 4.2cqw, 1.18rem);
+  color: rgba(232, 238, 248, .98);
   text-shadow:
-    0 2px 14px var(--claim-shadow),
-    0 0 22px rgba(0,0,0,.35);
+    0 2px 16px rgba(0,0,0,.62),
+    0 0 28px rgba(0,0,0,.38);
 }
 
 .brand-claim > span{
-  color: var(--claim-text);
-  font-weight:800; /* ✅ bolder */
-}
-.accent-initial{
-  color:var(--accent);
   font-weight:900;
-  text-shadow:
-    0 2px 14px rgba(0,0,0,.55);
+  color: rgba(232, 238, 248, .98);
 }
 
-/* dots */
+/* first letter bigger */
+.brand-claim .cap{
+  display:inline-block;
+  font-size: 1.25em;
+  font-weight: 900;
+  letter-spacing: .02em;
+  margin-right: 1px;
+  color: var(--accent);
+  text-shadow:
+    0 0 8px rgba(242,169,0,.16),
+    0 2px 16px rgba(0,0,0,.62);
+}
+
+.brand-claim .rest{
+  text-transform:lowercase;
+  font-weight:850;
+}
+
 .dot{
   width:10px;
   height:10px;
   border-radius:50%;
-  background: rgba(226, 234, 246, .70); /* match claim tone */
+  background: rgba(232, 238, 248, .72);
   display:inline-block;
   margin:0 18px;
-  box-shadow:0 0 16px rgba(0,0,0,.30);
-  opacity:.75;
+  box-shadow:0 0 18px rgba(0,0,0,.38);
+  opacity:.85;
 }
 @container (min-width: 260px){
   .dot{
@@ -455,7 +463,8 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 body.scrolled .btc{
   text-shadow:
     0 0 4px rgba(242,169,0,.12),
-    0 0 10px rgba(242,169,0,.08);
+    0 0 10px rgba(242,169,0,.08),
+    0 2px 16px rgba(0,0,0,.46);
 }
 
 .hero-claim{
@@ -758,19 +767,21 @@ footer{
     </div>
 
     <div class="hero-text">
-      <div class="brand" aria-label="Basys Analytics">
-        <span class="btc">₿</span><span class="analytics-rest">asys</span>
-        <span style="margin-left:6px;">
-          <span class="btc">A</span><span class="analytics-rest">nalytics</span>
+      <!-- ✅ ALL CAPS inside globe -->
+      <div class="brand" aria-label="BASYS ANALYTICS">
+        <span class="btc">₿</span><span class="analytics-rest">ASYS</span>
+        <span style="margin-left:10px;">
+          <span class="btc">A</span><span class="analytics-rest">NALYTICS</span>
         </span>
       </div>
 
+      <!-- ✅ First letter bigger, rest lowercase -->
       <div class="brand-claim" aria-label="Observe Learn Lead">
-        <span><span class="accent-initial">O</span>bserve</span>
+        <span><span class="cap">O</span><span class="rest">bserve</span></span>
         <span class="dot" aria-hidden="true"></span>
-        <span><span class="accent-initial">L</span>earn</span>
+        <span><span class="cap">L</span><span class="rest">earn</span></span>
         <span class="dot" aria-hidden="true"></span>
-        <span><span class="accent-initial">L</span>ead</span>
+        <span><span class="cap">L</span><span class="rest">ead</span></span>
       </div>
     </div>
   </div>
@@ -792,7 +803,7 @@ footer{
     <h2 style="color:var(--accent); text-transform:uppercase; letter-spacing:3px; margin-bottom:10px;">Basys</h2>
 
     <p style="margin-top:6px; opacity:.90; line-height:1.7; font-size:1.02rem;">
-      A clear process model to <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
+      A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
     </p>
 
     <div style="margin-top:18px; display:grid; gap:12px;">
@@ -937,7 +948,7 @@ footer{
 </footer>
 
 <script>
-/* Header shrink on scroll + body scrolled class (for text/glow tuning) */
+/* Header shrink on scroll + body scrolled class */
 const header = document.getElementById('siteHeader');
 window.addEventListener('scroll', () => {
   const scrolled = window.scrollY > 20;
@@ -968,16 +979,12 @@ toggle?.addEventListener('click', (e) => {
   const open = group.classList.toggle('open');
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
-
-/* close only when clicking outside */
 document.addEventListener('click', (e) => {
   if (!group?.contains(e.target)) {
     group?.classList.remove('open');
     toggle?.setAttribute('aria-expanded', 'false');
   }
 });
-
-/* close dropdown when submenu link clicked */
 document.querySelectorAll('.nav-group-menu a').forEach(a => {
   a.addEventListener('click', () => {
     group?.classList.remove('open');
@@ -985,7 +992,7 @@ document.querySelectorAll('.nav-group-menu a').forEach(a => {
   });
 });
 
-/* Reveal animations */
+/* Reveal */
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -1009,7 +1016,6 @@ function setActive(id){
     a.classList.toggle('active', a.getAttribute('data-nav') === id);
   });
 }
-
 function spy(){
   const line = header.getBoundingClientRect().height + 80;
   let current = 'home';
