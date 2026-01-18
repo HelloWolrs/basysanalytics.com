@@ -360,7 +360,35 @@ section{
   letter-spacing:.04em;
   text-shadow:0 14px 30px rgba(0,0,0,.6);
 }
-.brand .btc{ color:var(--accent); }
+
+/* ✅ Orange ₿ + A glow (subtle) + gets calmer on scroll */
+.btc{
+  color:var(--accent);
+  text-shadow:
+    0 0 6px rgba(242,169,0,.18),
+    0 0 14px rgba(242,169,0,.12);
+  transition:text-shadow .4s ease;
+}
+
+/* ✅ Same grey for "asys" + "nalytics" */
+.analytics-rest{
+  color: rgba(230, 236, 245, .78);
+  font-weight:700;
+  opacity:.92;
+  transition: color .35s ease, opacity .35s ease;
+}
+
+/* Scroll state: grey slightly darker, glow slightly reduced */
+body.scrolled .analytics-rest{
+  color: rgba(200, 206, 215, .62);
+  opacity:.90;
+}
+body.scrolled .btc{
+  text-shadow:
+    0 0 4px rgba(242,169,0,.12),
+    0 0 10px rgba(242,169,0,.08);
+}
+
 .brand .light{ font-weight:700; opacity:.92; }
 
 /* Observe · Learn · Lead */
@@ -698,8 +726,12 @@ footer{
     </div>
 
     <div class="hero-text">
-      <div class="brand">
-        <span class="btc">₿</span>asys <span class="light">Analytics</span>
+      <!-- ✅ UPDATED BRAND: ₿ + A orange, asys/nalytics grey -->
+      <div class="brand" aria-label="Basys Analytics">
+        <span class="btc">₿</span><span class="analytics-rest">asys</span>
+        <span class="analytics-word">
+          <span class="btc">A</span><span class="analytics-rest">nalytics</span>
+        </span>
       </div>
 
       <div class="brand-claim" aria-label="Observe Learn Lead">
@@ -868,10 +900,12 @@ footer{
 </footer>
 
 <script>
-/* Header shrink on scroll */
+/* Header shrink on scroll + ✅ body scrolled class (for grey/ glow tuning) */
 const header = document.getElementById('siteHeader');
 window.addEventListener('scroll', () => {
-  header.classList.toggle('scrolled', window.scrollY > 20);
+  const scrolled = window.scrollY > 20;
+  header.classList.toggle('scrolled', scrolled);
+  document.body.classList.toggle('scrolled', scrolled);
 }, { passive:true });
 
 /* Mobile burger */
