@@ -14,6 +14,10 @@
 
   --text-main: rgba(232,238,248,.90);
   --text-muted: rgba(160,172,188,.85);
+
+  --green: rgba(46, 213, 115, .95);
+  --green-border: rgba(46, 213, 115, .45);
+  --green-glow: rgba(46, 213, 115, .22);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
@@ -392,12 +396,10 @@ section{
   max-width: 74%;
   margin-inline:auto;
   transform: translateY(-1%);
-
   text-shadow:
     0 1px 0 rgba(0,0,0,.55),
     0 2px 12px rgba(0,0,0,.72),
     0 0 26px rgba(0,0,0,.42);
-
   -webkit-font-smoothing: antialiased;
   text-rendering: geometricPrecision;
 }
@@ -558,97 +560,79 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   color:var(--text-main);
 }
 
-/* ===================== EDUCATION FUND (BTC + Lightning + USDT ERC-20 + Card/Bank) ===================== */
-.fund-meta{
+/* ===================== EDUCATION FUND (Selector Cards) ===================== */
+.pay-grid{
+  margin-top:18px;
+  display:grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap:12px;
+}
+.pay-card{
+  position:relative;
+  text-align:left;
+  padding:14px 14px 14px 14px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.04);
+  color:var(--text-main);
+  cursor:pointer;
+  transition:.2s;
+  min-height:92px;
+}
+.pay-card:hover{
+  transform: translateY(-1px);
+  border-color: rgba(242,169,0,.22);
+  background: rgba(242,169,0,.06);
+}
+.pay-card.active{
+  border-color: rgba(46,213,115,.35);
+  background: rgba(46,213,115,.06);
+  box-shadow: 0 0 0 1px rgba(46,213,115,.10), 0 18px 40px rgba(0,0,0,.28);
+}
+.pay-dot{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:10px;height:10px;
+  border-radius:999px;
+  background: rgba(255,255,255,.18);
+  border:1px solid rgba(255,255,255,.18);
+}
+.pay-card.active .pay-dot{
+  background: var(--green);
+  border-color: var(--green-border);
+  box-shadow: 0 0 14px var(--green-glow);
+}
+.pay-top{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.pay-ico{
+  width:18px;height:18px;
+  opacity:.95;
+}
+.pay-title{
+  font-size:.76rem;
+  font-weight:900;
+  letter-spacing:.10em;
+  text-transform:uppercase;
+}
+.pay-desc{
+  margin-top:8px;
+  font-size:.88rem;
+  line-height:1.35;
+  color: rgba(210,220,235,.88);
+}
+
+/* region select */
+.region{
   margin-top:14px;
   display:flex;
+  align-items:center;
+  justify-content:flex-end;
   gap:10px;
   flex-wrap:wrap;
-  align-items:center;
-}
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 12px;
-  border-radius:999px;
-  font-size:.78rem;
-  font-weight:900;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.05);
-  color:var(--text-main);
-}
-.badge.btc{
-  border-color: rgba(242,169,0,.28);
-  background: rgba(242,169,0,.10);
-}
-.badge.usdt{
-  border-color: rgba(38, 205, 147, .28);
-  background: rgba(38, 205, 147, .10);
-}
-.badge .dot-mini{
-  width:9px;height:9px;border-radius:50%;
-  background: var(--accent);
-  box-shadow:0 0 12px rgba(242,169,0,.20);
-}
-.badge .dot-mini.usdt{ background: rgba(38, 205, 147, .95); box-shadow:0 0 12px rgba(38,205,147,.20); }
-
-.fund-controls{
-  margin-top:16px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  flex-wrap:wrap;
-}
-
-.seg{
-  display:inline-flex;
-  border-radius:14px;
-  padding:6px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.10);
-}
-.seg button{
-  appearance:none;
-  border:0;
-  background:transparent;
-  color:var(--text-main);
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  font-size:.72rem;
-  padding:10px 12px;
-  border-radius:10px;
-  cursor:pointer;
-  opacity:.86;
-  transition:.2s;
-}
-.seg button:hover{ opacity:1; }
-.seg button.active{
-  opacity:1;
-  background:rgba(242,169,0,.12);
-  border:1px solid rgba(242,169,0,.35);
-  color:var(--text-main);
-  box-shadow:0 14px 30px rgba(0,0,0,.25);
-}
-
-/* card tab: subtle icon spacing */
-.seg button .tab-ico{
-  display:inline-flex;
-  margin-right:8px;
-  opacity:.95;
-  transform: translateY(1px);
-}
-
-.region{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-left:auto;
 }
 .select{
   display:inline-flex;
@@ -715,83 +699,7 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 }
 .qr canvas, .qr img{ width:100% !important; height:100% !important; display:block; }
 
-/* ✅ Removed big middle address frame: compact row instead */
-.addr-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  padding:10px 12px;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.03);
-}
-.addr-left{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  min-width:0;
-}
-.addr-label{
-  font-size:.72rem;
-  font-weight:900;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:var(--text-muted);
-}
-.addr-value{
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-  font-size:.92rem;
-  letter-spacing:.3px;
-  color:var(--text-main);
-  opacity:.96;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  max-width: 520px;
-}
-.icon-btn{
-  flex:0 0 auto;
-  width:42px;
-  height:42px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.04);
-  color:var(--text-main);
-  cursor:pointer;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  transition:.2s;
-}
-.icon-btn:hover{
-  transform:translateY(-1px);
-  border-color:rgba(242,169,0,.35);
-  background:rgba(242,169,0,.10);
-}
-
-.copied-pill{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  padding:6px 10px;
-  border-radius:999px;
-  font-size:.72rem;
-  font-weight:900;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  border:1px solid rgba(242,169,0,.35);
-  background: rgba(10,15,25,.82);
-  color: var(--text-main);
-  opacity:0;
-  transform: translateY(4px);
-  transition: .22s ease;
-  pointer-events:none;
-  margin-top:10px;
-  width:max-content;
-}
-.copied-pill.show{ opacity:1; transform: translateY(0); }
-
+/* action buttons */
 .fund-actions{
   margin-top:12px;
   display:flex;
@@ -825,8 +733,6 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   border-color: rgba(242,169,0,.55);
   background: rgba(242,169,0,.18);
 }
-
-/* credit card button: clearer */
 .action-btn.card{
   border-color: rgba(242,169,0,.45);
   background: rgba(242,169,0,.14);
@@ -835,18 +741,28 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   border-color: rgba(242,169,0,.60);
   background: rgba(242,169,0,.20);
 }
-.card-ico{
-  width:18px;height:18px;
-  display:inline-block;
-}
 
-.small-note{
+.copied-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  border:1px solid rgba(242,169,0,.35);
+  background: rgba(10,15,25,.82);
+  color: var(--text-main);
+  opacity:0;
+  transform: translateY(4px);
+  transition: .22s ease;
+  pointer-events:none;
   margin-top:10px;
-  color:var(--text-muted);
-  font-size:.92rem;
-  line-height:1.55;
-  opacity:.92;
+  width:max-content;
 }
+.copied-pill.show{ opacity:1; transform: translateY(0); }
 
 .warn{
   margin-top:10px;
@@ -971,7 +887,10 @@ footer{
   font-size:.8rem;
 }
 
-/* ================= MOBILE MENU ================= */
+/* ================= MOBILE MENU + RESPONSIVE ================= */
+@media (max-width: 980px){
+  .pay-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (max-width: 768px){
   header{ padding:16px 16px; }
   header.scrolled{ padding:12px 16px; }
@@ -1021,14 +940,12 @@ footer{
     border:none;
     padding:0;
     box-shadow:none;
-
     opacity:1;
     transform:none;
     pointer-events:auto;
     transition:none;
     display:none;
   }
-
   .nav-group.open .nav-group-menu{
     display:grid;
     gap:8px;
@@ -1039,12 +956,6 @@ footer{
 
   .fund-grid{ grid-template-columns: 1fr; }
   .qr{ width:180px; height:180px; }
-  .fund-controls{ align-items:stretch; }
-  .region{ margin-left:0; }
-  .addr-value{ max-width: 100%; }
-}
-
-@media (max-width: 900px){
   section{ padding:135px 8% 110px; }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
@@ -1216,151 +1127,156 @@ footer{
       Contributions support independent education and research initiatives.
     </div>
 
-    <div class="fund-meta">
-      <span class="badge btc"><span class="dot-mini"></span> Bitcoin</span>
-      <span class="badge btc"><span class="dot-mini"></span> Lightning</span>
-      <span class="badge usdt"><span class="dot-mini usdt"></span> USDT (ERC-20)</span>
-      <span class="badge">Card/Bank → BTC</span>
+    <!-- ✅ CLEAR SELECTOR (CARDS) + GREEN DOT + ICONS -->
+    <div class="pay-grid" role="tablist" aria-label="Payment method selector">
+      <button class="pay-card active" type="button" data-method="btc" role="tab" aria-selected="true">
+        <span class="pay-dot" aria-hidden="true"></span>
+        <div class="pay-top">
+          <!-- BTC icon -->
+          <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 2v20"></path>
+            <path d="M7 7h8a3 3 0 0 1 0 6H7z"></path>
+            <path d="M7 13h9a3 3 0 0 1 0 6H7z"></path>
+          </svg>
+          <div class="pay-title">Bitcoin</div>
+        </div>
+        <div class="pay-desc">Send BTC directly (on-chain).</div>
+      </button>
+
+      <button class="pay-card" type="button" data-method="ln" role="tab" aria-selected="false">
+        <span class="pay-dot" aria-hidden="true"></span>
+        <div class="pay-top">
+          <!-- Lightning icon -->
+          <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M13 2L3 14h8l-1 8 11-14h-8z"></path>
+          </svg>
+          <div class="pay-title">Lightning</div>
+        </div>
+        <div class="pay-desc">Instant + low fees (LN).</div>
+      </button>
+
+      <button class="pay-card" type="button" data-method="usdt" role="tab" aria-selected="false">
+        <span class="pay-dot" aria-hidden="true"></span>
+        <div class="pay-top">
+          <!-- USDT icon (simple T) -->
+          <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M6 6h12"></path>
+            <path d="M12 6v14"></path>
+            <path d="M8 10c1.4 1 3.2 1.5 4 1.5s2.6-.5 4-1.5"></path>
+          </svg>
+          <div class="pay-title">USDT (ERC-20)</div>
+        </div>
+        <div class="pay-desc">Stablecoin on Ethereum network.</div>
+      </button>
+
+      <button class="pay-card" type="button" data-method="card" role="tab" aria-selected="false">
+        <span class="pay-dot" aria-hidden="true"></span>
+        <div class="pay-top">
+          <!-- Credit card icon -->
+          <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <path d="M3 10h18"></path>
+            <path d="M7 15h3"></path>
+          </svg>
+          <div class="pay-title">Card / Bank</div>
+        </div>
+        <div class="pay-desc">Buy BTC via provider + send.</div>
+      </button>
     </div>
 
-    <div class="fund-controls">
-      <div class="seg" role="tablist" aria-label="Payment method">
-        <button class="active" id="tabBtc" type="button" role="tab" aria-selected="true">Bitcoin</button>
-        <button id="tabLn" type="button" role="tab" aria-selected="false">Lightning</button>
-        <button id="tabUsdt" type="button" role="tab" aria-selected="false">USDT</button>
-        <button id="tabCard" type="button" role="tab" aria-selected="false">
-          <span class="tab-ico" aria-hidden="true">
-            <!-- credit card icon -->
-            <svg class="card-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <path d="M3 10h18"></path>
-              <path d="M7 15h3"></path>
-            </svg>
-          </span>
-          Card / Bank
-        </button>
-      </div>
-
-      <div class="region">
-        <div class="select" title="Auto-detected via IP (can be changed)">
-          <label for="regionSelect">Region</label>
-          <select id="regionSelect">
-            <option value="EU">EU</option>
-            <option value="US">US</option>
-          </select>
-        </div>
+    <div class="region">
+      <div class="select" title="Auto-detected via IP (can be changed)">
+        <label for="regionSelect">Region</label>
+        <select id="regionSelect">
+          <option value="EU">EU</option>
+          <option value="US">US</option>
+        </select>
       </div>
     </div>
 
     <div class="fund-panels">
       <!-- BTC PANEL -->
-      <div class="fund-panel active" id="panelBtc" role="tabpanel" aria-labelledby="tabBtc">
+      <div class="fund-panel active" id="panelBtc" role="tabpanel" aria-label="Bitcoin panel">
+        <div class="summary-box" style="margin-top:14px;">
+          <strong>Bitcoin (On-chain):</strong> Send BTC directly to the fund address. Widely supported.
+        </div>
+
         <div class="fund-grid">
           <div class="qr-wrap">
             <div class="qr" id="btcQr" aria-label="Bitcoin QR"></div>
           </div>
 
           <div>
-            <!-- ✅ no big frame; compact -->
-            <div class="addr-row">
-              <div class="addr-left">
-                <div class="addr-label">BTC Address</div>
-                <div class="addr-value" id="btcAddress">bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3</div>
-              </div>
-              <button class="icon-btn" id="copyBtcBtn" type="button" aria-label="Copy BTC address">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                  <rect x="2" y="2" width="13" height="13" rx="2"></rect>
-                </svg>
-              </button>
-            </div>
-
             <div class="fund-actions">
               <a class="action-btn primary" id="openBtcWalletBtn" href="#" rel="noopener">Open Wallet</a>
+              <button class="action-btn" id="copyBtcBtn" type="button">Copy BTC Address</button>
             </div>
 
-            <div class="copied-pill" id="copiedPill">Copied</div>
+            <div class="copied-pill" id="copiedPillBtc">Copied</div>
 
             <div class="warn">
-              <strong>Note:</strong> Placeholder address for layout/testing. Do not send funds to this address.
+              <strong>Note:</strong> This is a placeholder address for layout/testing. Do not send funds to this address.
             </div>
           </div>
         </div>
       </div>
 
       <!-- LIGHTNING PANEL -->
-      <div class="fund-panel" id="panelLn" role="tabpanel" aria-labelledby="tabLn">
+      <div class="fund-panel" id="panelLn" role="tabpanel" aria-label="Lightning panel">
+        <div class="summary-box" style="margin-top:14px;">
+          <strong>Lightning:</strong> Best for small instant payments with low fees. Uses a Lightning Address (placeholder).
+        </div>
+
         <div class="fund-grid">
           <div class="qr-wrap">
             <div class="qr" id="lnQr" aria-label="Lightning QR"></div>
           </div>
 
           <div>
-            <div class="addr-row">
-              <div class="addr-left">
-                <div class="addr-label">Lightning Address</div>
-                <div class="addr-value" id="lnAddress">donate@basys.io</div>
-              </div>
-              <button class="icon-btn" id="copyLnBtn" type="button" aria-label="Copy Lightning address">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                  <rect x="2" y="2" width="13" height="13" rx="2"></rect>
-                </svg>
-              </button>
-            </div>
-
             <div class="fund-actions">
               <a class="action-btn primary" id="openLnWalletBtn" href="#" rel="noopener">Open Lightning Wallet</a>
+              <button class="action-btn" id="copyLnBtn" type="button">Copy Lightning Address</button>
             </div>
 
             <div class="copied-pill" id="copiedPillLn">Copied</div>
 
             <div class="warn">
-              <strong>Note:</strong> Lightning invoices (BOLT11) are typically generated dynamically. This uses a Lightning Address (placeholder).
+              <strong>Note:</strong> Lightning invoices (BOLT11) are typically generated dynamically.
             </div>
           </div>
         </div>
       </div>
 
-      <!-- USDT ERC-20 PANEL -->
-      <div class="fund-panel" id="panelUsdt" role="tabpanel" aria-labelledby="tabUsdt">
+      <!-- USDT PANEL -->
+      <div class="fund-panel" id="panelUsdt" role="tabpanel" aria-label="USDT panel">
+        <div class="summary-box" style="margin-top:14px;">
+          <strong>USDT (ERC-20):</strong> Send USDT on Ethereum network (ERC-20 only).
+        </div>
+
         <div class="fund-grid">
           <div class="qr-wrap">
             <div class="qr" id="usdtQr" aria-label="USDT ERC-20 QR"></div>
           </div>
 
           <div>
-            <div class="addr-row">
-              <div class="addr-left">
-                <div class="addr-label">USDT Address (ERC-20)</div>
-                <div class="addr-value" id="usdtAddress">0xplaceholderERC20Addressxxxxxxxxxxxxxxxxxxxx</div>
-              </div>
-              <button class="icon-btn" id="copyUsdtBtn" type="button" aria-label="Copy USDT address">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
-                  <rect x="2" y="2" width="13" height="13" rx="2"></rect>
-                </svg>
-              </button>
-            </div>
-
             <div class="fund-actions">
               <a class="action-btn primary" id="openUsdtWalletBtn" href="#" rel="noopener">Open Wallet</a>
+              <button class="action-btn" id="copyUsdtBtn" type="button">Copy USDT Address</button>
             </div>
 
             <div class="copied-pill" id="copiedPillUsdt">Copied</div>
 
             <div class="warn">
-              <strong>Important:</strong> Only send <strong>USDT</strong> on the <strong>Ethereum (ERC-20)</strong> network.
-              Sending on the wrong network may result in loss of funds.
+              <strong>Important:</strong> Only send <strong>USDT</strong> on <strong>Ethereum (ERC-20)</strong>. Wrong-network transfers may be lost.
             </div>
           </div>
         </div>
       </div>
 
-      <!-- CARD / BANK PANEL -->
-      <div class="fund-panel" id="panelCard" role="tabpanel" aria-labelledby="tabCard">
+      <!-- CARD PANEL -->
+      <div class="fund-panel" id="panelCard" role="tabpanel" aria-label="Card/Bank panel">
         <div class="summary-box" style="margin-top:14px;">
-          <strong>Card / Bank:</strong> Redirects to a regulated onramp to buy <span class="highlight">BTC</span> and send it to the fund address.
+          <strong>Credit Card / Bank:</strong> Redirects to a regulated onramp to buy <span class="highlight">BTC</span> and send it to the fund address.
         </div>
 
         <div class="amount-row">
@@ -1371,7 +1287,7 @@ footer{
           </div>
 
           <button class="action-btn card" id="onrampBtn" type="button">
-            <svg class="card-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
               <rect x="3" y="5" width="18" height="14" rx="2"></rect>
               <path d="M3 10h18"></path>
               <path d="M7 15h3"></path>
@@ -1383,7 +1299,7 @@ footer{
         </div>
 
         <div class="compliance">
-          Payments via card/bank are processed by third-party providers. Fees, exchange rates, and KYC/verification requirements may apply depending on region and provider availability.
+          Payments via card/bank are processed by third-party providers. Fees, exchange rates, and KYC/verification requirements may apply depending on region/provider.
         </div>
       </div>
     </div>
@@ -1435,6 +1351,15 @@ footer{
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
 <script>
+/* ===================== SOURCE OF TRUTH (NO BIG ADDRESS BOX) ===================== */
+const BTC_ADDRESS  = 'bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3';
+const LN_ADDRESS   = 'donate@basys.io'; /* placeholder */
+const USDT_ADDRESS = '0xplaceholderERC20Addressxxxxxxxxxxxxxxxxxxxx'; /* placeholder */
+
+function getBtcAddress(){ return BTC_ADDRESS; }
+function getLnAddress(){ return LN_ADDRESS; }
+function getUsdtAddress(){ return USDT_ADDRESS; }
+
 /* Header shrink on scroll + body scrolled class */
 const header = document.getElementById('siteHeader');
 window.addEventListener('scroll', () => {
@@ -1467,14 +1392,12 @@ toggle?.addEventListener('click', (e) => {
   const open = group.classList.toggle('open');
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
-
 document.addEventListener('click', (e) => {
   if (!group?.contains(e.target)) {
     group?.classList.remove('open');
     toggle?.setAttribute('aria-expanded', 'false');
   }
 });
-
 document.querySelectorAll('.nav-group-menu a').forEach(a => {
   a.addEventListener('click', () => {
     group?.classList.remove('open');
@@ -1506,7 +1429,6 @@ function setActive(id){
     a.classList.toggle('active', a.getAttribute('data-nav') === id);
   });
 }
-
 function spy(){
   const line = header.getBoundingClientRect().height + 80;
   let current = 'home';
@@ -1534,7 +1456,7 @@ window.addEventListener('scroll', () => {
   rafId = requestAnimationFrame(onParallax);
 }, { passive:true });
 
-/* ===== Anchor scroll: scroll to CARD so it lands high (deeper by 5–10px) ===== */
+/* ===== Anchor scroll: scroll to CARD so it lands high ===== */
 function isHashLink(a){
   const href = a.getAttribute('href') || '';
   return href.startsWith('#') && href.length > 1;
@@ -1564,94 +1486,56 @@ document.addEventListener('click', (e) => {
   scrollToTarget(hash);
 });
 
-/* ===================== FUND LOGIC ===================== */
+/* ===================== FUND LOGIC (Selector Cards) ===================== */
+const payCards = Array.from(document.querySelectorAll('.pay-card[data-method]'));
+const panels = {
+  btc: document.getElementById('panelBtc'),
+  ln: document.getElementById('panelLn'),
+  usdt: document.getElementById('panelUsdt'),
+  card: document.getElementById('panelCard'),
+};
 
-/* Tabs */
-const tabBtc = document.getElementById('tabBtc');
-const tabLn = document.getElementById('tabLn');
-const tabUsdt = document.getElementById('tabUsdt');
-const tabCard = document.getElementById('tabCard');
+function setPayment(method){
+  payCards.forEach(btn => {
+    const isActive = btn.dataset.method === method;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
 
-const panelBtc = document.getElementById('panelBtc');
-const panelLn = document.getElementById('panelLn');
-const panelUsdt = document.getElementById('panelUsdt');
-const panelCard = document.getElementById('panelCard');
-
-function setFundTab(which){
-  const map = {
-    btc: [tabBtc, panelBtc],
-    ln: [tabLn, panelLn],
-    usdt: [tabUsdt, panelUsdt],
-    card: [tabCard, panelCard]
-  };
-
-  Object.entries(map).forEach(([key, [btn, panel]]) => {
-    const active = key === which;
-    btn?.classList.toggle('active', active);
-    btn?.setAttribute('aria-selected', active ? 'true' : 'false');
-    panel?.classList.toggle('active', active);
+  Object.entries(panels).forEach(([key, panel]) => {
+    panel?.classList.toggle('active', key === method);
   });
 }
-tabBtc?.addEventListener('click', () => setFundTab('btc'));
-tabLn?.addEventListener('click', () => setFundTab('ln'));
-tabUsdt?.addEventListener('click', () => setFundTab('usdt'));
-tabCard?.addEventListener('click', () => setFundTab('card'));
 
-/* Elements */
-const copiedPill = document.getElementById('copiedPill');
-const copiedPillLn = document.getElementById('copiedPillLn');
-const copiedPillUsdt = document.getElementById('copiedPillUsdt');
+payCards.forEach(btn => {
+  btn.addEventListener('click', () => setPayment(btn.dataset.method));
+});
 
-const btcAddressEl = document.getElementById('btcAddress');
-const lnAddressEl = document.getElementById('lnAddress');
-const usdtAddressEl = document.getElementById('usdtAddress');
-
-const btcQr = document.getElementById('btcQr');
-const lnQr = document.getElementById('lnQr');
-const usdtQr = document.getElementById('usdtQr');
-
-const openBtcWalletBtn = document.getElementById('openBtcWalletBtn');
-const openLnWalletBtn = document.getElementById('openLnWalletBtn');
-const openUsdtWalletBtn = document.getElementById('openUsdtWalletBtn');
-
-const copyBtcBtn = document.getElementById('copyBtcBtn');
-const copyLnBtn = document.getElementById('copyLnBtn');
-const copyUsdtBtn = document.getElementById('copyUsdtBtn');
-
+/* Copy helpers */
 function showPill(pill){
   pill?.classList.add('show');
   setTimeout(() => pill?.classList.remove('show'), 900);
 }
-
 async function copyText(text, pill){
   try{
     await navigator.clipboard.writeText(text);
     showPill(pill);
-  }catch(e){
-    // no-op
-  }
+  }catch(e){}
 }
+
+const copiedPillBtc = document.getElementById('copiedPillBtc');
+const copiedPillLn = document.getElementById('copiedPillLn');
+const copiedPillUsdt = document.getElementById('copiedPillUsdt');
+
+document.getElementById('copyBtcBtn')?.addEventListener('click', () => copyText(getBtcAddress(), copiedPillBtc));
+document.getElementById('copyLnBtn')?.addEventListener('click', () => copyText(getLnAddress(), copiedPillLn));
+document.getElementById('copyUsdtBtn')?.addEventListener('click', () => copyText(getUsdtAddress(), copiedPillUsdt));
 
 /* URIs */
-function getBtcAddress(){ return (btcAddressEl?.textContent || '').trim(); }
-function getLnAddress(){ return (lnAddressEl?.textContent || '').trim(); }
-function getUsdtAddress(){ return (usdtAddressEl?.textContent || '').trim(); }
-
 function btcUri(){ return `bitcoin:${getBtcAddress()}`; }
-
-/* Lightning: use "lightning:" with lightning address (works in many apps; some prefer lnurl/bolt11) */
-function lnUri(){
-  const a = getLnAddress();
-  return `lightning:${a}`;
-}
-
-/* USDT ERC-20: safest deeplink is to just open address in wallet.
-   Some wallets support "ethereum:" scheme. We'll provide a compatible hint: ethereum:<address>
-*/
-function usdtUri(){
-  const addr = getUsdtAddress();
-  return `ethereum:${addr}`;
-}
+function lnUri(){ return `lightning:${getLnAddress()}`; }
+/* USDT ERC-20: best effort deeplink (some wallets accept ethereum:) */
+function usdtUri(){ return `ethereum:${getUsdtAddress()}`; }
 
 /* QR helper */
 function renderQr(node, text){
@@ -1668,26 +1552,27 @@ function renderQr(node, text){
   }
 }
 
-function refreshWalletBits(){
+function refreshFund(){
+  const btcQRNode = document.getElementById('btcQr');
+  const lnQRNode = document.getElementById('lnQr');
+  const usdtQRNode = document.getElementById('usdtQr');
+
   const b = btcUri();
   const l = lnUri();
   const u = usdtUri();
 
-  renderQr(btcQr, b);
-  renderQr(lnQr, l);
-  renderQr(usdtQr, getUsdtAddress()); // QR for raw address is most interoperable
+  renderQr(btcQRNode, b);
+  renderQr(lnQRNode, l);
+  renderQr(usdtQRNode, getUsdtAddress()); /* raw address is most interoperable */
 
-  if (openBtcWalletBtn) openBtcWalletBtn.href = b;
-  if (openLnWalletBtn) openLnWalletBtn.href = l;
-  if (openUsdtWalletBtn) openUsdtWalletBtn.href = u;
+  const openBtc = document.getElementById('openBtcWalletBtn');
+  const openLn = document.getElementById('openLnWalletBtn');
+  const openUsdt = document.getElementById('openUsdtWalletBtn');
+
+  if(openBtc) openBtc.href = b;
+  if(openLn) openLn.href = l;
+  if(openUsdt) openUsdt.href = u;
 }
-
-window.addEventListener('load', refreshWalletBits);
-
-/* Copy buttons */
-copyBtcBtn?.addEventListener('click', () => copyText(getBtcAddress(), copiedPill));
-copyLnBtn?.addEventListener('click', () => copyText(getLnAddress(), copiedPillLn));
-copyUsdtBtn?.addEventListener('click', () => copyText(getUsdtAddress(), copiedPillUsdt));
 
 /* ===================== CARD/BANK ONRAMP (BTC) ===================== */
 const regionSelect = document.getElementById('regionSelect');
@@ -1696,24 +1581,20 @@ const fiatUnit = document.getElementById('fiatUnit');
 const onrampBtn = document.getElementById('onrampBtn');
 const copyOnrampBtn = document.getElementById('copyOnrampBtn');
 
-/* Update fiat unit */
 function refreshFiatUnit(){
   const region = regionSelect?.value || 'EU';
   if (fiatUnit) fiatUnit.textContent = (region === 'US') ? 'USD' : 'EUR';
 }
 regionSelect?.addEventListener('change', refreshFiatUnit);
 
-/* Build onramp link for BTC (Onramper aggregator). */
 function buildOnrampLink(){
   const region = (regionSelect?.value || 'EU');
   const fiat = region === 'US' ? 'USD' : 'EUR';
   const country = region === 'US' ? 'US' : 'DE';
 
-  // amount (sanitize)
   const amtRaw = (fiatAmount?.value || '').trim().replace(',', '.');
   const amt = (amtRaw && !isNaN(Number(amtRaw)) && Number(amtRaw) > 0) ? amtRaw : '50';
 
-  // send BTC to BTC address
   const addr = encodeURIComponent(getBtcAddress());
 
   const base = 'https://buy.onramper.com/';
@@ -1721,9 +1602,7 @@ function buildOnrampLink(){
     defaultCrypto: 'BTC',
     defaultFiat: fiat,
     country: country,
-    // wallet address for payout
     walletAddress: addr,
-    // amount hint (commonly supported)
     defaultAmount: amt
   });
 
@@ -1733,7 +1612,6 @@ function buildOnrampLink(){
 function refreshOnramp(){
   refreshFiatUnit();
   const link = buildOnrampLink();
-  // button is a <button> (not <a>), so we'll open in new tab on click
   onrampBtn.dataset.href = link;
 }
 regionSelect?.addEventListener('change', refreshOnramp);
@@ -1743,14 +1621,10 @@ onrampBtn?.addEventListener('click', () => {
   const link = onrampBtn.dataset.href || buildOnrampLink();
   window.open(link, '_blank', 'noopener,noreferrer');
 });
-
-copyOnrampBtn?.addEventListener('click', async () => {
-  await copyText(buildOnrampLink(), copiedPill); // reuse pill
-});
+copyOnrampBtn?.addEventListener('click', () => copyText(buildOnrampLink(), copiedPillBtc));
 
 /* ✅ IP/Geo region autodetect (EU/US) */
 async function detectRegionByIP(){
-  // We only need country. If blocked, fall back to EU.
   try{
     const res = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
     if(!res.ok) throw new Error('geo failed');
@@ -1766,9 +1640,11 @@ async function detectRegionByIP(){
 }
 
 window.addEventListener('load', () => {
+  refreshFund();
   detectRegionByIP();
   refreshFiatUnit();
   refreshOnramp();
+  setPayment('btc');
 });
 </script>
 
