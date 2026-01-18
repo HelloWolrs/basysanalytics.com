@@ -11,6 +11,7 @@
 :root{
   --accent:#f2a900;
   --glass: rgba(10,15,25,.38);
+
   --text-main: rgba(232,238,248,.90);
   --text-muted: rgba(160,172,188,.85);
 }
@@ -85,7 +86,6 @@ nav{
   align-items:center;
   width:100%;
 }
-
 nav a, .nav-group-toggle{
   font-size:12px;
   letter-spacing:2px;
@@ -101,14 +101,8 @@ nav a, .nav-group-toggle{
   border:none;
   cursor:pointer;
 }
-nav a:hover, .nav-group-toggle:hover{
-  opacity:1;
-  color:var(--accent);
-}
-nav a.active{
-  opacity:1;
-  color:var(--accent);
-}
+nav a:hover, .nav-group-toggle:hover{ opacity:1; color:var(--accent); }
+nav a.active{ opacity:1; color:var(--accent); }
 nav a.active::after{
   content:"";
   position:absolute;
@@ -132,14 +126,12 @@ nav a.login-link.active::after{ display:none; }
 
 /* ===== Initiatives dropdown ===== */
 .nav-group{ position:relative; }
-
 .nav-group-toggle{
   display:inline-flex;
   align-items:center;
   gap:8px;
   opacity:.85;
 }
-
 .chevron{
   font-size:13px;
   font-weight:900;
@@ -151,10 +143,7 @@ nav a.login-link.active::after{ display:none; }
 .nav-group-toggle:hover .chevron{ color:var(--accent); }
 .nav-group.open .chevron{ transform:translateY(-1px) rotate(180deg); }
 
-.nav-group.has-active .nav-group-toggle{
-  opacity:1;
-  color:var(--accent);
-}
+.nav-group.has-active .nav-group-toggle{ opacity:1; color:var(--accent); }
 .nav-group.has-active .nav-group-toggle::after{
   content:"";
   position:absolute;
@@ -569,7 +558,7 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   color:var(--text-main);
 }
 
-/* ===================== EDUCATION FUND (Wallet + Card/Bank) ===================== */
+/* ===================== EDUCATION FUND (BTC + Lightning + USDT ERC-20 + Card/Bank) ===================== */
 .fund-meta{
   margin-top:14px;
   display:flex;
@@ -594,15 +583,18 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 .badge.btc{
   border-color: rgba(242,169,0,.28);
   background: rgba(242,169,0,.10);
-  color: var(--text-main);
+}
+.badge.usdt{
+  border-color: rgba(38, 205, 147, .28);
+  background: rgba(38, 205, 147, .10);
 }
 .badge .dot-mini{
   width:9px;height:9px;border-radius:50%;
   background: var(--accent);
   box-shadow:0 0 12px rgba(242,169,0,.20);
 }
+.badge .dot-mini.usdt{ background: rgba(38, 205, 147, .95); box-shadow:0 0 12px rgba(38,205,147,.20); }
 
-/* fund controls */
 .fund-controls{
   margin-top:16px;
   display:flex;
@@ -611,6 +603,7 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   gap:12px;
   flex-wrap:wrap;
 }
+
 .seg{
   display:inline-flex;
   border-radius:14px;
@@ -640,6 +633,14 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   border:1px solid rgba(242,169,0,.35);
   color:var(--text-main);
   box-shadow:0 14px 30px rgba(0,0,0,.25);
+}
+
+/* card tab: subtle icon spacing */
+.seg button .tab-ico{
+  display:inline-flex;
+  margin-right:8px;
+  opacity:.95;
+  transform: translateY(1px);
 }
 
 .region{
@@ -677,7 +678,7 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   cursor:pointer;
 }
 
-/* fund panels */
+/* panels */
 .fund-panels{ margin-top:16px; }
 .fund-panel{ display:none; }
 .fund-panel.active{ display:block; }
@@ -685,10 +686,11 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 .fund-grid{
   margin-top:14px;
   display:grid;
-  grid-template-columns: 180px 1fr;
+  grid-template-columns: 190px 1fr;
   gap:16px;
   align-items:start;
 }
+
 .qr-wrap{
   border-radius:16px;
   border:1px solid rgba(255,255,255,.10);
@@ -701,8 +703,8 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   justify-content:center;
 }
 .qr{
-  width:156px;
-  height:156px;
+  width:166px;
+  height:166px;
   border-radius:12px;
   overflow:hidden;
   background:rgba(255,255,255,.04);
@@ -713,52 +715,65 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
 }
 .qr canvas, .qr img{ width:100% !important; height:100% !important; display:block; }
 
-.wallet-box{
-  margin-top:0;
-  position:relative;
+/* ✅ Removed big middle address frame: compact row instead */
+.addr-row{
   display:flex;
-  gap:12px;
   align-items:center;
   justify-content:space-between;
-  padding:14px 16px;
+  gap:10px;
+  padding:10px 12px;
   border-radius:14px;
-  background-color: rgba(10,15,25,.22);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
   border:1px solid rgba(255,255,255,.10);
+  background:rgba(255,255,255,.03);
 }
-.wallet-address{
+.addr-left{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:0;
+}
+.addr-label{
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+}
+.addr-value{
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-  font-size:.96rem;
-  letter-spacing:.4px;
-  opacity:.95;
-  overflow-wrap:anywhere;
+  font-size:.92rem;
+  letter-spacing:.3px;
   color:var(--text-main);
-  line-height:1.35;
+  opacity:.96;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width: 520px;
 }
-.copy-btn{
+.icon-btn{
   flex:0 0 auto;
-  padding:10px 14px;
-  border-radius:10px;
-  border:1px solid rgba(242,169,0,.35);
-  background:rgba(242,169,0,.12);
+  width:42px;
+  height:42px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.04);
   color:var(--text-main);
   cursor:pointer;
-  font-weight:800;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  font-size:.72rem;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   transition:.2s;
 }
-.copy-btn:hover{
+.icon-btn:hover{
   transform:translateY(-1px);
-  background:rgba(242,169,0,.18);
-  border-color:rgba(242,169,0,.55);
+  border-color:rgba(242,169,0,.35);
+  background:rgba(242,169,0,.10);
 }
+
 .copied-pill{
-  position:absolute;
-  right:14px;
-  top:-12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
   padding:6px 10px;
   border-radius:999px;
   font-size:.72rem;
@@ -772,11 +787,10 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   transform: translateY(4px);
   transition: .22s ease;
   pointer-events:none;
+  margin-top:10px;
+  width:max-content;
 }
-.copied-pill.show{
-  opacity:1;
-  transform: translateY(0);
-}
+.copied-pill.show{ opacity:1; transform: translateY(0); }
 
 .fund-actions{
   margin-top:12px;
@@ -812,6 +826,20 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   background: rgba(242,169,0,.18);
 }
 
+/* credit card button: clearer */
+.action-btn.card{
+  border-color: rgba(242,169,0,.45);
+  background: rgba(242,169,0,.14);
+}
+.action-btn.card:hover{
+  border-color: rgba(242,169,0,.60);
+  background: rgba(242,169,0,.20);
+}
+.card-ico{
+  width:18px;height:18px;
+  display:inline-block;
+}
+
 .small-note{
   margin-top:10px;
   color:var(--text-muted);
@@ -820,12 +848,71 @@ body.scrolled .analytics-rest{ color: var(--text-muted); }
   opacity:.92;
 }
 
-.fund-note{
+.warn{
   margin-top:10px;
-  opacity:.82;
-  font-size:.9rem;
-  line-height:1.6;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.03);
+  color: var(--text-muted);
+  font-size:.92rem;
+  line-height:1.55;
+}
+.warn strong{ color: var(--text-main); }
+
+.compliance{
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.10);
+  color:rgba(160,172,188,.80);
+  font-size:.88rem;
+  line-height:1.55;
+}
+
+/* Amount input */
+.amount-row{
+  margin-top:14px;
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+.amount{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(10,15,25,.22);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.amount label{
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  opacity:.85;
+}
+.amount input{
+  width:140px;
+  padding:0;
+  margin:0;
+  border:0;
+  outline:none;
+  background:transparent;
   color:var(--text-main);
+  font-weight:900;
+  letter-spacing:.02em;
+  font-size:1rem;
+}
+.amount .unit{
+  font-size:.78rem;
+  font-weight:900;
+  letter-spacing:.08em;
+  opacity:.85;
+  text-transform:uppercase;
 }
 
 /* Reveal */
@@ -951,11 +1038,10 @@ footer{
   .login-link{ margin-left:0; text-align:center; }
 
   .fund-grid{ grid-template-columns: 1fr; }
-  .qr{ width:170px; height:170px; }
+  .qr{ width:180px; height:180px; }
   .fund-controls{ align-items:stretch; }
   .region{ margin-left:0; }
-  .wallet-box{ flex-direction:column; align-items:stretch; }
-  .copy-btn{ width:100%; }
+  .addr-value{ max-width: 100%; }
 }
 
 @media (max-width: 900px){
@@ -1131,19 +1217,32 @@ footer{
     </div>
 
     <div class="fund-meta">
-      <span class="badge btc"><span class="dot-mini"></span> Bitcoin Only</span>
-      <span class="badge">On-chain BTC address</span>
-      <span class="badge">Card/Bank via onramp</span>
+      <span class="badge btc"><span class="dot-mini"></span> Bitcoin</span>
+      <span class="badge btc"><span class="dot-mini"></span> Lightning</span>
+      <span class="badge usdt"><span class="dot-mini usdt"></span> USDT (ERC-20)</span>
+      <span class="badge">Card/Bank → BTC</span>
     </div>
 
     <div class="fund-controls">
       <div class="seg" role="tablist" aria-label="Payment method">
         <button class="active" id="tabBtc" type="button" role="tab" aria-selected="true">Bitcoin</button>
-        <button id="tabCard" type="button" role="tab" aria-selected="false">Card / Bank</button>
+        <button id="tabLn" type="button" role="tab" aria-selected="false">Lightning</button>
+        <button id="tabUsdt" type="button" role="tab" aria-selected="false">USDT</button>
+        <button id="tabCard" type="button" role="tab" aria-selected="false">
+          <span class="tab-ico" aria-hidden="true">
+            <!-- credit card icon -->
+            <svg class="card-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <path d="M3 10h18"></path>
+              <path d="M7 15h3"></path>
+            </svg>
+          </span>
+          Card / Bank
+        </button>
       </div>
 
       <div class="region">
-        <div class="select" title="Auto-detected from browser, can be changed">
+        <div class="select" title="Auto-detected via IP (can be changed)">
           <label for="regionSelect">Region</label>
           <select id="regionSelect">
             <option value="EU">EU</option>
@@ -1162,46 +1261,129 @@ footer{
           </div>
 
           <div>
-            <div class="wallet-box">
-              <div class="wallet-address" id="btcAddress">
-                bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3
+            <!-- ✅ no big frame; compact -->
+            <div class="addr-row">
+              <div class="addr-left">
+                <div class="addr-label">BTC Address</div>
+                <div class="addr-value" id="btcAddress">bc1qplaceholderaddressxxxxxxxxxxxxxxxxxxxxxx9p6m3</div>
               </div>
-
-              <button class="copy-btn" id="copyBtn" type="button">Copy</button>
-              <div class="copied-pill" id="copiedPill">Copied</div>
+              <button class="icon-btn" id="copyBtcBtn" type="button" aria-label="Copy BTC address">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                  <rect x="2" y="2" width="13" height="13" rx="2"></rect>
+                </svg>
+              </button>
             </div>
 
             <div class="fund-actions">
-              <a class="action-btn primary" id="openWalletBtn" href="#" rel="noopener">Open in Wallet</a>
-              <button class="action-btn" id="copyUriBtn" type="button">Copy bitcoin: link</button>
+              <a class="action-btn primary" id="openBtcWalletBtn" href="#" rel="noopener">Open Wallet</a>
             </div>
 
-            <div class="small-note">
-              This opens a standard <span class="highlight">bitcoin:</span> payment request in compatible wallets.
+            <div class="copied-pill" id="copiedPill">Copied</div>
+
+            <div class="warn">
+              <strong>Note:</strong> Placeholder address for layout/testing. Do not send funds to this address.
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="fund-note">
-          <span class="highlight">Note:</span> This is a placeholder address for layout/testing. Do not send funds to this address.
+      <!-- LIGHTNING PANEL -->
+      <div class="fund-panel" id="panelLn" role="tabpanel" aria-labelledby="tabLn">
+        <div class="fund-grid">
+          <div class="qr-wrap">
+            <div class="qr" id="lnQr" aria-label="Lightning QR"></div>
+          </div>
+
+          <div>
+            <div class="addr-row">
+              <div class="addr-left">
+                <div class="addr-label">Lightning Address</div>
+                <div class="addr-value" id="lnAddress">donate@basys.io</div>
+              </div>
+              <button class="icon-btn" id="copyLnBtn" type="button" aria-label="Copy Lightning address">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                  <rect x="2" y="2" width="13" height="13" rx="2"></rect>
+                </svg>
+              </button>
+            </div>
+
+            <div class="fund-actions">
+              <a class="action-btn primary" id="openLnWalletBtn" href="#" rel="noopener">Open Lightning Wallet</a>
+            </div>
+
+            <div class="copied-pill" id="copiedPillLn">Copied</div>
+
+            <div class="warn">
+              <strong>Note:</strong> Lightning invoices (BOLT11) are typically generated dynamically. This uses a Lightning Address (placeholder).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- USDT ERC-20 PANEL -->
+      <div class="fund-panel" id="panelUsdt" role="tabpanel" aria-labelledby="tabUsdt">
+        <div class="fund-grid">
+          <div class="qr-wrap">
+            <div class="qr" id="usdtQr" aria-label="USDT ERC-20 QR"></div>
+          </div>
+
+          <div>
+            <div class="addr-row">
+              <div class="addr-left">
+                <div class="addr-label">USDT Address (ERC-20)</div>
+                <div class="addr-value" id="usdtAddress">0xplaceholderERC20Addressxxxxxxxxxxxxxxxxxxxx</div>
+              </div>
+              <button class="icon-btn" id="copyUsdtBtn" type="button" aria-label="Copy USDT address">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2"></rect>
+                  <rect x="2" y="2" width="13" height="13" rx="2"></rect>
+                </svg>
+              </button>
+            </div>
+
+            <div class="fund-actions">
+              <a class="action-btn primary" id="openUsdtWalletBtn" href="#" rel="noopener">Open Wallet</a>
+            </div>
+
+            <div class="copied-pill" id="copiedPillUsdt">Copied</div>
+
+            <div class="warn">
+              <strong>Important:</strong> Only send <strong>USDT</strong> on the <strong>Ethereum (ERC-20)</strong> network.
+              Sending on the wrong network may result in loss of funds.
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- CARD / BANK PANEL -->
       <div class="fund-panel" id="panelCard" role="tabpanel" aria-labelledby="tabCard">
         <div class="summary-box" style="margin-top:14px;">
-          <strong>Card / Bank (EU/US):</strong> This option redirects to a regulated onramp that lets you buy BTC and send it to the fund address.
+          <strong>Card / Bank:</strong> Redirects to a regulated onramp to buy <span class="highlight">BTC</span> and send it to the fund address.
         </div>
 
-        <div class="fund-actions" style="margin-top:14px;">
-          <a class="action-btn primary" id="onrampBtn" href="#" target="_blank" rel="noopener">
-            Buy BTC & Send
-          </a>
+        <div class="amount-row">
+          <div class="amount">
+            <label for="fiatAmount">Amount</label>
+            <input id="fiatAmount" inputmode="decimal" placeholder="50" value="50" />
+            <div class="unit" id="fiatUnit">EUR</div>
+          </div>
+
+          <button class="action-btn card" id="onrampBtn" type="button">
+            <svg class="card-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <path d="M3 10h18"></path>
+              <path d="M7 15h3"></path>
+            </svg>
+            Pay with Credit Card
+          </button>
+
           <button class="action-btn" id="copyOnrampBtn" type="button">Copy checkout link</button>
         </div>
 
-        <div class="small-note">
-          Provider availability depends on your region. If one provider is unavailable, try switching region or use direct on-chain BTC.
+        <div class="compliance">
+          Payments via card/bank are processed by third-party providers. Fees, exchange rates, and KYC/verification requirements may apply depending on region and provider availability.
         </div>
       </div>
     </div>
@@ -1249,7 +1431,7 @@ footer{
   <div style="margin-top:10px; opacity:.65;">© 2026 Basys Analytics. All rights reserved.</div>
 </footer>
 
-<!-- QR generator (small, reliable) -->
+<!-- QR generator -->
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 
 <script>
@@ -1337,23 +1519,6 @@ window.addEventListener('scroll', () => requestAnimationFrame(spy), { passive:tr
 window.addEventListener('load', spy);
 window.addEventListener('resize', spy);
 
-/* Copy BTC */
-const copyBtn = document.getElementById('copyBtn');
-const btcAddress = document.getElementById('btcAddress');
-const copiedPill = document.getElementById('copiedPill');
-
-copyBtn?.addEventListener('click', async () => {
-  try{
-    await navigator.clipboard.writeText(btcAddress.textContent.trim());
-    copiedPill?.classList.add('show');
-    setTimeout(() => copiedPill?.classList.remove('show'), 900);
-  }catch(e){
-    const prev = copyBtn.textContent;
-    copyBtn.textContent = 'Copy failed';
-    setTimeout(() => (copyBtn.textContent = prev), 900);
-  }
-});
-
 /* ✅ Parallax (lighter + throttled via rAF) */
 const sky = document.querySelector('#home .sky-layer');
 let rafId = null;
@@ -1399,142 +1564,211 @@ document.addEventListener('click', (e) => {
   scrollToTarget(hash);
 });
 
-/* ===================== FUND: BTC QR + Wallet URI + Onramp ===================== */
+/* ===================== FUND LOGIC ===================== */
 
 /* Tabs */
 const tabBtc = document.getElementById('tabBtc');
+const tabLn = document.getElementById('tabLn');
+const tabUsdt = document.getElementById('tabUsdt');
 const tabCard = document.getElementById('tabCard');
+
 const panelBtc = document.getElementById('panelBtc');
+const panelLn = document.getElementById('panelLn');
+const panelUsdt = document.getElementById('panelUsdt');
 const panelCard = document.getElementById('panelCard');
 
 function setFundTab(which){
-  const btcActive = which === 'btc';
-  tabBtc.classList.toggle('active', btcActive);
-  tabCard.classList.toggle('active', !btcActive);
-  tabBtc.setAttribute('aria-selected', btcActive ? 'true' : 'false');
-  tabCard.setAttribute('aria-selected', !btcActive ? 'true' : 'false');
-  panelBtc.classList.toggle('active', btcActive);
-  panelCard.classList.toggle('active', !btcActive);
+  const map = {
+    btc: [tabBtc, panelBtc],
+    ln: [tabLn, panelLn],
+    usdt: [tabUsdt, panelUsdt],
+    card: [tabCard, panelCard]
+  };
+
+  Object.entries(map).forEach(([key, [btn, panel]]) => {
+    const active = key === which;
+    btn?.classList.toggle('active', active);
+    btn?.setAttribute('aria-selected', active ? 'true' : 'false');
+    panel?.classList.toggle('active', active);
+  });
 }
 tabBtc?.addEventListener('click', () => setFundTab('btc'));
+tabLn?.addEventListener('click', () => setFundTab('ln'));
+tabUsdt?.addEventListener('click', () => setFundTab('usdt'));
 tabCard?.addEventListener('click', () => setFundTab('card'));
 
-/* Region detection (simple: US if en-US, otherwise EU) + manual override */
-const regionSelect = document.getElementById('regionSelect');
+/* Elements */
+const copiedPill = document.getElementById('copiedPill');
+const copiedPillLn = document.getElementById('copiedPillLn');
+const copiedPillUsdt = document.getElementById('copiedPillUsdt');
 
-function autoRegion(){
-  const lang = (navigator.language || '').toLowerCase();
-  const tz = (Intl.DateTimeFormat().resolvedOptions().timeZone || '').toLowerCase();
+const btcAddressEl = document.getElementById('btcAddress');
+const lnAddressEl = document.getElementById('lnAddress');
+const usdtAddressEl = document.getElementById('usdtAddress');
 
-  // strong US hints
-  if (lang.includes('en-us') || tz.includes('america/')) return 'US';
-  return 'EU';
-}
-if (regionSelect){
-  regionSelect.value = autoRegion();
-}
-
-/* Build bitcoin: URI + QR */
-const openWalletBtn = document.getElementById('openWalletBtn');
-const copyUriBtn = document.getElementById('copyUriBtn');
 const btcQr = document.getElementById('btcQr');
+const lnQr = document.getElementById('lnQr');
+const usdtQr = document.getElementById('usdtQr');
 
-function getBtcAddress(){
-  return (btcAddress?.textContent || '').trim();
+const openBtcWalletBtn = document.getElementById('openBtcWalletBtn');
+const openLnWalletBtn = document.getElementById('openLnWalletBtn');
+const openUsdtWalletBtn = document.getElementById('openUsdtWalletBtn');
+
+const copyBtcBtn = document.getElementById('copyBtcBtn');
+const copyLnBtn = document.getElementById('copyLnBtn');
+const copyUsdtBtn = document.getElementById('copyUsdtBtn');
+
+function showPill(pill){
+  pill?.classList.add('show');
+  setTimeout(() => pill?.classList.remove('show'), 900);
 }
 
-function buildBitcoinUri(){
-  const addr = getBtcAddress();
-  // Keep simple + compatible: bitcoin:<address>
-  // (Optional params like amount= are omitted because we’d need conversion UI)
-  return `bitcoin:${addr}`;
-}
-
-function refreshBtcQr(){
-  if (!btcQr) return;
-  const uri = buildBitcoinUri();
-
-  // clear previous
-  btcQr.innerHTML = '';
-
-  // generate QR (uses qrcode library loaded above)
-  if (window.QRCode && typeof QRCode.toCanvas === 'function') {
-    const canvas = document.createElement('canvas');
-    btcQr.appendChild(canvas);
-    QRCode.toCanvas(canvas, uri, {
-      margin: 1,
-      width: 156,
-      errorCorrectionLevel: 'M'
-    }, (err) => {
-      if (err) {
-        btcQr.textContent = 'QR unavailable';
-      }
-    });
-  } else {
-    btcQr.textContent = uri;
-  }
-
-  // update wallet open link
-  if (openWalletBtn) openWalletBtn.href = uri;
-}
-window.addEventListener('load', refreshBtcQr);
-
-copyUriBtn?.addEventListener('click', async () => {
+async function copyText(text, pill){
   try{
-    await navigator.clipboard.writeText(buildBitcoinUri());
-    copiedPill?.classList.add('show');
-    setTimeout(() => copiedPill?.classList.remove('show'), 900);
+    await navigator.clipboard.writeText(text);
+    showPill(pill);
   }catch(e){
     // no-op
   }
-});
+}
 
-/* Onramp link (EU/US) — uses Onramper aggregator link (placeholder-friendly).
-   You can swap this to Ramp/Transak/MoonPay later. */
+/* URIs */
+function getBtcAddress(){ return (btcAddressEl?.textContent || '').trim(); }
+function getLnAddress(){ return (lnAddressEl?.textContent || '').trim(); }
+function getUsdtAddress(){ return (usdtAddressEl?.textContent || '').trim(); }
+
+function btcUri(){ return `bitcoin:${getBtcAddress()}`; }
+
+/* Lightning: use "lightning:" with lightning address (works in many apps; some prefer lnurl/bolt11) */
+function lnUri(){
+  const a = getLnAddress();
+  return `lightning:${a}`;
+}
+
+/* USDT ERC-20: safest deeplink is to just open address in wallet.
+   Some wallets support "ethereum:" scheme. We'll provide a compatible hint: ethereum:<address>
+*/
+function usdtUri(){
+  const addr = getUsdtAddress();
+  return `ethereum:${addr}`;
+}
+
+/* QR helper */
+function renderQr(node, text){
+  if(!node) return;
+  node.innerHTML = '';
+  if (window.QRCode && typeof QRCode.toCanvas === 'function') {
+    const canvas = document.createElement('canvas');
+    node.appendChild(canvas);
+    QRCode.toCanvas(canvas, text, { margin:1, width:166, errorCorrectionLevel:'M' }, (err) => {
+      if (err) node.textContent = 'QR unavailable';
+    });
+  } else {
+    node.textContent = text;
+  }
+}
+
+function refreshWalletBits(){
+  const b = btcUri();
+  const l = lnUri();
+  const u = usdtUri();
+
+  renderQr(btcQr, b);
+  renderQr(lnQr, l);
+  renderQr(usdtQr, getUsdtAddress()); // QR for raw address is most interoperable
+
+  if (openBtcWalletBtn) openBtcWalletBtn.href = b;
+  if (openLnWalletBtn) openLnWalletBtn.href = l;
+  if (openUsdtWalletBtn) openUsdtWalletBtn.href = u;
+}
+
+window.addEventListener('load', refreshWalletBits);
+
+/* Copy buttons */
+copyBtcBtn?.addEventListener('click', () => copyText(getBtcAddress(), copiedPill));
+copyLnBtn?.addEventListener('click', () => copyText(getLnAddress(), copiedPillLn));
+copyUsdtBtn?.addEventListener('click', () => copyText(getUsdtAddress(), copiedPillUsdt));
+
+/* ===================== CARD/BANK ONRAMP (BTC) ===================== */
+const regionSelect = document.getElementById('regionSelect');
+const fiatAmount = document.getElementById('fiatAmount');
+const fiatUnit = document.getElementById('fiatUnit');
 const onrampBtn = document.getElementById('onrampBtn');
 const copyOnrampBtn = document.getElementById('copyOnrampBtn');
 
+/* Update fiat unit */
+function refreshFiatUnit(){
+  const region = regionSelect?.value || 'EU';
+  if (fiatUnit) fiatUnit.textContent = (region === 'US') ? 'USD' : 'EUR';
+}
+regionSelect?.addEventListener('change', refreshFiatUnit);
+
+/* Build onramp link for BTC (Onramper aggregator). */
 function buildOnrampLink(){
-  const addr = encodeURIComponent(getBtcAddress());
-
-  // Basic intent:
-  // - buy BTC
-  // - withdraw/send to the given address
-  // - set a region hint
   const region = (regionSelect?.value || 'EU');
-
-  // Country hint: EU -> DE (default), US -> US
+  const fiat = region === 'US' ? 'USD' : 'EUR';
   const country = region === 'US' ? 'US' : 'DE';
 
-  // Onramper style link (works as an external checkout page)
-  // Note: parameter names can vary by provider; this is a practical, common pattern.
+  // amount (sanitize)
+  const amtRaw = (fiatAmount?.value || '').trim().replace(',', '.');
+  const amt = (amtRaw && !isNaN(Number(amtRaw)) && Number(amtRaw) > 0) ? amtRaw : '50';
+
+  // send BTC to BTC address
+  const addr = encodeURIComponent(getBtcAddress());
+
   const base = 'https://buy.onramper.com/';
   const params = new URLSearchParams({
     defaultCrypto: 'BTC',
-    defaultFiat: region === 'US' ? 'USD' : 'EUR',
-    country,
-    walletAddress: addr
+    defaultFiat: fiat,
+    country: country,
+    // wallet address for payout
+    walletAddress: addr,
+    // amount hint (commonly supported)
+    defaultAmount: amt
   });
 
   return `${base}?${params.toString()}`;
 }
 
 function refreshOnramp(){
+  refreshFiatUnit();
   const link = buildOnrampLink();
-  if (onrampBtn) onrampBtn.href = link;
+  // button is a <button> (not <a>), so we'll open in new tab on click
+  onrampBtn.dataset.href = link;
 }
-
 regionSelect?.addEventListener('change', refreshOnramp);
-window.addEventListener('load', refreshOnramp);
+fiatAmount?.addEventListener('input', refreshOnramp);
+
+onrampBtn?.addEventListener('click', () => {
+  const link = onrampBtn.dataset.href || buildOnrampLink();
+  window.open(link, '_blank', 'noopener,noreferrer');
+});
 
 copyOnrampBtn?.addEventListener('click', async () => {
+  await copyText(buildOnrampLink(), copiedPill); // reuse pill
+});
+
+/* ✅ IP/Geo region autodetect (EU/US) */
+async function detectRegionByIP(){
+  // We only need country. If blocked, fall back to EU.
   try{
-    await navigator.clipboard.writeText(buildOnrampLink());
-    copiedPill?.classList.add('show');
-    setTimeout(() => copiedPill?.classList.remove('show'), 900);
+    const res = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
+    if(!res.ok) throw new Error('geo failed');
+    const data = await res.json();
+    const country = (data && data.country) ? String(data.country).toUpperCase() : '';
+    const region = (country === 'US') ? 'US' : 'EU';
+    if (regionSelect) regionSelect.value = region;
   }catch(e){
-    // no-op
+    if (regionSelect) regionSelect.value = 'EU';
+  }finally{
+    refreshOnramp();
   }
+}
+
+window.addEventListener('load', () => {
+  detectRegionByIP();
+  refreshFiatUnit();
+  refreshOnramp();
 });
 </script>
 
