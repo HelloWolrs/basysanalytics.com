@@ -181,10 +181,7 @@ nav a.login-link.active::after{ display:none; }
   display:none;
   padding:10px;
   border-radius:14px;
-
-  /* keep readable vs super transparent cards */
   background:rgba(10,15,25,.78);
-
   backdrop-filter:blur(14px);
   border:1px solid rgba(255,255,255,.10);
   box-shadow:0 20px 50px rgba(0,0,0,.55);
@@ -233,7 +230,7 @@ section{
   scroll-margin-top:90px;
 }
 
-/* ===== HERO overrides global bg ===== */
+/* ===== HERO ===== */
 #home{
   position:relative;
   overflow:hidden;
@@ -243,28 +240,12 @@ section{
 /* ✅ star-sky as its own layer (seam-free parallax) */
 #home .sky-layer{
   position:absolute;
-  inset:0;
+  inset:-20px;                 /* ✅ slight overscan to avoid any edge on scroll */
   background: url("hero-sky.png") no-repeat center top;
   background-size: cover;
   transform: translate3d(0,0,0);
   will-change: transform;
   z-index:0;
-}
-
-/* ✅ hide any residual seam at bottom */
-#home::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-  background: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0) 0%,
-    rgba(0,0,0,0) 65%,
-    rgba(0,0,0,.22) 85%,
-    rgba(0,0,0,.48) 100%
-  );
 }
 
 /* Film grain overlay (hero only) */
@@ -273,7 +254,7 @@ section{
   position:absolute;
   inset:0;
   pointer-events:none;
-  opacity:.05; /* ✅ reduced (avoid bright band) */
+  opacity:.05;
   mix-blend-mode:overlay;
   z-index:1;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
@@ -283,7 +264,7 @@ section{
 /* Ensure content stays above sky/grain */
 #home > *{ position:relative; z-index:2; }
 
-/* ✅ Twinkle layer FIX (pan bg, no transform seams) */
+/* ✅ Twinkle layer (pan bg, no transform seams) */
 .twinkle{
   position:absolute;
   inset:0;
@@ -303,15 +284,18 @@ section{
   to{ background-position: 40px -30px, 100px 40px; }
 }
 
-/* Hero stage (✅ 20% smaller) */
+/* Hero stage (20% smaller) */
 .hero-stage{
   position:relative;
-  width:min(368px, 78vw); /* ✅ ~20% smaller */
+  width:min(368px, 78vw);
   aspect-ratio: 1 / 1;
   display:flex;
   align-items:center;
   justify-content:center;
   margin-top:-6px;
+
+  /* ✅ lets us scale text to ALWAYS fit inside the globe */
+  container-type: inline-size;
 }
 
 @keyframes rotate-earth{
@@ -319,26 +303,24 @@ section{
   to{ transform:rotate(360deg); }
 }
 
-/* Globe rotator: mask + zoom removes rim */
+/* Globe rotator */
 .globe-rotator{
   position:absolute;
   inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  animation: rotate-earth 240s linear infinite; /* slow */
+  animation: rotate-earth 240s linear infinite;
   border-radius:50%;
   overflow:hidden;
   will-change: transform;
 
-  /* Terminator shading */
   background:
     radial-gradient(circle at 70% 50%,
       rgba(0,0,0,0) 45%,
       rgba(0,0,0,.30) 70%,
       rgba(0,0,0,.52) 100%);
 
-  /* Feather mask to kill any ring */
   -webkit-mask-image: radial-gradient(circle, #000 90%, transparent 100%);
   mask-image: radial-gradient(circle, #000 90%, transparent 100%);
 }
@@ -374,7 +356,7 @@ section{
 
 .globe-rotator img{
   position:relative;
-  width:110%;   /* ✅ slightly less zoomed than before */
+  width:110%;
   height:110%;
   object-fit:cover;
   object-position:center;
@@ -386,7 +368,7 @@ section{
     brightness(1.05);
 }
 
-/* Hero text (static) */
+/* Hero text (always inside globe) */
 .hero-text{
   position:absolute;
   inset:0;
@@ -395,52 +377,36 @@ section{
   align-items:center;
   justify-content:center;
   pointer-events:none;
+
+  /* ✅ keep text safely inside circle */
+  padding: 0 10%;
+  text-align:center;
 }
 
+/* ✅ Container-query sizing: always fits the globe */
 .brand{
-  font-size:clamp(2.2rem, 4.6vw, 3.2rem);
   font-weight:800;
-  letter-spacing:.04em;
+  letter-spacing:.03em;
   text-shadow:0 14px 30px rgba(0,0,0,.6);
+  white-space:nowrap;
+  line-height:1.05;
+
+  /* scales with globe size */
+  font-size: clamp(1.6rem, 10cqw, 3.0rem);
 }
 
-/* Orange ₿ + A glow (subtle) + calmer on scroll */
-.btc{
-  color:var(--accent);
-  text-shadow:
-    0 0 6px rgba(242,169,0,.18),
-    0 0 14px rgba(242,169,0,.12);
-  transition:text-shadow .4s ease;
-}
-
-/* same grey for "asys" + "nalytics" */
-.analytics-rest{
-  color: var(--text-main);
-  font-weight:700;
-  opacity:1;
-  transition: color .35s ease, opacity .35s ease;
-}
-
-/* Scroll state: text slightly calmer, glow slightly reduced */
-body.scrolled .analytics-rest{
-  color: var(--text-muted);
-}
-body.scrolled .btc{
-  text-shadow:
-    0 0 4px rgba(242,169,0,.12),
-    0 0 10px rgba(242,169,0,.08);
-}
-
-/* Observe · Learn · Lead */
 .brand-claim{
-  margin-top:14px;
-  font-size:1.25rem;
+  margin-top:12px;
   letter-spacing:.14em;
   opacity:.95;
   text-transform:uppercase;
   display:flex;
   align-items:center;
   justify-content:center;
+  gap:0;
+  white-space:nowrap;
+
+  font-size: clamp(.78rem, 4.1cqw, 1.15rem);
 }
 
 .brand-claim > span{
@@ -453,16 +419,49 @@ body.scrolled .btc{
   font-weight:900;
 }
 
-/* ✅ dots in same grey (not black) */
+/* Orange ₿ + A glow */
+.btc{
+  color:var(--accent);
+  text-shadow:
+    0 0 6px rgba(242,169,0,.18),
+    0 0 14px rgba(242,169,0,.12);
+  transition:text-shadow .4s ease;
+}
+
+.analytics-rest{
+  color: var(--text-main);
+  font-weight:700;
+  opacity:1;
+  transition: color .35s ease, opacity .35s ease;
+}
+
+/* Scroll state: text slightly calmer, glow slightly reduced */
+body.scrolled .analytics-rest{ color: var(--text-muted); }
+body.scrolled .btc{
+  text-shadow:
+    0 0 4px rgba(242,169,0,.12),
+    0 0 10px rgba(242,169,0,.08);
+}
+
+/* dots in same grey */
 .dot{
   width:10px;
   height:10px;
   border-radius:50%;
   background: var(--text-muted);
   display:inline-block;
-  margin:0 22px;
+  margin:0 18px;
   box-shadow:0 0 14px rgba(0,0,0,.22);
   opacity:.55;
+}
+
+/* Scale dots a bit with globe too */
+@container (min-width: 260px){
+  .dot{
+    width: clamp(7px, 2.2cqw, 10px);
+    height: clamp(7px, 2.2cqw, 10px);
+    margin: 0 clamp(12px, 4cqw, 18px);
+  }
 }
 
 .hero-claim{
@@ -726,7 +725,7 @@ footer{
   section{ padding:135px 8% 110px; }
   .glass-card{ padding:36px; }
   .hero-claim{ white-space:normal; letter-spacing:1.2px; line-height:1.35; }
-  .hero-stage{ width:min(416px, 86vw); } /* ✅ ~20% smaller for mobile */
+  .hero-stage{ width:min(416px, 86vw); } /* ~20% smaller for mobile */
 }
 </style>
 </head>
@@ -773,7 +772,6 @@ footer{
     </div>
 
     <div class="hero-text">
-      <!-- ✅ ₿ + A orange, asys/nalytics grey -->
       <div class="brand" aria-label="Basys Analytics">
         <span class="btc">₿</span><span class="analytics-rest">asys</span>
         <span style="margin-left:6px;">
@@ -834,7 +832,7 @@ footer{
   </a>
 </section>
 
-<!-- ANALYTICS (long version) -->
+<!-- ANALYTICS -->
 <section id="analytics" data-section="analytics">
   <div class="glass-card reveal">
     <h2 style="color: var(--accent); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px;">
@@ -935,7 +933,7 @@ footer{
     </form>
   </div>
 
-  <!-- ✅ Back to Home arrow -->
+  <!-- Back to Home arrow -->
   <a href="#home" class="scroll-indicator reveal up" aria-label="Back to Home">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M7 11l5-5 5 5M7 18l5-5 5 5"></path>
@@ -985,7 +983,22 @@ toggle?.addEventListener('click', (e) => {
   const open = group.classList.toggle('open');
   toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
-document.addEventListener('click', () => group?.classList.remove('open'));
+
+/* close only when clicking outside */
+document.addEventListener('click', (e) => {
+  if (!group?.contains(e.target)) {
+    group?.classList.remove('open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  }
+});
+
+/* close dropdown when submenu link clicked */
+document.querySelectorAll('.nav-group-menu a').forEach(a => {
+  a.addEventListener('click', () => {
+    group?.classList.remove('open');
+    toggle?.setAttribute('aria-expanded', 'false');
+  });
+});
 
 /* Reveal animations */
 const revealEls = document.querySelectorAll('.reveal');
@@ -1042,12 +1055,12 @@ copyBtn?.addEventListener('click', async () => {
   }
 });
 
-/* ✅ Parallax (seam-free): move sky layer via transform */
+/* ✅ Parallax (seam-free): move sky layer via transform (no bottom stripe) */
 const sky = document.querySelector('#home .sky-layer');
 window.addEventListener('scroll', () => {
   if(!sky) return;
   const yRaw = window.scrollY * 0.12;
-  const y = Math.max(0, Math.min(140, yRaw)); // clamp => stable, no seam
+  const y = Math.max(0, Math.min(140, yRaw)); // clamp => stable
   sky.style.transform = `translate3d(0, ${-y}px, 0)`;
 }, { passive:true });
 </script>
