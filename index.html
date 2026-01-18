@@ -14,7 +14,7 @@
   /* transparent glass default */
   --glass: rgba(10,15,25,.38);
 
-  /* darker readable text system */
+  /* readable text system */
   --text-main: rgba(232,238,248,.92);
   --text-muted: rgba(160,172,188,.82);
 
@@ -110,7 +110,6 @@ nav a, .nav-group-toggle{
   border:none;
   cursor:pointer;
 }
-
 nav a:hover, .nav-group-toggle:hover{
   opacity:1;
   color:var(--accent);
@@ -162,7 +161,6 @@ nav a.login-link.active::after{ display:none; }
 .nav-group-toggle:hover .chevron{ color:var(--accent); }
 .nav-group.open .chevron{ transform:translateY(-1px) rotate(180deg); }
 
-/* If Token/Fund active, mark Initiatives too */
 .nav-group.has-active .nav-group-toggle{
   opacity:1;
   color:var(--accent);
@@ -177,7 +175,6 @@ nav a.login-link.active::after{ display:none; }
   box-shadow:0 0 18px rgba(242,169,0,.25);
 }
 
-/* Smooth dropdown */
 .nav-group-menu{
   position:absolute;
   top:calc(100% + 10px);
@@ -407,7 +404,6 @@ section{
   padding: 0 10%;
   text-align:center;
 }
-
 .globe-stack{
   display:flex;
   flex-direction:column;
@@ -417,25 +413,22 @@ section{
   width:100%;
 }
 
-/* BASYS + ANALYTICS: now stacked (under each other), slightly bigger but constrained */
-.brand{
+/* LINE 1: BASYS ANALYTICS (one line) */
+.brand.one-line{
   width:100%;
-  max-width: 80%;
+  max-width: 92%;
   display:flex;
-  flex-direction:column;
-  align-items:center;
+  align-items:baseline;
   justify-content:center;
-  gap:6px;
-  transform: translateY(-2%);
+  white-space:nowrap;
+  gap:0;
   text-transform:uppercase;
   font-weight:900;
   line-height:1.02;
 
-  /* slightly larger than before, but safe */
-  font-size: clamp(1.18rem, 7.2cqw, 2.05rem);
+  font-size: clamp(1.02rem, 6.0cqw, 1.85rem);
 
   letter-spacing: 0;
-  white-space:nowrap;
   text-shadow:
     0 1px 0 rgba(0,0,0,.55),
     0 2px 12px rgba(0,0,0,.72),
@@ -443,80 +436,77 @@ section{
   -webkit-font-smoothing: antialiased;
   text-rendering: geometricPrecision;
 }
-.brand-line{
-  display:flex;
-  align-items:baseline;
-  justify-content:center;
-  gap:.02em;
-}
-.brand .btc{
+.brand.one-line .btc{
   color:var(--accent);
   font-weight:900;
-  font-size: 1.42em; /* bigger B/A */
+  font-size: 1.50em; /* bigger B/A */
   line-height: 0.95;
   text-shadow:
-    0 0 10px rgba(242,169,0,.22),
-    0 0 20px rgba(242,169,0,.12),
+    0 0 10px rgba(242,169,0,.20),
+    0 0 20px rgba(242,169,0,.10),
     0 2px 20px rgba(0,0,0,.70);
 }
-.analytics-rest{
+.brand.one-line .analytics-rest{
   color: var(--text-main);
   font-weight:850;
   opacity:1;
-  transition: color .35s ease, opacity .35s ease;
   text-shadow: 0 1px 10px rgba(0,0,0,.55);
+  transition: color .35s ease;
 }
-body.scrolled .analytics-rest{ color: var(--text-muted); }
+body.scrolled .brand.one-line .analytics-rest{ color: var(--text-muted); }
+.brand.one-line .spacer{ display:inline-block; width:.55ch; }
 
-/* O/L/L now vertical (under each other) with subtle thin dividers */
-.brand-claim{
+/* LINE 2: Observe | Learn | Lead (vertical dividers, subtle) */
+.brand-claim.inline{
   display:flex;
-  flex-direction:column;
-  align-items:center;
+  align-items:baseline;
   justify-content:center;
-  gap:7px;
+  gap:12px;
   width:100%;
-  max-width: 78%;
+  max-width: 92%;
   margin-inline:auto;
 
-  font-size: clamp(.82rem, 3.2cqw, 1.05rem);
-  letter-spacing:.10em;
+  font-size: clamp(.72rem, 2.55cqw, .96rem);
+  letter-spacing:.08em;
 
+  color: rgba(232,238,248,.98);
   text-shadow:
     0 2px 16px rgba(0,0,0,.62),
     0 0 28px rgba(0,0,0,.38);
 }
-.brand-claim .line{
-  display:flex;
+.brand-claim.inline .word{
+  display:inline-flex;
   align-items:baseline;
   justify-content:center;
 }
-.brand-claim .cap{
+.brand-claim.inline .cap{
   display:inline-block;
-  font-size: 1.32em;
+  font-size: 1.22em;
   font-weight: 900;
   margin-right: 2px;
   color: var(--accent);
   text-shadow:
-    0 0 8px rgba(242,169,0,.14),
+    0 0 8px rgba(242,169,0,.12),
     0 2px 16px rgba(0,0,0,.62);
 }
-.brand-claim .rest{
+.brand-claim.inline .rest{
   text-transform:lowercase;
   font-weight:850;
   color: var(--text-main);
 }
-body.scrolled .brand-claim .rest{ color: var(--text-muted); }
+body.scrolled .brand-claim.inline .rest{ color: var(--text-muted); }
 
-.divider{
-  width:34px;          /* thinner & less dominant */
-  height:2px;
+.vsep{
+  width:1px;
+  height:15px;
   border-radius:999px;
-  background: rgba(242,169,0,.85);
-  box-shadow: 0 0 10px rgba(242,169,0,.12);
+  background: rgba(242,169,0,.34);
+  box-shadow: 0 0 10px rgba(242,169,0,.07);
   opacity:.85;
+  transform: translateY(1px);
 }
 
+/* Hero claim */
 .hero-claim{
   margin-top:18px;
   text-align:center;
@@ -563,8 +553,6 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
     box-shadow .35s ease,
     transform .35s ease;
 }
-
-/* Hover */
 .glass-card:hover{
   background-color: rgba(10,15,25,.22);
   backdrop-filter: blur(26px);
@@ -572,8 +560,6 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
   box-shadow:0 30px 70px rgba(0,0,0,.65);
   transform: translateY(-2px);
 }
-
-/* Touch devices */
 @media (hover: none){
   .glass-card:hover{
     background-color: var(--glass);
@@ -640,7 +626,7 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
   gap:10px;
 }
 
-/* All tiles SAME size (BTC/USDT/Card/Region) */
+/* FORCE: all 4 tiles EXACT same size */
 .pay-card,
 .region-card{
   position:relative;
@@ -650,10 +636,20 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.035);
   color:var(--text-main);
-  cursor:pointer;
   transition:.18s;
+
+  height:64px;
   min-height:64px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+
+  overflow:hidden;
 }
+.pay-card{ cursor:pointer; }
+.region-card{ cursor:default; }
+
 .pay-card:hover,
 .region-card:hover{
   transform: translateY(-1px);
@@ -696,29 +692,42 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
 .pay-desc{
   margin-top:5px;
   font-size:.78rem;
-  line-height:1.25;
+  line-height:1.2;
   color: rgba(210,220,235,.86);
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-/* region card inner bits */
-.region-card{ cursor:default; }
-.region-card .r-hint{
-  margin-top:5px;
-  font-size:.78rem;
-  line-height:1.25;
-  color: rgba(210,220,235,.86);
+/* Region tile: keep everything in ONE line inside the fixed height */
+.region-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.region-left{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
 }
 .region-card select{
-  margin-top:7px;
-  width:100%;
+  width:96px;
+  height:30px;
+  flex:0 0 auto;
+
   border:1px solid rgba(255,255,255,.10);
   background: rgba(10,15,25,.18);
   color: var(--text-main);
   border-radius:10px;
-  padding:7px 10px;
+  padding:4px 10px;
   outline:none;
+
   font-weight:900;
   letter-spacing:.04em;
+  font-size:.80rem;
 }
 
 /* panels */
@@ -841,7 +850,6 @@ body.scrolled .brand-claim .rest{ color: var(--text-muted); }
   background: rgba(242,169,0,.20);
 }
 
-/* tighter summary in fund panels */
 .fund-panel .summary-box{
   margin-top:10px;
   padding:13px;
@@ -1094,21 +1102,20 @@ footer{
     <div class="hero-text">
       <div class="globe-stack">
 
-        <div class="brand" aria-label="BASYS ANALYTICS">
-          <div class="brand-line">
-            <span class="btc">₿</span><span class="analytics-rest">ASYS</span>
-          </div>
-          <div class="brand-line">
-            <span class="btc">A</span><span class="analytics-rest">NALYTICS</span>
-          </div>
+        <!-- LINE 1 -->
+        <div class="brand one-line" aria-label="BASYS ANALYTICS">
+          <span class="btc">₿</span><span class="analytics-rest">ASYS</span>
+          <span class="spacer" aria-hidden="true"></span>
+          <span class="btc">A</span><span class="analytics-rest">NALYTICS</span>
         </div>
 
-        <div class="brand-claim" aria-label="Observe Learn Lead">
-          <div class="line"><span class="cap">O</span><span class="rest">bserve</span></div>
-          <div class="divider" aria-hidden="true"></div>
-          <div class="line"><span class="cap">L</span><span class="rest">earn</span></div>
-          <div class="divider" aria-hidden="true"></div>
-          <div class="line"><span class="cap">L</span><span class="rest">ead</span></div>
+        <!-- LINE 2 -->
+        <div class="brand-claim inline" aria-label="Observe Learn Lead">
+          <span class="word"><span class="cap">O</span><span class="rest">bserve</span></span>
+          <span class="vsep" aria-hidden="true"></span>
+          <span class="word"><span class="cap">L</span><span class="rest">earn</span></span>
+          <span class="vsep" aria-hidden="true"></span>
+          <span class="word"><span class="cap">L</span><span class="rest">ead</span></span>
         </div>
 
       </div>
@@ -1223,14 +1230,12 @@ footer{
       Contributions support independent education and research initiatives.
     </div>
 
-    <!-- subtle steps -->
     <div class="fund-steps" aria-label="Payment steps">
       <span>Select payment</span><span class="sep" aria-hidden="true"></span>
       <span>Select amount</span><span class="sep" aria-hidden="true"></span>
       <span>Fund education &amp; research</span>
     </div>
 
-    <!-- Selector 2x2 compact: BTC | USDT / Card-Bank | Region -->
     <div class="pay-row">
       <div class="pay-grid" role="tablist" aria-label="Payment method selector">
 
@@ -1273,23 +1278,25 @@ footer{
             </svg>
             <div class="pay-title">Card / Bank</div>
           </div>
-          <div class="pay-desc">Buy BTC via provider + send.</div>
+          <div class="pay-desc">Buy BTC &amp; send.</div>
         </button>
 
-        <!-- REGION -->
+        <!-- REGION (same height guaranteed) -->
         <div class="region-card" title="Auto-detected via IP (can be changed)">
-          <div class="pay-top">
-            <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-              <path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"></path>
-              <path d="M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
-            </svg>
-            <div class="pay-title">Region</div>
+          <div class="region-row">
+            <div class="region-left">
+              <svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"></path>
+                <path d="M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path>
+              </svg>
+              <div class="pay-title">Region</div>
+            </div>
+
+            <select id="regionSelect" aria-label="Region select">
+              <option value="EU">EU</option>
+              <option value="US">US</option>
+            </select>
           </div>
-          <div class="r-hint">Auto-detected. Used for providers.</div>
-          <select id="regionSelect">
-            <option value="EU">EU</option>
-            <option value="US">US</option>
-          </select>
         </div>
 
       </div>
