@@ -88,59 +88,6 @@
 /* ===== Ensure modal stays hidden until invoked ===== */
 #proofPasteModal[hidden]{display:none !important}
 
-
-/* ===== Mobile Nav Fix (show burger, proper dropdown, auto-close) ===== */
-@media (max-width:860px){
-  .nav-toggle{display:flex !important;}
-  header{position:sticky;top:0;z-index:3000;}
-  #siteHeader{position:relative;z-index:3000;}
-  #siteNav{
-    position:absolute;
-    top:56px;
-    left:12px;
-    right:12px;
-    display:none;
-    flex-direction:column;
-    align-items:stretch;
-    gap:10px;
-    padding:12px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,.14);
-    background:rgba(10,15,25,.92);
-    box-shadow:0 18px 55px rgba(0,0,0,.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-  }
-  header.nav-open #siteNav{display:flex !important;}
-  #siteNav>a, #siteNav .nav-group-toggle, #siteNav .login-link{
-    width:100% !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:space-between !important;
-  }
-  #siteNav .login-link{margin-left:0 !important; justify-content:center !important;}
-  /* Initiatives submenu as inline accordion on mobile */
-  #initiativeGroup{width:100% !important;}
-  #initiativeGroup .nav-group-menu{
-    position:static !important;
-    transform:none !important;
-    inset:auto !important;
-    width:100% !important;
-    margin-top:6px !important;
-    display:none;
-    border-radius:14px;
-    padding:8px;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.10);
-  }
-  #initiativeGroup.open .nav-group-menu{display:block !important;}
-}
-
-/* Decorative layers must not block taps/clicks */
-.sky-layer,.globe-rotator,.globe-stack,.globe,.earth,.hero-globe,.hero-visual,.hero-bg{
-  pointer-events:none !important;
-}
-
 </style></head><body><header id="siteHeader"><button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button><nav id="siteNav"><a href="#home" data-nav="home" class="active">Home</a><a href="#basys" data-nav="basys">Basys</a><a href="#analytics" data-nav="analytics">Analytics</a><div class="nav-group" id="initiativeGroup"><button class="nav-group-toggle" aria-expanded="false" type="button"><span class="nav-group-label">Initiatives</span><span class="chevron">▾</span></button><div class="nav-group-menu" aria-label="Initiatives submenu"><a href="#fund" data-nav="fund">Education Fund</a><a href="#finance" data-nav="finance">Finance</a><a href="#token" data-nav="token">Token</a></div></div><a href="#contact" data-nav="contact">Contact</a><a href="/login" class="login-link">Login</a></nav></header><section id="home" data-section="home"><div class="sky-layer" aria-hidden="true"></div><div class="twinkle" aria-hidden="true"></div><div class="hero-stage reveal"><div class="globe-rotator"><img src="hero-globe.png" alt="Earth"></div><div class="hero-text"><div class="globe-stack"><div class="brand one-line" aria-label="BASYS ANALYTICS"><span class="btc">₿</span><span class="analytics-rest">ASYS</span><span class="spacer" aria-hidden="true"></span><span class="btc">A</span><span class="analytics-rest">NALYTICS</span></div><div class="brand-claim inline" aria-label="Observe Learn Lead"><span class="word"><span class="cap">O</span><span class="rest">bserve</span></span><span class="vsep" aria-hidden="true"></span><span class="word"><span class="cap">L</span><span class="rest">earn</span></span><span class="vsep" aria-hidden="true"></span><span class="word"><span class="cap">L</span><span class="rest">ead</span></span></div></div></div></div><div class="hero-claim reveal">
  From <span>Observation</span> to <span>Leadership</span> in Digital Markets
  </div><div class="home-asset-icons reveal"><span class="asset-icons" aria-label="Supported assets"><span class="asset-logo" title="BTC · Bitcoin" data-symbol="BTC"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#F7931A"/><path fill="#fff" d="M18.4 14.2c.8-.2 1.3-.7 1.5-1.4.3-1.1-.7-1.7-1.9-2.1l.4-1.7-1.1-.3-.4 1.6c-.3-.1-.7-.2-1-.2l.4-1.6-1.1-.3-.4 1.7c-.3-.1-.5-.1-.8-.2l-1.5-.4-.3 1.2s.8.2.8.2c.4.1.5.3.5.5l-.5 1.9c0 0 .1 0 .1.1h-.1l-.7 2.8c-.1.2-.2.4-.5.3 0 0-.8-.2-.8-.2l-.6 1.3 1.4.4c.3.1.6.2.9.2l-.4 1.7 1.1.3.4-1.7c.3.1.7.2 1 .2l-.4 1.7 1.1.3.4-1.7c1.6.3 2.8.2 3.3-1.3.4-1.2 0-1.9-.9-2.3zm-1.6 4.2c-.3 1.1-2.1.5-2.7.4l.6-2.3c.6.2 2.4.4 2.1 1.9zm.3-4.3c-.3 1-1.8.5-2.3.4l.5-2.1c.5.1 2 .3 1.8 1.7z"/></svg><span class="asset-label">BTC</span></span><span class="asset-logo" title="ETH · Ethereum" data-symbol="ETH"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#627EEA"/><path fill="#fff" d="M16 5l6 11-6 3-6-3 6-11z"/><path fill="#dfe7ff" d="M10 16l6 3 6-3-6 8-6-8z"/></svg><span class="asset-label">ETH</span></span><span class="asset-logo" title="USDT · Tether" data-symbol="USDT"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#26A17B"/><path fill="#fff" d="M8 10h16v3H18v2.2c3.1.2 5.3.8 5.3 1.6 0 .9-2.2 1.4-5.3 1.6V24h-4v-2c-3-.2-5.3-.7-5.3-1.6 0-.8 2.3-1.4 5.3-1.6V13H8v-3zm8 6.2c-3 .2-4.9.7-4.9 1.1 0 .4 1.9.9 4.9 1.1 3-.2 4.9-.7 4.9-1.1 0-.4-1.9-.9-4.9-1.1z"/></svg><span class="asset-label">USDT</span></span><span class="asset-logo" title="SOL · Solana" data-symbol="SOL"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#0b1220"/><defs><linearGradient id="g-home" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14F195"/><stop offset="1" stop-color="#9945FF"/></linearGradient></defs><path fill="url(#g-home)" d="M10 10.5c.3-.3.7-.5 1.1-.5h12.2c.2 0 .3.3.2.4l-1.6 1.6c-.3.3-.7.5-1.1.5H8.6c-.2 0-.3-.3-.2-.4l1.6-1.6z"/><path fill="url(#g-home)" d="M10 15.4c.3-.3.7-.5 1.1-.5h12.2c.2 0 .3.3.2.4l-1.6 1.6c-.3.3-.7.5-1.1.5H8.6c-.2 0-.3-.3-.2-.4l1.6-1.6z"/><path fill="url(#g-home)" d="M10 20.3c.3-.3.7-.5 1.1-.5h12.2c.2 0 .3.3.2.4l-1.6 1.6c-.3.3-.7.5-1.1.5H8.6c-.2 0-.3-.3-.2-.4l1.6-1.6z"/></svg><span class="asset-label">SOL</span></span><span class="asset-logo" title="BNB · BNB" data-symbol="BNB"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#F3BA2F"/><path fill="#fff" d="M16 8.2l3 3-3 3-3-3 3-3zm0 6l3 3-3 3-3-3 3-3zm6-0.3l3 3-3 3-3-3 3-3zm-12 0l3 3-3 3-3-3 3-3z"/></svg><span class="asset-label">BNB</span></span><span class="asset-logo" title="XRP · XRP" data-symbol="XRP"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#111827"/><path fill="#fff" d="M9.3 11.2c1.2 0 2 .6 3 1.6l1 1c1.6 1.6 4.1 1.6 5.7 0l1-1c1-1 1.8-1.6 3-1.6h2.2l-1.7 1.7c-1 1-2.5 2.5-4.5 2.5s-3.5-1.5-4.5-2.5l-1-1c-.7-.7-1.2-1-1.7-1H7.7l1.6-1.7h0zm13.4 9.6c-1.2 0-2-.6-3-1.6l-1-1c-1.6-1.6-4.1-1.6-5.7 0l-1 1c-1 1-1.8 1.6-3 1.6H7.7l1.7-1.7c1-1 2.5-2.5 4.5-2.5s3.5 1.5 4.5 2.5l1 1c.7.7 1.2 1 1.7 1h4.2l-1.6 1.7h0z"/></svg><span class="asset-label">XRP</span></span></span></div><a href="#basys" class="scroll-indicator reveal" aria-label="Scroll to Basys"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path></svg></a></section><section id="basys" data-section="basys"><div class="glass-card reveal"><h2 style="color:var(--accent); text-transform:uppercase; letter-spacing:3px; margin-bottom:10px;">Basys</h2><p style="margin-top:6px; opacity:.90; line-height:1.7; font-size:1.02rem; color:var(--text-main);">
@@ -171,7 +118,7 @@
  </div></div></div><div class="fund-panel" id="panelCard" role="tabpanel" aria-labelledby="tabCard"><div class="addr-card" style="margin-top:12px;"><div class="addr-tools"><button class="copy-mini" id="showCardBtcBtn" type="button" aria-label="Show BTC address">Show</button><button class="copy-mini" id="copyCardBtcBtn" type="button" aria-label="Copy BTC address">Copy</button></div><div class="addr-label">Education Fund Destination BTC Address (auto-filled)</div><div class="addr-value" id="cardBtcAddrDisplay"></div></div><div class="card-amount-hint" id="cardAmountHint" aria-hidden="true"><div class="card-amount-hint-inner"><strong>Next step:</strong> NEXT STEP: SELECT FUNDING AMOUNT
  </div></div><div class="payment-options-label"></div><div class="payment-options-row-inline"></div><div class="summary-box"><strong>Card / Bank:</strong> You’ll be redirected to a third-party provider to buy <span class="highlight">BTC</span>
  and send it to the Education Fund directly.
- </div><div class="amount-row"><div class="amount-options" role="group" aria-label="Quick amount options"><button class="opt-btn opt-reset" type="button" id="btnResetAmount" aria-label="Reset amount">↺</button><button class="opt-btn" type="button" data-amt="10">10</button><button class="opt-btn" type="button" data-amt="30">30 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="50">50 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="100">100 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="120">120 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="150">150 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="200">200 <span class="opt-unit">€</span></button><button class="opt-btn opt-other" type="button" data-amt="other">Other <span class="opt-unit">€</span></button></div></div><div class="amount-line"><div class="amount"><div class="amt-input-wrap"><input id="fiatAmount" inputmode="decimal" placeholder="0" value="0" /><div class="unit" id="fiatUnit">€</div></div></div><button class="action-btn card continue-payment" id="onrampBtn" type="button" style="display:flex;align-items:center;justify-content:center;width:100%;max-width:560px;margin:0 auto;height:104px;min-height:104px;font-size:26px;font-weight:900;letter-spacing:.02em;border-radius:18px;padding:0 30px;">
+ </div><div class="amount-row"><div class="amount-options" role="group" aria-label="Quick amount options"><button class="opt-btn opt-reset" type="button" id="btnResetAmount" aria-label="Reset amount">↺</button><button class="opt-btn" type="button" data-amt="30">30 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="50">50 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="100">100 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="120">120 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="150">150 <span class="opt-unit">€</span></button><button class="opt-btn" type="button" data-amt="200">200 <span class="opt-unit">€</span></button><button class="opt-btn opt-other" type="button" data-amt="other">Other <span class="opt-unit">€</span></button></div></div><div class="amount-line"><div class="amount"><div class="amt-input-wrap"><input id="fiatAmount" inputmode="decimal" placeholder="0" value="0" /><div class="unit" id="fiatUnit">€</div></div></div><button class="action-btn card continue-payment" id="onrampBtn" type="button" style="display:flex;align-items:center;justify-content:center;width:100%;max-width:560px;margin:0 auto;height:104px;min-height:104px;font-size:26px;font-weight:900;letter-spacing:.02em;border-radius:18px;padding:0 30px;">
  
  Continue payment
 </button><div class="pay-badges brand-icons" aria-label="Supported payment methods"><span class="brand-ico b-card" title="Credit Card" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2.5" fill="#e8eef8"></rect><rect x="2" y="9" width="20" height="2" fill="#c7cfde"></rect><circle cx="14.8" cy="15.2" r="2.3" fill="#EB001B"></circle><circle cx="17.6" cy="15.2" r="2.3" fill="#F79E1B"></circle><circle cx="16.2" cy="15.2" r="2.3" fill="#000" opacity=".12"></circle><text x="7.2" y="15.6" font-size="7.6" font-weight="900"
@@ -279,11 +226,6 @@ const navToggle = document.getElementById('navToggle');
 const closeNav = () => {
   header.classList.remove('nav-open');
   navToggle?.setAttribute('aria-expanded', 'false');
-  // also close Initiatives submenu
-  const group = document.getElementById('initiativeGroup');
-  const t = group?.querySelector('.nav-group-toggle');
-  group?.classList.remove('open');
-  t?.setAttribute('aria-expanded','false');
 };
 navToggle?.addEventListener('click', () => {
   const open = header.classList.toggle('nav-open');
