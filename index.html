@@ -88,7 +88,36 @@
 /* ===== Ensure modal stays hidden until invoked ===== */
 #proofPasteModal[hidden]{display:none !important}
 
-</style></head><body><header id="siteHeader"><button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button><nav id="siteNav"><a href="#home" data-nav="home" class="active">Home</a><a href="#basys" data-nav="basys">Basys</a><a href="#analytics" data-nav="analytics">Analytics</a><div class="nav-group" id="initiativeGroup"><button class="nav-group-toggle" aria-expanded="false" type="button"><span class="nav-group-label">Initiatives</span><span class="chevron">▾</span></button><div class="nav-group-menu" aria-label="Initiatives submenu"><a href="#fund" data-nav="fund">Education Fund</a><a href="#finance" data-nav="finance">Finance</a><a href="#token" data-nav="token">Token</a></div></div><a href="#contact" data-nav="contact">Contact</a><a href="/login" class="login-link">Login</a></nav></header><section id="home" data-section="home"><div class="sky-layer" aria-hidden="true"></div><div class="twinkle" aria-hidden="true"></div><div class="hero-stage reveal"><div class="globe-rotator"><img src="hero-globe.png" alt="Earth"></div><div class="hero-text"><div class="globe-stack"><div class="brand one-line" aria-label="BASYS ANALYTICS"><span class="btc">₿</span><span class="analytics-rest">ASYS</span><span class="spacer" aria-hidden="true"></span><span class="btc">A</span><span class="analytics-rest">NALYTICS</span></div><div class="brand-claim inline" aria-label="Observe Learn Lead"><span class="word"><span class="cap">O</span><span class="rest">bserve</span></span><span class="vsep" aria-hidden="true"></span><span class="word"><span class="cap">L</span><span class="rest">earn</span></span><span class="vsep" aria-hidden="true"></span><span class="word"><span class="cap">L</span><span class="rest">ead</span></span></div></div></div></div><div class="hero-claim reveal">
+</style>
+<style id="mobile-menu-stability-v1">
+/* ===== Mobile menu stability (ONLY small screens) ===== */
+@media (max-width: 860px){
+  /* ensure header/nav always above sections */
+  #siteHeader{ z-index: 5000 !important; }
+
+  /* menu panel: not too wide, scrollable, safe on mobile address bar */
+  #siteHeader.nav-open #siteNav{
+    position: fixed !important;
+    left: 12px !important;
+    right: 12px !important;
+    top: calc(env(safe-area-inset-top, 0px) + 56px) !important;
+    max-width: 380px !important;
+    margin: 0 auto !important;
+
+    max-height: calc(100dvh - (env(safe-area-inset-top, 0px) + 72px)) !important;
+    overflow: auto !important;
+    -webkit-overflow-scrolling: touch;
+
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+
+    border-radius: 16px !important;
+    box-shadow: 0 26px 70px rgba(0,0,0,.58) !important;
+  }
+}
+</style>
+
+</head><body><header id="siteHeader"><button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" type="button"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"></path></svg></button><nav id="siteNav"><a href="#home" data-nav="home" class="active">Home</a><a href="#basys" data-nav="basys">Basys</a><a href="#analytics" data-nav="analytics">Analytics</a><div class="nav-group" id="initiativeGroup"><button class="nav-group-toggle" aria-expanded="false" type="button"><span class="nav-group-label">Initiatives</span><span class="chevron">▾</span></button><div class="nav-group-menu" aria-label="Initiatives submenu"><a href="#fund" data-nav="fund">Education Fund</a><a href="#finance" data-nav="finance">Finance</a><a href="#token" data-nav="token">Token</a></div></div><a href="#contact" data-nav="contact">Contact</a><a href="/login" class="login-link">Login</a></nav></header><section id="home" data-section="home"><div class="sky-layer" aria-hidden="true"></div><div class="twinkle" aria-hidden="true"></div><div class="hero-stage reveal"><div class="globe-rotator"><img src="hero-globe.png" alt="Earth"></div><div class="hero-text"><div class="globe-stack"><div class="brand one-line" aria-label="BASYS ANALYTICS"><span class="btc">₿</span><span class="analytics-rest">ASYS</span><span class="spacer" aria-hidden="true"></span><span class="btc">A</span><span class="analytics-rest">NALYTICS</span></div><div class="brand-claim inline" aria-label="Observe Learn Lead"><span class="word"><span class="cap">O</span><span class="rest">bserve</span></span><span class="vsep" aria-hidden="true"></span><span class="word"><span class="cap">L</span><span class="rest">earn</span></span><span class="vsep" aria-hidden="true"></span><span class="word"><span class="cap">L</span><span class="rest">ead</span></span></div></div></div></div><div class="hero-claim reveal">
  From <span>Observation</span> to <span>Leadership</span> in Digital Markets
  </div><div class="home-asset-icons reveal"><span class="asset-icons" aria-label="Supported assets"><span class="asset-logo" title="BTC · Bitcoin" data-symbol="BTC"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#F7931A"/><path fill="#fff" d="M18.4 14.2c.8-.2 1.3-.7 1.5-1.4.3-1.1-.7-1.7-1.9-2.1l.4-1.7-1.1-.3-.4 1.6c-.3-.1-.7-.2-1-.2l.4-1.6-1.1-.3-.4 1.7c-.3-.1-.5-.1-.8-.2l-1.5-.4-.3 1.2s.8.2.8.2c.4.1.5.3.5.5l-.5 1.9c0 0 .1 0 .1.1h-.1l-.7 2.8c-.1.2-.2.4-.5.3 0 0-.8-.2-.8-.2l-.6 1.3 1.4.4c.3.1.6.2.9.2l-.4 1.7 1.1.3.4-1.7c.3.1.7.2 1 .2l-.4 1.7 1.1.3.4-1.7c1.6.3 2.8.2 3.3-1.3.4-1.2 0-1.9-.9-2.3zm-1.6 4.2c-.3 1.1-2.1.5-2.7.4l.6-2.3c.6.2 2.4.4 2.1 1.9zm.3-4.3c-.3 1-1.8.5-2.3.4l.5-2.1c.5.1 2 .3 1.8 1.7z"/></svg><span class="asset-label">BTC</span></span><span class="asset-logo" title="ETH · Ethereum" data-symbol="ETH"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#627EEA"/><path fill="#fff" d="M16 5l6 11-6 3-6-3 6-11z"/><path fill="#dfe7ff" d="M10 16l6 3 6-3-6 8-6-8z"/></svg><span class="asset-label">ETH</span></span><span class="asset-logo" title="USDT · Tether" data-symbol="USDT"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#26A17B"/><path fill="#fff" d="M8 10h16v3H18v2.2c3.1.2 5.3.8 5.3 1.6 0 .9-2.2 1.4-5.3 1.6V24h-4v-2c-3-.2-5.3-.7-5.3-1.6 0-.8 2.3-1.4 5.3-1.6V13H8v-3zm8 6.2c-3 .2-4.9.7-4.9 1.1 0 .4 1.9.9 4.9 1.1 3-.2 4.9-.7 4.9-1.1 0-.4-1.9-.9-4.9-1.1z"/></svg><span class="asset-label">USDT</span></span><span class="asset-logo" title="SOL · Solana" data-symbol="SOL"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#0b1220"/><defs><linearGradient id="g-home" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14F195"/><stop offset="1" stop-color="#9945FF"/></linearGradient></defs><path fill="url(#g-home)" d="M10 10.5c.3-.3.7-.5 1.1-.5h12.2c.2 0 .3.3.2.4l-1.6 1.6c-.3.3-.7.5-1.1.5H8.6c-.2 0-.3-.3-.2-.4l1.6-1.6z"/><path fill="url(#g-home)" d="M10 15.4c.3-.3.7-.5 1.1-.5h12.2c.2 0 .3.3.2.4l-1.6 1.6c-.3.3-.7.5-1.1.5H8.6c-.2 0-.3-.3-.2-.4l1.6-1.6z"/><path fill="url(#g-home)" d="M10 20.3c.3-.3.7-.5 1.1-.5h12.2c.2 0 .3.3.2.4l-1.6 1.6c-.3.3-.7.5-1.1.5H8.6c-.2 0-.3-.3-.2-.4l1.6-1.6z"/></svg><span class="asset-label">SOL</span></span><span class="asset-logo" title="BNB · BNB" data-symbol="BNB"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#F3BA2F"/><path fill="#fff" d="M16 8.2l3 3-3 3-3-3 3-3zm0 6l3 3-3 3-3-3 3-3zm6-0.3l3 3-3 3-3-3 3-3zm-12 0l3 3-3 3-3-3 3-3z"/></svg><span class="asset-label">BNB</span></span><span class="asset-logo" title="XRP · XRP" data-symbol="XRP"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#111827"/><path fill="#fff" d="M9.3 11.2c1.2 0 2 .6 3 1.6l1 1c1.6 1.6 4.1 1.6 5.7 0l1-1c1-1 1.8-1.6 3-1.6h2.2l-1.7 1.7c-1 1-2.5 2.5-4.5 2.5s-3.5-1.5-4.5-2.5l-1-1c-.7-.7-1.2-1-1.7-1H7.7l1.6-1.7h0zm13.4 9.6c-1.2 0-2-.6-3-1.6l-1-1c-1.6-1.6-4.1-1.6-5.7 0l-1 1c-1 1-1.8 1.6-3 1.6H7.7l1.7-1.7c1-1 2.5-2.5 4.5-2.5s3.5 1.5 4.5 2.5l1 1c.7.7 1.2 1 1.7 1h4.2l-1.6 1.7h0z"/></svg><span class="asset-label">XRP</span></span></span></div><a href="#basys" class="scroll-indicator reveal" aria-label="Scroll to Basys"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path></svg></a></section><section id="basys" data-section="basys"><div class="glass-card reveal"><h2 style="color:var(--accent); text-transform:uppercase; letter-spacing:3px; margin-bottom:10px;">Basys</h2><p style="margin-top:6px; opacity:.90; line-height:1.7; font-size:1.02rem; color:var(--text-main);">
  A clear process model for <span class="highlight">Observe · Learn · Lead</span> — turning market behavior into orientation and responsible action.
@@ -110,7 +139,7 @@
  </div></div><a href="#fund" class="scroll-indicator reveal" aria-label="Scroll to Education Fund"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"></path></svg></a></section><section id="fund" data-section="fund"><div class="glass-card reveal"><h2 style="color:var(--accent); margin-bottom:12px; letter-spacing:3px; text-transform:uppercase;">Education Fund 
 <span class="asset-icons" aria-label="Supported assets"><span class="asset-logo" title="BTC · Bitcoin" data-symbol="BTC"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#F7931A"/><path fill="#fff" d="M18.4 14.2c.8-.2 1.3-.7 1.5-1.4.3-1.1-.7-1.7-1.9-2.1l.4-1.7-1.1-.3-.4 1.6c-.3-.1-.7-.2-1-.2l.4-1.6-1.1-.3-.4 1.7c-.3-.1-.5-.1-.8-.2l-1.5-.4-.3 1.2s.8.2.8.2c.4.1.5.3.5.5l-.5 1.9c0 0 .1 0 .1.1h-.1l-.7 2.8c-.1.2-.2.4-.5.3 0 0-.8-.2-.8-.2l-.6 1.3 1.4.4c.3.1.6.2.9.2l-.4 1.7 1.1.3.4-1.7c.3.1.7.2 1 .2l-.4 1.7 1.1.3.4-1.7c1.6.3 2.8.2 3.3-1.3.4-1.2 0-1.9-.9-2.3zm-1.6 4.2c-.3 1.1-2.1.5-2.7.4l.6-2.3c.6.2 2.4.4 2.1 1.9zm.3-4.3c-.3 1-1.8.5-2.3.4l.5-2.1c.5.1 2 .3 1.8 1.7z"/></svg><span class="asset-label">BTC</span></span><span class="asset-logo" title="ETH · Ethereum" data-symbol="ETH"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#627EEA"/><path fill="#fff" d="M16 5l6 11-6 3-6-3 6-11z"/><path fill="#dfe7ff" d="M10 16l6 3 6-3-6 8-6-8z"/></svg><span class="asset-label">ETH</span></span><span class="asset-logo" title="USDT · Tether" data-symbol="USDT"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#26A17B"/><path fill="#fff" d="M8 10h16v3H18v2.2c3.1.2 5.3.8 5.3 1.6 0 .9-2.2 1.4-5.3 1.6V24h-4v-2c-3-.2-5.3-.7-5.3-1.6 0-.8 2.3-1.4 5.3-1.6V13H8v-3zm8 6.2c-3 .2-4.9.7-4.9 1.1 0 .4 1.9.9 4.9 1.1 3-.2 4.9-.7 4.9-1.1 0-.4-1.9-.9-4.9-1.1z"/></svg><span class="asset-label">USDT</span></span><span class="asset-logo" title="SOL · Solana" data-symbol="SOL"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#0b1220"/><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#14F195"/><stop offset="1" stop-color="#9945FF"/></linearGradient></defs><path fill="url(#g)" d="M10 10.5c.3-.3.7-.5 1.1-.5h12.2c.2 0 .3.3.2.4l-1.6 1.6c-.3.3-.7.5-1.1.5H8.6c-.2 0-.3-.3-.2-.4l1.6-1.6z"/><path fill="url(#g)" d="M10 15.4c.3-.3.7-.5 1.1-.5h12.2c.2 0 .3.3.2.4l-1.6 1.6c-.3.3-.7.5-1.1.5H8.6c-.2 0-.3-.3-.2-.4l1.6-1.6z"/><path fill="url(#g)" d="M10 20.3c.3-.3.7-.5 1.1-.5h12.2c.2 0 .3.3.2.4l-1.6 1.6c-.3.3-.7.5-1.1.5H8.6c-.2 0-.3-.3-.2-.4l1.6-1.6z"/></svg><span class="asset-label">SOL</span></span><span class="asset-logo" title="BNB · BNB" data-symbol="BNB"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#F3BA2F"/><path fill="#fff" d="M16 8.2l3 3-3 3-3-3 3-3zm0 6l3 3-3 3-3-3 3-3zm6-0.3l3 3-3 3-3-3 3-3zm-12 0l3 3-3 3-3-3 3-3z"/></svg><span class="asset-label">BNB</span></span><span class="asset-logo" title="XRP · XRP" data-symbol="XRP"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#111827"/><path fill="#fff" d="M9.3 11.2c1.2 0 2 .6 3 1.6l1 1c1.6 1.6 4.1 1.6 5.7 0l1-1c1-1 1.8-1.6 3-1.6h2.2l-1.7 1.7c-1 1-2.5 2.5-4.5 2.5s-3.5-1.5-4.5-2.5l-1-1c-.7-.7-1.2-1-1.7-1H7.7l1.6-1.7h0zm13.4 9.6c-1.2 0-2-.6-3-1.6l-1-1c-1.6-1.6-4.1-1.6-5.7 0l-1 1c-1 1-1.8 1.6-3 1.6H7.7l1.7-1.7c1-1 2.5-2.5 4.5-2.5s3.5 1.5 4.5 2.5l1 1c.7.7 1.2 1 1.7 1h4.2l-1.6 1.7h0z"/></svg><span class="asset-label">XRP</span></span></span></h2><div class="sub-kicker">
  CONTRIBUTIONS SUPPORT EDUCATION AND RESEARCH
- </div><div class="fund-steps" aria-label="Payment steps"><div class="step-item"><span class="step-dot sep" id="stepPaymentDot" aria-hidden="true"></span><span class="step-label" id="stepPaymentLabel">Select payment</span></div><div class="step-item"><span class="step-dot sep" id="stepAmountDot" aria-hidden="true"></span><span class="step-label" id="stepAmountLabel">NEXT STEP: SELECT FUNDING AMOUNT</span></div><div class="step-item"><span class="step-dot sep" id="stepFundDot" aria-hidden="true"></span><span class="step-label" id="stepFundLabel">NEXT STEP: FUND EDUCATION AND RESEARCH</span></div></div><div class="pay-row"><div class="pay-grid" role="tablist" aria-label="Payment method selector"><button class="pay-card active" id="tabBtc" type="button" data-method="btc" role="tab" aria-selected="false" aria-controls="panelBtc"><span class="pay-dot" aria-hidden="true"></span><div class="pay-top"><svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20"></path><path d="M7 7h8a3 3 0 0 1 0 6H7z"></path><path d="M7 13h9a3 3 0 0 1 0 6H7z"></path></svg><div class="pay-title">Bitcoin</div></div><div class="pay-desc">Send BTC directly (on-chain).</div></button><button class="pay-card" id="tabUsdt" type="button" data-method="usdt" role="tab" aria-selected="false" aria-controls="panelUsdt"><span class="pay-dot" aria-hidden="true"></span><div class="pay-top"><svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6h12"></path><path d="M12 6v14"></path><path d="M8 10c1.4 1 3.2 1.5 4 1.5s2.6-.5 4-1.5"></path></svg><div class="pay-title">USDT (ERC-20)</div></div><div class="pay-desc">Send USDT directly on Ethereum</div></button><button class="pay-card" id="tabCard" type="button" data-method="card" role="tab" aria-selected="false" aria-controls="panelCard"><span class="pay-dot" aria-hidden="true"></span><div class="pay-top"><svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path><path d="M7 15h3"></path></svg><div class="cardbank-tags" aria-label="Card and Bank"><span class="cardbank-tag">Card</span><span class="cardbank-tag">Bank</span></div></div><div class="pay-desc">BTC → Education Fund</div></button><div class="region-card" role="group" aria-label="Region selection (used for card/bank providers)" title="Auto-detected via IP (can be changed)"><div class="region-row"><div class="region-left"><svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"></path><path d="M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg><div class="pay-title">Region</div></div><select id="regionSelect" aria-label="Region select"><option value="EU">EU</option><option value="US">US</option></select></div></div></div><div class="geo-warn" id="geoWarn" role="status" aria-live="polite">
+ </div><div class="fund-steps" aria-label="Payment steps"><div class="step-item"><span class="step-dot sep" id="stepPaymentDot" aria-hidden="true"></span><span class="step-label" id="stepPaymentLabel">Select Payment Option</span></div><div class="step-item"><span class="step-dot sep" id="stepAmountDot" aria-hidden="true"></span><span class="step-label" id="stepAmountLabel">NEXT STEP: SELECT FUNDING AMOUNT</span></div><div class="step-item"><span class="step-dot sep" id="stepFundDot" aria-hidden="true"></span><span class="step-label" id="stepFundLabel">NEXT STEP: FUND EDUCATION AND RESEARCH</span></div></div><div class="pay-row"><div class="pay-grid" role="tablist" aria-label="Payment method selector"><button class="pay-card active" id="tabBtc" type="button" data-method="btc" role="tab" aria-selected="false" aria-controls="panelBtc"><span class="pay-dot" aria-hidden="true"></span><div class="pay-top"><svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 2v20"></path><path d="M7 7h8a3 3 0 0 1 0 6H7z"></path><path d="M7 13h9a3 3 0 0 1 0 6H7z"></path></svg><div class="pay-title">Bitcoin</div></div><div class="pay-desc">Send BTC directly (on-chain).</div></button><button class="pay-card" id="tabUsdt" type="button" data-method="usdt" role="tab" aria-selected="false" aria-controls="panelUsdt"><span class="pay-dot" aria-hidden="true"></span><div class="pay-top"><svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6h12"></path><path d="M12 6v14"></path><path d="M8 10c1.4 1 3.2 1.5 4 1.5s2.6-.5 4-1.5"></path></svg><div class="pay-title">USDT (ERC-20)</div></div><div class="pay-desc">Send USDT directly on Ethereum</div></button><button class="pay-card" id="tabCard" type="button" data-method="card" role="tab" aria-selected="false" aria-controls="panelCard"><span class="pay-dot" aria-hidden="true"></span><div class="pay-top"><svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 10h18"></path><path d="M7 15h3"></path></svg><div class="cardbank-tags" aria-label="Card and Bank"><span class="cardbank-tag">Card</span><span class="cardbank-tag">Bank</span></div></div><div class="pay-desc">BTC → Education Fund</div></button><div class="region-card" role="group" aria-label="Region selection (used for card/bank providers)" title="Auto-detected via IP (can be changed)"><div class="region-row"><div class="region-left"><svg class="pay-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"></path><path d="M12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg><div class="pay-title">Region</div></div><select id="regionSelect" aria-label="Region select"><option value="EU">EU</option><option value="US">US</option></select></div></div></div><div class="geo-warn" id="geoWarn" role="status" aria-live="polite">
  Region auto-detect failed — default set to EU.
  </div></div><div class="fund-panels"><div class="fund-panel active" id="panelBtc" role="tabpanel" aria-labelledby="tabBtc"><div class="addr-card" style="margin-top:12px;" aria-label="BTC Address"><div class="addr-tools"><button class="copy-mini" id="showBtcBtn" type="button" aria-label="Show BTC address">Show</button><button class="copy-mini" id="copyBtcBtn" type="button" aria-label="Copy BTC address">Copy</button></div><div class="addr-label">BTC Destination Address</div><div class="addr-value" id="btcAddrDisplay" data-full=""></div></div><div><div class="fund-actions"></div></div><div class="summary-box"><strong>BTC (On-chain):</strong><span class="network-badge">BTC · On-chain</span><span class="orange-word">openWallet</span> or <span class="orange-word">scanQR</span><br><span class="microcopy">Direct routing · Non-custodial · On-chain settlement</span><details class="trust-details"><summary class="trust-summary"><span class="trust-title">Security &amp; Transparency</span><span class="trust-chev" aria-hidden="true">▾</span></summary><div class="trust-body"><div class="trust-row" aria-label="Security and trust signals"><div class="trust-item lock"><i class="ti-ico ph ph-shield-check" aria-hidden="true"></i><div class="ti-text"><div class="ti-title">Non‑custodial
 <div class="trust-section-title">Connection & Data Security</div><div class="platform-trust" aria-label="Connection & Data Security"><div class="trust-item tls" title="Transport security for this session."><i class="ti-ico ph ph-shield-lock" aria-hidden="true"></i><div class="ti-text"><div class="ti-title">TLS-encrypted connection</div><div class="ti-sub">Secure transport (HTTPS/TLS).</div></div></div></div></div><div class="trust-item privacy" title="No registration required. Minimal data handling."><i class="ti-ico ph ph-user-minus" aria-hidden="true"></i> No account · No personal data stored</div></div></div><div class="trust-item lock"><i class="ti-ico ph ph-shield-check" aria-hidden="true"></i> Direct routing</div><div class="trust-item lock"><i class="ti-ico ph ph-shield-check" aria-hidden="true"></i> No smart contracts</div><div class="trust-item lock"><i class="ti-ico ph ph-shield-check" aria-hidden="true"></i> Network check</div><div class="trust-item secondary" title="Transactions can be verified on-chain."><svg class="ti-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg> On‑chain verifiable</div></div><div class="trust-note"><strong>Note:</strong> Only send on the displayed network. Transfers on other networks may be lost.</div></div></details></div><div class="fund-grid"><div class="wallet-box"><a class="action-btn primary open-wallet-btn" id="openBtcWalletBtn" href="#" rel="noopener" target="_blank">Open Wallet</a></div><div class="qr-wrap"><div class="qr" id="btcQr" aria-label="Bitcoin QR"></div></div><div class="warn"><strong>Important:</strong> Only send <strong>BTC</strong> on <strong>Bitcoin (On-chain)</strong>.</div></div></div><div class="fund-panel" id="panelUsdt" role="tabpanel" aria-labelledby="tabUsdt"><div class="addr-card" style="margin-top:12px;" aria-label="USDT ERC-20 Address"><div class="addr-tools"><button class="copy-mini" id="showUsdtBtn" type="button" aria-label="Show USDT address">Show</button><button class="copy-mini" id="copyUsdtBtn" type="button" aria-label="Copy USDT address">Copy</button></div><div class="addr-label">USDT Destination Address (ERC-20)</div><div class="addr-value" id="usdtAddrDisplay"></div></div><div><div class="fund-actions"></div></div><div class="summary-box"><strong>USDT (ERC-20):</strong><span class="network-badge">USDT · ERC-20</span><span class="orange-word">openWallet</span> or <span class="orange-word">scanQR</span><br><span class="microcopy">Direct routing · Non-custodial · On-chain settlement</span><details class="trust-details"><summary class="trust-summary"><span class="trust-title">Security &amp; Transparency</span><span class="trust-chev" aria-hidden="true">▾</span></summary><div class="trust-body"><div class="trust-row" aria-label="Security and trust signals"><div class="trust-item lock"><i class="ti-ico ph ph-shield-check" aria-hidden="true"></i><div class="ti-text"><div class="ti-title">Non‑custodial
@@ -1147,7 +1176,7 @@ if (payCards[0]) payCards[0].tabIndex = 0;
     const usdtSel = sel(tabUsdt);
     const anyPay  = cardSel || btcSel || usdtSel;
 
-    // Default: no payment selected => Select payment is next step (yellow pulsing)
+    // Default: no payment selected => Select Payment Option is next step (yellow pulsing)
     if(!anyPay){
       dotPayment?.classList.add('current');
       return;
@@ -1600,7 +1629,7 @@ function hideAddress(addrMid, masked){
       if(!d) return;
       d.classList.remove('done','current');
     });
-    // initial: Select Payment is the current step
+    // initial: Select Payment Option is the current step
     if(stepPaymentDot) stepPaymentDot.classList.add('current');
   }
 
@@ -1927,7 +1956,7 @@ function hideAddress(addrMid, masked){
   function bindRegionReset(){
     if(!regionSelect) return;
     regionSelect.addEventListener('change', ()=>{
-      // On region change: keep current payment selection (so Select Payment stays green),
+      // On region change: keep current payment selection (so Select Payment Option stays green),
       // but reset downstream steps (amount/wallet/fund).
       state.payment = getActivePayment();
       resetDownstream('payment');
@@ -2503,6 +2532,15 @@ function hideAddress(addrMid, masked){
     const a = e.target.closest && e.target.closest('a[href="#finance"]');
     if(!a) return;
     e.preventDefault();
+    
+    // Close mobile menu first (Finance click uses stopImmediatePropagation)
+    (function(){
+      const hdr = document.getElementById('siteHeader') || document.querySelector('header');
+      const tgl = document.getElementById('navToggle');
+      hdr && hdr.classList.remove('nav-open');
+      tgl && tgl.setAttribute('aria-expanded','false');
+    })();
+
     e.stopImmediatePropagation();
     setHash();
     smoothCenterFinance();
@@ -3367,7 +3405,51 @@ function hideAddress(addrMid, masked){
     parts.push('<div class="row"><span class="k">Network:</span><span class="v">'+r.network+'</span></div>');
     parts.push('<div class="row"><span class="k">Region:</span><span class="v">'+r.region+'</span></div>');
     parts.push('<div class="row"><span class="k">Tx Hash:</span><span class="v">'+r.txHash+'</span></div>');
-    parts.push('<div class="hr"></div><div class="micro"><strong>Note:</strong> '+r.note+'</div></div></body></html>');
+    parts.push('<div class="hr"></div><div class="micro"><strong>Note:</strong> '+r.note+'</div></div>
+<script id="mobile-menu-stability-js-v1">
+(function(){
+  const header = document.getElementById('siteHeader');
+  const nav = document.getElementById('siteNav');
+  const toggle = document.getElementById('navToggle');
+  const group = document.getElementById('initiativeGroup');
+  const groupToggle = group ? group.querySelector('.nav-group-toggle') : null;
+
+  if(!header || !nav || !toggle) return;
+
+  const mq = window.matchMedia ? window.matchMedia('(max-width: 860px)') : null;
+
+  function isSmall(){
+    return mq ? mq.matches : (window.innerWidth <= 860);
+  }
+
+  function onOpen(){
+    // show top links
+    nav.scrollTop = 0;
+    // close submenu so it doesn't "start in the middle"
+    if(group){
+      group.classList.remove('open');
+      if(groupToggle) groupToggle.setAttribute('aria-expanded','false');
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    // let existing toggle run first
+    setTimeout(() => {
+      if(isSmall() && header.classList.contains('nav-open')) onOpen();
+    }, 0);
+  });
+
+  // If the menu is opened by other code, still keep it sane
+  window.addEventListener('resize', () => {
+    if(!isSmall()){
+      header.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded','false');
+    }
+  });
+})();
+</script>
+
+</body></html>');
     const htmlDoc = parts.join('');
     const safeName = 'basys_receipt_' + (new Date()).toISOString().slice(0,19).replace(/[:T]/g,'-') + '.html';
     const blob = new Blob([htmlDoc], {type:'text/html'});
