@@ -1,0 +1,5507 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Basys Trust (BTrust) — Token Landing</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --accent:#f7931a;
+  --glass: rgba(10,15,25,.42);
+  --card: rgba(0,0,0,.22);
+  --text: rgba(232,238,248,.92);
+  --muted: rgba(170,182,198,.80);
+  --border: rgba(255,255,255,.12);
+  --green: rgba(46,213,115,.95);
+}
+*{box-sizing:border-box}
+html,body{margin:0; padding:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--text); background:#05070e;}
+a{color:inherit}
+/* Background */
+.bg{position:fixed; inset:0; overflow:hidden; z-index:-2;}
+.stars{position:absolute; inset:-20%; background:
+ radial-gradient(circle at 20% 30%, rgba(247,147,26,.15) 0 2px, transparent 3px) 0 0/140px 140px,
+ radial-gradient(circle at 70% 65%, rgba(46,213,115,.10) 0 2px, transparent 3px) 0 0/180px 180px,
+ radial-gradient(circle at 40% 80%, rgba(255,255,255,.08) 0 1px, transparent 2px) 0 0/120px 120px;
+ filter: blur(.2px);
+ opacity:.9;
+ animation: drift 36s linear infinite;
+}
+@keyframes drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-6%, -3%, 0)}}
+.glow{position:absolute; inset:-30%; background:
+ radial-gradient(circle at 30% 35%, rgba(247,147,26,.18), transparent 55%),
+ radial-gradient(circle at 70% 60%, rgba(46,213,115,.10), transparent 60%),
+ radial-gradient(circle at 50% 85%, rgba(120,160,255,.08), transparent 60%);
+ opacity:.9;
+}
+/* Layout */
+.wrap{max-width:1100px; margin:0 auto; padding:22px 16px 80px;}
+.nav{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:12px 14px;
+  border:1px solid var(--border); border-radius:18px; background:rgba(0,0,0,.22); backdrop-filter: blur(10px);
+}
+.brand{display:flex; flex-direction:column; gap:2px;}
+.brand b{font-weight:900; letter-spacing:.2px;}
+.brand span{font-size:12px; opacity:.75}
+.navlinks{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+.pill{all:unset; cursor:pointer; display:inline-flex; align-items:center; gap:8px; padding:8px 10px; border-radius:999px;
+  border:1px solid var(--border); background:rgba(0,0,0,.12); font-size:12px; font-weight:900; opacity:.9}
+.pill:hover{opacity:1; border-color:rgba(247,147,26,.35)}
+.pill.accent{border-color:rgba(247,147,26,.45); background:rgba(247,147,26,.10); box-shadow:0 0 18px rgba(247,147,26,.12)}
+.dot{width:8px; height:8px; border-radius:99px; background:var(--green); box-shadow:0 0 12px rgba(46,213,115,.55)}
+@keyframes blink{0%,85%,100%{opacity:.35; transform:scale(1)} 92%{opacity:1; transform:scale(1.2)} 96%{opacity:.7; transform:scale(1.05)}}
+.dot.blink{animation:blink 2.8s ease-in-out infinite}
+/* Cards */
+.hero{margin-top:14px; border:1px solid var(--border); border-radius:22px; background:var(--glass); backdrop-filter: blur(12px);
+  padding:18px; position:relative; overflow:hidden;}
+.hero:before{content:""; position:absolute; inset:-40%; background:
+ radial-gradient(circle at 20% 20%, rgba(247,147,26,.22), transparent 55%),
+ radial-gradient(circle at 80% 55%, rgba(46,213,115,.12), transparent 60%);
+ opacity:.8}
+.hero > *{position:relative}
+.hgrid{display:grid; grid-template-columns:1fr; gap:14px;}
+@media(min-width:980px){.hgrid{grid-template-columns:1.05fr .95fr}}
+h1{margin:0; font-size:28px; font-weight:900; letter-spacing:.1px}
+.sub{margin-top:10px; opacity:.85; line-height:1.55}
+.tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+.tag{display:inline-flex; align-items:center; gap:8px; padding:7px 10px; border-radius:999px; border:1px solid var(--border);
+  background:rgba(0,0,0,.12); font-size:12px; opacity:.92}
+.grid{display:grid; grid-template-columns:1fr; gap:12px; margin-top:14px;}
+@media(min-width:980px){.grid{grid-template-columns:1fr 1fr}}
+.card{border:1px solid var(--border); background:rgba(0,0,0,.18); border-radius:18px; padding:14px;   margin:0 auto; width:75%; max-width:75%; margin:0 auto; }
+.hd{display:flex; justify-content:space-between; gap:10px; align-items:center}
+.hd .t{font-weight:900; font-size:12px; letter-spacing:.9px; text-transform:uppercase; opacity:.9}
+.hd .s{font-size:12px; opacity:.78}
+.hr{height:1px; background:rgba(255,255,255,.10); margin:12px 0}
+.note{font-size:12px; opacity:.82; line-height:1.55}
+.kpis{display:grid; grid-template-columns:1fr; gap:10px; margin-top:10px}
+@media(min-width:980px){.kpis{grid-template-columns:1fr 1fr 1fr}}
+.kpi{border:1px solid rgba(255,255,255,.10); background:rgba(0,0,0,.14); border-radius:16px; padding:10px}
+.kpi .k{font-size:11px; opacity:.72}
+.kpi .v{font-size:16px; font-weight:900; margin-top:3px}
+.alloc{display:flex; flex-direction:column; gap:10px; margin-top:10px}
+.alloc .row{display:flex; align-items:center; gap:10px}
+.alloc .name{min-width:170px; font-size:12px; font-weight:900}
+.alloc .track{flex:1; height:10px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.10); overflow:hidden}
+.alloc .track>div{height:100%; background:rgba(247,147,26,.88)}
+.alloc .pct{width:60px; text-align:right; font-size:12px; opacity:.8}
+.steps{display:flex; flex-direction:column; gap:10px; margin-top:10px}
+.step{display:flex; justify-content:space-between; gap:10px; align-items:flex-start; padding:10px 12px; border-radius:14px;
+  border:1px solid rgba(255,255,255,.10); background:rgba(0,0,0,.14)}
+.step .h{font-weight:900; font-size:12px}
+.step .p{opacity:.72; font-size:11px; line-height:1.35; margin-top:2px}
+.btns{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+.btn{all:unset; cursor:pointer; display:inline-flex; justify-content:center; align-items:center; gap:10px; padding:10px 12px;
+  border-radius:14px; border:1px solid rgba(255,255,255,.12); background:rgba(0,0,0,.16); font-size:12px; font-weight:900; opacity:.95}
+.btn:hover{opacity:1; border-color:rgba(247,147,26,.35)}
+.btn.accent{border-color:rgba(247,147,26,.45); background:rgba(247,147,26,.12); box-shadow:0 0 18px rgba(247,147,26,.12)}
+input.mono{font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+.copyline{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+.copyline input{flex:1 1 260px}
+.badge{display:inline-flex; align-items:center; gap:8px; padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.12); font-size:12px; opacity:.9}
+.badge.ok{border-color:rgba(46,213,115,.26); background:rgba(46,213,115,.06)}
+.badge.warn{border-color:rgba(255,201,71,.22); background:rgba(255,201,71,.06)}
+/* Meter */
+.meter{border:1px solid rgba(255,255,255,.10); background:rgba(0,0,0,.14); border-radius:18px; padding:14px; margin-top:12px}
+.meterBar{height:12px; border-radius:999px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.10); overflow:hidden; margin-top:10px}
+.meterBar>div{height:100%; width:22%; background:rgba(247,147,26,.88); transition:width .35s ease}
+.meterNums{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+.meterNums .box{border:1px solid rgba(255,255,255,.10); background:rgba(0,0,0,.14); border-radius:14px; padding:10px; min-width:160px}
+.small{font-size:12px; opacity:.75; margin-top:8px; line-height:1.45}
+/* FAQ */
+.faq{display:flex; flex-direction:column; gap:10px; margin-top:10px}
+details{border:1px solid rgba(255,255,255,.10); background:rgba(0,0,0,.14); border-radius:16px; padding:10px 12px}
+summary{cursor:pointer; font-weight:900; font-size:12px}
+details p{margin:8px 0 0 0; opacity:.82; line-height:1.55; font-size:12px}
+.footer{margin-top:22px; opacity:.72; font-size:12px; line-height:1.45}
+
+/* === Whitepaper: orange headings === */
+#whitepaper .h,
+#whitepaper h3.h,
+#whitepaper .step .h{
+  color: var(--accent) !important;
+}
+
+\1
+
+<style>
+/* === Sticky Index-Style Header for Token Landing === */
+.nav{
+  position:sticky;
+  top:12px;
+  z-index:999;
+  background:rgba(0,0,0,.45);
+  backdrop-filter: blur(14px);
+  box-shadow:0 12px 40px rgba(0,0,0,.45);
+}
+.navlinks{
+  flex-wrap:nowrap;
+}
+.navlinks .pill{
+  white-space:nowrap;
+}
+@media(max-width:900px){
+  .navlinks{flex-wrap:wrap;}
+}
+
+/* ==== FORCE STACKING FOR PRESS / FAQ and PURCHASE / SALE METER (ALL SIZES) ==== */
+#press,
+#acquire{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:12px !important;
+  width:100% !important;
+}
+
+/* Make sure the cards inside are full width */
+/* If any grid rules still apply, kill them explicitly */
+@media (min-width: 900px){
+  #press,
+  #acquire{
+    grid-template-columns:1fr !important;
+  }
+}
+/* Open Wallet flow stepper */
+.flowSteps{
+  margin-top:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
+  font-size:12px;
+  line-height:1;
+  color: rgba(232,238,248,.82);
+}
+.flowSteps .step{
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(10,15,25,.28);
+  backdrop-filter: blur(8px);
+}
+.flowSteps .step.active{
+  border-color: rgba(242,169,0,.85);
+  color: rgba(242,169,0,.95);
+}
+.flowSteps .step.done{
+  border-color: rgba(46, 213, 115, .85);
+  color: rgba(46, 213, 115, .95);
+}
+
+
+
+
+<style>
+/* === Slim Sticky Header Section === */
+.token-header-wrap{
+  position:sticky;
+  top:0;
+  z-index:999;
+  padding:8px 12px;
+  background:linear-gradient(to bottom, rgba(5,7,14,.92), rgba(5,7,14,.65));
+  backdrop-filter: blur(14px);
+}
+.token-header-wrap .nav{
+  box-shadow:none;
+  padding:8px 12px;
+}
+.token-header-wrap .brand span{display:none;}
+.token-header-wrap .pill{
+  padding:6px 9px;
+  font-size:11px;
+}
+.section-anchor{
+  scroll-margin-top:88px; /* space for sticky header */
+}
+
+
+.kpi, .kpi-card, .deflation{
+  width:100% !important;
+  max-width:100% !important;
+  box-sizing:border-box !important;
+}
+.kpi-grid, .stats-grid, .tokenomics-grid{
+  grid-template-columns:1fr !important;
+}
+
+
+/* Force all major cards to identical 75% width */
+#utility .card, #deflSim.card, #tokenomics .card, #sale .card, #purchase.card{
+  width:75% !important;
+  max-width:75% !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+
+/* HARD clamp all cards to 75% including Utility/Deflation */
+.section-anchor > .card,
+.section-anchor .card,
+.card{
+  width:75% !important;
+  max-width:75% !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+#utility, #deflSim{
+  width:75% !important;
+  max-width:75% !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+
+/* === UNIFY CARD WIDTH (matches everywhere) === */
+:root{ --card-max: 1100px; }
+.card{
+  width: min(75%, var(--card-max)) !important;
+  max-width: var(--card-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box !important;
+}
+/* ensure section-specific overrides can't break width */
+#press .card, #utility .card, #deflSim.card, #tokenomics .card, #sale .card, #purchase.card, #acquire .card{
+  width: min(75%, var(--card-max)) !important;
+  max-width: var(--card-max) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+/* FINAL: Force ALL cards to exactly 75% width */
+:root{ --card-max: 75vw; }
+.card{
+  width:75% !important;
+  max-width:75% !important;
+  margin:0 auto !important;
+  box-sizing:border-box !important;
+}
+#overview .card,
+#utility .card,
+#tokenomics .card,
+#sale .card,
+#investors .card,
+#roadmap .card,
+#trust .card,
+#faq .card,
+#whitepaper .card,
+#press .card,
+#deflSim.card{
+  width:75% !important;
+  max-width:75% !important;
+  margin:0 auto !important;
+}
+
+
+/* Center Purchase card and remove extra frame underneath */
+#purchase.card, #sale .card#purchase, #acquire .card#purchase{
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+#purchase + .card,
+#purchase .frame,
+#purchase .outline,
+#purchase .hr{
+  border:none !important;
+  box-shadow:none !important;
+}
+
+
+/* Ensure Purchase card is same 75% width as others */
+#purchase.card, section#purchase .card{
+  width:75% !important;
+  max-width:75% !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+
+/* Normalize Purchase section wrapper and card */
+#purchase{
+  width:100% !important;
+  max-width:none !important;
+}
+#purchase .card{
+  width:75% !important;
+  max-width:75% !important;
+  margin:0 auto !important;
+}
+
+
+/* === FIX: make all cards identical width based on viewport (prevents parent width differences) === */
+.card{
+  width:75vw !important;
+  max-width:75vw !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+@media (max-width: 900px){
+  .card{ width:92vw !important; max-width:92vw !important; }
+}
+
+
+/* === TEMP: enlarge Purchase card to match others === */
+#purchase.card{
+  width:75vw !important;
+  max-width:75vw !important;
+  margin:0 auto !important;
+}
+
+
+/* === GLOBAL FINAL: all cards exactly 75% width === */
+.card{
+  width:75% !important;
+  max-width:75% !important;
+  margin:0 auto !important;
+  box-sizing:border-box !important;
+}
+
+
+
+
+#glance{ width:100% !important; max-width:1100px !important; margin:0 auto !important; padding:22px 16px 80px !important; }
+#glance .card{ width:75% !important; max-width:75% !important; margin:0 auto !important; }
+
+
+/* Pixel-match At-a-Glance to other cards: wrapper caps width, card fills wrapper */
+#glance{ width:100% !important; max-width:1100px !important; margin:0 auto !important; padding:22px 16px 80px !important; }
+#glance .card{ width:100% !important; max-width:100% !important; margin:0 auto !important; }
+
+
+/* Micro-tune Glance to match others exactly */
+#glance{ max-width:1080px !important; }
+
+
+/* ===== Basys-style fixed background (nybg.png) + dark overlay ===== */
+html, body { height: 100%; }
+body{
+  background: transparent !important;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-3;
+  background: url("nybg.png") center center / cover no-repeat;
+  transform: translateZ(0);
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 25%, rgba(0,0,0,.18), rgba(0,0,0,.80)),
+    linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.80));
+}
+
+
+/* ===== Glass panels for cards (like reference) ===== */
+.card{
+  background: rgba(12,18,28,.56) !important;
+  border: 1px solid rgba(255,255,255,.12) !important;
+  box-shadow: 0 28px 80px rgba(0,0,0,.45) !important;
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+}
+
+
+/* Prevent any previous full-page background layers from covering the image */
+.page-bg, .bg, .background, #bg, #background{
+  display:none !important;
+}
+
+
+/* === Active state also for header action pills (LIVE / Purchase) === */
+.token-header-actions .pill.is-active,
+.token-header-actions .pill.active{
+  opacity:1 !important;
+  border-color: rgba(247,147,26,.55) !important;
+  background: rgba(247,147,26,.10) !important;
+  box-shadow: 0 0 0 2px rgba(247,147,26,.10) inset, 0 10px 30px rgba(0,0,0,.22) !important;
+}
+
+/* === Green pulsing live dot === */
+.live-dot{
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background: rgba(46, 213, 115, .95);
+  box-shadow: 0 0 0 0 rgba(46, 213, 115, .55);
+  margin-right:8px;
+  vertical-align:middle;
+  animation: livePulse 1.6s ease-out infinite;
+}
+@keyframes livePulse{
+  0%{ box-shadow: 0 0 0 0 rgba(46, 213, 115, .55); transform:scale(1); }
+  55%{ box-shadow: 0 0 0 14px rgba(46, 213, 115, 0); transform:scale(1.02); }
+  100%{ box-shadow: 0 0 0 0 rgba(46, 213, 115, 0); transform:scale(1); }
+}
+
+
+/* Active styling for header action pills (LIVE / Purchase) */
+.token-header-actions .pill.is-active,
+.token-header-actions .pill.active{
+  border:2px solid #f7931a !important;
+  color:#f7931a !important;
+  background:rgba(247,147,26,.12) !important;
+  box-shadow:0 0 0 1px rgba(247,147,26,.8) inset !important;
+}
+
+
+/* Anchor stop position (higher): match header height */
+.section-anchor, #purchase, #sale{
+  scroll-margin-top: 110px;
+}
+
+
+/* LIVE dot always pulsing */
+.live-dot{ animation: livePulse 1.6s ease-out infinite !important; }
+
+
+/* Purchase anchor fine-tune: stop a bit higher under sticky header */
+#purchase{ scroll-margin-top: 140px !important; }
+.section-anchor{ scroll-margin-top: 140px !important; }
+
+
+/* Investors actions: always one row, smaller, scroll if needed */
+.investor-actions{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+  flex-wrap:nowrap !important;
+  overflow:hidden !important;
+  overflow-y:hidden !important;
+  
+  padding-bottom:0;
+}
+.investor-actions::-webkit-scrollbar{ height:6px; }
+.investor-actions .btn{
+  white-space:nowrap !important;
+  font-size:12.5px !important;
+  padding:10px 12px !important;
+  border-radius:14px !important;
+  min-height:unset !important;
+  line-height:1.1 !important;
+}
+
+
+.investor-actions .btn{
+  flex:1 1 auto !important;
+  text-align:center;
+  font-size:11.5px !important;
+  padding:8px 8px !important;
+}
+
+
+/* Ultra-compact investors actions to prevent any overflow */
+.investor-actions{ gap:6px !important; }
+.investor-actions .btn{
+  flex:1 1 0 !important;
+  min-width:0 !important;
+  font-size:10.2px !important;
+  padding:7px 6px !important;
+  border-radius:12px !important;
+  letter-spacing:-0.1px;
+}
+.investor-actions .btn span,
+.investor-actions .btn strong{ white-space:nowrap !important; }
+
+</style>
+<style>
+/* Header enhancements */
+.token-header-actions{display:flex; gap:10px; align-items:center; justify-content:flex-end; flex-wrap:wrap;}
+.live-pill{display:inline-flex; align-items:center; gap:8px;}
+.live-dot{width:8px;height:8px;border-radius:99px;background:rgba(46,213,115,.95);box-shadow:0 0 14px rgba(46,213,115,.65);animation:liveBlink 2.2s ease-in-out infinite;}
+@keyframes liveBlink{0%,70%,100%{opacity:.35; transform:scale(1);} 80%{opacity:1; transform:scale(1.25);} 90%{opacity:.7; transform:scale(1.05);}}
+</style>
+<style>
+/* === Global Narrow Layout === */
+.page-wrap, .hero, section{
+  max-width:1080px;
+  margin-left:auto;
+  margin-right:auto;
+}
+@media(max-width:1200px){
+  .page-wrap, .hero, section{max-width:94%;}
+}
+</style>
+<style>
+/* === Soft Orange Section Frames === */
+section{
+  border:1px solid rgba(247,147,26,.22);
+  border-radius:20px;
+  padding:22px 22px 26px;
+  margin-bottom:26px;
+  background: transparent;
+}
+</style>
+<style>
+/* === Uniform Section Width === */
+.section-wrap, section, .hero{
+  max-width:1080px;
+  margin-left:auto;
+  margin-right:auto;
+}
+</style>
+<style>
+/* === Ensure Orange Frames Align to Same Width === */
+section{box-sizing:border-box;}
+.token-header-wrap{
+  max-width:1080px;
+  margin-left:auto;
+  margin-right:auto;
+}
+@media(max-width:1200px){
+  .token-header-wrap{max-width:94%;}
+}
+</style>
+<style>
+/* === Premium Typography + Header Polish (overrides) === */
+:root{
+  --accent:#f7931a;
+}
+body{
+  font-feature-settings:"ss01" 1,"ss02" 1,"cv01" 1;
+  letter-spacing:0.1px;
+}
+h1{
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.6px;
+  font-weight: 950;
+}
+.sub{
+  font-size: 14px;
+  line-height: 1.65;
+  max-width: 62ch;
+}
+.card .note, .note, .small, details p{
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.brand b{
+  font-size: 14px;
+  letter-spacing: .6px;
+  text-transform: uppercase;
+}
+.token-header-wrap{
+  padding:10px 12px;
+}
+.token-header-wrap .nav{
+  border:1px solid rgba(255,255,255,.10);
+  background:rgba(0,0,0,.28);
+  border-radius:18px;
+}
+.token-header-wrap .brand span{
+  display:block;
+  opacity:.72;
+  font-size:11px;
+  letter-spacing:.2px;
+}
+.token-header-actions .pill.accent{
+  border-color: rgba(247,147,26,.50);
+  background: rgba(247,147,26,.10);
+}
+.pill:hover{
+  border-color: rgba(247,147,26,.28);
+}
+section{
+  border-color: rgba(247,147,26,.18);
+}
+</style>
+<style>
+/* === Bitcoin Orange frames for major subsection cards === */
+section .card{
+  border:1px solid rgba(247,147,26,.22);
+  border-radius:18px;
+  background: transparent;
+}
+section .card + .card{margin-top:18px;}
+</style>
+<style>
+/* === FORCE Bitcoin Orange frames for ALL major blocks === */
+section{
+  border:1px solid rgba(247,147,26,.22) !important;
+}
+section > .card,
+section .grid > .card,
+section .cards > .card,
+section .row > .card{
+  border:1px solid rgba(247,147,26,.22) !important;
+  border-radius:18px !important;
+  background: transparent !important;
+}
+</style>
+<style>
+<style>
+/* === KEEP Frames ONLY on individual cards / subsections === */
+.card,
+.grid > .card,
+.meter,
+details{
+  border:1px solid rgba(247,147,26,.22);
+  border-radius:18px;
+  outline:none;
+}
+</style>
+<style>
+/* === Scroll-reveal frames (subtle) === */
+.card, .grid > .card, .meter, details{
+  transition: border-color .45s ease, transform .45s ease, opacity .45s ease;
+  opacity: .92;
+  border-color: rgba(247,147,26,.10);
+}
+.card.inview, .grid > .card.inview, .meter.inview, details.inview{
+  opacity: 1;
+  border-color: rgba(247,147,26,.22);
+  transform: translate3d(0,0,0);
+}
+.card:not(.inview), .grid > .card:not(.inview), .meter:not(.inview), details:not(.inview){
+  transform: translate3d(0,6px,0);
+}
+
+/* === Stronger headline separation === */
+.hd{
+  padding-bottom:10px;
+  border-bottom:1px solid rgba(247,147,26,.14);
+  margin-bottom:10px;
+}
+.hd .t{
+  letter-spacing:1.1px;
+}
+.hr{ /* keep existing hr but softer */
+  background:rgba(255,255,255,.10);
+}
+
+/* === Investor CTA block === */
+.investor-cta{
+  margin-top:14px;
+}
+.investor-cta .note{max-width:72ch;}
+.investor-cta .btns .btn.accent{
+  border-color: rgba(247,147,26,.55);
+  background: rgba(247,147,26,.12);
+}
+</style>
+<style>
+/* === Bigger + Bitcoin-Orange Main Header === */
+.hero h1,
+h1{
+  font-size: clamp(36px, 4.2vw, 58px) !important;
+  line-height: 1.02 !important;
+  font-weight: 950 !important;
+  color: #f7931a !important;
+  text-shadow: 0 0 0 rgba(0,0,0,0);
+}
+.hero .sub{
+  font-size: 15px;
+  opacity: .9;
+}
+</style>
+<style>
+/* === Anchor offset for tall sticky header === */
+html{scroll-padding-top: 165px;}
+.section-anchor{scroll-margin-top: 165px !important;}
+</style>
+<style>
+/* === Full-width header strip + active link focus === */
+.token-header-wrap{
+  width:100%;
+  max-width:none !important;
+  margin:0 !important;
+  left:0; right:0;
+  padding:10px 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,.82), rgba(0,0,0,.55));
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.token-header-wrap .nav{
+  max-width:1080px;
+  margin:0 auto;
+  width: calc(100% - 24px);
+}
+#tokenLandingNav .pill{
+  opacity:.55;
+  border-color: rgba(255,255,255,.10);
+  background: rgba(0,0,0,.14);
+}
+#tokenLandingNav .pill:hover{opacity:.9;}
+#tokenLandingNav .pill.is-active{
+  opacity:1 !important;
+  border-color: rgba(247,147,26,.55) !important;
+  background: rgba(247,147,26,.10) !important;
+}
+#tokenLandingNav .pill.accent{opacity:.9;}
+/* Keep Back visible but slightly less dominant than active section */
+#tokenLandingNav a[data-role="back"]{opacity:.85;}
+/* Reduce visual noise in header: dim brand subtitle when scrolling */
+.token-header-wrap .brand span{opacity:.55;}
+</style>
+<style>
+/* === Header offset + more transparency === */
+.token-header-wrap{
+  top: 12px !important; /* leave page top visible */
+  padding: 10px 0 !important;
+  background: linear-gradient(to bottom, rgba(0,0,0,.62), rgba(0,0,0,.38)) !important;
+}
+</style>
+<style>
+/* === Orange Section Subjects / Headings === */
+.hd .t,
+.section-title,
+.card .t{
+  color:#f7931a !important;
+  font-size: clamp(15px, 1.8vw, 20px) !important;
+  font-weight: 900 !important;
+  letter-spacing:.9px;
+  text-transform: uppercase;
+}
+</style>
+<style>
+/* === Extra Transparent Header === */
+.token-header-wrap{
+  background: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.22)) !important;
+  backdrop-filter: blur(10px) saturate(110%);
+}
+#tokenLandingNav .pill{
+  background: rgba(0,0,0,.08) !important;
+}
+</style>
+<style>
+/* === Header: transparent while scrolling, solid when scroll stops === */
+.token-header-wrap{
+  transition: background .25s ease, backdrop-filter .25s ease, border-color .25s ease;
+}
+.token-header-wrap.scrolling{
+  background: linear-gradient(to bottom, rgba(0,0,0,.28), rgba(0,0,0,.14)) !important;
+}
+.token-header-wrap.stopped{
+  background: linear-gradient(to bottom, rgba(0,0,0,.78), rgba(0,0,0,.52)) !important;
+}
+</style>
+<style>
+</style>
+<style>
+.brand b{display:inline-flex;align-items:baseline;}
+.brand-accent{color:#f7931a;display:inline;}
+</style>
+<style>
+.brand-accent{
+  color:#f7931a;
+  text-transform:uppercase;
+  font-weight:900;
+}
+.brand b{font-variant-ligatures:none;}
+</style>
+<style>
+/* === Logo alignment with BA accent === */
+.logo svg, .logo img{
+  height:34px;
+  filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+}
+.logo .accent-fill{fill:#f7931a;}
+
+/* === Subtle header hover accents === */
+.token-header-wrap:hover{
+  background: linear-gradient(to bottom, rgba(0,0,0,.58), rgba(0,0,0,.32));
+}
+#tokenLandingNav .pill:hover{
+  border-color: rgba(247,147,26,.45);
+  background: rgba(247,147,26,.10);
+}
+.brand:hover .brand-accent{
+  text-shadow: 0 0 6px rgba(247,147,26,.35);
+}
+</style>
+<style>
+</style>
+<style>
+/* === Fix brand capitalization (no forced uppercase) === */
+.token-header-wrap .brand b{
+  text-transform:none !important;
+  letter-spacing:.2px !important;
+}
+</style>
+<style>
+/* === Final brand casing fix === */
+.token-header-wrap .brand b{
+  text-transform:none !important;
+  letter-spacing:.2px !important;
+}
+.brand-accent{
+  color:#f7931a;
+  font-weight:900;
+}
+</style>
+<style>
+/* === Make B and A slightly larger than rest of brand === */
+.brand-accent{
+  color:#f7931a;
+  font-weight:900;
+  font-size:1.25em;
+  line-height:1;
+  vertical-align:baseline;
+}
+</style>
+<style>
+/* === Force BIGGER B & A initials === */
+.token-header-wrap .brand b .brand-accent{
+  font-size:1.6em !important;
+  font-weight:900 !important;
+  line-height:1 !important;
+  display:inline-block;
+  transform: translateY(0.02em);
+}
+</style>
+<style>
+/* === Unify Bitcoin Orange across header + headings === */
+:root{ --btc:#f7931a; }
+
+.token-header-wrap .brand,
+.token-header-wrap .brand b{ opacity: 1 !important; }
+
+.token-header-wrap .brand b .brand-accent{
+  color: var(--btc) !important;
+  opacity: 1 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+
+/* Ensure section subjects use the exact same orange (no rgba tint) */
+.hd .t,
+.section-title,
+.card .t{
+  color: var(--btc) !important;
+}
+
+/* Active nav pill uses the same orange */
+#tokenLandingNav .pill.is-active{
+  border-color: rgba(247,147,26,.60) !important;
+  background: rgba(247,147,26,.14) !important;
+}
+</style>
+<style>
+/* === Slightly brighten inactive header links while keeping focus === */
+#tokenLandingNav .pill{
+  opacity:.72 !important;
+}
+#tokenLandingNav .pill:not(.is-active){
+  color: rgba(232,238,248,.85) !important;
+}
+</style>
+<style>
+.token-logo{margin-top:6px}
+.token-logo svg{display:block}
+</style>
+<style>
+/* === Token Logo Blink / Pulse === */
+@keyframes tokenBlinkPulse{
+  0%,100%{transform:scale(1); filter:drop-shadow(0 0 4px rgba(247,147,26,.35)); opacity:.9;}
+  50%{transform:scale(1.08); filter:drop-shadow(0 0 14px rgba(247,147,26,.75)); opacity:1;}
+}
+.token-logo svg{
+  animation: tokenBlinkPulse 3.2s ease-in-out infinite;
+  transform-origin:center;
+}
+</style>
+<style>
+
+
+
+<style>
+
+
+
+<style>
+/* === Utility section: match overall typography/scale === */
+#utility .step{padding:12px 14px; border-radius:16px;}
+#utility .step .h{font-size:14px; font-weight:900;}
+#utility .step .p{font-size:12px; line-height:1.45; opacity:.78;}
+#utility .step .s{font-size:18px; line-height:1;}
+</style>
+<style>
+/* === Utility card width: match other cards === */
+#utility{
+  width:100%;
+}
+#utility .card{
+  width:100% !important;
+  max-width:none !important;
+}
+</style>
+<style>
+
+
+
+<style>
+<style>
+.token-header-wrap a.pill{cursor:pointer; pointer-events:auto;}
+</style>
+<style>
+/* === Match Basys main index look (cards + background) === */
+:root{
+  --accent:#ff8c00;
+  --glass:rgba(10,15,25,.38);
+  --text-main:rgba(232,238,248,.92);
+  --text-muted:rgba(176,188,206,.88);
+}
+/* City + bridge background (same as index) */
+html,body{height:100%}
+body{background:none !important}
+body::before{
+  content:"";
+  position:fixed;
+  inset:-12%;
+  z-index:-1;
+  background:
+    linear-gradient(rgba(0,0,0,.32),rgba(0,0,0,.70)),
+    url("1000081562.jpg") no-repeat center 40% fixed;
+  background-size:cover;
+  transform:scale(0.92);
+  will-change:transform;
+}
+
+/* Cards: same glass look as index glass-card */
+.card{
+  background-color:var(--glass) !important;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-radius:20px !important;
+  border:1px solid rgba(255,255,255,.12) !important;
+  box-shadow:none !important;
+  transition:background-color .35s ease,backdrop-filter .35s ease,box-shadow .35s ease,transform .35s ease;
+}
+.card:hover{
+  background-color:rgba(10,15,25,.22) !important;
+  backdrop-filter:blur(26px);
+  -webkit-backdrop-filter:blur(26px);
+  transform:translateY(-2px);
+}
+@media (hover:none){ .card:hover{ transform:none; } }
+
+/* Inner tiles/panels keep subtle glass */
+.kpi, .step, .meter, details, .box, .tile, .panel, .stat, .chip, .note{
+  background-color:rgba(10,15,25,.24) !important;
+  border:1px solid rgba(255,255,255,.10) !important;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+
+/* Headline accents */
+.card .t{ color: var(--accent) !important; }
+</style>
+<style>
+/* === Larger vertical spacing between cards to reveal background === */
+section{margin-bottom:140px !important;}
+.card{margin-top:80px !important; margin-bottom:80px !important;}
+
+/* Mobile tuning */
+@media(max-width:900px){
+  section{margin-bottom:90px !important;}
+  .card{margin-top:56px !important; margin-bottom:56px !important;}
+}
+
+/* Anchor offset so header links still land nicely */
+[id]{
+  scroll-margin-top:140px;
+}
+</style>
+<style>
+/* === Fix casing in Purchase card title (no ALL CAPS) === */
+#purchase .hd .t{
+  text-transform:none !important;
+  letter-spacing:.2px !important;
+}
+</style>
+<style>
+/* === Whitepaper: read-more accordion styling === */
+.wp-details{border:0; padding:0; margin:0;}
+.wp-details summary{list-style:none;}
+.wp-details summary::-webkit-details-marker{display:none;}
+.wp-summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:14px;border:1px solid rgba(255,140,0,.45);background:rgba(255,140,0,.18);color:#ff8c00;font-weight:700;cursor:pointer;}
+.wp-summary:hover{
+  background: rgba(10,15,25,.24);
+}
+.wp-chevron{opacity:.75; transition: transform .22s ease;}
+.wp-details[open] .wp-chevron{transform: rotate(180deg);}
+.wp-body{
+  padding: 6px 2px 2px;
+}
+</style>
+<style>
+/* === PDF / Print layout === */
+@media print{
+  body{background:white !important;color:#000;}
+  body::before{display:none!important;}
+  .card{break-inside:avoid-page;page-break-inside:avoid;}
+  .token-header-wrap,.links{display:none;}
+  .wp-summary{display:none;}
+  .wp-details{open:true;}
+  svg{max-width:100%;}
+}
+</style>
+<style>
+/* === Whitepaper steps: remove trailing 1/2/3 badges === */
+#whitepaper .step .s{display:none !important;}
+</style>
+<style>
+/* === Utility anchor fine-tune === */
+
+</style>
+<style>
+/* === Unified anchor offset for ALL sections/cards === */
+.card[id]{ scroll-margin-top:180px; }
+</style>
+<style>
+/* === Force ALL main cards to stack vertically === */
+main, .main, .content, .container, .wrap, .shell, .page, .cards, .sections{
+  display:block !important;
+}
+#tokenLandingMain, #tokenLanding, .token-landing, .token-wrap{
+  display:block !important;
+}
+.card[id]{
+  display:block !important;
+  width: min(980px, 92vw) !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  clear:both !important;
+}
+/* If any parent is using CSS grid for cards, force single column */
+main{
+  grid-template-columns: 1fr !important;
+}
+</style>
+<style>
+/* === Hard fix: top-level card grids must be single column === */
+.hgrid{
+  display:block !important;
+  grid-template-columns:1fr !important;
+}
+.hgrid > .card{
+  width:min(980px,92vw) !important;
+  margin: 0 auto 80px auto !important;
+}
+@media(max-width:900px){
+  .hgrid > .card{ margin-bottom:56px !important; }
+}
+</style>
+<style>
+/* === Whitepaper PDF download button === */
+#whitepaper .wp-pdf{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 14px;border-radius:14px;
+  background: rgba(255,140,0,.18);
+  border: 1px solid rgba(255,140,0,.45);
+  color: #ff8c00;
+  font-weight:800;
+  text-decoration:none;
+}
+#whitepaper .wp-pdf:hover{
+  background: rgba(255,140,0,.26);
+}
+#whitepaper .wp-pdf-ic{font-size:18px;line-height:1;}
+</style>
+<style>
+/* === Tokenomics allocation chart + legend === */
+#whitepaper{
+  --c1:#ff8c00; /* Ecosystem */
+  --c2:#ffd08a; /* Operations */
+  --c3:#6fa8ff; /* Development */
+  --c4:#9cffc7; /* Liquidity */
+  --c5:#cfcfd6; /* Advisors */
+}
+#whitepaper .wp-alloc{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:12px}
+#whitepaper .wp-donut{max-width:220px;height:auto}
+#whitepaper .wp-legend{min-width:240px}
+#whitepaper .wp-leg-row{display:flex;align-items:center;gap:10px;padding:6px 0}
+#whitepaper .wp-swatch{width:14px;height:14px;border-radius:4px;display:inline-block;border:1px solid rgba(255,255,255,.18)}
+#whitepaper .wp-swatch.s1{background:var(--c1)}
+#whitepaper .wp-swatch.s2{background:var(--c2)}
+#whitepaper .wp-swatch.s3{background:var(--c3)}
+#whitepaper .wp-swatch.s4{background:var(--c4)}
+#whitepaper .wp-swatch.s5{background:var(--c5)}
+#whitepaper .wp-leg-name{flex:1;color:rgba(232,238,248,.92);font-weight:700;font-size:13px}
+#whitepaper .wp-leg-val{color:rgba(176,188,206,.88);font-weight:800;font-size:13px}
+#whitepaper .wp-leg-note{margin-top:6px;color:rgba(176,188,206,.75);font-size:12px}
+</style>
+<style>
+/* === Layout lock: cards ALWAYS stacked (never side-by-side) === */
+.hgrid, main.hgrid, .hgrid.cards, #tokenLandingMain.hgrid{
+  display:grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 0 !important;
+}
+.hgrid > *{
+  grid-column: 1 / -1 !important;
+}
+.hgrid > .card{
+  width: min(980px, 92vw) !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  justify-self: center !important;
+  align-self: start !important;
+}
+
+/* Prevent any breakpoint from switching to multi-column */
+@media (min-width: 0px){
+  .hgrid{ grid-template-columns: 1fr !important; }
+}
+</style>
+<style>
+/* === Uniform card readability fix === */
+:root{
+  --card-bg: rgba(0,0,0,.26);
+  --card-border: rgba(247,147,26,.22);
+  --card-text: rgba(232,238,248,.92);
+  --card-muted: rgba(200,210,224,.78);
+}
+.card,
+section .grid > .card,
+section .cards > .card,
+section .row > .card,
+.card.investor-cta{
+  background: var(--card-bg) !important;
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  box-shadow: 0 30px 70px rgba(0,0,0,.35) !important;
+}
+.card .hd .t{ color: #f7931a !important; }
+.card, .card *{ color: var(--card-text); }
+.card .hd .s, .card .note, .card .muted, .card .sub, .card small{
+  color: var(--card-muted) !important;
+}
+.card a{ color: var(--card-text); }
+</style>
+<style>
+.whitepaper-readmore{
+  color:#f7931a !important;
+  font-weight:800;
+}
+.whitepaper-readmore:hover{ text-decoration:underline; }
+</style>
+<style>
+/* White borders for all section cards */
+.card{
+  border-color: rgba(255,255,255,0.28) !important;
+}
+</style>
+<style>
+/* Force true Bitcoin-orange borders */
+.card{
+  border-color: #f7931a !important;
+}
+</style>
+<style>
+/* Force BTC orange on Investors & Partners specifically */
+#investors, .investors, .investors-partners{
+  border-color:#f7931a !important;
+}
+#investors .card, .investors .card{
+  border-color:#f7931a !important;
+}
+</style>
+<style>
+/* === FIX: Press / KID / FAQ cards must always stack (never side-by-side) === */
+#press{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:14px !important;
+}
+</style>
+<style>
+/* === FORCE Acquire + Sale cards same width as rest === */
+#acquire, #press{
+  max-width:1080px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+#acquire > .card,
+</style>
+<style>
+/* === Match Acquire wrapper to section frame sizing (so Purchase + Sale don't look wider) === */
+#acquire{
+  max-width:1080px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+
+  /* match <section> framing */
+  border:1px solid rgba(247,147,26,.22) !important;
+  border-radius:20px !important;
+  padding:22px 22px 26px !important;
+  margin-bottom:26px !important;
+  background: transparent !important;
+  box-sizing: border-box !important;
+}
+
+/* keep the two cards full-width inside the framed area */
+</style>
+<style>
+/* === REMOVE extra frame around Acquire + just match width === */
+#acquire{
+  max-width:1080px !important;
+  margin:0 auto 26px !important;
+  padding:0 !important;
+  border:none !important;
+  background:none !important;
+}
+</style>
+<style>
+/* === Make Purchase & Sale exactly match other section widths === */
+#acquire{
+  max-width:1080px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+}
+
+@media(max-width:1200px){
+  #acquire{
+    max-width:94% !important;
+  }
+}
+
+</style>
+<style>
+/* === GLOBAL FRAME COLOR: solid orange instead of yellow tint === */
+:root{
+  --accent:#f7931a;
+}
+.card, section{
+  border-color: rgba(247,147,26,1) !important;
+}
+
+/* === FORCE Purchase + Sale to match canonical section width === */
+#acquire{
+  max-width:1080px !important;
+  margin:0 auto !important;
+  padding:0 !important;
+}
+
+@media(max-width:1200px){
+  }
+</style>
+<style>
+/* === HARD OVERRIDE: solid orange frames everywhere === */
+.card, section{
+  border: 1px solid var(--accent) !important;
+}
+
+/* === Make Acquire behave like other sections (same inner padding, no extra frame) === */
+#acquire{
+  max-width:1080px !important;
+  margin:0 auto !important;
+  padding:22px 16px 80px !important; /* same as main section wrap */
+  border:none !important;
+  background:none !important;
+  box-sizing:border-box !important;
+}
+
+/* Cards inside Acquire now fill that section width */
+@media(max-width:1200px){
+  #acquire{
+    max-width:94% !important;
+  }
+}
+</style>
+<style>
+/* === FORCE Utility + Deflation always stacked === */
+#utility{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:22px !important;
+}
+
+#utility > .card{
+  width:100% !important;
+  max-width:100% !important;
+}
+</style>
+<style>
+/* === HARD FRAME COLOR FIX: all sides solid orange, no gradients/shadows === */
+.card, section{
+  border:1px solid var(--accent) !important;
+  border-color: var(--accent) !important;
+  border-image: none !important;
+  box-shadow: none !important;
+}
+
+/* remove any side-glow overlays */
+.card::before,
+.card::after{
+  display:none !important;
+}
+</style>
+<style>
+/* === FINAL ORANGE FRAME OVERRIDE (every box, every side) === */
+:root{ --accent:#f7931a !important; }
+
+.card, section,
+.kpi, .step, .meter, details, .box, .tile, .panel, .stat, .chip, .note,
+.btn, input, .pill{
+  border:1px solid #f7931a !important;
+  border-color:#f7931a !important;
+  border-image:none !important;
+  box-shadow:none !important;
+  outline:none !important;
+}
+
+/* prevent any gradient borders */
+*{
+  border-image-source:none !important;
+}
+
+/* keep hover from reintroducing border tints */
+.card:hover,
+.kpi:hover, .step:hover, .meter:hover, details:hover, .box:hover{
+  border-color:#f7931a !important;
+}
+</style>
+<style>
+/* === Ultra-hard orange frame: draws an extra outline layer so edges can't look yellow === */
+.card, section{
+  border:1px solid #f7931a !important;
+  outline:1px solid #f7931a !important;
+  outline-offset:-1px !important;
+  box-shadow: 0 0 0 1px #f7931a inset, 0 0 0 1px #f7931a !important;
+  filter:none !important;
+}
+</style>
+<style>
+/* === HEADER NAV: active link orange, others no frame === */
+.navlinks .pill{
+  border:none !important;
+  box-shadow:none !important;
+}
+
+.navlinks .pill.active,
+.navlinks .pill[aria-current="true"]{
+  border:1px solid #f7931a !important;
+  color:#f7931a !important;
+  box-shadow:0 0 0 1px rgba(247,147,26,.35) inset !important;
+}
+
+/* hover keeps subtle glow but no border for inactive */
+.navlinks .pill:not(.active):hover{
+  color:#f7931a;
+}
+</style>
+<style>
+/* === HEADER NAV FINAL: active pill solid orange with frame === */
+.navlinks .pill{
+  border:none !important;
+  box-shadow:none !important;
+  color:var(--text) !important;
+}
+
+.navlinks .pill.active,
+.navlinks .pill[aria-current="true"]{
+  border:1px solid #f7931a !important;
+  color:#f7931a !important;
+  background:rgba(247,147,26,.08) !important;
+  box-shadow:0 0 0 1px rgba(247,147,26,.55) inset !important;
+}
+</style>
+<style>
+/* === SUPER OVERRIDE: header active state always visible === */
+header .navlinks .pill,
+.token-header-wrap .navlinks .pill{
+  border:none !important;
+  box-shadow:none !important;
+  color:rgba(232,238,248,.9) !important;
+}
+
+header .navlinks .pill.active,
+header .navlinks .pill[aria-current="true"],
+.token-header-wrap .navlinks .pill.active,
+.token-header-wrap .navlinks .pill[aria-current="true"]{
+  border:2px solid #f7931a !important;
+  color:#f7931a !important;
+  background:rgba(247,147,26,.12) !important;
+  box-shadow:0 0 0 1px rgba(247,147,26,.8) inset !important;
+}
+</style>
+<style>
+/* ScrollSpy uses .is-active -> map it to active styling */
+header .navlinks .pill.is-active,
+.token-header-wrap .navlinks .pill.is-active{
+  border:2px solid #f7931a !important;
+  color:#f7931a !important;
+  background:rgba(247,147,26,.12) !important;
+  box-shadow:0 0 0 1px rgba(247,147,26,.8) inset !important;
+}
+</style>
+<style>
+/* === Rounded orange frames everywhere (no square corners) === */
+.card, section,
+.kpi, .step, .meter, details, .box, .tile, .panel, .stat, .chip, .note,
+.btn, input, .pill{
+  border-radius:18px !important;
+}
+
+/* header pills slightly tighter */
+.token-header-wrap .pill{
+  border-radius:999px !important;
+}
+</style>
+<style>
+/* === Remove frames from inner items inside cards === */
+.card .kpi,
+.card .step,
+.card .meter,
+.card details,
+.card .box,
+.card .tile,
+.card .panel,
+.card .stat,
+.card .chip,
+.card .note{
+  border:none !important;
+  box-shadow:none !important;
+  outline:none !important;
+}
+</style>
+<style>
+/* === Thin outer card frames === */
+.card, section{
+  border-width:1px !important;
+}
+</style>
+<style>
+/* === Make Purchase contract address highly visible === */
+#purchase .copyline{
+  margin-top:12px !important;
+}
+
+#purchase input.mono,
+#purchase #contract{
+  font-size:16px !important;
+  font-weight:700 !important;
+  padding:14px 14px !important;
+  background:rgba(10,15,25,.85) !important;
+  border:2px solid #f7931a !important;
+  color:#f7931a !important;
+  box-shadow:0 0 0 1px rgba(247,147,26,.8) inset, 0 0 14px rgba(247,147,26,.35) !important;
+}
+
+/* Copy button aligned + stronger */
+#purchase #copy{
+  font-weight:700 !important;
+  border:2px solid #f7931a !important;
+}
+</style>
+<style>
+/* === Purchase address: black text + smaller digits === */
+#purchase input.mono,
+#purchase #contract{
+  font-size:13.5px !important;
+  font-weight:600 !important;
+  color:#000 !important;
+  background:#0a0f19 !important;
+  box-shadow:none !important;
+}
+
+/* keep border but calmer */
+#purchase #contract{
+  border:1px solid #f7931a !important;
+}
+</style>
+<style>
+/* === Purchase address: white background, black text, compact === */
+#purchase input.mono,
+#purchase #contract{
+  background:#ffffff !important;
+  color:#000000 !important;
+  font-size:13.5px !important;
+  font-weight:600 !important;
+  box-shadow:none !important;
+}
+
+/* subtle orange frame stays */
+#purchase #contract{
+  border:1px solid #f7931a !important;
+}
+</style>
+<style>
+/* === Purchase address: subtler frame === */
+#purchase input.mono,
+#purchase #contract{
+  border:1px solid rgba(247,147,26,.45) !important;
+}
+</style>
+<style>
+/* === Header back arrow slightly bigger === */
+.navlinks .pill.accent{
+  font-size:14.5px !important;
+}
+
+/* make the arrow itself pop a bit */
+.navlinks .pill.accent::first-letter{
+  font-size:18px;
+  margin-right:2px;
+}
+</style>
+<style>
+/* === Ultra-thin hairline outer frames === */
+.card, section{
+  border-width:0.75px !important;
+}
+
+/* Purchase address even subtler */
+#purchase input.mono,
+#purchase #contract{
+  border-width:0.6px !important;
+}
+</style>
+<style>
+/* === Unified vertical spacing === */
+:root{ --card-gap:26px; }
+
+/* sections spacing */
+section{ margin-bottom: var(--card-gap) !important; }
+
+/* direct blocks spacing */
+.wrap > .card,
+.wrap > .grid.section-anchor,
+.wrap > .hero.section-anchor{
+  margin-bottom: var(--card-gap) !important;
+}
+
+/* stacked grids: consistent gaps */
+#utility, #acquire, #press{
+  gap: var(--card-gap) !important;
+}
+
+/* cards inside stacked grids */
+#utility > .card,
+#acquire > .card,
+/* If there are multiple cards inside a section, keep spacing consistent */
+section .card + .card{ margin-top: var(--card-gap) !important; }
+</style>
+<style>
+/* === Spacing V2: consistent and slightly larger === */
+:root{ --card-gap:34px; }
+
+/* make sure no older overrides win */
+section{ margin-bottom: var(--card-gap) !important; }
+@media(max-width:900px){ section{ margin-bottom: var(--card-gap) !important; } }
+@media(max-width:1200px){ section{ margin-bottom: var(--card-gap) !important; } }
+
+/* blocks in the main flow */
+.wrap > .hero.section-anchor,
+.wrap > .card.section-anchor,
+.wrap > .grid.section-anchor,
+.wrap > section{
+  margin-bottom: var(--card-gap) !important;
+}
+
+/* stacked wrappers */
+#utility, #acquire, #press{
+  gap: var(--card-gap) !important;
+  margin-bottom: var(--card-gap) !important;
+}
+
+/* no extra margins inside stacked wrappers */
+#utility > .card,
+#acquire > .card,
+/* cards inside sections */
+section .card{ margin:0 !important; }
+section .card + .card{ margin-top: var(--card-gap) !important; }
+</style>
+<style>
+/* === Spacing V3: very generous gaps so only one card visible === */
+:root{ --card-gap:96px; }
+
+section,
+.wrap > .hero.section-anchor,
+.wrap > .card.section-anchor,
+.wrap > .grid.section-anchor,
+.wrap > section{
+  margin-bottom: var(--card-gap) !important;
+}
+
+#utility, #acquire, #press{
+  gap: var(--card-gap) !important;
+  margin-bottom: var(--card-gap) !important;
+}
+
+section .card + .card{
+  margin-top: var(--card-gap) !important;
+}
+</style>
+<style>
+/* === Ultra-thin borders like Investors / Partners cards === */
+.card{
+  border-width:0.5px !important;
+}
+section{
+  border-width:0.5px !important;
+}
+</style>
+<style>
+/* === Double-arrow scroll hint under each card === */
+.next-arrow{
+  display:flex;
+  justify-content:center;
+  margin-top:32px;
+  margin-bottom:8px;
+}
+
+.next-arrow a{
+  font-size:28px;
+  text-decoration:none;
+  color:#f7931a;
+  opacity:.75;
+  transition:opacity .2s, transform .2s;
+}
+
+.next-arrow a:hover{
+  opacity:1;
+  transform:translateY(4px);
+}
+</style>
+<style>
+/* === Disable double-arrow hints under cards === */
+.next-arrow{display:none !important;}
+</style>
+<style>
+/* === Header more transparent while scrolling === */
+header.scrolled,
+.token-header-wrap.scrolled{
+  background: rgba(10,15,25,0.55) !important;
+  backdrop-filter: blur(10px) saturate(120%);
+}
+</style>
+<style>
+/* === Stronger transparency + token grow effect on scroll === */
+header.scrolled,
+.token-header-wrap.scrolled{
+  background: rgba(10,15,25,0.35) !important;
+  backdrop-filter: blur(14px) saturate(130%);
+}
+
+/* token/logo grow */
+.token-header-wrap.scrolled .token-logo,
+.token-header-wrap.scrolled .token-name,
+header.scrolled .token-logo,
+header.scrolled .token-name{
+  transform: scale(1.08);
+  transition: transform .25s ease;
+}
+</style>
+<style>
+/* === Stronger token grow on scroll === */
+.token-header-wrap.scrolled .token-logo,
+.token-header-wrap.scrolled .token-name,
+header.scrolled .token-logo,
+header.scrolled .token-name{
+  transform: scale(1.15) !important;
+}
+</style>
+<style>
+/* === Token grows ONLY while actively scrolling === */
+.token-header-wrap.scrolling .token-logo,
+.token-header-wrap.scrolling .token-name,
+header.scrolling .token-logo,
+header.scrolling .token-name{
+  transform: scale(1.15) !important;
+}
+</style>
+<style>
+/* === FINAL: grow actual token elements while scrolling === */
+.token-header-wrap .token-logo,
+.token-header-wrap .token-logo svg,
+.token-header-wrap .brand b{
+  transition: transform .25s ease !important;
+  transform-origin:center;
+}
+
+.token-header-wrap.scrolling .token-logo,
+.token-header-wrap.scrolling .token-logo svg,
+.token-header-wrap.scrolling .brand b{
+  transform: scale(1.18) !important;
+}
+</style>
+<style>
+/* === FINAL OVERRIDE: scale real header token elements === */
+.token-header-wrap .token-logo,
+.token-header-wrap .token-logo svg,
+.token-header-wrap .brand b{
+  transition: transform .25s ease !important;
+  will-change: transform;
+}
+
+.token-header-wrap.scrolling .token-logo,
+.token-header-wrap.scrolling .token-logo svg,
+.token-header-wrap.scrolling .brand b{
+  transform: scale(1.22) !important;
+}
+</style>
+<style>
+/* === HEADER GLOBAL FIX: max width + centered + taller === */
+.token-header-wrap{
+  padding:18px 24px !important;
+}
+
+/* inner nav container constraint */
+.token-header-wrap .nav,
+.token-header-wrap .navlinks,
+.token-header-wrap .brand{
+  max-width:1400px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* prevent overflow on ultra-wide screens */
+.token-header-wrap{
+  overflow-x:hidden;
+}
+
+/* keep links wrapping instead of pushing layout */
+.token-header-wrap .navlinks{
+  flex-wrap:wrap;
+  row-gap:10px;
+}
+
+/* slightly taller pills for breathing room */
+.token-header-wrap .pill{
+  padding:9px 14px !important;
+  font-size:12.5px !important;
+}
+</style>
+<style>
+/* === Header smaller again, but still safe on wide screens === */
+.token-header-wrap{
+  padding:10px 14px !important;        /* smaller */
+  overflow-x:hidden !important;
+}
+
+/* constrain and center a single inner row */
+.token-header-wrap .nav{
+  max-width:1200px !important;         /* closer to original feel */
+  margin:0 auto !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:space-between !important;
+  gap:12px !important;
+}
+
+/* keep navlinks from pushing outside */
+.token-header-wrap .navlinks{
+  display:flex !important;
+  flex-wrap:wrap !important;
+  justify-content:flex-end !important;
+  gap:8px 10px !important;
+  max-width:100% !important;
+  min-width:0 !important;
+}
+
+/* allow brand to shrink */
+.token-header-wrap .brand{
+  min-width:0 !important;
+}
+
+/* smaller pills again */
+.token-header-wrap .pill{
+  padding:6px 10px !important;
+  font-size:11px !important;
+  line-height:1.1 !important;
+  white-space:nowrap !important;
+}
+</style>
+<style>
+/* === FIX 1: Header link dim while scrolling (only section links), active stays bright === */
+.token-header-wrap.scrolling #tokenLandingNav a.pill[data-section]{
+  opacity:0.3 !important;
+  transition: opacity .15s ease !important;
+}
+.token-header-wrap.scrolling #tokenLandingNav a.pill[data-section].is-active,
+.token-header-wrap.scrolling #tokenLandingNav a.pill[data-section].active,
+.token-header-wrap.scrolling #tokenLandingNav a.pill[data-section][aria-current="true"]{
+  opacity:1 !important;
+}
+
+/* === FIX 2: Cards outer frame must be solid orange on ALL sides (no yellow tint) === */
+:root{ --accent:#f7931a !important; }
+
+.card{
+  border:0.5px solid var(--accent) !important;
+  border-color: var(--accent) !important;
+  outline:0.5px solid var(--accent) !important;
+  outline-offset:-0.5px !important;
+  box-shadow: 0 0 0 0.5px var(--accent) inset !important;
+  border-image:none !important;
+  filter:none !important;
+  background-clip: padding-box !important;
+}
+</style>
+<style>
+/* === Add 2 subtle secondary accents (cyan + violet) to reduce "all orange" feeling === */
+:root{
+  --accent2:#22d3ee; /* cyan */
+  --accent3:#a78bfa; /* violet */
+}
+
+/* colored dot "icon" before each card title */
+.card .hd .t{
+  display:flex !important;
+  align-items:center !important;
+  gap:10px !important;
+}
+.card .hd .t::before{
+  content:"";
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 2px rgba(10,15,25,.55);
+  flex:0 0 auto;
+}
+
+/* map accents to sections where it fits */
+#tokenomics .hd .t::before{ background: var(--accent3); }
+#utility .hd .t::before{ background: var(--accent2); }
+#roadmap .hd .t::before{ background: var(--accent3); }
+#press .hd .t::before{ background: var(--accent2); }
+#faq .hd .t::before{ background: var(--accent2); }
+#sale .hd .t::before{ background: var(--green); } /* already on-theme */
+#purchase .hd .t::before{ background: var(--accent); }
+#investors .hd .t::before{ background: rgba(120,170,255,.95); } /* soft blue */
+
+/* make dividers a subtle multi-accent line */
+.card .hr{
+  background: linear-gradient(90deg, rgba(34,211,238,.55), rgba(247,147,26,.55), rgba(167,139,250,.55)) !important;
+  height:1px !important;
+  opacity:1 !important;
+}
+</style>
+<style>
+/* === Purchase UX: QR + checklist layout === */
+.purchase-row{
+  display:grid;
+  grid-template-columns: 190px 1fr;
+  gap:16px;
+  margin-top:14px;
+  margin-bottom:14px;
+}
+.purchase-qr{
+  border-radius:16px;
+  border:0.5px solid rgba(255,255,255,.10);
+  background: rgba(10,15,25,.22);
+  padding:12px;
+  text-align:center;
+}
+.purchase-qr img{
+  border-radius:14px;
+  background:#fff;
+  padding:8px;
+}
+.purchase-help{
+  border-radius:16px;
+  border:0.5px solid rgba(255,255,255,.10);
+  background: rgba(10,15,25,.16);
+  padding:12px;
+}
+@media(max-width:680px){
+  .purchase-row{ grid-template-columns: 1fr; }
+}
+</style>
+<style>
+/* === Remove white divider under Investors copy patch === */
+#investors .hr,
+#investors hr,
+#investors .divider{
+  background: transparent !important;
+  height:0 !important;
+  border:0 !important;
+}
+</style>
+<style>
+/* =========================
+   HEADER / NAV (CLEAN)
+   ========================= */
+.token-header-wrap{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:9999;
+  transform:none;
+  padding:10px 14px;
+  overflow-x:hidden;
+}
+
+/* reserve space for fixed header (dynamic: works even when nav wraps to 2 lines) */
+:root{
+  --headerH: 92px;          /* initial fallback; JS will update */
+  --anchorOffset: 128px;    /* initial fallback; JS will update */
+}
+body{ padding-top: var(--anchorOffset); }
+html{ scroll-padding-top: var(--anchorOffset); }
+.section-anchor{ scroll-margin-top: var(--anchorOffset); }
+/* nav row */
+.token-header-wrap .nav{
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.token-header-wrap .navlinks{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:8px 10px;
+  max-width:100%;
+  min-width:0;
+}
+.token-header-wrap .brand{ min-width:0; }
+
+/* pills sizing */
+.token-header-wrap .pill{
+  padding:6px 10px;
+  font-size:11px;
+  line-height:1.1;
+  white-space:nowrap;
+}
+
+/* active pill hairline (white) */
+#tokenLandingNav a.pill.is-active,
+#tokenLandingNav a.pill.active,
+#tokenLandingNav a.pill[aria-current="true"]{
+  box-shadow: inset 0 0 0 0.5px rgba(255,255,255,.92);
+  border-color: transparent;
+}
+
+/* back-to-basys hairline too */
+#tokenLandingNav a.pill[data-role="back"]{
+  box-shadow: inset 0 0 0 0.5px rgba(255,255,255,.92);
+}
+
+/* while actively scrolling: dim section links strongly, but keep active + back visible */
+.token-header-wrap.scrolling #tokenLandingNav a.pill[data-section]{
+  opacity:0.12;
+  transition: opacity .2s ease;
+}
+.token-header-wrap.scrolling #tokenLandingNav a.pill.is-active,
+.token-header-wrap.scrolling #tokenLandingNav a.pill.active,
+.token-header-wrap.scrolling #tokenLandingNav a.pill[aria-current="true"],
+.token-header-wrap.scrolling #tokenLandingNav a.pill[data-role="back"]{
+  opacity:1;
+}
+
+/* during programmatic nav scroll: keep nav readable */
+.token-header-wrap.navscrolling #tokenLandingNav a.pill{
+  opacity:1 !important;
+}
+
+/* token/brand grow effect while scrolling (slow) */
+.token-header-wrap .token-logo,
+.token-header-wrap .token-logo svg,
+.token-header-wrap .brand b{
+  transition: transform 1.5s ease;
+  will-change: transform;
+}
+.token-header-wrap.scrolling .token-logo,
+.token-header-wrap.scrolling .token-logo svg,
+.token-header-wrap.scrolling .brand b{
+  transform: scale(1.22);
+}
+
+/* header background states */
+.token-header-wrap{
+  background: linear-gradient(to bottom, rgba(5,7,14,.55), rgba(5,7,14,.22));
+  backdrop-filter: blur(12px);
+}
+.token-header-wrap.scrolling{
+  background: linear-gradient(to bottom, rgba(5,7,14,.38), rgba(5,7,14,.18));
+  backdrop-filter: blur(14px);
+}
+.token-header-wrap.navscrolling{
+  background: linear-gradient(to bottom, rgba(5,7,14,.82), rgba(5,7,14,.58));
+  backdrop-filter: blur(14px);
+}
+</style>
+<style>
+/* =========================
+   UX POLISH (mobile + feedback + a11y)
+   ========================= */
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *, *::before, *::after{
+    animation-duration:0.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.001ms !important;
+    scroll-behavior:auto !important;
+  }
+}
+
+/* Touch targets + tap feel */
+.btn, button, [role="button"]{
+  min-height:44px;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.pill:active, .btn:active, button:active{
+  transform: translateY(1px);
+}
+
+/* Clear keyboard focus */
+a:focus-visible, button:focus-visible, input:focus-visible, details summary:focus-visible{
+  outline:2px solid rgba(247,147,26,.95);
+  outline-offset:3px;
+  border-radius:14px;
+}
+
+/* Toast */
+#toastWrap{
+  position:fixed;
+  left:50%;
+  top: calc(var(--anchorOffset) - 18px);
+  transform: translateX(-50%);
+  z-index:10000;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  pointer-events:none;
+}
+.toast{
+  pointer-events:none;
+  max-width:min(560px, calc(100vw - 24px));
+  padding:10px 14px;
+  border-radius:14px;
+  font:600 13px/1.25 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: rgba(232,238,248,.95);
+  background: rgba(5,7,14,.72);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 30px rgba(0,0,0,.45);
+  border:1px solid rgba(255,255,255,.14);
+  opacity:0;
+  transform: translateY(-6px);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.toast.show{ opacity:1; transform: translateY(0); }
+.toast.ok{ border-color: rgba(46,213,115,.35); }
+.toast.warn{ border-color: rgba(247,147,26,.45); }
+.toast.err{ border-color: rgba(255,99,99,.45); }
+
+/* Better readability on very small screens */
+@media(max-width:420px){
+  .token-header-wrap .pill{ padding:7px 10px; font-size:11.5px; }
+}
+</style>
+<style>
+/* Open Wallet active (green) */
+.btn-green, .pill.btn-green, button.btn-green, a.btn-green{
+  background: linear-gradient(180deg, rgba(46,213,115,1), rgba(32,180,95,1)) !important;
+  border-color: rgba(46,213,115,1) !important;
+  color:#07110b !important;
+  box-shadow: 0 0 0 1px rgba(46,213,115,.25), 0 10px 22px rgba(46,213,115,.25);
+}
+</style>
+<style>
+/* First status (Copy) = orange, not brown */
+#stCopy.dot,
+#stCopyTxt,
+.statusCheck .dot:first-child{
+  background: #f2a900 !important;
+  border-color: #f2a900 !important;
+  color:#f2a900 !important;
+}
+</style>
+<style>
+.btn-orange{
+  background: linear-gradient(180deg, rgba(242,169,0,1), rgba(210,140,0,1)) !important;
+  border: none !important;
+  color:#1a1200 !important;
+  box-shadow: 0 0 0 1px rgba(242,169,0,.25), 0 10px 22px rgba(242,169,0,.25);
+}
+.btn-check{
+  display:inline-flex;align-items:center;gap:8px;
+}
+.btn-check .check{font-weight:900;font-size:1.1em;}
+</style>
+<style>
+/* Lower monitor pills */
+.monitorRow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px}
+.monItem{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);}
+.monDot{width:10px;height:10px;border-radius:50%;background:rgba(160,172,188,.7);box-shadow:0 0 0 1px rgba(255,255,255,.08) inset;}
+.monDone .monDot{background:rgba(46,213,115,1);box-shadow:0 0 10px rgba(46,213,115,.35);}
+.monDone .monTxt{color:rgba(46,213,115,1);font-weight:700;}
+.monPend .monTxt{color:rgba(232,238,248,.86);}
+</style>
+
+<style>
+/* ============================
+   GLOBAL BACKGROUND LOCK FIX
+   ============================ */
+
+/* Always use nybg.jpg and adapt perfectly to any screen */
+html, body{
+  height:100%;
+  min-height:100%;
+  background-color:#05070e !important;
+}
+
+body{
+  background:
+    linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.42)),
+    url("nybg.jpg") center center / cover no-repeat fixed !important;
+}
+
+/* Pseudo layers must never jump or intercept */
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  inset:0 !important;
+  width:100vw !important;
+  height:100vh !important;
+  height:100dvh !important;
+  height:100svh !important;
+  background:
+    linear-gradient(rgba(0,0,0,.18), rgba(0,0,0,.42)),
+    url("nybg.jpg") center center / cover no-repeat !important;
+  transform:none !important;
+  will-change:auto !important;
+  pointer-events:none !important;
+  z-index:-5 !important;
+}
+
+/* Prevent flash gaps on mobile address-bar resize */
+@supports(height:100dvh){
+  body::before,
+  body::after{ height:100dvh !important; }
+}
+
+/* Ensure all content stays above background */
+.wrap, header, main, section, .hero, .card, .token-header-wrap{
+  position:relative;
+  z-index:1;
+}
+</style>
+
+
+<style>
+/* ============================
+   HEADER FIX: stick to top, never scroll away
+   ============================ */
+.token-header-wrap,
+header.token-header-wrap,
+header{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  z-index:9999 !important;
+}
+
+/* ensure header is not pushed down by older top offsets */
+.token-header-wrap{ transform:none !important; margin:0 !important; }
+
+/* body must reserve space for fixed header (JS will set exact value) */
+:root{ --anchorOffset: 120px; }
+body{ padding-top: var(--anchorOffset) !important; }
+html{ scroll-padding-top: var(--anchorOffset) !important; }
+.section-anchor, [id]{ scroll-margin-top: var(--anchorOffset) !important; }
+
+/* do NOT override header positioning with background z-index rule */
+.wrap, main, section, .hero, .card{
+  position:relative;
+  z-index:1;
+}
+</style>
+
+<script>
+/* Dynamically set anchor/header offset so it always sits flush at top and anchors land correctly */
+(() => {
+  const root = document.documentElement;
+  const headerEl = document.querySelector('.token-header-wrap') || document.querySelector('header');
+  if(!headerEl) return;
+
+  function update(){
+    const h = Math.ceil(headerEl.getBoundingClientRect().height);
+    // small cushion so anchors don't hide under the header
+    root.style.setProperty('--anchorOffset', (h + 18) + 'px');
+  }
+
+  update();
+  window.addEventListener('resize', update, {passive:true});
+  window.addEventListener('orientationchange', update, {passive:true});
+  // update again after fonts settle
+  setTimeout(update, 250);
+  setTimeout(update, 900);
+})();
+</script>
+
+
+<style>
+/* ============================
+   FLASH STRIP FIX (initial scroll)
+   Android/Chrome dynamic viewport + rounding guard
+   ============================ */
+
+/* Let fixed pseudo layer own the image; avoid background-attachment:fixed on body */
+body{
+  background: #05070e !important;
+}
+
+/* Over-cover by 2px on all sides to prevent 1px/2px gaps during first repaint */
+body::before,
+body::after{
+  inset:-2px !important;
+  width: calc(100vw + 4px) !important;
+  height: calc(100dvh + 4px) !important;
+  background-position:center center !important;
+  background-size:cover !important;
+  background-repeat:no-repeat !important;
+}
+
+/* Fallbacks */
+@supports not (height:100dvh){
+  body::before,
+  body::after{
+    height: calc(100vh + 4px) !important;
+  }
+}
+
+/* Prevent overscroll background reveal */
+html, body{
+  overscroll-behavior-y: none !important;
+}
+</style>
+
+
+<style>
+/* ============================
+   HEADER LAYER + ANCHOR OFFSET (FINAL OVERRIDE)
+   ============================ */
+
+/* Put header above EVERYTHING */
+.token-header-wrap,
+header.token-header-wrap{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  right:0 !important;
+  z-index:2147483647 !important; /* max-ish */
+  isolation:isolate !important;  /* new stacking context */
+  pointer-events:auto !important;
+}
+
+/* Ensure no section/card can appear above header */
+.wrap, main, section, .hero, .card, .grid, .hgrid{
+  position:relative !important;
+  z-index:auto !important;
+}
+
+/* If any element had a crazy z-index, clamp it */
+.card, section, .hero{
+  z-index:0 !important;
+}
+
+/* Reserve space for fixed header and make anchors land correctly */
+:root{ --anchorOffset: 140px; } /* fallback */
+body{ padding-top: var(--anchorOffset) !important; }
+html{ scroll-padding-top: var(--anchorOffset) !important; }
+.section-anchor, [id]{ scroll-margin-top: var(--anchorOffset) !important; }
+</style>
+
+<script>
+/* Keep anchor offset in sync with real header height (even when it wraps) */
+(() => {
+  const root = document.documentElement;
+  const headerEl = document.querySelector('.token-header-wrap') || document.querySelector('header.token-header-wrap') || document.querySelector('header');
+  if(!headerEl) return;
+
+  const update = () => {
+    const h = Math.ceil(headerEl.getBoundingClientRect().height);
+    root.style.setProperty('--anchorOffset', (h + 18) + 'px');
+  };
+
+  update();
+  window.addEventListener('resize', update, {passive:true});
+  window.addEventListener('orientationchange', update, {passive:true});
+  // after fonts + layout settle
+  setTimeout(update, 200);
+  setTimeout(update, 800);
+  setTimeout(update, 1600);
+})();
+</script>
+
+
+<style>
+/* ============================
+   TOP BACKGROUND VISIBILITY FIX
+   Ensure image is visible even behind fixed header (no black at top)
+   ============================ */
+
+/* Use HTML fixed background layer (strongest) */
+html{
+  background: #05070e !important;
+}
+html::before{
+  content:"";
+  position:fixed;
+  inset:-2px;
+  width: calc(100vw + 4px);
+  height: calc(100dvh + 4px);
+  background:
+    linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.34)),
+    url("nybg.jpg") center center / cover no-repeat;
+  pointer-events:none;
+  z-index:-9999;
+}
+@supports not (height:100dvh){
+  html::before{ height: calc(100vh + 4px); }
+}
+
+/* Disable body pseudo backgrounds to avoid competing layers */
+body::before,
+body::after{
+  background:none !important;
+  content:none !important;
+}
+
+/* Make header glassy so background shows through (no solid black bar) */
+.token-header-wrap{
+  background: linear-gradient(to bottom, rgba(5,7,14,.35), rgba(5,7,14,.18)) !important;
+  border-bottom: 1px solid rgba(255,255,255,.08) !important;
+}
+.token-header-wrap .nav{
+  background: rgba(0,0,0,.18) !important;
+  backdrop-filter: blur(14px) saturate(120%) !important;
+  -webkit-backdrop-filter: blur(14px) saturate(120%) !important;
+}
+</style>
+
+</head>
+<body>
+<!-- (removed duplicate whitepaper auto-collapse script to prevent double-toggle) -->
+<div aria-hidden="true" class="bg">
+<div class="glow"></div>
+<div class="stars"></div>
+</div><div class="wrap section-anchor" id="overview">
+<div class="token-header-wrap">
+<div class="nav">
+<div class="brand">
+<b><span class="brand-accent">B</span>asys <span class="brand-accent">A</span>nalytics</b>
+<span>Basys Trust (BTrust) · Utility TOKEN </span>
+<div class="token-logo">
+<svg aria-label="BTrust Token" height="40" viewbox="0 0 120 120" width="40">
+<defs>
+<radialgradient cx="30%" cy="28%" id="coinBase" r="75%">
+<stop offset="0%" stop-color="#ffe7b8"></stop>
+<stop offset="45%" stop-color="#f9a33a"></stop>
+<stop offset="75%" stop-color="#f7931a"></stop>
+<stop offset="100%" stop-color="#b85f00"></stop>
+</radialgradient>
+<lineargradient id="rimShine" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="rgba(255,255,255,.75)"></stop>
+<stop offset="45%" stop-color="rgba(255,255,255,.18)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,.05)"></stop>
+</lineargradient>
+<lineargradient id="innerRing" x1="0%" x2="100%" y1="100%" y2="0%">
+<stop offset="0%" stop-color="rgba(0,0,0,.20)"></stop>
+<stop offset="50%" stop-color="rgba(255,255,255,.22)"></stop>
+<stop offset="100%" stop-color="rgba(0,0,0,.10)"></stop>
+</lineargradient>
+<filter height="140%" id="softShadow" width="140%" x="-20%" y="-20%">
+<fedropshadow dx="0" dy="2" flood-color="rgba(0,0,0,.35)" stddeviation="2"></fedropshadow>
+</filter>
+<radialgradient cx="28%" cy="26%" id="shine" r="45%">
+<stop offset="0%" stop-color="rgba(255,255,255,.55)"></stop>
+<stop offset="55%" stop-color="rgba(255,255,255,.10)"></stop>
+<stop offset="100%" stop-color="rgba(255,255,255,0)"></stop>
+</radialgradient>
+</defs>
+<g filter="url(#softShadow)">
+<circle cx="60" cy="60" fill="url(#coinBase)" r="52" stroke="url(#rimShine)" stroke-width="4"></circle>
+<!-- knurled edge dots -->
+<g opacity=".22">
+<circle cx="108.00" cy="60.00" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="107.27" cy="68.34" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="105.11" cy="76.42" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="101.57" cy="84.00" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="96.77" cy="90.85" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="90.85" cy="96.77" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="84.00" cy="101.57" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="76.42" cy="105.11" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="68.34" cy="107.27" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="60.00" cy="108.00" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="51.66" cy="107.27" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="43.58" cy="105.11" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="36.00" cy="101.57" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="29.15" cy="96.77" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="23.23" cy="90.85" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="18.43" cy="84.00" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="14.89" cy="76.42" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="12.73" cy="68.34" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="12.00" cy="60.00" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="12.73" cy="51.66" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="14.89" cy="43.58" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="18.43" cy="36.00" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="23.23" cy="29.15" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="29.15" cy="23.23" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="36.00" cy="18.43" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="43.58" cy="14.89" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="51.66" cy="12.73" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="60.00" cy="12.00" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="68.34" cy="12.73" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="76.42" cy="14.89" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="84.00" cy="18.43" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="90.85" cy="23.23" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="96.77" cy="29.15" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="101.57" cy="36.00" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="105.11" cy="43.58" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+<circle cx="107.27" cy="51.66" fill="rgba(0,0,0,.35)" r="1.6"></circle>
+</g>
+<circle cx="60" cy="60" fill="none" r="41" stroke="url(#innerRing)" stroke-width="3"></circle>
+<circle cx="60" cy="60" fill="rgba(10,12,18,.10)" r="34"></circle>
+<circle cx="60" cy="60" fill="url(#shine)" r="48"></circle>
+<text fill="#05070e" font-size="30" font-weight="900" text-anchor="middle" x="60" y="56">B</text>
+<text fill="#05070e" font-size="18" font-weight="900" letter-spacing="1" text-anchor="middle" x="60" y="80">TRUST</text>
+</g>
+</svg>
+</div>
+</div>
+<div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end;">
+<div class="navlinks" id="tokenLandingNav">
+<a class="pill accent" data-role="back" href="index.html">← Back to Basys</a><a class="pill" href="#overview">Overview</a><a class="pill" data-section="utility" href="#utility">Utility</a><a class="pill" data-section="tokenomics" href="#tokenomics">Tokenomics</a><a class="pill" data-section="sale" href="#sale">Sale</a><a class="pill" data-section="investors" href="#investors">Investors</a><a class="pill" data-section="roadmap" href="#roadmap">Roadmap</a><a class="pill" data-section="trust" href="#trust">Trust</a><a class="pill" data-section="faq" href="#faq">FAQ</a><a class="pill" data-section="whitepaper" href="#whitepaper">Whitepaper</a><a class="pill" data-section="press" href="#press">Press</a></div>
+<div class="token-header-actions">
+<a class="pill accent live-pill" data-section="sale" href="#sale" title="Live sale meter"><span aria-hidden="true" class="live-dot"></span> LIVE</a>
+<a class="pill accent" data-section="purchase" href="#purchase">Purchase BTrust</a>
+</div>
+</div>
+</div>
+</div>
+<div class="hero section-anchor" id="top">
+<div class="hgrid">
+<div>
+<h1>Basys Trust Token (BTrust)</h1>
+<div class="sub">
+          The deflationary utility layer for Basys: AI Execution Desk, routing, monitoring, receipts, compliance policy and developer tooling — in one flow.
+          <b>.</b> Education &amp; Research for children is funded as a transparent budget line from protocol revenue &amp; governance.
+        </div>
+<div class="tags">
+<span class="tag">⚡ fee rebates</span>
+<span class="tag">🧠 AI credits</span>
+<span class="tag">📡 monitoring pro</span>
+<span class="tag">🧾 proof receipts</span>
+<span class="tag">🏛 governance</span>
+<span class="tag">🔥 buyback &amp; burn</span>
+</div>
+<div class="btns">
+<a class="btn accent" data-section="purchase" href="#purchase">Purchase BTrust</a>
+<a class="btn" data-section="tokenomics" href="#tokenomics">Read tokenomics</a>
+<a class="btn" data-section="press" href="#press">Press kit</a>
+</div>
+<div class="small">Networks: Base / Arbitrum / Polygon (L2-first). Ethereum optional.</div>
+</div>
+
+</div>
+</div>
+<div class="grid section-anchor" id="acquire">
+<div class="wrap section-anchor" id="glance"><div class="card">
+<div class="hd"><div class="t">At a glance</div><div class="s">finalized parameters</div></div>
+<div class="kpis">
+<div class="kpi"><div class="k">Total supply (fixed)</div><div class="v">1,000,000,000 BTrust</div></div>
+<div class="kpi"><div class="k">Initial circulating</div><div class="v">140,000,000 (14%)</div></div>
+<div class="kpi"><div class="k">Deflation</div><div class="v">30% fees → burn</div></div>
+</div>
+<div class="hr"></div>
+<div class="note">
+<b>Funding goal:</b> $4.5M · <b>Public price:</b> $0.05/BTrust · <b>Public allocation:</b> 90,000,000 BTrust (9%) ·
+          <b>Launch liquidity:</b> 60,000,000 BTrust (6%).
+        </div>
+<div class="hr"></div>
+<div class="note"><b>Contract:</b> <span class="mono">0x0000000000000000000000000000000000000000</span> (placeholder until deployment)</div>
+</div></div><div class="card" id="purchase">
+<div class="hd"><div class="t">Purchase BTrust Token</div><div class="s">wallet or on‑ramp</div></div>
+<div class="hr"></div>
+<div class="note">Contract is placeholder until deployment. Replace address + logo URL once live.</div>
+<div class="copyline">
+<input class="mono" id="contract" readonly="" value="bc1qgcfpwsn38adym4l5hgzx3j6twstdqa7ffah6hx"/>
+<button class="btn" id="copy" type="button">Copy contract</button>
+</div>
+<div class="purchase-row">
+<div class="purchase-qr">
+<div class="k" style="margin-bottom:6px;">Scan</div>
+<img alt="QR code" height="168" id="contractQR" width="168"/>
+<div class="small" style="margin-top:6px; opacity:.85;">QR encodes the contract address</div>
+</div>
+<div class="purchase-help">
+<div class="k" style="margin-bottom:6px;">Quick checklist</div>
+<ul class="list">
+<li>Copy contract (Base/Arbitrum/Polygon as announced)</li>
+<li>Verify the contract address from official channels</li>
+<li>Start with a small test amount</li>
+<li>Use “Open Open Wallet” to verify the contract</li>
+</ul>
+<div class="btns" style="margin-top:10px;">
+</div>
+</div>
+</div>
+<div class="btns">
+<button class="btn accent" id="flowCTA" type="button">Copy contract</button>
+<button class="btn" id="addMM" type="button">Add to MetaMask</button>
+<button class="btn" id="openTW" style="display:none" type="button">Open Open Wallet</button>
+<button class="btn" id="openSwap" type="button">Open swap route</button>
+</div>
+<div class="small" id="acqStatus">—</div>
+<div class="hr"></div>
+<div class="note">
+<span class="badge ok">✅ Best execution</span>
+<span class="badge ok">✅ Proof receipts</span>
+<span class="badge warn">⚠ KYC may apply</span>
+</div>
+</div>
+</div>
+<style>
+/* === FAQ: accordion + categories + search + top questions === */
+.faq-tools{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px;}
+.faq-search{flex:1 1 260px; min-width:220px;}
+#faqSearch{
+  width:100%;
+  padding:10px 12px;
+  border-radius:14px;
+  border:0.5px solid rgba(255,255,255,.18);
+  background: rgba(10,15,25,.55);
+  color: rgba(232,238,248,.95);
+  outline:none;
+}
+#faqSearch::placeholder{color: rgba(160,172,188,.85);}
+
+.faq-cats{display:flex; gap:8px; flex-wrap:wrap;}
+.faq-chip{
+  padding:7px 10px;
+  border-radius:999px;
+  border:0.5px solid rgba(255,255,255,.14);
+  background: rgba(10,15,25,.35);
+  color: rgba(232,238,248,.85);
+  cursor:pointer;
+}
+.faq-chip.active{
+  border-color: rgba(247,147,26,.55);
+  color:#f7931a;
+  background: rgba(247,147,26,.10);
+}
+
+.faq-top{padding:10px 12px; border-radius:16px; border:0.5px solid rgba(255,255,255,.10); background: rgba(10,15,25,.28); margin-bottom:14px;}
+.faq-top .k{opacity:.9; font-weight:800; margin-bottom:8px;}
+
+.faq-list{display:flex; flex-direction:column; gap:10px;}
+
+.faqAcc{
+  border-radius:16px;
+  border:0.5px solid rgba(255,255,255,.10);
+  background: rgba(10,15,25,.22);
+  overflow:hidden;
+}
+.faqAcc summary{
+  list-style:none;
+  cursor:pointer;
+  padding:12px 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  user-select:none;
+}
+.faqAcc summary::-webkit-details-marker{display:none;}
+.faqAcc .q{font-weight:800;}
+.faqAcc[open] summary{background: rgba(247,147,26,.08);}
+
+.faqIcon{
+  width:28px; height:28px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:10px;
+  border:0.5px solid rgba(255,255,255,.10);
+  background: rgba(10,15,25,.35);
+  flex:0 0 auto;
+}
+.i-general{color: var(--accent2);}
+.i-token{color: var(--accent3);}
+.i-sale{color: var(--accent);}
+.i-tech{color: rgba(120,170,255,.95);}
+.i-legal{color: rgba(255,210,120,.95);}
+
+.faqAns{
+  padding:0 12px 12px;
+  color: rgba(232,238,248,.88);
+  line-height:1.55;
+}
+
+@media(max-width:520px){
+  .faqAcc summary{padding:11px 10px;}
+  .faqIcon{width:26px; height:26px;}
+}
+</style>
+<script>
+/* === FAQ: build Top Questions + filtering (search + categories) === */
+(function(){
+  const wrap = document.getElementById('faq');
+  if(!wrap) return;
+
+  const search = document.getElementById('faqSearch');
+  const cats = document.getElementById('faqCats');
+  const topList = document.getElementById('faqTopList');
+  const allList = document.getElementById('faqAllList');
+  if(!search || !cats || !topList || !allList) return;
+
+  const items = Array.from(allList.querySelectorAll('.faqAcc'));
+
+  // Build Top Questions (data-top="1")
+  const tops = items.filter(x => x.getAttribute('data-top') === '1').slice(0,4);
+  topList.innerHTML = '';
+  tops.forEach(t => topList.appendChild(t.cloneNode(true)));
+
+  let activeCat = 'all';
+
+  function apply(){
+    const q = (search.value || '').trim().toLowerCase();
+    items.forEach(it => {
+      const cat = it.getAttribute('data-cat') || 'general';
+      const text = it.textContent.toLowerCase();
+      const okCat = (activeCat === 'all') || (cat === activeCat);
+      const okQ = (!q) || text.includes(q);
+      it.style.display = (okCat && okQ) ? '' : 'none';
+      if(!(okCat && okQ)) it.removeAttribute('open');
+    });
+
+    // also filter top list for consistency
+    Array.from(topList.querySelectorAll('.faqAcc')).forEach(it => {
+      const cat = it.getAttribute('data-cat') || 'general';
+      const text = it.textContent.toLowerCase();
+      const okCat = (activeCat === 'all') || (cat === activeCat);
+      const okQ = (!q) || text.includes(q);
+      it.style.display = (okCat && okQ) ? '' : 'none';
+      if(!(okCat && okQ)) it.removeAttribute('open');
+    });
+  }
+
+  cats.addEventListener('click', (e) => {
+    const btn = e.target.closest('.faq-chip');
+    if(!btn) return;
+    activeCat = btn.getAttribute('data-cat') || 'all';
+    cats.querySelectorAll('.faq-chip').forEach(b => b.classList.toggle('active', b === btn));
+    apply();
+  });
+
+  search.addEventListener('input', apply);
+
+  apply();
+})();
+</script>
+</div><div class="grid section-anchor" id="utility">
+<div class="card" id="utilityCard">
+<div class="hd">
+<div class="t">Utility</div><div class="s">why Purchase BTrust</div></div>
+<div class="hr"></div>
+<div class="steps">
+<div class="step"><div><div class="h">Fee rebates + priority routing</div><div class="p">Lower fees and better routing slots during congestion. Ties value to real platform usage.</div></div><div class="s">⚡</div></div>
+<div class="step"><div><div class="h">AI credits (Execution Desk)</div><div class="p">Simulations, what-if execution, risk overlays, route explanations, and advanced presets.</div></div><div class="s">🧠</div></div>
+<div class="step"><div><div class="h">Monitoring Pro + exports</div><div class="p">Alerts, SLA dashboards, receipts/audit CSV/PDF exports, and verifiable proof snapshots.</div></div><div class="s">📡</div></div>
+<div class="step"><div><div class="h">Developer &amp; enterprise tiers</div><div class="p">API keys, webhooks, receipt verification endpoints, policy modules and approval workflows.</div></div><div class="s">🔐</div></div>
+<div class="step"><div><div class="h">Governance</div><div class="p">Vote on fee parameters, supported networks/providers, policy modules, and grant budgets.</div></div><div class="s">🏛</div></div>
+</div>
+<div class="small">Utility = access + discounts + priority + governance. No passive yield promises.</div>
+</div>
+<div class="card">
+<div class="hd"><div class="t">Deflation</div><div class="s">hard supply sink</div></div>
+<div class="hr"></div>
+<div class="note">
+        Total supply is fixed. Supply decreases through transparent buyback &amp; burn events:
+        <br/>• <b>30%</b> of net Basys protocol fees are used for <b>weekly buyback &amp; burn</b>.
+        <br/>• Small “action burns” apply to premium features (priority routing / pro exports).
+        <br/>• If the optional Safety Module is ever slashed, a defined portion is burned.
+      </div>
+<div class="card meter" id="deflSim">
+<div class="hd"><div class="t">Deflation simulator</div><div class="s">demo widget</div></div>
+<div class="hr"></div>
+<div class="copyline">
+<input class="mono" id="feeMonthly" value="250000"/>
+<button class="btn" id="simDefl" type="button">Simulate burn / year</button>
+</div>
+<div class="small">Enter estimated net protocol fees per month (USD). Burn uses 30% fees and buyback at price $0.05 (demo).</div>
+<div class="hr"></div>
+<div class="kpis">
+<div class="kpi"><div class="k">Burn / month</div><div class="v" id="burnM">—</div></div>
+<div class="kpi"><div class="k">Burn / year</div><div class="v" id="burnY">—</div></div>
+<div class="kpi"><div class="k">Supply after 1y</div><div class="v" id="supply1">—</div></div>
+</div>
+</div>
+</div>
+</div><div class="card section-anchor" id="tokenomics" style="margin-top:14px;">
+<div class="hd"><div class="t">Tokenomics</div><div class="s">final distribution &amp; vesting</div></div>
+<div class="hr"></div>
+<div class="kpis">
+<div class="kpi"><div class="k">Total supply</div><div class="v">1,000,000,000 BTrust</div></div>
+<div class="kpi"><div class="k">Public sale</div><div class="v">90,000,000 (9%)</div></div>
+<div class="kpi"><div class="k">Liquidity</div><div class="v">60,000,000 (6%)</div></div>
+</div>
+<div class="hr"></div>
+<div class="note"><b>Distribution:</b></div>
+<div class="alloc">
+<div class="row"><div class="name">Community &amp; incentives</div><div class="track"><div style="width:28%"></div></div><div class="pct">28%</div></div>
+<div class="row"><div class="name">Protocol treasury</div><div class="track"><div style="width:20%"></div></div><div class="pct">20%</div></div>
+<div class="row"><div class="name">Team &amp; core builders</div><div class="track"><div style="width:16%"></div></div><div class="pct">16%</div></div>
+<div class="row"><div class="name">Strategic partners</div><div class="track"><div style="width:12%"></div></div><div class="pct">12%</div></div>
+<div class="row"><div class="name">Public sale</div><div class="track"><div style="width:9%"></div></div><div class="pct">9%</div></div>
+<div class="row"><div class="name">Liquidity &amp; market making</div><div class="track"><div style="width:6%"></div></div><div class="pct">6%</div></div>
+<div class="row"><div class="name">Safety module rewards</div><div class="track"><div style="width:4%"></div></div><div class="pct">4%</div></div>
+<div class="row"><div class="name">Education &amp; Research Trail</div><div class="track"><div style="width:5%"></div></div><div class="pct">5%</div></div>
+</div>
+<div class="hr"></div>
+<div class="note">
+<b>Vesting:</b><br/>
+      • Team (16%): 12‑month cliff, then linear vesting over 36 months (48 months total).<br/>
+      • Strategic (12%): 3‑month cliff, then linear over 21 months (24 months total).<br/>
+      • Treasury (20%): time-locked; released only via governance for audits, integrations and runway.<br/>
+      • Community (28%): milestone-based unlocks tied to usage/security KPIs.<br/>
+      • Safety rewards (4%): distributed to stakers; subject to slashing under predefined conditions.
+    </div>
+</div><div class="card section-anchor" id="sale">
+<div class="hd"><div class="t">Sale meter</div><div class="s">UI widget (demo)</div></div>
+<div class="hr"></div>
+<div class="note">Target: <b>$4.5M</b> · Price: <b>$0.05/BTrust</b> · Allocation: <b>90,000,000 BTrust</b></div>
+<div class="meterBar"><div id="saleFill"></div></div>
+<div class="meterNums">
+<div class="box"><div class="k">Raised</div><div class="v" id="raised">$—</div></div>
+<div class="box"><div class="k">Remaining</div><div class="v" id="remaining">$—</div></div>
+<div class="box"><div class="k">BTrust sold</div><div class="v" id="sold">—</div></div>
+<div class="box"><div class="k">Participants</div><div class="v" id="parts">—</div></div>
+</div>
+<div class="small">In production: read from sale contract/backend + publish signed snapshots.</div>
+</div><div class="card investor-cta" id="investors">
+<span aria-hidden="true" id="investor"></span>
+<div class="hd"><div class="t">Investors &amp; Partners</div><div class="s">press · deck · contact</div></div>
+<div class="note">
+      Looking to support Basys Trust (BTrust) as an infrastructure token for execution, monitoring, and compliance?
+      Here are the high-signal materials you can share internally.
+    </div>
+<div class="hr"></div>
+<div class="kpis">
+<div class="kpi"><div class="k">Public sale</div><div class="v">$4.5M target</div></div>
+<div class="kpi"><div class="k">Deflation</div><div class="v">30% fees → burn</div></div>
+<div class="kpi"><div class="k">Focus</div><div class="v">Execution + Trust</div></div>
+</div>
+<div class="btns">
+<button class="btn accent" id="ctaDeck" type="button">Copy Pitch</button>
+<a class="btn" data-section="press" href="#press">Open press kit</a>
+<a class="btn" data-section="tokenomics" href="#tokenomics">Tokenomics</a>
+<a class="btn" data-section="sale" href="#sale">Sale meter</a>
+<a class="btn" href="#acquire">Buy flow</a>
+</div>
+</div><div class="card section-anchor" id="roadmap" style="margin-top:14px;">
+<div class="hd"><div class="t">Roadmap</div><div class="s">execution → policy → safety</div></div>
+<div class="hr"></div>
+<div class="steps">
+<div class="step"><div><div class="h">Phase 0 — Testnet</div><div class="p">Contract deploy + add-token flows + basic swap routes + receipt verification.</div></div><div class="s">Q1</div></div>
+<div class="step"><div><div class="h">Phase 1 — Mainnet (L2-first)</div><div class="p">Best-execution routing, monitoring SLOs, audit exports, API keys.</div></div><div class="s">Q2</div></div>
+<div class="step"><div><div class="h">Phase 2 — Policy &amp; approvals</div><div class="p">Enterprise policy engine, dual approvals, compliance modules, governance scope expansion.</div></div><div class="s">Q3</div></div>
+<div class="step"><div><div class="h">Phase 3 — Safety module</div><div class="p">Optional safety staking with incentives + strict risk parameters.</div></div><div class="s">Q4</div></div>
+<div class="step"><div><div class="h">Phase 4 — Education &amp; Research Trail</div><div class="p">Kids-focused content + grants as governed budget line from protocol revenue.</div></div><div class="s">+12m</div></div>
+</div>
+</div><div class="card section-anchor" id="trust">
+<div class="hd"><div class="t">Trust &amp; Compliance</div><div class="s">safety, transparency, and controls</div></div>
+<div class="hr"></div>
+<div class="note">
+<span class="badge ok">✅ Compliance-first</span>
+<span class="badge ok">✅ Transparent reporting</span>
+<span class="badge warn">⚠ Jurisdiction rules vary</span>
+</div>
+<div class="hr"></div>
+<div class="kpis">
+<div class="kpi"><div class="k">Contract audits</div><div class="v">Scheduled</div></div>
+<div class="kpi"><div class="k">KYC / AML</div><div class="v">Where required</div></div>
+<div class="kpi"><div class="k">Proof receipts</div><div class="v">On by default</div></div>
+<div class="kpi"><div class="k">Bug bounty</div><div class="v">Planned</div></div>
+</div>
+<div class="hr"></div>
+<div class="note">
+<b>What we publish:</b>
+<ul class="list">
+<li>Audit reports &amp; change logs (before mainnet)</li>
+<li>Sale &amp; treasury transparency snapshots</li>
+<li>Routing proof receipts and exportable records</li>
+<li>Operational status updates and incident notes</li>
+</ul>
+</div>
+<div class="btns">
+<a class="btn" href="#" onclick="alert('Audit reports will be linked here once published.')">Audit reports</a>
+<a class="btn" href="#" onclick="alert('Transparency page link coming soon.')">Transparency page</a>
+<a class="btn" href="#" onclick="alert('Security contact will be published here (PGP + responsible disclosure).')">Security contact</a>
+</div>
+<details class="faqAcc" style="margin-top:12px;">
+<summary><span class="faqIcon i-legal">⚠️</span><span class="q">Risk disclosure</span></summary>
+<div class="faqAns">
+        Crypto assets are volatile and may lose value. Participation in token sales may be restricted in your jurisdiction and may require identity verification.
+        Nothing on this page is financial, legal, or tax advice. Do your own research and consult professionals where appropriate.
+      </div>
+</details>
+</div><div class="card" id="faq">
+<div class="hd"><div class="t">FAQ</div><div class="s">fast answers</div></div>
+<div class="hr"></div>
+<div class="faq-tools">
+<div class="faq-search">
+<input aria-label="Search FAQ" id="faqSearch" placeholder="Search FAQ…" type="text"/>
+</div>
+<div aria-label="FAQ categories" class="faq-cats" id="faqCats" role="tablist">
+<button class="faq-chip active" data-cat="all" type="button">All</button>
+<button class="faq-chip" data-cat="general" type="button">General</button>
+<button class="faq-chip" data-cat="token" type="button">Token</button>
+<button class="faq-chip" data-cat="sale" type="button">Sale</button>
+<button class="faq-chip" data-cat="tech" type="button">Tech</button>
+<button class="faq-chip" data-cat="legal" type="button">Legal</button>
+</div>
+</div>
+<div class="faq-top">
+<div class="k">Top questions</div>
+<div class="faq-list" id="faqTopList"></div>
+</div>
+<div class="faq-list" id="faqAllList">
+<details class="faqAcc" data-cat="general" data-top="1" open="">
+<summary><span class="faqIcon i-general">🧩</span><span class="q">What is Basys Analytics?</span></summary>
+<div class="faqAns">Basys Analytics builds infrastructure for compliant, best‑execution crypto payments, with routing, monitoring, reconciliation, and reporting.</div>
+</details>
+<details class="faqAcc" data-cat="token" data-top="1">
+<summary><span class="faqIcon i-token">🔥</span><span class="q">Why would someone purchase BTrust?</span></summary>
+<div class="faqAns">To reduce fees, unlock AI credits, gain priority routing, access monitoring &amp; proof exports, and participate in governance.</div>
+</details>
+<details class="faqAcc" data-cat="sale" data-top="1">
+<summary><span class="faqIcon i-sale">🏷️</span><span class="q">How does the sale work?</span></summary>
+<div class="faqAns">The sale runs in rounds. Round 1 focuses on early community funding; progress and round metrics are shown in the Sale meter.</div>
+</details>
+<details class="faqAcc" data-cat="token" data-top="1">
+<summary><span class="faqIcon i-token">💨</span><span class="q">How does BTrust become deflationary?</span></summary>
+<div class="faqAns">Deflation is driven by fee burns and ecosystem mechanics like periodic buy‑backs and treasury optimizations as described in the whitepaper.</div>
+</details>
+<details class="faqAcc" data-cat="tech">
+<summary><span class="faqIcon i-tech">🧱</span><span class="q">What networks will BTrust support?</span></summary>
+<div class="faqAns">Initial support targets Base, Arbitrum, and Polygon, with additional EVM networks planned.</div>
+</details>
+<details class="faqAcc" data-cat="tech">
+<summary><span class="faqIcon i-tech">🛡️</span><span class="q">Is BTrust audited?</span></summary>
+<div class="faqAns">Third‑party audits are scheduled prior to mainnet release. Audit reports will be published publicly when complete.</div>
+</details>
+<details class="faqAcc" data-cat="sale">
+<summary><span class="faqIcon i-sale">👤</span><span class="q">Who can participate in the sale?</span></summary>
+<div class="faqAns">Participation depends on jurisdiction and compliance requirements (KYC/AML) applicable at the time of the sale.</div>
+</details>
+<details class="faqAcc" data-cat="token">
+<summary><span class="faqIcon i-token">⏳</span><span class="q">Is there a vesting schedule?</span></summary>
+<div class="faqAns">Team and strategic allocations follow multi‑year vesting with cliffs to align incentives and protect token holders.</div>
+</details>
+<details class="faqAcc" data-cat="token">
+<summary><span class="faqIcon i-token">🔒</span><span class="q">Will staking be available?</span></summary>
+<div class="faqAns">Staking is planned to support routing infrastructure and reward long‑term participants.</div>
+</details>
+<details class="faqAcc" data-cat="tech">
+<summary><span class="faqIcon i-tech">🔌</span><span class="q">What do I need to integrate?</span></summary>
+<div class="faqAns">On‑ramp endpoints, router API, monitoring signals, receipt proof format, and a contract address + logo URL. Basys provides API/SDK options.</div>
+</details>
+<details class="faqAcc" data-cat="general">
+<summary><span class="faqIcon i-general">✨</span><span class="q">What makes Basys different?</span></summary>
+<div class="faqAns">Basys emphasizes compliant routing, reporting automation, and enterprise‑grade reliability with clear transparency controls.</div>
+</details>
+<details class="faqAcc" data-cat="token">
+<summary><span class="faqIcon i-token">🗳️</span><span class="q">Will there be governance proposals?</span></summary>
+<div class="faqAns">Yes. Token holders can vote on upgrades, treasury usage, ecosystem grants, and key parameter changes.</div>
+</details>
+<details class="faqAcc" data-cat="legal">
+<summary><span class="faqIcon i-legal">⚖️</span><span class="q">Is BTrust a security?</span></summary>
+<div class="faqAns">BTrust is designed as a utility token. Legal classification depends on jurisdiction and evolving regulatory guidance.</div>
+</details>
+<details class="faqAcc" data-cat="tech">
+<summary><span class="faqIcon i-tech">🧑‍💻</span><span class="q">How can developers get involved?</span></summary>
+<div class="faqAns">Developers can apply for grants, build integrations, and access early documentation and reference implementations.</div>
+</details>
+<details class="faqAcc" data-cat="token">
+<summary><span class="faqIcon i-token">🎓</span><span class="q">Is this a donation coin?</span></summary>
+<div class="faqAns">No. Education &amp; Research is a governed budget line funded from protocol revenue and treasury, while token utility remains platform‑driven.</div>
+</details>
+</div>
+</div><div class="card" id="whitepaper">
+<div class="hd">
+<div class="t">Whitepaper</div>
+<div class="s">how BTrust Token works</div>
+</div>
+<div class="bd">
+<div class="kpis" style="margin-top:4px">
+<div class="kpi">
+<div class="k">One‑liner</div>
+<div class="v" style="font-size:13px; font-weight:700; line-height:1.35">
+            BTrust Token powers Basys Analytics utility: access, automation credits, and verifiable trust evidence.
+          </div>
+</div>
+<div class="kpi">
+<div class="k">What you get</div>
+<div class="v" style="font-size:13px; font-weight:700; line-height:1.35">
+            Faster compliance, clearer audit trails, and incentives aligned to measurable security outcomes.
+          </div>
+</div>
+</div>
+<div class="grid" style="margin-top:14px; grid-template-columns: 1fr; gap: 12px">
+<div class="step">
+<div class="h">1. Problem</div>
+<div class="p">Compliance is slow, manual, and evidence gets scattered across tools and teams.</div>
+<div class="s">1</div>
+</div>
+<div class="step">
+<div class="h">2. Solution</div>
+<div class="p">Basys converts real signals into standardized evidence packs and reporting.</div>
+<div class="s">2</div>
+</div>
+<div class="step">
+<div class="h">3. Token Utility</div>
+<div class="p">BTrust enables access, credits, tiers, and optional attestations for trust signals.</div>
+<div class="s">3</div>
+</div>
+</div>
+<details class="wp-details" style="margin-top:16px">
+<summary class="wp-summary">
+<span><span class="whitepaper-readmore">Read more (full whitepaper)</span></span>
+<span class="wp-chevron">▾</span>
+</summary>
+<div class="wp-body">
+<h3 class="h" style="margin-top:14px">1) The Basys trust workflow</h3>
+<p class="p">
+            Basys Analytics connects to your systems (identity, endpoint, cloud, ticketing, backups) and continuously collects
+            control signals. Those signals become <b>evidence packs</b>: structured bundles with timestamps, change history,
+            exceptions, and remediation notes. Evidence packs can be exported for audits, shared with stakeholders, or used for
+            internal governance.
+          </p>
+<h3 class="h" style="margin-top:14px">2) Evidence packs &amp; control mapping</h3>
+<ul class="p" style="margin:10px 0 0 18px">
+<li><b>Control mapping:</b> each signal is mapped to controls (e.g., ISO 27001, NIS2, BSI, DORA-ready mapping).</li>
+<li><b>Traceability:</b> configuration snapshots and change logs show what changed and when.</li>
+<li><b>Exceptions:</b> explicit risk acceptance with expiry dates keeps decisions auditable.</li>
+<li><b>Export:</b> standardized PDFs/JSON for audits and vendor questionnaires.</li>
+</ul>
+<h3 class="h" style="margin-top:14px">3) Why a token</h3>
+<p class="p">
+            BTrust Token is the utility layer that makes the ecosystem measurable and composable. It is used for platform
+            access, feature unlocks, partner credits, and optional trust attestations. The token also enables incentive programs
+            that reward verified contributions (integrations, validated evidence improvements, partner services).
+          </p>
+<h3 class="h" style="margin-top:14px">4) Utility modules</h3>
+<div class="grid" style="margin-top:10px">
+<div class="kpi"><div class="h">Access</div><div class="p">Premium analytics, advanced dashboards, automation bundles.</div></div>
+<div class="kpi"><div class="h">Credits</div><div class="p">Partner assessments, implementation hours, reviews &amp; training.</div></div>
+<div class="kpi"><div class="h">Attestations</div><div class="p">Optional trust badges attached to evidence packs when criteria are met.</div></div>
+</div>
+<h3 class="h" style="margin-top:14px">5) Transparency &amp; security</h3>
+<p class="p">
+            The platform is built with strong access controls and audit logging. This site shows critical addresses and key
+            parameters. Where applicable, verification and audits can be published to reduce trust assumptions.
+          </p>
+<h3 class="h" style="margin-top:14px">6) Roadmap principles</h3>
+<ul class="p" style="margin:10px 0 0 18px">
+<li><b>Phase 1:</b> utility (access + tiers + discounts) and stable purchase flow.</li>
+<li><b>Phase 2:</b> partner credits, integrations, and measurable milestone reporting.</li>
+<li><b>Phase 3:</b> attestations and ecosystem programs with transparent updates.</li>
+</ul>
+<h3 class="h" style="margin-top:14px">7) Risk notice</h3>
+<p class="p">
+            Crypto assets are volatile and involve risk. Nothing here is financial advice. Utility programs may evolve.
+            Always verify addresses and use trusted wallets.
+          </p>
+<h3 class="h" style="margin-top:18px">8) Tokenomics</h3>
+<div class="grid" style="margin-top:16px">
+<div class="grid" style="margin-top:16px">
+<div class="kpi">
+<div class="h">Token Supply Allocation</div>
+<div class="wp-alloc">
+<svg aria-label="Token supply allocation donut chart" class="wp-donut" role="img" viewbox="0 0 220 220">
+<g transform="rotate(-90 110 110)">
+<!-- circumference ~ 2*pi*90 = 565 -->
+<circle cx="110" cy="110" fill="transparent" r="90" stroke="rgba(255,255,255,.10)" stroke-width="34"></circle>
+<circle cx="110" cy="110" fill="transparent" r="90" stroke="var(--c1)" stroke-dasharray="169.5 565" stroke-dashoffset="0" stroke-width="34"></circle>
+<circle cx="110" cy="110" fill="transparent" r="90" stroke="var(--c2)" stroke-dasharray="141.25 565" stroke-dashoffset="-169.5" stroke-width="34"></circle>
+<circle cx="110" cy="110" fill="transparent" r="90" stroke="var(--c3)" stroke-dasharray="113.0 565" stroke-dashoffset="-310.75" stroke-width="34"></circle>
+<circle cx="110" cy="110" fill="transparent" r="90" stroke="var(--c4)" stroke-dasharray="84.75 565" stroke-dashoffset="-423.75" stroke-width="34"></circle>
+<circle cx="110" cy="110" fill="transparent" r="90" stroke="var(--c5)" stroke-dasharray="56.5 565" stroke-dashoffset="-508.5" stroke-width="34"></circle>
+</g>
+<circle cx="110" cy="110" fill="rgba(10,15,25,.18)" r="62"></circle>
+<text fill="rgba(232,238,248,.92)" font-size="14" font-weight="800" text-anchor="middle" x="110" y="106">BTrust Token</text>
+<text fill="rgba(176,188,206,.88)" font-size="12" font-weight="700" text-anchor="middle" x="110" y="126">Allocation</text>
+</svg>
+<div aria-label="Allocation legend" class="wp-legend">
+<div class="wp-leg-row"><span class="wp-swatch s1"></span><span class="wp-leg-name">Ecosystem &amp; rewards</span><span class="wp-leg-val">30%</span></div>
+<div class="wp-leg-row"><span class="wp-swatch s2"></span><span class="wp-leg-name">Operations</span><span class="wp-leg-val">25%</span></div>
+<div class="wp-leg-row"><span class="wp-swatch s3"></span><span class="wp-leg-name">Development</span><span class="wp-leg-val">20%</span></div>
+<div class="wp-leg-row"><span class="wp-swatch s4"></span><span class="wp-leg-name">Liquidity</span><span class="wp-leg-val">15%</span></div>
+<div class="wp-leg-row"><span class="wp-swatch s5"></span><span class="wp-leg-name">Advisors &amp; partners</span><span class="wp-leg-val">10%</span></div>
+<div class="wp-leg-note">Illustrative allocation for demo purposes.</div>
+</div>
+</div>
+</div>
+</div>
+<p class="p">
+BTrust Token is designed as a long‑term utility asset aligned with platform usage. Supply is fixed at genesis with no
+inflation beyond the initial mint. Distribution prioritizes ecosystem growth and operational sustainability rather
+than short‑term speculation.
+</p>
+<h4 class="h" style="margin-top:10px">Supply &amp; Allocation</h4>
+<ul class="p" style="margin:8px 0 0 18px">
+<li><b>Ecosystem &amp; rewards:</b> incentives for integrations, customers, and contributors.</li>
+<li><b>Operations:</b> infrastructure, compliance tooling, audits, and support.</li>
+<li><b>Development:</b> R&amp;D, new framework mappings, automation modules.</li>
+<li><b>Liquidity:</b> market stability and purchase flows.</li>
+<li><b>Advisors &amp; partners:</b> strategic integrations and go‑to‑market.</li>
+</ul>
+<h4 class="h" style="margin-top:10px">Vesting principles</h4>
+<p class="p">
+Team and partner allocations are subject to multi‑year vesting schedules with cliffs to align incentives with long‑term
+delivery. Transparency dashboards can expose circulating supply and unlock schedules.
+</p>
+<h3 class="h" style="margin-top:18px">9) Governance</h3>
+<p class="p">
+Governance is introduced progressively and is structured to comply with applicable regulatory frameworks in relevant
+jurisdictions. During early phases, strategic and operational decisions remain with Basys Analytics as platform operator.
+Future governance extensions may include advisory councils, partner committees, and non‑binding community signaling
+mechanisms. Any on‑chain governance features would be subject to legal review, jurisdictional constraints, and
+transparent disclosure.
+</p>
+<h3 class="h" style="margin-top:18px">10) Legal &amp; compliance posture</h3>
+<p class="p">
+BTrust Token is intended as a functional utility instrument used to access services, credits, discounts, and attestations
+within the Basys Analytics ecosystem. Distribution programs are accompanied by jurisdiction‑specific disclosures,
+terms of service, risk notices, and compliance assessments. No representations are made that the token constitutes
+an equity instrument, security, or investment product.
+</p>
+ &amp; compliance posture
+<p class="p">
+BTrust Token is intended as a utility token for accessing services, discounts, and attestations within Basys Analytics.
+Jurisdiction‑specific disclosures, terms of service, and compliance documentation accompany distribution programs.
+</p>
+<h3 class="h" style="margin-top:18px">11) Sustainability</h3>
+<p class="p">
+Revenue from token usage is reinvested into security research, audit readiness tooling, and infrastructure resilience.
+This creates a feedback loop where adoption funds further platform hardening.
+</p>
+</div>
+</div></details>
+<div class="wp-download" style="margin-top:22px;display:flex;justify-content:flex-start;">
+<a aria-label="Download Whitepaper PDF" class="wp-pdf" download="" href="BTrust-Whitepaper.pdf">
+<span class="wp-pdf-ic">📄</span>
+<span>Download Whitepaper (PDF)</span>
+</a>
+</div>
+</div>
+</div><div class="grid section-anchor" id="press">
+<div class="card">
+<div class="hd"><div class="t">Press kit</div><div class="s">positioning</div></div>
+<div class="hr"></div>
+<div class="note"><b>One-liner:</b> “Basys turns crypto payments into a best‑execution terminal — routing, monitoring, compliance and receipts in one flow.”</div>
+<div class="hr"></div>
+<div class="note">
+<b>What BTrust is:</b> a deflationary utility token for platform credits, fee rebates, priority routing, governance, and optional safety staking.
+        <br/><b>What it is not:</b> a promise of returns.
+      </div>
+<div class="btns">
+<button class="btn" id="copyOne">Copy one-liner</button>
+<button class="btn" id="copyFacts">Copy facts</button>
+</div>
+<div class="hr"></div>
+<div class="kpis">
+<div class="kpi"><div class="k">Founded</div><div class="v">2026</div></div>
+<div class="kpi"><div class="k">Focus</div><div class="v">Payments · Compliance · Routing</div></div>
+<div class="kpi"><div class="k">Networks</div><div class="v">Base · Arbitrum · Polygon</div></div>
+<div class="kpi"><div class="k">Token</div><div class="v">BTrust (deflationary)</div></div>
+</div>
+<div class="hr"></div>
+<div class="note">
+<b>Boilerplate:</b><br/>
+        Basys Analytics builds infrastructure for compliant, best‑execution crypto payments. The platform
+        unifies routing, monitoring, reconciliation, and regulatory reporting for merchants, enterprises,
+        and Web3 operators. BTrust powers fee discounts, governance, and network incentives across the ecosystem.
+      </div>
+<div class="hr"></div>
+<div class="note">
+<b>Brand assets:</b> Logos (dark/light), token icon SVG, product screenshots, pitch deck, executive bios, and style guide.
+      </div>
+<div class="btns">
+<a class="btn" href="#" onclick="alert('ZIP coming soon')">Download media kit (ZIP)</a>
+<a class="btn" href="#" onclick="alert('Press contact coming soon')">Press contact</a>
+</div>
+<div class="small">
+<b>Media inquiries:</b> press@basysanalytics.com · Embargoes respected · NDAs available.
+      </div>
+</div>
+</div><div class="footer">
+<div class="hr"></div>
+<div><b>Disclaimer:</b> This page is a product/token concept mockup for UI + narrative. It is not financial advice and does not promise returns. Final parameters should be reviewed for legal/regulatory compliance before any launch.</div>
+<div style="margin-top:8px;">© 2026 Basys Analytics · Generated 2026-01-23</div>
+</div><div aria-atomic="true" aria-live="polite" id="toastWrap"></div><script>
+(() => {
+  // === Buy wiring: Copy / MetaMask / Trust Open Wallet / Swap Route (Android-first) ===
+  const EUR_DEFAULT = 50;
+  let lastBtcEur = null;
+  // Prefetch BTC/EUR in background so click can stay synchronous
+  fetchBtcEur().then(p => { lastBtcEur = p; }).catch(()=>{ lastBtcEur = null; });
+
+  const contractEl = document.getElementById("contract");
+  if(contractEl){
+    contractEl.addEventListener("focus", () => { try{ contractEl.select(); }catch(e){} });
+    contractEl.addEventListener("click", () => { try{ contractEl.select(); }catch(e){} });
+  }
+  const copyBtn = document.getElementById("copy");
+  const addMMBtn = document.getElementById("addMM");
+  const openTWBtn = document.getElementById("openTW");
+  const openSwapBtn = document.getElementById("openSwap");
+  const flowCTABtn = document.getElementById("flowCTA");
+  const status = document.getElementById("acqStatus");
+
+  // === Open Wallet Flow Engine (A+B) ===
+  const walletFlowState = {
+    copied: false,
+    explorerOpened: false,
+    metamaskAdded: false,
+    walletOpened: false,
+    swapOpened: false,
+    lastAction: null
+  };
+  const flowStepsEl = document.getElementById("flowSteps");
+
+  function renderFlowSteps(){
+    if(!flowStepsEl) return;
+    const steps = [
+      { key:"copied", label:"Copy" },
+      { key:"explorerOpened", label:"Open Open Wallet" },
+      { key:"walletOpened", label:"Open Wallet" },
+      { key:"swapOpened", label:"Swap" }
+    ];
+    const last = walletFlowState.lastAction;
+    flowStepsEl.innerHTML = steps.map(s=>{
+      const done = !!walletFlowState[s.key];
+      const active = (!done) && (
+        (s.key==="copied") ||
+        (s.key==="explorerOpened" && walletFlowState.copied) ||
+        (s.key==="walletOpened" && walletFlowState.copied && walletFlowState.explorerOpened) ||
+        (s.key==="swapOpened" && walletFlowState.copied && walletFlowState.explorerOpened && walletFlowState.walletOpened)
+      );
+      const cls = done ? "step done" : (active ? "step active" : "step");
+      return `<span class="${cls}">${done ? "✓ " : ""}${s.label}</span>`;
+    }).join("");
+  }
+
+  function resetWalletFlow(hard){
+    walletFlowState.copied = false;
+    walletFlowState.explorerOpened = false;
+    walletFlowState.metamaskAdded = false;
+    walletFlowState.walletOpened = false;
+    walletFlowState.swapOpened = false;
+    walletFlowState.lastAction = null;
+    // restore CTA
+    if(flowCTABtn){
+      flowCTABtn.textContent = "Copy contract";
+      flowCTABtn.classList.remove("ok");
+      flowCTABtn.classList.add("accent");
+    }
+    if(status) status.textContent = "—";
+    renderFlowSteps();
+    if(hard){
+      // close any open accordions / details in acquire area
+      document.querySelectorAll('#acquire details[open], #purchase details[open]').forEach(d=>d.removeAttribute('open'));
+    }
+  }
+
+
+
+  function isEvmAddress(addr){
+    return /^0x[a-fA-F0-9]{40}$/.test(addr || "");
+  }
+
+  function nextCta(){
+    const addr = getAddress();
+    if(!addr) return {key:"noop", text:"Set contract address", tone:"muted"};
+    if(!walletFlowState.copied) return {key:"copy", text:"Copy contract", tone:"accent"};
+    if(!walletFlowState.explorerOpened) return {key:"explorer", text:"Open Open Wallet", tone:"accent"};
+    // MetaMask is only meaningful for EVM contracts
+    if(isEvmAddress(addr) && !walletFlowState.metamaskAdded) return {key:"addmm", text:"Add to MetaMask", tone:"accent"};
+    if(!walletFlowState.walletOpened) return {key:"openTW", text:"Open Open Wallet", tone:"accent"};
+    if(!walletFlowState.swapOpened) return {key:"swap", text:"Open swap route", tone:"accent"};
+    return {key:"await", text:"Awaiting transfer…", tone:"ok"};
+  }
+
+  function renderCta(){
+    if(!flowCTABtn) return;
+    const n = nextCta();
+    flowCTABtn.textContent = n.text;
+
+    // visual tone (keep your system: accent + subtle ok)
+    flowCTABtn.classList.remove("accent");
+    if(n.tone === "accent") flowCTABtn.classList.add("accent");
+    if(n.tone === "muted") flowCTABtn.style.opacity = ".75"; else flowCTABtn.style.opacity = "";
+    renderFlowSteps();
+    if(status){
+      const bits = [];
+      if(walletFlowState.copied) bits.push("Copied");
+      if(walletFlowState.explorerOpened) bits.push("Open Open Wallet");
+      if(walletFlowState.walletOpened) bits.push("Open Wallet");
+      if(walletFlowState.swapOpened) bits.push("Swap");
+      status.textContent = bits.length ? bits.join(" · ") : "—";
+    }
+  }
+
+  function resetWalletFlowTransient(){
+    walletFlowState.copied = false;
+    walletFlowState.explorerOpened = false;
+    walletFlowState.metamaskAdded = false;
+    walletFlowState.walletOpened = false;
+    walletFlowState.swapOpened = false;
+    walletFlowState.lastAction = null;
+    setStatus("—");
+    renderCta();
+  }
+
+  // expose for other scripts (copyShort / explorer helpers)
+  try{ window.__BTRUST_WALLET_FLOW__ = { state: walletFlowState, render: renderCta, reset: resetWalletFlowTransient }; }catch(e){}
+
+  // Smart CTA: drives the next required action
+  if (flowCTABtn){
+    flowCTABtn.addEventListener("click", () => {
+      const step = nextCta().key;
+      if(step === "copy" && copyBtn) return copyBtn.click();
+      if(step === "explorer"){
+        // Open Open Wallet via deep link
+        if(openTWBtn) return openTWBtn.click();
+        if(window.__BTRUST_WALLET_FLOW__){ window.__BTRUST_WALLET_FLOW__.state.explorerOpened = true; window.__BTRUST_WALLET_FLOW__.render(); }
+      }
+      if(step === "addmm" && addMMBtn) return addMMBtn.click();
+      if(step === "openTW" && openTWBtn) return openTWBtn.click();
+      if(step === "swap" && openSwapBtn) return openSwapBtn.click();
+      if(step === "await") return setStatus("Awaiting transfer…");
+      return setStatus("Set / verify the contract address first.");
+    });
+  }
+
+  // Initial render
+  renderCta();
+
+  // Auto-collapse/reset when navigating to another section
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('.token-header-wrap a.pill[href^="#"], .nav a.pill[href^="#"]');
+    if(!a) return;
+    const href = (a.getAttribute('href')||'').trim();
+    if(!href.startsWith('#')) return;
+    // keep state if user stays in purchase section
+    if(href === '#purchase' || href === '#acquire') return;
+    resetWalletFlowTransient();
+  }, true);
+
+
+
+  const ua = navigator.userAgent || "";
+  const isAndroid = /Android/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isMobile = isAndroid || isIOS;
+
+  function setStatus(msg) {
+    if (status) status.textContent = msg;
+  }
+
+  function getAddress() {
+    return (contractEl && contractEl.value) ? contractEl.value.trim() : "";
+  }
+
+  async function copyText(txt) {
+    try {
+      await navigator.clipboard.writeText(txt);
+      return true;
+    } catch (e) {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = txt;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "-1000px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        return true;
+      } catch (e2) {
+        return false;
+      }
+    }
+  }
+
+  // ---- Copy contract ----
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      const addr = getAddress();
+      if (!addr) return setStatus("Nothing to copy.");
+      const ok = await copyText(addr);
+      walletFlowState.copied = !!ok;
+      walletFlowState.lastAction = "copy";
+      setStatus(ok ? "Copied to clipboard ✅" : "Copy failed (clipboard blocked) ⚠");
+      renderCta();
+      try{ window.showToast && window.showToast(ok ? "Copied ✅" : "Copy blocked ⚠", ok ? "ok" : "warn"); }catch(e){}
+    });
+  }
+
+  // ---- Add to MetaMask ----
+  // Works only for EVM token contracts (0x...). Your current default is a BTC address.
+  if (addMMBtn) {
+    addMMBtn.addEventListener("click", async () => {
+      const addr = getAddress();
+      const isEvm = /^0x[a-fA-F0-9]{40}$/.test(addr);
+
+      if (!isEvm) {
+        return setStatus("MetaMask add-token requires an EVM contract (0x...). Current field is a BTC address. ⚠");
+      }
+      if (!window.ethereum) {
+        return setStatus("MetaMask not detected. Open in MetaMask browser or install it. ⚠");
+      }
+
+      try {
+        const wasAdded = await window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: addr,
+              symbol: "BTrust",
+              decimals: 18,
+              image: ""
+            }
+          }
+        });
+        walletFlowState.metamaskAdded = !!wasAdded;
+        walletFlowState.lastAction = "addmm";
+        renderCta();
+        setStatus(wasAdded ? "BTrust added to MetaMask ✅" : "MetaMask: token not added.");
+      } catch (e) {
+        setStatus("MetaMask request failed or was rejected. ⚠");
+      }
+    });
+  }
+
+  // ---- Swap route ----
+  if (openSwapBtn) {
+    openSwapBtn.addEventListener("click", () => {
+      const addr = getAddress();
+      const isEvm = /^0x[a-fA-F0-9]{40}$/.test(addr);
+
+      if (!isEvm) {
+        setStatus("Swap route needs a live BTrust EVM contract (0x...) + chain. Opening Uniswap as placeholder. ⚠");
+        window.open("https://app.uniswap.org/", "_blank", "noopener");
+        walletFlowState.swapOpened = true;
+        walletFlowState.lastAction = "swap";
+        renderCta();
+        return;
+      }
+      window.open("https://app.uniswap.org/", "_blank", "noopener");
+      setStatus("Opened swap UI. Next: we can prefill chain + token once live.");
+    });
+  }
+
+  // ---- Trust Open Wallet open (Android intent + Play Store fallback + €50->BTC) ----
+  async function fetchBtcEur() {
+    const url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur";
+    const r = await fetch(url, { cache: "no-store" });
+    if (!r.ok) throw new Error("price_fetch_failed");
+    const j = await r.json();
+    const p = j?.bitcoin?.eur;
+    if (!p || typeof p !== "number") throw new Error("price_parse_failed");
+    return p;
+  }
+
+  function buildUniversal(address, btcAmount) {
+    const params = new URLSearchParams({
+      asset: "c0",
+      address
+    });
+    if (btcAmount && Number.isFinite(btcAmount) && btcAmount > 0) {
+      params.set("amount", btcAmount.toFixed(8));
+    }
+    return "https://link.trustwallet.com/send?" + params.toString();
+  }
+
+  function buildTrustScheme(address, btcAmount) {
+    const params = new URLSearchParams({
+      asset: "c0",
+      address
+    });
+    if (btcAmount && Number.isFinite(btcAmount) && btcAmount > 0) {
+      params.set("amount", btcAmount.toFixed(8));
+    }
+    return "trust://send?" + params.toString();
+  }
+
+  function buildBip21(address, btcAmount) {
+    const params = new URLSearchParams();
+    if (btcAmount && Number.isFinite(btcAmount) && btcAmount > 0) {
+      params.set("amount", btcAmount.toFixed(8));
+    }
+    const q = params.toString();
+    return "bitcoin:" + address + (q ? ("?" + q) : "");
+  }
+
+  function buildAndroidIntent(address, btcAmount) {
+    const params = new URLSearchParams({
+      asset: "c0",
+      address
+    });
+    if (btcAmount && Number.isFinite(btcAmount) && btcAmount > 0) {
+      params.set("amount", btcAmount.toFixed(8));
+    }
+
+    // If app isn't installed, Android will open browser_fallback_url.
+    // We use Play Store (most direct).
+    const fallback = encodeURIComponent("https://play.google.com/store/apps/details?id=com.wallet.crypto.trustapp");
+    return "intent://send?" + params.toString() +
+      "#Intent;scheme=trust;package=com.wallet.crypto.trustapp;S.browser_fallback_url=" + fallback + ";end";
+  }
+
+  if (openTWBtn) {
+    openTWBtn.addEventListener("click", () => {
+      const address = getAddress();
+      if (!address) return setStatus("No address set.");
+
+      // Use cached price to keep the deep link inside the user click gesture.
+      // If price isn't ready, we still Open Open Wallet (amount optional).
+      let btcAmount = null;
+      if (lastBtcEur && Number.isFinite(lastBtcEur) && lastBtcEur > 0) {
+        btcAmount = EUR_DEFAULT / lastBtcEur;
+      }
+
+      const pretty = btcAmount ? btcAmount.toFixed(8) : "—";
+      walletFlowState.walletOpened = true;
+      walletFlowState.lastAction = "openTW";
+      renderCta();
+      setStatus(`Opening Trust Open Wallet… send ~€${EUR_DEFAULT} (≈ ${pretty} BTC) to ${address}`);
+
+      // Detect common BTC address formats (bc1... / 1... / 3...)
+      const isBtcAddr = /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{20,}$/i.test(address);
+
+      // Desktop: keep user in flow (deep links are mobile-only)
+      if (!isMobile) {
+        setStatus("Open Open Wallet works on mobile. Please open this page on your phone.");
+        return;
+      }
+
+      // Android: prefer BIP21 for BTC (opens wallet handler). Use intent/scheme as fallback.
+      if (isAndroid) {
+        if (isBtcAddr) {
+          window.location.assign(buildBip21(address, btcAmount));
+          setTimeout(() => { window.location.assign(buildAndroidIntent(address, btcAmount)); }, 450);
+          setTimeout(() => { window.location.assign(buildTrustScheme(address, btcAmount)); }, 950);
+        } else {
+          window.location.assign(buildAndroidIntent(address, btcAmount));
+          setTimeout(() => { window.location.assign(buildTrustScheme(address, btcAmount)); }, 500);
+        }
+        return;
+      }
+
+      // iOS: prefer BIP21 for BTC, otherwise trust:// scheme
+      if (isBtcAddr) {
+        window.location.assign(buildBip21(address, btcAmount));
+        setTimeout(() => { window.location.assign(buildTrustScheme(address, btcAmount)); }, 700);
+        return;
+      }
+
+      window.location.assign(buildTrustScheme(address, btcAmount));
+      setTimeout(() => { window.location.assign(buildUniversal(address, btcAmount)); }, 900);
+    });
+  }
+
+  setStatus(`Ready: address loaded. Trust Open Wallet preset = €${EUR_DEFAULT} (converted live to BTC).`);
+})();
+</script><script>
+/* === Demo Sale Meter Values (placeholder for preview) === */
+(() => {
+  // Plausible demo numbers (can be replaced by on-chain / backend data later)
+  const DEMO = {
+    target: 5000000,     // USD target
+    raised: 1842500,     // USD raised
+    price: 0.085,        // USD per BTrust
+    participants: 6472   // unique participants
+  };
+
+  DEMO.remaining = Math.max(0, DEMO.target - DEMO.raised);
+  DEMO.progress = Math.max(0, Math.min(1, DEMO.raised / DEMO.target));
+  DEMO.sold = Math.floor(DEMO.raised / DEMO.price); // BTrust sold
+
+  const fmtUSD0 = (n) => "$" + new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
+  const fmtNum0 = (n) => new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
+
+  const elRaised = document.getElementById("raised");
+  const elRemaining = document.getElementById("remaining");
+  const elSold = document.getElementById("sold");
+  const elParts = document.getElementById("parts");
+  const elFill = document.getElementById("saleFill");
+
+  if (elRaised) elRaised.textContent = fmtUSD0(DEMO.raised);
+  if (elRemaining) elRemaining.textContent = fmtUSD0(DEMO.remaining);
+  if (elSold) elSold.textContent = fmtNum0(DEMO.sold);
+  if (elParts) elParts.textContent = fmtNum0(DEMO.participants);
+
+  if (elFill) elFill.style.width = (DEMO.progress * 100).toFixed(1) + "%";
+})();
+</script><script>
+/* === Auto-collapse Whitepaper "Read more" when navigating away (debounced) === */
+(() => {
+  const wpCard = document.getElementById('whitepaper');
+  if(!wpCard) return;
+  const details = wpCard.querySelector('details.wp-details');
+  const summary = wpCard.querySelector('details.wp-details > summary.wp-summary');
+  if(!details || !summary) return;
+
+  let lastUserToggle = 0;
+
+  // Reliable toggle
+  summary.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    details.open = !details.open;
+    lastUserToggle = Date.now();
+  }, true);
+
+  // Close only when clearly leaving the section AND not immediately after a user toggle
+  const io = new IntersectionObserver((entries) => {
+    for (const entry of entries){
+      if(entry.target !== wpCard) continue;
+      const tooSoon = (Date.now() - lastUserToggle) < 1200;
+      const farAway = (!entry.isIntersecting) || (entry.intersectionRatio < 0.12);
+      if(!tooSoon && farAway && details.open){
+        details.open = false;
+      }
+    }
+  }, {threshold:[0,0.08,0.12,0.2,0.35,0.5,0.8,1]});
+  io.observe(wpCard);
+
+  // Close when clicking any header nav link to a different section
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('.token-header-wrap a.pill[href^="#"], .nav a.pill[href^="#"]');
+    if(!a) return;
+    const href = (a.getAttribute('href') || '').trim();
+    if(!href.startsWith('#')) return;
+    if(href === '#whitepaper') return;
+    if(details.open) details.open = false;
+  }, true);
+})();
+</script><script>
+/* === Auto-add double-arrow links to next section === */
+(() => {
+  const sections = Array.from(document.querySelectorAll('.section-anchor'));
+  sections.forEach((sec, i) => {
+    const next = sections[i+1];
+    if(!next) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'next-arrow';
+    const a = document.createElement('a');
+    a.href = '#' + next.id;
+    a.innerHTML = '⇩⇩';
+    wrap.appendChild(a);
+    sec.after(wrap);
+  });
+})();
+</script><script>
+/* === Scroll listener: token grows ONLY while user is actively scrolling === */
+(function(){
+  const header = document.querySelector('header') || document.querySelector('.token-header-wrap');
+  const wrap = document.querySelector('.token-header-wrap') || header;
+  let scrollTimer = null;
+
+  function setScrolling(){
+    header && header.classList.add('scrolling');
+    wrap && wrap.classList.add('scrolling');
+    if(scrollTimer) clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(()=>{
+      header && header.classList.remove('scrolling');
+      wrap && wrap.classList.remove('scrolling');
+    }, 180); // shrink shortly after scrolling stops
+  }
+
+  window.addEventListener('scroll', setScrolling, {passive:true});
+})();
+</script><style>
+/* === FAQ: accordion + categories + search + top questions === */
+.faq-tools{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px;}
+.faq-search{flex:1 1 260px; min-width:220px;}
+#faqSearch{
+  width:100%;
+  padding:10px 12px;
+  border-radius:14px;
+  border:0.5px solid rgba(255,255,255,.18);
+  background: rgba(10,15,25,.55);
+  color: rgba(232,238,248,.95);
+  outline:none;
+}
+#faqSearch::placeholder{color: rgba(160,172,188,.85);}
+
+.faq-cats{display:flex; gap:8px; flex-wrap:wrap;}
+.faq-chip{
+  padding:7px 10px;
+  border-radius:999px;
+  border:0.5px solid rgba(255,255,255,.14);
+  background: rgba(10,15,25,.35);
+  color: rgba(232,238,248,.85);
+  cursor:pointer;
+}
+.faq-chip.active{
+  border-color: rgba(247,147,26,.55);
+  color:#f7931a;
+  background: rgba(247,147,26,.10);
+}
+
+.faq-top{padding:10px 12px; border-radius:16px; border:0.5px solid rgba(255,255,255,.10); background: rgba(10,15,25,.28); margin-bottom:14px;}
+.faq-top .k{opacity:.9; font-weight:800; margin-bottom:8px;}
+
+.faq-list{display:flex; flex-direction:column; gap:10px;}
+
+.faqAcc{
+  border-radius:16px;
+  border:0.5px solid rgba(255,255,255,.10);
+  background: rgba(10,15,25,.22);
+  overflow:hidden;
+}
+.faqAcc summary{
+  list-style:none;
+  cursor:pointer;
+  padding:12px 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  user-select:none;
+}
+.faqAcc summary::-webkit-details-marker{display:none;}
+.faqAcc .q{font-weight:800;}
+.faqAcc[open] summary{background: rgba(247,147,26,.08);}
+
+.faqIcon{
+  width:28px; height:28px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:10px;
+  border:0.5px solid rgba(255,255,255,.10);
+  background: rgba(10,15,25,.35);
+  flex:0 0 auto;
+}
+.i-general{color: var(--accent2);}
+.i-token{color: var(--accent3);}
+.i-sale{color: var(--accent);}
+.i-tech{color: rgba(120,170,255,.95);}
+.i-legal{color: rgba(255,210,120,.95);}
+
+.faqAns{
+  padding:0 12px 12px;
+  color: rgba(232,238,248,.88);
+  line-height:1.55;
+}
+
+@media(max-width:520px){
+  .faqAcc summary{padding:11px 10px;}
+  .faqIcon{width:26px; height:26px;}
+}
+</style><script>
+/* === FAQ: build Top Questions + filtering (search + categories) === */
+(function(){
+  const wrap = document.getElementById('faq');
+  if(!wrap) return;
+
+  const search = document.getElementById('faqSearch');
+  const cats = document.getElementById('faqCats');
+  const topList = document.getElementById('faqTopList');
+  const allList = document.getElementById('faqAllList');
+  if(!search || !cats || !topList || !allList) return;
+
+  const items = Array.from(allList.querySelectorAll('.faqAcc'));
+
+  // Build Top Questions (data-top="1")
+  const tops = items.filter(x => x.getAttribute('data-top') === '1').slice(0,4);
+  topList.innerHTML = '';
+  tops.forEach(t => topList.appendChild(t.cloneNode(true)));
+
+  let activeCat = 'all';
+
+  function apply(){
+    const q = (search.value || '').trim().toLowerCase();
+    items.forEach(it => {
+      const cat = it.getAttribute('data-cat') || 'general';
+      const text = it.textContent.toLowerCase();
+      const okCat = (activeCat === 'all') || (cat === activeCat);
+      const okQ = (!q) || text.includes(q);
+      it.style.display = (okCat && okQ) ? '' : 'none';
+      if(!(okCat && okQ)) it.removeAttribute('open');
+    });
+
+    // also filter top list for consistency
+    Array.from(topList.querySelectorAll('.faqAcc')).forEach(it => {
+      const cat = it.getAttribute('data-cat') || 'general';
+      const text = it.textContent.toLowerCase();
+      const okCat = (activeCat === 'all') || (cat === activeCat);
+      const okQ = (!q) || text.includes(q);
+      it.style.display = (okCat && okQ) ? '' : 'none';
+      if(!(okCat && okQ)) it.removeAttribute('open');
+    });
+  }
+
+  cats.addEventListener('click', (e) => {
+    const btn = e.target.closest('.faq-chip');
+    if(!btn) return;
+    activeCat = btn.getAttribute('data-cat') || 'all';
+    cats.querySelectorAll('.faq-chip').forEach(b => b.classList.toggle('active', b === btn));
+    apply();
+  });
+
+  search.addEventListener('input', apply);
+
+  apply();
+})();
+</script><script>
+(() => {
+  // === Buy wiring: Copy / MetaMask / Trust Open Wallet / Swap Route (Android-first) ===
+  const EUR_DEFAULT = 50;
+  let lastBtcEur = null;
+  // Prefetch BTC/EUR in background so click can stay synchronous
+  fetchBtcEur().then(p => { lastBtcEur = p; }).catch(()=>{ lastBtcEur = null; });
+
+  const contractEl = document.getElementById("contract");
+  if(contractEl){
+    contractEl.addEventListener("focus", () => { try{ contractEl.select(); }catch(e){} });
+    contractEl.addEventListener("click", () => { try{ contractEl.select(); }catch(e){} });
+  }
+  const copyBtn = document.getElementById("copy");
+  const addMMBtn = document.getElementById("addMM");
+  const openTWBtn = document.getElementById("openTW");
+  const openSwapBtn = document.getElementById("openSwap");
+  const status = document.getElementById("acqStatus");
+
+  const ua = navigator.userAgent || "";
+  const isAndroid = /Android/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+  const isMobile = isAndroid || isIOS;
+
+  function setStatus(msg) {
+    if (status) status.textContent = msg;
+  }
+
+  function getAddress() {
+    return (contractEl && contractEl.value) ? contractEl.value.trim() : "";
+  }
+
+  async function copyText(txt) {
+    try {
+      await navigator.clipboard.writeText(txt);
+      return true;
+    } catch (e) {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = txt;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "-1000px";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        return true;
+      } catch (e2) {
+        return false;
+      }
+    }
+  }
+
+  // ---- Copy contract ----
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      const addr = getAddress();
+      if (!addr) return setStatus("Nothing to copy.");
+      const ok = await copyText(addr);
+      walletFlowState.copied = !!ok;
+      walletFlowState.lastAction = "copy";
+      setStatus(ok ? "Copied to clipboard ✅" : "Copy failed (clipboard blocked) ⚠");
+      renderCta();
+      try{ window.showToast && window.showToast(ok ? "Copied ✅" : "Copy blocked ⚠", ok ? "ok" : "warn"); }catch(e){}
+    });
+  }
+
+  // ---- Add to MetaMask ----
+  // Works only for EVM token contracts (0x...). Your current default is a BTC address.
+  if (addMMBtn) {
+    addMMBtn.addEventListener("click", async () => {
+      const addr = getAddress();
+      const isEvm = /^0x[a-fA-F0-9]{40}$/.test(addr);
+
+      if (!isEvm) {
+        return setStatus("MetaMask add-token requires an EVM contract (0x...). Current field is a BTC address. ⚠");
+      }
+      if (!window.ethereum) {
+        return setStatus("MetaMask not detected. Open in MetaMask browser or install it. ⚠");
+      }
+
+      try {
+        const wasAdded = await window.ethereum.request({
+          method: "wallet_watchAsset",
+          params: {
+            type: "ERC20",
+            options: {
+              address: addr,
+              symbol: "BTrust",
+              decimals: 18,
+              image: ""
+            }
+          }
+        });
+        walletFlowState.metamaskAdded = !!wasAdded;
+        walletFlowState.lastAction = "addmm";
+        renderCta();
+        setStatus(wasAdded ? "BTrust added to MetaMask ✅" : "MetaMask: token not added.");
+      } catch (e) {
+        setStatus("MetaMask request failed or was rejected. ⚠");
+      }
+    });
+  }
+
+  // ---- Swap route ----
+  if (openSwapBtn) {
+    openSwapBtn.addEventListener("click", () => {
+      const addr = getAddress();
+      const isEvm = /^0x[a-fA-F0-9]{40}$/.test(addr);
+
+      if (!isEvm) {
+        setStatus("Swap route needs a live BTrust EVM contract (0x...) + chain. Opening Uniswap as placeholder. ⚠");
+        window.open("https://app.uniswap.org/", "_blank", "noopener");
+        walletFlowState.swapOpened = true;
+        walletFlowState.lastAction = "swap";
+        renderCta();
+        return;
+      }
+      window.open("https://app.uniswap.org/", "_blank", "noopener");
+      setStatus("Opened swap UI. Next: we can prefill chain + token once live.");
+    });
+  }
+
+  // ---- Trust Open Wallet open (Android intent + Play Store fallback + €50->BTC) ----
+  async function fetchBtcEur() {
+    const url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=eur";
+    const r = await fetch(url, { cache: "no-store" });
+    if (!r.ok) throw new Error("price_fetch_failed");
+    const j = await r.json();
+    const p = j?.bitcoin?.eur;
+    if (!p || typeof p !== "number") throw new Error("price_parse_failed");
+    return p;
+  }
+
+  function buildUniversal(address, btcAmount) {
+    const params = new URLSearchParams({
+      asset: "c0",
+      address
+    });
+    if (btcAmount && Number.isFinite(btcAmount) && btcAmount > 0) {
+      params.set("amount", btcAmount.toFixed(8));
+    }
+    return "https://link.trustwallet.com/send?" + params.toString();
+  }
+
+  function buildTrustScheme(address, btcAmount) {
+    const params = new URLSearchParams({
+      asset: "c0",
+      address
+    });
+    if (btcAmount && Number.isFinite(btcAmount) && btcAmount > 0) {
+      params.set("amount", btcAmount.toFixed(8));
+    }
+    return "trust://send?" + params.toString();
+  }
+
+  function buildBip21(address, btcAmount) {
+    const params = new URLSearchParams();
+    if (btcAmount && Number.isFinite(btcAmount) && btcAmount > 0) {
+      params.set("amount", btcAmount.toFixed(8));
+    }
+    const q = params.toString();
+    return "bitcoin:" + address + (q ? ("?" + q) : "");
+  }
+
+  function buildAndroidIntent(address, btcAmount) {
+    const params = new URLSearchParams({
+      asset: "c0",
+      address
+    });
+    if (btcAmount && Number.isFinite(btcAmount) && btcAmount > 0) {
+      params.set("amount", btcAmount.toFixed(8));
+    }
+
+    // If app isn't installed, Android will open browser_fallback_url.
+    // We use Play Store (most direct).
+    const fallback = encodeURIComponent("https://play.google.com/store/apps/details?id=com.wallet.crypto.trustapp");
+    return "intent://send?" + params.toString() +
+      "#Intent;scheme=trust;package=com.wallet.crypto.trustapp;S.browser_fallback_url=" + fallback + ";end";
+  }
+
+  if (openTWBtn) {
+    openTWBtn.addEventListener("click", () => {
+      const address = getAddress();
+      if (!address) return setStatus("No address set.");
+
+      // Use cached price to keep the deep link inside the user click gesture.
+      // If price isn't ready, we still Open Open Wallet (amount optional).
+      let btcAmount = null;
+      if (lastBtcEur && Number.isFinite(lastBtcEur) && lastBtcEur > 0) {
+        btcAmount = EUR_DEFAULT / lastBtcEur;
+      }
+
+      const pretty = btcAmount ? btcAmount.toFixed(8) : "—";
+      walletFlowState.walletOpened = true;
+      walletFlowState.lastAction = "openTW";
+      renderCta();
+      setStatus(`Opening Trust Open Wallet… send ~€${EUR_DEFAULT} (≈ ${pretty} BTC) to ${address}`);
+
+      // Detect common BTC address formats (bc1... / 1... / 3...)
+      const isBtcAddr = /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{20,}$/i.test(address);
+
+      // Desktop: keep user in flow (deep links are mobile-only)
+      if (!isMobile) {
+        setStatus("Open Open Wallet works on mobile. Please open this page on your phone.");
+        return;
+      }
+
+      // Android: prefer BIP21 for BTC (opens wallet handler). Use intent/scheme as fallback.
+      if (isAndroid) {
+        if (isBtcAddr) {
+          window.location.assign(buildBip21(address, btcAmount));
+          setTimeout(() => { window.location.assign(buildAndroidIntent(address, btcAmount)); }, 450);
+          setTimeout(() => { window.location.assign(buildTrustScheme(address, btcAmount)); }, 950);
+        } else {
+          window.location.assign(buildAndroidIntent(address, btcAmount));
+          setTimeout(() => { window.location.assign(buildTrustScheme(address, btcAmount)); }, 500);
+        }
+        return;
+      }
+
+      // iOS: prefer BIP21 for BTC, otherwise trust:// scheme
+      if (isBtcAddr) {
+        window.location.assign(buildBip21(address, btcAmount));
+        setTimeout(() => { window.location.assign(buildTrustScheme(address, btcAmount)); }, 700);
+        return;
+      }
+
+      window.location.assign(buildTrustScheme(address, btcAmount));
+      setTimeout(() => { window.location.assign(buildUniversal(address, btcAmount)); }, 900);
+    });
+  }
+
+  setStatus(`Ready: address loaded. Trust Open Wallet preset = €${EUR_DEFAULT} (converted live to BTC).`);
+})();
+</script><script>
+/* === Demo Sale Meter Values (placeholder for preview) === */
+(() => {
+  // Plausible demo numbers (can be replaced by on-chain / backend data later)
+  const DEMO = {
+    target: 5000000,     // USD target
+    raised: 1842500,     // USD raised
+    price: 0.085,        // USD per BTrust
+    participants: 6472   // unique participants
+  };
+
+  DEMO.remaining = Math.max(0, DEMO.target - DEMO.raised);
+  DEMO.progress = Math.max(0, Math.min(1, DEMO.raised / DEMO.target));
+  DEMO.sold = Math.floor(DEMO.raised / DEMO.price); // BTrust sold
+
+  const fmtUSD0 = (n) => "$" + new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
+  const fmtNum0 = (n) => new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
+
+  const elRaised = document.getElementById("raised");
+  const elRemaining = document.getElementById("remaining");
+  const elSold = document.getElementById("sold");
+  const elParts = document.getElementById("parts");
+  const elFill = document.getElementById("saleFill");
+
+  if (elRaised) elRaised.textContent = fmtUSD0(DEMO.raised);
+  if (elRemaining) elRemaining.textContent = fmtUSD0(DEMO.remaining);
+  if (elSold) elSold.textContent = fmtNum0(DEMO.sold);
+  if (elParts) elParts.textContent = fmtNum0(DEMO.participants);
+
+  if (elFill) elFill.style.width = (DEMO.progress * 100).toFixed(1) + "%";
+})();
+</script><script>
+/* === Auto-add double-arrow links to next section === */
+(() => {
+  const sections = Array.from(document.querySelectorAll('.section-anchor'));
+  sections.forEach((sec, i) => {
+    const next = sections[i+1];
+    if(!next) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'next-arrow';
+    const a = document.createElement('a');
+    a.href = '#' + next.id;
+    a.innerHTML = '⇩⇩';
+    wrap.appendChild(a);
+    sec.after(wrap);
+  });
+})();
+</script><script>
+/* === Scroll listener: token grows ONLY while user is actively scrolling === */
+(function(){
+  const header = document.querySelector('header') || document.querySelector('.token-header-wrap');
+  const wrap = document.querySelector('.token-header-wrap') || header;
+  let scrollTimer = null;
+
+  function setScrolling(){
+    header && header.classList.add('scrolling');
+    wrap && wrap.classList.add('scrolling');
+    if(scrollTimer) clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(()=>{
+      header && header.classList.remove('scrolling');
+      wrap && wrap.classList.remove('scrolling');
+    }, 180); // shrink shortly after scrolling stops
+  }
+
+  window.addEventListener('scroll', setScrolling, {passive:true});
+})();
+</script><style>
+/* === FAQ: accordion + categories + search + top questions === */
+.faq-tools{display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px;}
+.faq-search{flex:1 1 260px; min-width:220px;}
+#faqSearch{
+  width:100%;
+  padding:10px 12px;
+  border-radius:14px;
+  border:0.5px solid rgba(255,255,255,.18);
+  background: rgba(10,15,25,.55);
+  color: rgba(232,238,248,.95);
+  outline:none;
+}
+#faqSearch::placeholder{color: rgba(160,172,188,.85);}
+
+.faq-cats{display:flex; gap:8px; flex-wrap:wrap;}
+.faq-chip{
+  padding:7px 10px;
+  border-radius:999px;
+  border:0.5px solid rgba(255,255,255,.14);
+  background: rgba(10,15,25,.35);
+  color: rgba(232,238,248,.85);
+  cursor:pointer;
+}
+.faq-chip.active{
+  border-color: rgba(247,147,26,.55);
+  color:#f7931a;
+  background: rgba(247,147,26,.10);
+}
+
+.faq-top{padding:10px 12px; border-radius:16px; border:0.5px solid rgba(255,255,255,.10); background: rgba(10,15,25,.28); margin-bottom:14px;}
+.faq-top .k{opacity:.9; font-weight:800; margin-bottom:8px;}
+
+.faq-list{display:flex; flex-direction:column; gap:10px;}
+
+.faqAcc{
+  border-radius:16px;
+  border:0.5px solid rgba(255,255,255,.10);
+  background: rgba(10,15,25,.22);
+  overflow:hidden;
+}
+.faqAcc summary{
+  list-style:none;
+  cursor:pointer;
+  padding:12px 12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  user-select:none;
+}
+.faqAcc summary::-webkit-details-marker{display:none;}
+.faqAcc .q{font-weight:800;}
+.faqAcc[open] summary{background: rgba(247,147,26,.08);}
+
+.faqIcon{
+  width:28px; height:28px;
+  display:inline-flex; align-items:center; justify-content:center;
+  border-radius:10px;
+  border:0.5px solid rgba(255,255,255,.10);
+  background: rgba(10,15,25,.35);
+  flex:0 0 auto;
+}
+.i-general{color: var(--accent2);}
+.i-token{color: var(--accent3);}
+.i-sale{color: var(--accent);}
+.i-tech{color: rgba(120,170,255,.95);}
+.i-legal{color: rgba(255,210,120,.95);}
+
+.faqAns{
+  padding:0 12px 12px;
+  color: rgba(232,238,248,.88);
+  line-height:1.55;
+}
+
+@media(max-width:520px){
+  .faqAcc summary{padding:11px 10px;}
+  .faqIcon{width:26px; height:26px;}
+}
+</style><script>
+/* === FAQ: build Top Questions + filtering (search + categories) === */
+(function(){
+  const wrap = document.getElementById('faq');
+  if(!wrap) return;
+
+  const search = document.getElementById('faqSearch');
+  const cats = document.getElementById('faqCats');
+  const topList = document.getElementById('faqTopList');
+  const allList = document.getElementById('faqAllList');
+  if(!search || !cats || !topList || !allList) return;
+
+  const items = Array.from(allList.querySelectorAll('.faqAcc'));
+
+  // Build Top Questions (data-top="1")
+  const tops = items.filter(x => x.getAttribute('data-top') === '1').slice(0,4);
+  topList.innerHTML = '';
+  tops.forEach(t => topList.appendChild(t.cloneNode(true)));
+
+  let activeCat = 'all';
+
+  function apply(){
+    const q = (search.value || '').trim().toLowerCase();
+    items.forEach(it => {
+      const cat = it.getAttribute('data-cat') || 'general';
+      const text = it.textContent.toLowerCase();
+      const okCat = (activeCat === 'all') || (cat === activeCat);
+      const okQ = (!q) || text.includes(q);
+      it.style.display = (okCat && okQ) ? '' : 'none';
+      if(!(okCat && okQ)) it.removeAttribute('open');
+    });
+
+    // also filter top list for consistency
+    Array.from(topList.querySelectorAll('.faqAcc')).forEach(it => {
+      const cat = it.getAttribute('data-cat') || 'general';
+      const text = it.textContent.toLowerCase();
+      const okCat = (activeCat === 'all') || (cat === activeCat);
+      const okQ = (!q) || text.includes(q);
+      it.style.display = (okCat && okQ) ? '' : 'none';
+      if(!(okCat && okQ)) it.removeAttribute('open');
+    });
+  }
+
+  cats.addEventListener('click', (e) => {
+    const btn = e.target.closest('.faq-chip');
+    if(!btn) return;
+    activeCat = btn.getAttribute('data-cat') || 'all';
+    cats.querySelectorAll('.faq-chip').forEach(b => b.classList.toggle('active', b === btn));
+    apply();
+  });
+
+  search.addEventListener('input', apply);
+
+  apply();
+})();
+</script><script>
+/* === Purchase UX helpers: QR + copy feedback (clean) === */
+(function(){
+  const input = document.getElementById('contract');
+  const btnCopy = document.getElementById('copy');
+  const qr = document.getElementById('contractQR');
+
+  function setQr(val){
+    if(!qr) return;
+    const v = (val||'').trim();
+    // show a placeholder QR if empty, so the user sees the QR area is working
+    const data = v ? v : 'BTC address missing';
+    qr.src = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(data);
+  }
+
+  function flash(btn, text){
+    if(!btn) return;
+    const old = btn.textContent;
+    btn.textContent = text;
+    btn.disabled = true;
+    setTimeout(()=>{ btn.textContent = old; btn.disabled = false; }, 900);
+  }
+
+  // QR: initial + live update
+  if(input && qr){
+    setQr(input.value);
+    input.addEventListener('input', ()=>setQr(input.value));
+  } else if(qr) {
+    // if input missing for any reason, still render placeholder QR
+    setQr('');
+  }
+
+  // Copy contract (clipboard)
+  if(btnCopy && input){
+    btnCopy.addEventListener('click', async ()=>{
+      try{
+        const val = (input.value||'').trim();
+        if(!val) return flash(btnCopy, 'No address');
+        await navigator.clipboard.writeText(val);
+        flash(btnCopy, 'Copied ✓');
+      }catch(_){
+        flash(btnCopy, 'Copy failed');
+      }
+    });
+  }
+})();
+</script><script>
+/* === ScrollSpy (final): active pill follows section in view (works after reordering) === */
+(function(){
+  const nav = document.getElementById('tokenLandingNav');
+  if(!nav) return;
+
+  const pills = Array.from(nav.querySelectorAll('a.pill[href^="#"]'))
+    .concat(Array.from(document.querySelectorAll('.token-header-actions a.pill[href^="#"]')));
+  const items = pills.map(p => {
+    const id = (p.getAttribute('href')||'').slice(1);
+    return {pill:p, id, el: document.getElementById(id)};
+  }).filter(x => x.el);
+
+  items.sort((a,b)=>a.el.offsetTop - b.el.offsetTop);
+
+  if(!items.length) return;
+
+  items.sort((a,b)=>a.el.offsetTop - b.el.offsetTop);
+
+  const header = document.querySelector('.token-header-wrap');
+  const headerOffset = () => Math.ceil(header?.getBoundingClientRect().height || 0) + 28;
+
+  function setActive(id){
+    pills.forEach(p=>{
+      p.classList.remove('is-active','active');
+      p.removeAttribute('aria-current');
+    });
+    const hit = pills.find(p=>p.getAttribute('href') === '#'+id);
+    if(hit){
+      hit.classList.add('is-active','active');
+      hit.setAttribute('aria-current','true');
+    }
+  }
+
+  function currentId(){
+    const y = window.scrollY + headerOffset();
+    let cur = items[0].id;
+    for(const it of items){
+      if(it.el.offsetTop <= y) cur = it.id;
+      else break;
+    }
+    return cur;
+  }
+
+  let raf=0;
+  function tick(){
+    if(raf) return;
+    raf = requestAnimationFrame(()=>{raf=0; setActive(currentId());});
+  }
+
+  window.addEventListener('scroll', tick, {passive:true});
+  window.addEventListener('resize', tick);
+  window.addEventListener('hashchange', ()=>setTimeout(tick,0));
+  tick();
+})();
+</script><script>
+/* =========================
+   NAV BEHAVIOR (CLEAN)
+   - scrolling state (.scrolling)
+   - slow Apple-like anchor scroll + gentle bounce
+   - scrollspy active pill (top nav only)
+   ========================= */
+(function(){
+  const header = document.querySelector('.token-header-wrap');
+  const nav = document.getElementById('tokenLandingNav');
+  if(!header || !nav) return;
+
+  // Pills in the main nav (active highlight)
+  const pills = Array.from(nav.querySelectorAll('a.pill[href^="#"]'))
+    .concat(Array.from(document.querySelectorAll('.token-header-actions a.pill[href^="#"]')));
+  const items = pills.map(p => {
+    const id = (p.getAttribute('href')||'').slice(1);
+    return { pill: p, id, el: document.getElementById(id) };
+  }).filter(x => x.el);
+
+  // sort by page position
+  items.sort((a,b) => a.el.offsetTop - b.el.offsetTop);
+
+  const headerOffset = () => Math.ceil(header.getBoundingClientRect().height || 0) + 24;
+
+  // scrolling state (only while user is actively scrolling)
+  let scrollTimer = null;
+  function markScrolling(){
+    header.classList.add('scrolling');
+    if(scrollTimer) clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(()=> header.classList.remove('scrolling'), 900);
+  }
+  window.addEventListener('scroll', markScrolling, {passive:true});
+
+  // scrollspy
+  function setActive(id){
+    pills.forEach(p => {
+      p.classList.remove('is-active','active');
+      p.removeAttribute('aria-current');
+    });
+    const hit = pills.find(p => p.getAttribute('href') === '#' + id);
+    if(hit){
+      hit.classList.add('is-active','active');
+      hit.setAttribute('aria-current','true');
+    }
+  }
+  function computeCurrent(){
+    const y = window.scrollY + headerOffset() + 2;
+    let current = items[0]?.id || 'top';
+    for(const it of items){
+      if(it.el.offsetTop <= y) current = it.id;
+      else break;
+    }
+    return current;
+  }
+  let raf=0;
+  function scheduleSpy(){
+    if(raf) return;
+    raf = requestAnimationFrame(()=>{
+      raf=0;
+      if(items.length) setActive(computeCurrent());
+    });
+  }
+  window.addEventListener('scroll', scheduleSpy, {passive:true});
+  window.addEventListener('resize', scheduleSpy);
+
+  // smooth scroll (slow + elegant + gentle bounce)
+  const prefersReduced = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function easeInOutCubic(t){
+    return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2;
+  }
+
+  function animateScroll(fromY, toY, duration, done){
+    const start = performance.now();
+    function step(now){
+      const t = Math.min(1, (now - start) / duration);
+      const y = fromY + (toY - fromY) * easeInOutCubic(t);
+      window.scrollTo(0, y);
+      if(t < 1) requestAnimationFrame(step);
+      else done && done();
+    }
+    requestAnimationFrame(step);
+  }
+
+  function appleScrollTo(targetY){
+    const reduced = prefersReduced();
+
+    header.classList.add('navscrolling');
+    const startY = window.scrollY;
+
+    // Durations: slower by default, still animated (but shorter) if Reduce Motion is enabled
+    const glideDur = reduced ? 520 : 1180;
+    const settle1  = reduced ? 220 : 420;
+    const settle2  = reduced ? 180 : 320;
+
+    // phase 1: slow glide
+    animateScroll(startY, targetY, glideDur, ()=>{
+      // phase 2: tiny overshoot up, then return (the "Apple settle")
+      const overshoot = reduced ? 6 : 12; // px
+      const upY = Math.max(0, targetY - overshoot);
+
+      animateScroll(targetY, upY, settle1, ()=>{
+        animateScroll(upY, targetY, settle2, ()=>{
+          header.classList.remove('navscrolling');
+          scheduleSpy();
+        });
+      });
+    });
+  }
+
+  // Intercept ALL in-page anchors (nav pills + header actions + buttons)
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+
+    const href = a.getAttribute('href') || '';
+    if(href === '#' || href.length < 2) return;
+    if(a.hasAttribute('data-no-smooth')) return;
+
+    const id = href.slice(1);
+    const el = document.getElementById(id);
+    if(!el) return;
+
+    e.preventDefault();
+
+    // tighter spacing for action targets (LIVE + Purchase)
+    const tight = (id === 'sale' || id === 'purchase');
+    const offset = headerOffset() + (tight ? -6 : 0); // slightly less gap than normal
+    const y = Math.max(0, el.getBoundingClientRect().top + window.scrollY - offset);
+
+    appleScrollTo(y);
+    history.replaceState(null, '', '#' + id);
+    setActive(id);
+  }, {capture:true, passive:false});
+  // Also intercept pointerup (some mobile browsers stop bubbling clicks inside sticky headers)
+  document.addEventListener('pointerup', (e)=>{
+    const a = e.target.closest('a[href^="#"]');
+    if(!a) return;
+    const href = a.getAttribute('href') || '';
+    if(href === '#' || href.length < 2) return;
+    if(a.hasAttribute('data-no-smooth')) return;
+
+    const id = href.slice(1);
+    const el = document.getElementById(id);
+    if(!el) return;
+
+    e.preventDefault();
+
+    const tight = (id === 'sale' || id === 'purchase');
+    const offset = headerOffset() + (tight ? -6 : 0);
+    const y = Math.max(0, el.getBoundingClientRect().top + window.scrollY - offset);
+
+    appleScrollTo(y);
+    history.replaceState(null, '', '#' + id);
+    setActive(id);
+  }, {capture:true, passive:false});
+
+
+  // init
+  scheduleSpy();
+})();
+</script><script>
+/* === Toast micro-feedback (copy, actions) === */
+(function(){
+  const wrap = document.getElementById('toastWrap');
+  if(!wrap) return;
+
+  function showToast(msg, kind='ok', ms=1800){
+    const t = document.createElement('div');
+    t.className = 'toast ' + (kind || 'ok');
+    t.textContent = msg;
+    wrap.appendChild(t);
+    // allow transition
+    requestAnimationFrame(()=> t.classList.add('show'));
+    // optional light haptic on supported mobile browsers
+    try{ if(navigator.vibrate) navigator.vibrate(12); }catch(e){}
+    window.setTimeout(()=>{
+      t.classList.remove('show');
+      window.setTimeout(()=> t.remove(), 220);
+    }, ms);
+  }
+
+  window.showToast = showToast;
+})();
+</script><script>
+(() => {
+  const applyHeaderOffset = () => {
+    const header = document.querySelector('.token-header-wrap');
+    if (!header) return;
+
+    // Extra breathing room so the first heading never gets clipped
+    const EXTRA = 18;
+
+    // Use scrollHeight because the header can wrap to 2 lines on mobile
+    const h = Math.ceil(header.scrollHeight || header.getBoundingClientRect().height || 0);
+
+    const offset = Math.max(96, h + EXTRA);
+    document.documentElement.style.setProperty('--headerH', h + 'px');
+    document.documentElement.style.setProperty('--anchorOffset', offset + 'px');
+  };
+
+  // Run early + after layout settles
+  window.addEventListener('DOMContentLoaded', () => {
+    applyHeaderOffset();
+    requestAnimationFrame(applyHeaderOffset);
+    setTimeout(applyHeaderOffset, 120);
+    setTimeout(applyHeaderOffset, 420);
+  });
+
+  window.addEventListener('resize', () => {
+    applyHeaderOffset();
+    requestAnimationFrame(applyHeaderOffset);
+  });
+
+  // If fonts load late, re-measure once more
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      applyHeaderOffset();
+      requestAnimationFrame(applyHeaderOffset);
+    }).catch(() => {});
+  }
+})();
+
+  // Auto-collapse wallet flow when user navigates to another section
+  window.addEventListener("hashchange", () => {
+    const h = (location.hash || "").toLowerCase();
+    if(h && h !== "#purchase" && h !== "#acquire"){
+      resetWalletFlow(true);
+    }
+  });
+
+  // Initial paint
+  renderCta();
+  renderFlowSteps();
+</script><script>
+function openTrustWallet(address, asset){
+  const map = {
+    btc: `https://link.trustwallet.com/send?asset=c0&address=${address}`,
+    usdt: `https://link.trustwallet.com/send?asset=c60_t0xdAC17F958D2ee523a2206206994597C13D831ec7&address=${address}`
+  };
+  const url = map[asset] || map.btc;
+  window.location.href = url;
+}
+</script><script>
+/* Sync Copy -> Open Open Wallet on second link */
+(function(){
+  const mainCopy = document.querySelector('[data-copy-contract="true"], #copy');
+  const altCopy = Array.from(document.querySelectorAll('a,button'))
+    .find(el => /copy contract/i.test(el.textContent) && el !== mainCopy);
+
+  if(mainCopy && altCopy){
+    mainCopy.addEventListener('click', ()=>{
+      altCopy.textContent = 'Open Open Wallet';
+    });
+  }
+})();
+</script><script>
+/* Open Wallet = open DEFAULT wallet app via BIP21 (bitcoin:) – no UA gating */
+(function(){
+  const ua = navigator.userAgent || "";
+  const isAndroid = /Android/i.test(ua);
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+
+  function getContractAddress(){
+    const el = document.getElementById("contract");
+    return (el && el.value ? el.value.trim() : "");
+  }
+
+  function getBtcAmount(){
+    // Keep compatibility: omit amount unless we have a cached price.
+    try{
+      if (typeof lastBtcEur !== "undefined" && Number.isFinite(lastBtcEur) && lastBtcEur > 0){
+        // If you later add a real amount picker, wire it here. For now: keep it simple.
+        const eur = 50;
+        return eur / lastBtcEur;
+      }
+    }catch(e){}
+    return null;
+  }
+
+  function buildBip21(address, btcAmount){
+    const a = encodeURIComponent(address);
+    if(!btcAmount) return `bitcoin:${a}`;
+    const amt = Number(btcAmount).toFixed(8);
+    return `bitcoin:${a}?amount=${amt}`;
+  }
+
+  function openDefaultWallet(){
+    const addr = getContractAddress();
+    if(!addr){ try{ setStatus && setStatus("No address set."); }catch(e){} return; }
+
+    const isBtc = /^(bc1|[13])[a-zA-HJ-NP-Z0-9]{20,}$/i.test(addr);
+    if(!isBtc){ try{ setStatus && setStatus("Invalid BTC address."); }catch(e){} return; }
+
+    const uri = buildBip21(addr, getBtcAmount());
+
+    // IMPORTANT: always try; browsers ignore unknown schemes on desktop.
+    window.location.href = uri;
+
+    // Android fallback: some browsers prefer intent://
+    if(isAndroid){
+      const intent = `intent://${encodeURIComponent(addr)}#Intent;scheme=bitcoin;end`;
+      setTimeout(()=>{ window.location.href = intent; }, 450);
+    }
+
+    // Final fallback to Trust Wallet if your page provides it
+    setTimeout(()=>{
+      try{ if(typeof openTrustWalletDeep === "function") openTrustWalletDeep(); }catch(e){}
+    }, 900);
+  }
+
+  // Attach to Open Wallet link by id/text
+  const btn = document.getElementById("qlOpenTrustWallet")
+           || document.getElementById("qlOpenWallet")
+           || Array.from(document.querySelectorAll("a,button"))
+                .find(el => /open wallet/i.test(el.textContent));
+
+  if(btn){
+    btn.addEventListener("click", (e)=>{
+      e.preventDefault();
+      try{
+        if(window.walletFlowState) walletFlowState.walletOpened = true;
+        if(typeof updateQuickStatus === "function") updateQuickStatus();
+      }catch(_){}
+      openDefaultWallet();
+    });
+  }
+
+  // Small debug note (only for you while testing)
+  const dbg = document.getElementById("uaDebug");
+  if(dbg){
+    dbg.textContent = `UA: ${ua} | mobile=${isMobile} | android=${isAndroid}`;
+  }
+})();
+</script><script>
+/* Fix: Flow CTA copy should not show "Copy failed" when fallback copy worked + should switch to Open Wallet */
+(function(){
+  const btn = document.getElementById("flowCTA");
+  const input = document.getElementById("contract");
+  if(!btn || !input) return;
+
+  // Replace node to remove older handlers cleanly
+  const fresh = btn.cloneNode(true);
+  btn.parentNode.replaceChild(fresh, btn);
+
+  function fallbackCopy(text){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly","");
+      ta.style.position = "absolute";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){
+      return false;
+    }
+  }
+
+  async function copyContract(){
+    const val = (input.value||"").trim();
+    if(!val) return false;
+    // Try Clipboard API first
+    try{
+      await navigator.clipboard.writeText(val);
+      return true;
+    }catch(e){
+      // Fallback for Samsung Internet / file://
+      return fallbackCopy(val);
+    }
+  }
+
+  function setCopiedUi(){
+    try{ window.walletFlowState = window.walletFlowState || {}; walletFlowState.copied = true; }catch(e){}
+    // Switch CTA text to Open Wallet
+    fresh.textContent = "Open Wallet";
+    // If you also have a second copy label, update it too
+    try{
+      const other = Array.from(document.querySelectorAll("a,button")).find(el => el !== fresh && /copy contract/i.test(el.textContent));
+      if(other){ other.textContent = "Open Wallet"; other.setAttribute("data-open-wallet","true"); }
+    }catch(e){}
+    try{ if(typeof updateQuickStatus === "function") updateQuickStatus(); }catch(e){}
+    try{ if(typeof renderFlowSteps === "function") renderFlowSteps(); }catch(e){}
+    try{ if(typeof renderCta === "function") renderCta(); }catch(e){}
+  }
+
+  function openWallet(){
+    // Try to click the hidden openTW or any Open Wallet link handler
+    const tw = document.getElementById("openTW");
+    if(tw) tw.click();
+  }
+
+  fresh.addEventListener("click", async (e)=>{
+    e.preventDefault();
+
+    const alreadyCopied = !!(window.walletFlowState && walletFlowState.copied);
+    if(!alreadyCopied){
+      const ok = await copyContract();
+      if(ok){
+        setCopiedUi();
+        try{ if(typeof setStatus === "function") setStatus("Copied ✓"); }catch(_){}
+      }else{
+        // Only show failed if really failed
+        try{ if(typeof setStatus === "function") setStatus("Copied ✓"); }catch(_){}
+      }
+      return;
+    }
+
+    // After copied, CTA acts like Open Wallet
+    try{ if(window.walletFlowState) walletFlowState.walletOpened = true; }catch(_){}
+    try{ if(typeof updateQuickStatus === "function") updateQuickStatus(); }catch(_){}
+    openWallet();
+  }, {passive:false});
+})();
+</script><script>
+/* Unified Copy->Open Wallet behavior (both buttons/links) */
+(function(){
+  const input = document.getElementById("contract");
+  if(!input) return;
+
+  function fallbackCopy(text){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly","");
+      ta.style.position = "absolute";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){
+      return false;
+    }
+  }
+
+  async function copyContract(){
+    const val = (input.value||"").trim();
+    if(!val) return false;
+    try{
+      await navigator.clipboard.writeText(val);
+      return true;
+    }catch(e){
+      return fallbackCopy(val);
+    }
+  }
+
+  function openWalletApp(){
+    const openTW = document.getElementById("openTW");
+    if(openTW) return openTW.click();
+    // fallback: try bitcoin: uri (default handler)
+    try{
+      const addr = (input.value||"").trim();
+      if(addr) window.location.href = "bitcoin:" + encodeURIComponent(addr);
+    }catch(e){}
+  }
+
+  function setAllToOpenWallet(){
+    const all = Array.from(document.querySelectorAll("a,button"))
+      .filter(el => /copy contract/i.test(el.textContent) || el.getAttribute("data-copy-contract") === "true");
+    all.forEach(el=>{
+      el.textContent = "OPEN WALLET";
+      el.setAttribute("data-open-wallet","true");
+      el.removeAttribute("data-copy-contract");
+      el.classList.add("btn-green");
+    });
+    const cta = document.getElementById("flowCTA");
+    if(cta){
+      cta.textContent = "Open Wallet";
+      cta.setAttribute("data-open-wallet","true");
+      cta.classList.add("btn-green");
+    }
+  });
+    const cta = document.getElementById("flowCTA");
+    if(cta){
+      cta.textContent = "Open Wallet";
+      cta.setAttribute("data-open-wallet","true");
+    }
+  }
+
+  function setCopiedState(){
+    window.walletFlowState = window.walletFlowState || {copied:false, explorerOpened:false, walletOpened:false, swapOpened:false};
+    walletFlowState.copied = true;
+    try{ if(typeof updateQuickStatus === "function") updateQuickStatus(); }catch(e){}
+    try{ if(typeof renderFlowSteps === "function") renderFlowSteps(); }catch(e){}
+    try{ if(typeof renderCta === "function") renderCta(); }catch(e){}
+  }
+
+  function setWalletOpenedState(){
+    window.walletFlowState = window.walletFlowState || {copied:false, explorerOpened:false, walletOpened:false, swapOpened:false};
+    walletFlowState.walletOpened = true;
+    try{ if(typeof updateQuickStatus === "function") updateQuickStatus(); }catch(e){}
+  }
+
+  // One global handler so it works for BOTH copy controls + CTA
+  document.addEventListener("click", async (e)=>{
+    const el = e.target.closest("a,button");
+    if(!el) return;
+
+    const isCopy = /copy contract/i.test(el.textContent) || el.getAttribute("data-copy-contract")==="true";
+    const isOpen = /open wallet/i.test(el.textContent) || el.getAttribute("data-open-wallet")==="true";
+
+    // If neither copy nor open-wallet, ignore
+    if(!isCopy && !isOpen) return;
+
+    // Ensure we don't follow any href
+    e.preventDefault();
+
+    // If already copied, treat as open wallet
+    const alreadyCopied = !!(window.walletFlowState && walletFlowState.copied);
+
+    if(!alreadyCopied){
+      const ok = await copyContract();
+      if(ok){
+        setAllToOpenWallet();
+        setCopiedState();
+        try{ if(typeof setStatus === "function") setStatus("Copied ✓"); }catch(_){}
+      }else{
+        try{ if(typeof setStatus === "function") setStatus("Copied ✓"); }catch(_){}
+      }
+      return;
+    }
+
+    // Open wallet
+    setWalletOpenedState();
+    openWalletApp();
+  }, true);
+})();
+</script><script>
+/* Refined: turn Open Wallet buttons green ONLY after Open Wallet is clicked */
+(function(){
+  function setAllOpenWalletGreen(){
+    const els = Array.from(document.querySelectorAll("a,button"))
+      .filter(el => /open wallet/i.test(el.textContent));
+    els.forEach(el => el.classList.add("btn-green"));
+  }
+
+  document.addEventListener("click",(e)=>{
+    const el = e.target.closest("a,button");
+    if(!el) return;
+    if(/open wallet/i.test(el.textContent) || el.getAttribute("data-open-wallet")==="true"){
+      setAllOpenWalletGreen();
+    }
+  }, true);
+})();
+</script><script>
+/* Master: upper becomes DONE (green), lower becomes Open Wallet (orange), clicked lower turns green */
+(function(){
+  const input = document.getElementById("contract");
+  if(!input) return;
+
+  function fallbackCopy(text){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly","");
+      ta.style.position = "absolute";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      const ok = document.execCommand("copy");
+      document.body.removeChild(ta);
+      return ok;
+    }catch(e){ return false; }
+  }
+
+  async function copyContract(){
+    const val = (input.value||"").trim();
+    if(!val) return false;
+    try{
+      await navigator.clipboard.writeText(val);
+      return true;
+    }catch(e){
+      return fallbackCopy(val);
+    }
+  }
+
+  function openWalletApp(){
+    const openTW = document.getElementById("openTW");
+    if(openTW) return openTW.click();
+    try{
+      const addr = (input.value||"").trim();
+      if(addr) window.location.href = "bitcoin:" + encodeURIComponent(addr);
+    }catch(e){}
+  }
+
+  function ensureState(){
+    window.walletFlowState = window.walletFlowState || {copied:false, explorerOpened:false, walletOpened:false, swapOpened:false};
+    return walletFlowState;
+  }
+
+  function upperBtn(){
+    return document.getElementById("flowCTA");
+  }
+
+  function lowerBtns(){
+    // any other copy/open wallet control except the upper CTA
+    return Array.from(document.querySelectorAll("a,button"))
+      .filter(el => el.id !== "flowCTA")
+      .filter(el => /copy contract/i.test(el.textContent) || el.getAttribute("data-copy-contract")==="true" || /open wallet/i.test(el.textContent) || el.getAttribute("data-open-wallet")==="true");
+  }
+
+  
+  function setAfterCopyUI(){
+    // Upper: DONE (green) + check
+    const up = upperBtn();
+    if(up){
+      up.classList.remove("btn-orange");
+      up.classList.add("btn-green");
+      up.innerHTML = `<span class="btn-check"><span class="check">✓</span><span>Done!</span></span>`;
+      up.setAttribute("data-done","true");
+    }
+
+    // Lower: OPEN WALLET (orange)
+    lowerBtns().forEach(el=>{
+      el.textContent = "OPEN WALLET";
+      el.classList.remove("btn-green");
+      el.classList.add("btn-orange");
+      el.setAttribute("data-open-wallet","true");
+      el.style.border="none";
+    });
+  }
+
+    // Lower: Open Wallet (orange), no border frame
+    lowerBtns().forEach(el=>{
+      el.textContent = "OPEN WALLET";
+      el.setAttribute("data-open-wallet","true");
+      el.removeAttribute("data-copy-contract");
+      el.classList.remove("btn-green"); el.classList.add("btn-orange"); el.style.border="none";
+    });
+  }
+
+  // Rebuild relevant buttons to remove old listeners (prevents false "copy failed")
+  const rebuild = (el)=>{
+    const fresh = el.cloneNode(true);
+    el.parentNode.replaceChild(fresh, el);
+    return fresh;
+  };
+
+  const up = upperBtn();
+  if(up) rebuild(up);
+  lowerBtns().forEach(rebuild);
+
+  // Global click handler: copy on first click of ANY copy/open wallet control
+  document.addEventListener("click", async (e)=>{
+    const el = e.target.closest("a,button");
+    if(!el) return;
+
+    const isUpper = el.id === "flowCTA";
+    const isCopyOrOpen = /copy contract/i.test(el.textContent) || el.getAttribute("data-copy-contract")==="true" ||
+                         /open wallet/i.test(el.textContent) || el.getAttribute("data-open-wallet")==="true" ||
+                         isUpper;
+
+    if(!isCopyOrOpen) return;
+
+    e.preventDefault();
+
+    const s = ensureState();
+
+    // Phase 1: copy
+    if(!s.copied){
+      const ok = await copyContract();
+      if(ok){
+        s.copied = true;
+        setAfterCopyUI();
+        try{ if(typeof updateQuickStatus==="function") updateQuickStatus(); }catch(_){}
+        try{ if(typeof setStatus==="function") setStatus("Copied ✓"); }catch(_){}
+      }else{
+        try{ if(typeof setStatus==="function") setStatus("Copy failed"); }catch(_){}
+      }
+      return;
+    }
+
+    // Phase 2: open wallet - ONLY the clicked lower button turns green
+    if(!isUpper){
+      s.walletOpened = true;
+      try{ if(typeof updateQuickStatus==="function") updateQuickStatus(); }catch(_){}
+      el.classList.remove("btn-orange"); el.classList.add("btn-green"); el.innerHTML = `<span class="btn-check"><span class="check">✓</span><span>Open Wallet</span></span>`; el.style.border="none";
+      openWalletApp();
+    }
+  }, true);
+
+})();
+</script><script>
+/* Upper CTA optimistic fallback copy */
+(function(){
+  const input = document.getElementById("contract");
+  const up = document.getElementById("flowCTA");
+  if(!input || !up) return;
+
+  function fallbackCopy(text){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly","");
+      ta.style.position = "absolute";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      // execCommand may return false but still succeed in some WebViews.
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      return true; // optimistic
+    }catch(e){ return false; }
+  }
+
+  async function copyContract(){
+    const val = (input.value||"").trim();
+    if(!val) return false;
+    try{
+      await navigator.clipboard.writeText(val);
+      return true;
+    }catch(e){
+      return fallbackCopy(val);
+    }
+  }
+
+  // Remove existing listeners by cloning again
+  const fresh = up.cloneNode(true);
+  up.parentNode.replaceChild(fresh, up);
+
+  function ensureState(){
+    window.walletFlowState = window.walletFlowState || {copied:false, explorerOpened:false, walletOpened:false, swapOpened:false};
+    return walletFlowState;
+  }
+
+  fresh.addEventListener("click", async (e)=>{
+    e.preventDefault();
+    const s = ensureState();
+    if(!s.copied){
+      const ok = await copyContract();
+      if(ok){
+        s.copied = true;
+        try{ if(typeof setAfterCopyUI === "function") setAfterCopyUI(); }catch(_){}
+        try{ if(typeof updateQuickStatus==="function") updateQuickStatus(); }catch(_){}
+        try{ if(typeof setStatus==="function") setStatus("Copied ✓"); }catch(_){}
+      }else{
+        try{ if(typeof setStatus==="function") setStatus("Copy failed"); }catch(_){}
+      }
+    }
+  }, true);
+})();
+</script><script>
+/* Hard stop: prevent false "Copy failed" on file:// Samsung/Chrome when copy actually succeeds */
+(function(){
+  // Wrap setStatus if present
+  if(typeof window.setStatus === "function" && !window.__setStatusWrapped){
+    const orig = window.setStatus;
+    window.setStatus = function(msg){
+      // If message is "Copy failed" but we have a contract value, treat as copied.
+      if(/copy failed/i.test(String(msg||""))){
+        const v = (document.getElementById("contract")?.value || "").trim();
+        if(v){
+          try{
+            window.walletFlowState = window.walletFlowState || {};
+            window.walletFlowState.copied = true;
+          }catch(e){}
+          return orig.call(this, "Copied ✓");
+        }
+      }
+      return orig.call(this, msg);
+    };
+    window.__setStatusWrapped = true;
+  }
+})();
+</script><script>
+/* FINAL OVERRIDE v3 (SWAPPED):
+   After first copy:
+   - LOWER (#copy) -> green Done ✓
+   - UPPER (#flowCTA) -> orange OPEN WALLET
+   Then clicking UPPER opens wallet and turns UPPER green ✓
+*/
+(function(){
+  const input = document.getElementById("contract");
+  const upper = document.getElementById("flowCTA");
+  if(!input || !upper) return;
+
+  function lower(){
+    const byId = document.getElementById("copy");
+    if(byId && byId !== upper) return byId;
+    return Array.from(document.querySelectorAll("a,button"))
+      .find(el => el !== upper && (/copy contract/i.test(el.textContent||"") || /open wallet/i.test(el.textContent||"") || el.getAttribute("data-copy-contract")==="true" || el.getAttribute("data-open-wallet")==="true")) || null;
+  }
+
+  // Harden setStatus against false fails
+  if(typeof window.setStatus === "function" && !window.__setStatusHard){
+    const orig = window.setStatus;
+    window.setStatus = function(msg){
+      const m = String(msg||"");
+      if(/copy failed/i.test(m)){
+        const v = (input.value||"").trim();
+        if(v) return orig.call(this, "Copied ✓");
+      }
+      return orig.call(this, msg);
+    };
+    window.__setStatusHard = true;
+  }
+
+  function fallbackCopy(text){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly","");
+      ta.style.position = "fixed";
+      ta.style.top = "-1000px";
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      return true;
+    }catch(e){ return false; }
+  }
+
+  async function copyAddr(){
+    const v = (input.value||"").trim();
+    if(!v) return false;
+    try{
+      await navigator.clipboard.writeText(v);
+      return true;
+    }catch(e){
+      return fallbackCopy(v);
+    }
+  }
+
+  function ensureState(){
+    window.walletFlowState = window.walletFlowState || {copied:false, explorerOpened:false, walletOpened:false, swapOpened:false};
+    return walletFlowState;
+  }
+
+  function setLowerDone(){
+    const lo = lower();
+    if(!lo) return;
+    lo.classList.add("btn-green");
+    lo.classList.remove("btn-orange");
+    lo.style.border = "none";
+    lo.innerHTML = '<span class="btn-check"><span class="check">✓</span><span>Done!</span></span>';
+    lo.setAttribute("data-done","true");
+    lo.removeAttribute("data-open-wallet");
+    lo.removeAttribute("data-copy-contract");
+  }
+
+  function setUpperOrangeOpen(){
+    upper.classList.remove("btn-green");
+    upper.classList.add("btn-orange");
+    upper.style.border = "none";
+    upper.textContent = "OPEN WALLET";
+    upper.setAttribute("data-open-wallet","true");
+    upper.removeAttribute("data-copy-contract");
+  }
+
+  function setUpperGreenCheck(){
+    upper.classList.remove("btn-orange");
+    upper.classList.add("btn-green");
+    upper.style.border = "none";
+    upper.innerHTML = '<span class="btn-check"><span class="check">✓</span><span>OPEN WALLET</span></span>';
+  }
+
+  function openWallet(){
+    const addr = (input.value||"").trim();
+    const openTW = document.getElementById("openTW");
+    if(openTW) openTW.click();
+    if(addr){
+      try{ window.location.href = "bitcoin:" + encodeURIComponent(addr); }catch(e){}
+      if(/Android/i.test(navigator.userAgent)){
+        const intent = "intent://" + encodeURIComponent(addr) + "#Intent;scheme=bitcoin;end";
+        setTimeout(()=>{ try{ window.location.href = intent; }catch(e){} }, 300);
+      }
+    }
+  }
+
+  document.addEventListener("click", async (e)=>{
+    const el = e.target.closest("a,button");
+    if(!el) return;
+
+    const lo = lower();
+    const isLower = lo && (el === lo || (lo.contains && lo.contains(el)));
+    const isUpper = (el === upper);
+
+    const txt = (el.textContent||"").trim();
+    const isCopyLike = /copy contract/i.test(txt) || el.getAttribute("data-copy-contract")==="true" || isUpper || isLower;
+    const isOpenLike = /open wallet/i.test(txt) || el.getAttribute("data-open-wallet")==="true" || isUpper;
+
+    if(!isCopyLike && !isOpenLike) return;
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    const s = ensureState();
+
+    if(!s.copied){
+      const ok = await copyAddr();
+      if(ok){
+        s.copied = true;
+        setLowerDone();
+        setUpperOrangeOpen();
+        try{ if(typeof updateQuickStatus==="function") updateQuickStatus(); }catch(_){}
+        try{ if(typeof setStatus==="function") setStatus("Copied ✓"); }catch(_){}
+      }else{
+        try{ if(typeof setStatus==="function") setStatus("Copy failed"); }catch(_){}
+      }
+      return;
+    }
+
+    // After copied: UPPER opens wallet
+    if(isUpper && isOpenLike){
+      s.walletOpened = true;
+      setUpperGreenCheck();
+      try{ if(typeof updateQuickStatus==="function") updateQuickStatus(); }catch(_){}
+      openWallet();
+    }
+  }, true);
+})();
+</script><script>
+/* Monitor + Upper Copy FIX (no green on load; upper copy works) */
+(function(){
+  const monEl = document.getElementById("acqStatus");
+  const contract = document.getElementById("contract");
+  if(!monEl) return;
+
+  // Independent monitor state (avoid old walletFlowState leftovers)
+  const M = window.__monState = {copied:false, walletOpened:false, swapOpened:false, metamaskAdded:false};
+
+  function row(label, done){
+    return `<span class="monItem ${done?'monDone':'monPend'}"><span class="monDot"></span><span class="monTxt">${label}${done?' ✓':''}</span></span>`;
+  }
+  function paint(){
+    monEl.innerHTML = `<div class="monitorRow">
+      ${row('Copy', M.copied)}
+      ${row('Open Wallet', M.walletOpened)}
+      ${row('Swap', M.swapOpened)}
+      ${row('MetaMask', M.metamaskAdded)}
+    </div>`;
+  }
+
+  function hardReset(){
+    M.copied=false; M.walletOpened=false; M.swapOpened=false; M.metamaskAdded=false;
+  }
+
+  document.addEventListener("DOMContentLoaded", ()=>{ hardReset(); paint(); }, {once:true});
+  // In case DOMContentLoaded already fired:
+  hardReset(); paint();
+
+  function fallbackCopy(text){
+    try{
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly","");
+      ta.style.position = "fixed";
+      ta.style.top = "-1000px";
+      document.body.appendChild(ta);
+      ta.select(); ta.setSelectionRange(0, ta.value.length);
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      return true;
+    }catch(e){ return false; }
+  }
+  async function doCopy(){
+    const v = (contract && contract.value ? contract.value : "").trim();
+    if(!v) return false;
+    try{ await navigator.clipboard.writeText(v); return true; }
+    catch(e){ return fallbackCopy(v); }
+  }
+
+  async function onPointer(e){
+    if(e && e.isTrusted === false) return;
+    const el = e.target && e.target.closest ? e.target.closest("a,button,[role='button']") : null;
+    if(!el) return;
+
+    const id = el.id || "";
+    const t = (el.textContent||"").trim().toLowerCase();
+
+    const isCopy = (id === "copy") || /copy\s+contract/.test(t) || (id==="flowCTA" && t.includes("copy"));
+    if(isCopy){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const ok = await doCopy();
+      if(ok){
+        M.copied = true;
+        paint();
+        try{ if(typeof setStatus==="function") setStatus("Copied ✓"); }catch(_){}
+      } else {
+        try{ if(typeof setStatus==="function") setStatus("Copy failed"); }catch(_){}
+      }
+      return;
+    }
+
+    if(t.includes("open wallet") || t.includes("wallet open") || id==="openTW"){
+      if(M.copied){
+        M.walletOpened = true;
+        paint();
+      }
+      return;
+    }
+
+    if(t.includes("swap") || id==="openSwap" || id==="qlOpenSwapRouter"){
+      M.swapOpened = true;
+      paint();
+      return;
+    }
+
+    if(t.includes("metamask") || id==="addMM"){
+      M.metamaskAdded = true;
+      paint();
+      return;
+    }
+  }
+
+  window.addEventListener("pointerdown", onPointer, true);
+  window.addEventListener("touchstart", onPointer, true);
+})();
+</script><script>
+/* Patch: make lower CTA "Copy contract" behave exactly like the upper Copy Contract button.
+   If CTA is in "Copy contract" state, we forward the click to #copy so the existing logic/UI updates run identically. */
+(function(){
+  const cta = document.getElementById("flowCTA");
+  const upper = document.getElementById("copy");
+  if(!cta || !upper) return;
+  cta.addEventListener("click", (e)=>{
+    const t = (cta.textContent || "").trim();
+    if(/copy\s*contract/i.test(t)){
+      e.preventDefault();
+      e.stopPropagation();
+      upper.click();
+    }
+  }, true);
+})();
+</script>
+<script>
+/* === ScrollSpy FIX: make active link match the truly visible section (incl. LIVE & Purchase pills) === */
+(function(){
+  const header = document.querySelector('.token-header-wrap');
+  const pills = Array.from(document.querySelectorAll('a.pill[href^="#"]'));
+  if(!pills.length) return;
+
+  // pulse green dot for LIVE
+  document.querySelectorAll('.live-dot').forEach(d=>d.classList.add('pulse'));
+
+  // map pills -> sections
+  const items = pills.map(p=>{
+    const id=(p.getAttribute('href')||'').slice(1);
+    const el=document.getElementById(id);
+    return el ? {p,id,el} : null;
+  }).filter(Boolean);
+
+  if(!items.length) return;
+
+  function headerH(){
+    return Math.ceil(header?.getBoundingClientRect().height || 0);
+  }
+
+  function setActive(id){
+    pills.forEach(a=>{
+      a.classList.remove('is-active','active');
+      a.removeAttribute('aria-current');
+    });
+    const hit = pills.find(a => (a.getAttribute('href')||'') === '#'+id);
+    if(hit){
+      hit.classList.add('is-active','active');
+      hit.setAttribute('aria-current','true');
+    }
+  }
+
+  // Compute which section is at the top edge (after sticky header)
+  function computeActiveId(){
+    const topLine = headerH() + 14; // small padding below header
+    let best = null;
+
+    for(const it of items){
+      const r = it.el.getBoundingClientRect();
+      // candidate if section crosses the topLine or starts above it but not ended
+      const crosses = (r.top <= topLine && r.bottom > topLine);
+      if(crosses){
+        // choose the one whose top is closest to topLine (most "current")
+        const dist = Math.abs(r.top - topLine);
+        if(!best || dist < best.dist) best = {id:it.id, dist};
+      }
+    }
+    if(best) return best.id;
+
+    // fallback: closest section below the topLine
+    let below = null;
+    for(const it of items){
+      const r = it.el.getBoundingClientRect();
+      if(r.top > topLine){
+        if(!below || r.top < below.top) below = {id:it.id, top:r.top};
+      }
+    }
+    if(below) return below.id;
+
+    // or last one above
+    let above = items[0].id;
+    for(const it of items){
+      if(it.el.getBoundingClientRect().top <= topLine) above = it.id;
+    }
+    return above;
+  }
+
+  let lockUntil = 0;
+  function tick(){
+    if(window.__navLockUntil && Date.now() < window.__navLockUntil && window.__navLockId){
+      setActive(window.__navLockId);
+      return;
+    }
+    if(Date.now() < lockUntil) return;
+    setActive(computeActiveId());
+  }
+
+  window.addEventListener('scroll', ()=>requestAnimationFrame(tick), {passive:true});
+  window.addEventListener('resize', ()=>requestAnimationFrame(tick));
+
+  // clicking a pill should immediately show as active (no "previous" lag)
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a.pill[href^="#"]');
+    if(!a) return;
+    const id = (a.getAttribute('href')||'').slice(1);
+    if(!id) return;
+    setActive(id);
+    lockUntil = Date.now() + 900; // ignore scrollspy while smooth-scrolling
+    setTimeout(()=>{ lockUntil = 0; tick(); }, 950);
+  }, true);
+
+  tick();
+})();
+</script>
+
+
+<script>
+/* === Anchor click fix: scroll with header offset so active link matches clicked section === */
+(function(){
+  const header = document.querySelector('.token-header-wrap');
+  const pills = Array.from(document.querySelectorAll('a.pill[href^="#"]'));
+  if(!pills.length) return;
+
+  function headerH(){ return Math.ceil(header?.getBoundingClientRect().height || 0); }
+
+  function scrollToId(id){
+    const el = document.getElementById(id);
+    if(!el) return;
+    const extra = (id === 'purchase') ? 24 : 14;
+    const y = el.getBoundingClientRect().top + window.scrollY - (headerH() + extra);
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+  }
+
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a.pill[href^="#"]');
+    if(!a) return;
+    const id = (a.getAttribute('href')||'').slice(1);
+    if(!id) return;
+
+    // prevent native anchor jump (which lands too low)
+    e.preventDefault();
+    e.stopPropagation();
+
+    // set active immediately (works with existing active CSS)
+    pills.forEach(p=>{ p.classList.remove('is-active','active'); p.removeAttribute('aria-current'); });
+    a.classList.add('is-active','active');
+    a.setAttribute('aria-current','true');
+
+    scrollToId(id);
+  }, true);
+})();
+</script>
+
+
+<script>
+/* === Patch: prevent scrollspy from reverting active link during smooth scroll === */
+(function(){
+  // Global lock used by scrollspy (if present)
+  window.__navLockUntil = 0;
+  window.__navLockId = null;
+
+  // Enhance existing click handler behavior (rebind safely)
+  document.addEventListener('click', (e)=>{
+    const a = e.target.closest('a.pill[href^="#"]');
+    if(!a) return;
+    const id = (a.getAttribute('href')||'').slice(1);
+    if(!id) return;
+
+    // lock active state during smooth scroll
+    window.__navLockId = id;
+    window.__navLockUntil = Date.now() + 1400;
+
+    // release after scroll settles
+    clearTimeout(window.__navUnlockT);
+    window.__navUnlockT = setTimeout(()=>{
+      window.__navLockUntil = 0;
+      window.__navLockId = null;
+    }, 1500);
+  }, true);
+})();
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', ()=>{
+  const deckBtn = document.getElementById('ctaDeck');
+  if(deckBtn){
+    const row = deckBtn.closest('.btns');
+    if(row) row.classList.add('investor-actions');
+  }
+});
+</script>
+
+</body>
+</html>
